@@ -35,9 +35,9 @@
   <header class="site-header">
     <a href="/" class="brand"><strong>rafa</strong>.prompts</a>
     <nav class="nav">
-      <a href="/metodo.html">método</a>
-      <a href="/#recursos">recursos</a>
-      <a href="/#faq">faq</a>
+      <a href="/metodo.html">Método</a>
+      <a href="/#recursos">Recursos</a>
+      <a href="/#faq">FAQ</a>
       <a href="/metodo.html" class="btn">Empezar · 297€</a>
     </nav>
     <button class="burger" id="burger" aria-label="Abrir menú" aria-expanded="false" aria-controls="mobile-drawer">
@@ -46,10 +46,11 @@
   </header>
 
   <div class="mobile-drawer" id="mobile-drawer" aria-hidden="true">
+    <button class="drawer-close" id="drawer-close" aria-label="Cerrar menú"><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><line x1="18" y1="6" x2="6" y2="18"/><line x1="6" y1="6" x2="18" y2="18"/></svg></button>
     <nav class="drawer-nav">
-      <a href="/metodo.html">método</a>
-      <a href="/#recursos">recursos</a>
-      <a href="/#faq">faq</a>
+      <a href="/metodo.html">Método</a>
+      <a href="/#recursos">Recursos</a>
+      <a href="/#faq">FAQ</a>
       <a href="/metodo.html" class="btn accent large">Empezar · 297€</a>
     </nav>
   </div>
@@ -59,16 +60,16 @@
     <aside class="toc">
       <div class="label">En esta guía</div>
       <ol>
-        <li><a href="#qué-vas-a-crear">qué vas a crear</a></li>
-        <li><a href="#herramientas">las herramientas</a></li>
-        <li><a href="#principios">principios de hiperrealismo</a></li>
-        <li><a href="#guion">la estructura del guion</a></li>
-        <li><a href="#voz">voz</a></li>
-        <li><a href="#imagen">fotogramas clave</a></li>
-        <li><a href="#animacion">animación</a></li>
-        <li><a href="#montaje">montaje</a></li>
-        <li><a href="#mezcla">mezcla final</a></li>
-        <li><a href="#checklist">comprobar antes de publicar</a></li>
+        <li><a href="#qué-vas-a-crear">Qué vas a crear</a></li>
+        <li><a href="#herramientas">Las herramientas</a></li>
+        <li><a href="#principios">Principios de hiperrealismo</a></li>
+        <li><a href="#guion">La estructura del guion</a></li>
+        <li><a href="#voz">Voz</a></li>
+        <li><a href="#imagen">Fotogramas clave</a></li>
+        <li><a href="#animacion">Animación</a></li>
+        <li><a href="#montaje">Montaje</a></li>
+        <li><a href="#mezcla">Mezcla final</a></li>
+        <li><a href="#checklist">Comprobar antes de publicar</a></li>
       </ol>
     </aside>
 
@@ -190,7 +191,7 @@ Frase 9  · Llamada: comenta X y te mando Y</pre></div>
         <div class="label">Quieres ir más allá</div>
         <h3>El método Claude</h3>
         <p>Seis módulos para dominar Claude y construir sistemas útiles. Plantillas, pipelines y ejemplos paso a paso.</p>
-        <span class="arrow">ver el método →</span>
+        <span class="arrow">Ver el método →</span>
       </a>
 
       <h2 id="voz"><span class="num">05</span>Voz</h2>
@@ -263,7 +264,7 @@ Frase 9  · Llamada: comenta X y te mando Y</pre></div>
         <div class="label">Guía siguiente</div>
         <h3>Cómo automatizarlo para que se haga solo</h3>
         <p>Ahora que sabes producirlo a mano, automatízalo. Un agente hace el reel mientras duermes, tú solo revisas al despertar.</p>
-        <span class="arrow">abrir guía madrugón →</span>
+        <span class="arrow">Abrir guía madrugón →</span>
       </a>
 
     </div>
@@ -281,13 +282,15 @@ Frase 9  · Llamada: comenta X y te mando Y</pre></div>
       const drawer = document.getElementById('mobile-drawer');
       if (!burger || !drawer) return;
       const toggle = (force) => {
-        const open = force !== undefined ? Force : !document.body.classList.contains('drawer-open');
+        const open = force !== undefined ? force : !document.body.classList.contains('drawer-open');
         document.body.classList.toggle('drawer-open', open);
         burger.setAttribute('aria-expanded', open);
         drawer.setAttribute('aria-hidden', !open);
         document.body.style.overflow = open ? 'hidden' : '';
       };
       burger.addEventListener('click', () => toggle());
+      const close = document.getElementById('drawer-close');
+      if (close) close.addEventListener('click', () => toggle(false));
       drawer.querySelectorAll('a').forEach(a => a.addEventListener('click', () => toggle(false)));
       document.addEventListener('keydown', (e) => { if (e.key === 'Escape') toggle(false); });
     })();

@@ -21,12 +21,12 @@
 
   <svg width="0" height="0" style="position:absolute">
     <defs>
-      <filter id="sprayGrain" x="-15%" y="-15%" width="130%" height="130%">
-        <feTurbulence type="fractalNoise" baseFrequency="0.7" numOctaves="2" seed="7" result="noise"/>
-        <feDisplacementMap in="SourceGraphic" in2="noise" scale="4" xChannelSelector="R" yChannelSelector="G" result="wobbled"/>
-        <feGaussianBlur in="wobbled" stdDeviation="0.9" result="blurred"/>
+      <filter id="sprayGrain" x="-10%" y="-10%" width="120%" height="120%">
+        <feTurbulence type="fractalNoise" baseFrequency="0.9" numOctaves="2" seed="7" result="noise"/>
+        <feDisplacementMap in="SourceGraphic" in2="noise" scale="1.6" xChannelSelector="R" yChannelSelector="G" result="wobbled"/>
+        <feGaussianBlur in="wobbled" stdDeviation="0.3" result="blurred"/>
         <feComponentTransfer in="blurred">
-          <feFuncA type="linear" slope="2.2" intercept="-0.1"/>
+          <feFuncA type="linear" slope="1.8" intercept="-0.05"/>
         </feComponentTransfer>
       </filter>
     </defs>
@@ -76,7 +76,6 @@
         </p>
         <div class="actions">
           <a href="#comprar" class="btn accent large">Empezar ahora · 297€</a>
-          <a href="#temario" class="btn ghost">Ver temario</a>
         </div>
         <div class="hero-proof">
           <span>Acceso inmediato</span><span class="dot">·</span>

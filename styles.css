@@ -912,20 +912,25 @@ h3 {
 
 .bio-inline {
   display: grid;
-  grid-template-columns: 180px 1fr;
+  grid-template-columns: 140px 1fr;
   gap: 32px;
-  align-items: start;
+  align-items: center;
 }
 @media (max-width: 700px) {
-  .bio-inline { grid-template-columns: 1fr; }
+  .bio-inline { grid-template-columns: 104px 1fr; gap: 20px; }
 }
 .portrait-small {
-  width: 180px;
-  border-radius: var(--r-lg);
+  position: relative;
+  width: 140px;
+  height: 140px;
+  border-radius: 50%;
   overflow: hidden;
-  border: 1px solid var(--border);
+  border: 2px solid var(--border);
   background: var(--bg-cream-soft);
-  aspect-ratio: 1 / 1;
+  flex-shrink: 0;
+}
+@media (max-width: 700px) {
+  .portrait-small { width: 104px; height: 104px; }
 }
 .portrait-small img {
   width: 100%;

@@ -1,0 +1,11 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 512 512" width="512" height="512" role="img" aria-label="rafa.prompts mark">
+  <title>rafa.prompts</title>
+  <rect width="512" height="512" fill="#0A0A0A"/>
+  <!-- Terminal cursor prompt: ./ in red, large, centered -->
+  <g font-family="Archivo, system-ui, sans-serif" font-weight="900" fill="#DA7756">
+    <text x="256" y="340" font-size="320" text-anchor="middle" letter-spacing="-14">./</text>
+  </g>
+  <!-- Underscore cursor block at bottom right -->
+  <rect x="356" y="384" width="72" height="18" fill="#DA7756"/>
+</svg>

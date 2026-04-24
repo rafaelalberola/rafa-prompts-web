@@ -301,6 +301,17 @@ img { max-width: 100%; display: block; }
   gap: 12px;
   flex-wrap: wrap;
 }
+@media (max-width: 600px) {
+  .hero-personal { align-items: center; text-align: center; }
+  .hero-personal .hero-copy { width: 100%; }
+  .hero-personal h1 { margin-left: auto; margin-right: auto; }
+  .hero-personal .hero h1 .italic,
+  .hero-personal h1 .italic { margin-left: auto; margin-right: auto; }
+  .hero-personal .intro { margin-left: auto; margin-right: auto; }
+  .hero-personal .actions { width: 100%; flex-direction: column; }
+  .hero-personal .actions .btn { width: 100%; justify-content: center; }
+  .hero-personal .hero-proof { width: 100%; justify-content: center; }
+}
 
 .portrait {
   position: relative;
@@ -1202,10 +1213,8 @@ details > *:not(summary) { margin-top: 12px; }
 .dark-section {
   background: var(--ink);
   color: var(--bg-cream);
-  border-radius: var(--r-xl);
   padding: 5vw 5vw;
-  max-width: calc(var(--content-max) + 2 * var(--col));
-  margin: 4vw auto;
+  margin: 4vw 0;
 }
 
 .dark-section .kicker,

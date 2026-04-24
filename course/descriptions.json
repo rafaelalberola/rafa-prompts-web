@@ -1,0 +1,115 @@
+{
+  "modulo_01": {
+    "title": "Pensar en Claude",
+    "subtitle": "El modelo mental que cambia todo. Cuándo Claude te ahorra horas y cuándo te hace perderlas.",
+    "lessons": [
+      "Claude no es un buscador, es un colaborador",
+      "El contexto largo: su superpoder real",
+      "Cuándo NO usar Claude",
+      "Conversación versus orquestación",
+      "La regla del '¿vale la pena?'"
+    ],
+    "duration_minutes": 25,
+    "what_you_learn": [
+      "Entender qué tipo de problemas Claude resuelve bien, y cuáles no",
+      "Saber cómo estructurar lo que le pides para obtener respuestas útiles",
+      "Distinguir entre una conversación (algo puntual) y una orquestación (un sistema que se repite)",
+      "Tener un modelo mental para decidir si vale la pena automatizar algo"
+    ],
+    "cover_image": "modulo-01-cover.png"
+  },
+  "modulo_02": {
+    "title": "El CLAUDE.md",
+    "subtitle": "El artefacto más importante del sistema. Un documento que hace que Claude se comporte como tú quieres, sin repetir instrucciones cada vez.",
+    "lessons": [
+      "Qué es un CLAUDE.md y por qué importa",
+      "La estructura mínima que funciona",
+      "Plantilla 1: Creador de contenido",
+      "Plantilla 2 y 3: Marketer y Founder",
+      "Plantilla 4 y 5: Freelance diseño y Investigador"
+    ],
+    "duration_minutes": 30,
+    "what_you_learn": [
+      "Entender qué es un CLAUDE.md y por qué funciona tan bien",
+      "Saber cuándo vale la pena crearlo y cuándo es exceso",
+      "Tener 5 plantillas listas que puedes adaptar a tu nicho",
+      "Escribir tu primer CLAUDE.md propio en menos de 20 minutos"
+    ],
+    "cover_image": "modulo-02-cover.png"
+  },
+  "modulo_03": {
+    "title": "Skills y agentes",
+    "subtitle": "Cómo convertir tareas que repites en piezas reutilizables. Y cuándo una tarea merece volverse un agente que trabaja solo.",
+    "lessons": [
+      "Qué es una skill",
+      "Qué es un agente (y qué no)",
+      "Encadenar pasos sin romper el contexto",
+      "Cuándo separar contextos (conversaciones)",
+      "Tu primera skill documentada"
+    ],
+    "duration_minutes": 30,
+    "what_you_learn": [
+      "Distinguir entre una skill y un agente",
+      "Saber cuándo usar cada uno",
+      "Construir tu primera skill reutilizable en 15 minutos",
+      "Diseñar un agente simple que haga una tarea repetitiva por ti"
+    ],
+    "cover_image": "modulo-03-cover.png"
+  },
+  "modulo_04": {
+    "title": "Pipelines reales",
+    "subtitle": "4 casos completos, paso a paso. Artículos, investigación de mercado, inbox y datos. Copia, adapta y pon en marcha.",
+    "lessons": [
+      "Pipeline 01: Un artículo de 1500 palabras en 30 minutos",
+      "Pipeline 02: Investigación de mercado en 45 minutos",
+      "Pipeline 03: Procesar el inbox en 15 minutos",
+      "Pipeline 04: Analizar un CSV en 20 minutos"
+    ],
+    "duration_minutes": 35,
+    "what_you_learn": [
+      "Tener 4 pipelines probados listos para adaptar",
+      "Saber el patrón general para construir tu propio pipeline nuevo",
+      "Entender qué partes son plantilla fija y cuáles cambian siempre",
+      "Reducir tareas de 2 horas a 15 minutos en tu semana"
+    ],
+    "cover_image": "modulo-04-cover.png"
+  },
+  "modulo_05": {
+    "title": "Orquestación",
+    "subtitle": "Cómo conectar Claude con otras herramientas. El salto de hacer tareas manuales a sistemas que funcionan solos mientras tú vives tu vida.",
+    "lessons": [
+      "El patrón universal: trigger, proceso, destino",
+      "Las 3 herramientas visuales que te cubren el 95% de casos",
+      "Automatización real 1: resumen diario del inbox",
+      "Automatización real 2: newsletter semanal desde tus notas",
+      "Automatización real 3: triaje de leads de un formulario"
+    ],
+    "duration_minutes": 30,
+    "what_you_learn": [
+      "Saber qué herramientas se conectan bien con Claude",
+      "Entender el patrón universal de automatización (3 piezas)",
+      "Tener 3 ejemplos de automatizaciones reales funcionando",
+      "Escoger tu primera automatización propia y saber cómo empezar"
+    ],
+    "cover_image": "modulo-05-cover.png"
+  },
+  "modulo_06": {
+    "title": "Iteración y medida",
+    "subtitle": "Cómo saber si un sistema funciona. Qué medir, qué ignorar, y cómo mejorarlo sin romperlo. El paso que todos se saltan y por eso fallan.",
+    "lessons": [
+      "Las 3 métricas que importan",
+      "Qué métricas son vanidad",
+      "El ritual semanal de 15 minutos",
+      "El error más común: romper lo que funciona",
+      "Cómo llegar al mes 3 con el sistema vivo"
+    ],
+    "duration_minutes": 25,
+    "what_you_learn": [
+      "Saber qué métricas importan (y cuáles son vanidad)",
+      "Tener un sistema semanal de iteración de 15 minutos",
+      "Evitar el error más común: romper algo que funcionaba al querer mejorarlo",
+      "Llegar al mes 3 con un sistema que sigue funcionando (no abandonado)"
+    ],
+    "cover_image": "modulo-06-cover.png"
+  }
+}

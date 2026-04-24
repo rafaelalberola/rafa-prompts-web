@@ -51,6 +51,7 @@
   </header>
 
   <div class="mobile-drawer" id="mobile-drawer" aria-hidden="true">
+    <button class="drawer-close" id="drawer-close" aria-label="Cerrar menú"><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><line x1="18" y1="6" x2="6" y2="18"/><line x1="6" y1="6" x2="18" y2="18"/></svg></button>
     <nav class="drawer-nav">
       <a href="#para-ti">Para quién</a>
       <a href="#temario">Temario</a>
@@ -410,6 +411,8 @@
         document.body.style.overflow = open ? 'hidden' : '';
       };
       burger.addEventListener('click', () => toggle());
+      const close = document.getElementById('drawer-close');
+      if (close) close.addEventListener('click', () => toggle(false));
       drawer.querySelectorAll('a').forEach(a => a.addEventListener('click', () => toggle(false)));
       document.addEventListener('keydown', (e) => {
         if (e.key === 'Escape') toggle(false);

@@ -1,0 +1,268 @@
+<!doctype html>
+<html lang="es">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>yate : cómo hacer un reel como este · rafa.prompts</title>
+  <meta name="description" content="Sistema completo para producir un reel hiperrealista con IA. Guion, imagen, vídeo, voz, subtítulos, sonido y mezcla final.">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Archivo:wght@800;900&family=IBM+Plex+Mono:wght@400;600&family=Newsreader:ital,wght@1,400;1,500&display=swap">
+  <link rel="stylesheet" href="styles.css">
+</head>
+<body>
+
+  <svg width="0" height="0" style="position:absolute">
+    <defs>
+      <filter id="sprayGrain" x="-15%" y="-15%" width="130%" height="130%">
+        <feTurbulence type="fractalNoise" baseFrequency="0.7" numOctaves="2" seed="7" result="noise"/>
+        <feDisplacementMap in="SourceGraphic" in2="noise" scale="4" xChannelSelector="R" yChannelSelector="G" result="wobbled"/>
+        <feGaussianBlur in="wobbled" stdDeviation="0.9" result="blurred"/>
+        <feComponentTransfer in="blurred">
+          <feFuncA type="linear" slope="2.2" intercept="-0.1"/>
+        </feComponentTransfer>
+      </filter>
+    </defs>
+  </svg>
+
+  <div class="progress" id="progress"></div>
+
+  <header class="site-header">
+    <a href="/" class="brand"><strong>rafa</strong>.prompts</a>
+    <nav class="nav">
+      <a href="/metodo.html">método</a>
+      <a href="/#recursos">recursos</a>
+      <a href="/#faq">faq</a>
+    </nav>
+  </header>
+
+  <article class="resource">
+
+    <aside class="toc">
+      <div class="label">en esta guía</div>
+      <ol>
+        <li><a href="#qué-vas-a-crear">qué vas a crear</a></li>
+        <li><a href="#herramientas">las herramientas</a></li>
+        <li><a href="#principios">principios de hiperrealismo</a></li>
+        <li><a href="#guion">la estructura del guion</a></li>
+        <li><a href="#voz">voz</a></li>
+        <li><a href="#imagen">fotogramas clave</a></li>
+        <li><a href="#animacion">animación</a></li>
+        <li><a href="#montaje">montaje</a></li>
+        <li><a href="#mezcla">mezcla final</a></li>
+        <li><a href="#checklist">comprobar antes de publicar</a></li>
+      </ol>
+    </aside>
+
+    <div class="resource-content">
+
+      <div class="reading-time">8 min de lectura · guía 01</div>
+      <h1>Cómo hacer un reel como este</h1>
+      <p class="lede">
+        Te explico el flujo completo del vídeo que acabas de ver. Qué herramientas usa, cómo encajan, y cómo adaptarlo a tu marca.
+      </p>
+
+      <div class="callout">
+        <span class="ico">🛟</span>
+        <div>Lee cada paso en orden. Si te atascas, escríbeme "ayuda" por DM y te desbloqueo.</div>
+      </div>
+
+      <h2 id="qué-vas-a-crear"><span class="num">01</span>qué vas a crear</h2>
+      <p>
+        Un vídeo vertical de unos 20 a 25 segundos que se siente hecho a mano, no generado por un ordenador.
+      </p>
+      <p>Incluye:</p>
+      <ul>
+        <li>Una persona que habla a cámara, con cara y cuerpo muy realistas</li>
+        <li>Planos de apoyo (paisajes, objetos, detalles) generados con IA</li>
+        <li>Subtítulos palabra a palabra que resaltan con color</li>
+        <li>Pantallas y elementos gráficos montados aparte</li>
+        <li>Sonidos del entorno y una base musical discreta</li>
+        <li>Una mezcla final optimizada para Instagram y TikTok</li>
+      </ul>
+
+      <h2 id="herramientas"><span class="num">02</span>las herramientas que vas a usar</h2>
+      <p>Todo lo que necesitas está en servicios online y en tu propio ordenador.</p>
+      <h3>Inteligencia</h3>
+      <ul>
+        <li>Claude: el cerebro que piensa el guion y toma decisiones creativas</li>
+      </ul>
+      <h3>Imagen y vídeo</h3>
+      <ul>
+        <li>Nanobanana: genera los fotogramas clave de cada escena</li>
+        <li>Kling: convierte esos fotogramas en vídeo de 5 segundos</li>
+      </ul>
+      <h3>Voz y sonido</h3>
+      <ul>
+        <li>ElevenLabs: crea la voz, efectos de sonido y base musical</li>
+        <li>Wavespeed: sincroniza los labios del personaje con la voz</li>
+      </ul>
+      <h3>Montaje final</h3>
+      <ul>
+        <li>Remotion: programa que corre en tu ordenador y une todo</li>
+        <li>FFmpeg: ajusta el volumen final para redes sociales</li>
+      </ul>
+
+      <h2 id="principios"><span class="num">03</span>principios para que no parezca IA</h2>
+      <p>Estos 8 principios son la diferencia entre un vídeo que alguien mira 2 segundos y otro que retiene hasta el final. Aplícalos todos.</p>
+
+      <details>
+        <summary>Generando caras realistas</summary>
+        <p>Siempre pasa 2 o 3 fotos del personaje como referencia cuando generes una imagen. Sin referencias, la cara cambia entre escenas y se rompe la ilusión.</p>
+        <p>Pide explícitamente: piel con poros visibles, asimetría natural de las cejas, algún pelo fuera de sitio. La perfección es lo que delata la IA.</p>
+      </details>
+
+      <details>
+        <summary>Ropa que no se deforma</summary>
+        <p>Evita estampados complejos o lemas grandes. Si el personaje lleva una camiseta con un patrón en zigzag, la IA lo irá cambiando frame a frame.</p>
+        <p>Usa ropa con colores lisos, pequeños detalles y textura natural. La tela con arrugas reales suma.</p>
+      </details>
+
+      <details>
+        <summary>Movimiento creíble</summary>
+        <p>Cuando animes un fotograma, el movimiento tiene que ser pequeño y natural. Frases que funcionan: "ligera respiración con cámara en mano", "el viento mueve ligeramente el pelo", "gestos naturales al hablar".</p>
+        <p>Evita zooms rápidos, giros de cámara y desenfoques cambiantes. Son señales clásicas de vídeo IA.</p>
+      </details>
+
+      <details>
+        <summary>Sin marcos ni bordes de película</summary>
+        <p>Nunca permitas que la imagen generada incluya bordes tipo Polaroid, Kodak, Super 8 o cualquier marco decorativo. La imagen siempre ocupa toda la pantalla, de borde a borde.</p>
+      </details>
+
+      <details>
+        <summary>Clips cortos, no largos</summary>
+        <p>Cada plano de IA debe durar 5 segundos o menos. Si estiras más, la IA empieza a alucinar y aparecen deformaciones evidentes.</p>
+      </details>
+
+      <details>
+        <summary>Dos capas que unifican todo</summary>
+        <p>El montaje final aplica dos capas sutiles sobre todo el vídeo: un grano de película (textura suave) y una subida ligera de saturación y contraste.</p>
+        <p>Esto hace que los planos generados y los elementos gráficos se sientan parte del mismo mundo.</p>
+      </details>
+
+      <details>
+        <summary>Subtítulos con textura aerosol</summary>
+        <p>Los subtítulos llevan un filtro que les da un ligero desenfoque orgánico, como si estuvieran pintados con aerógrafo. Les da identidad visual sin recurrir a tipografía chillona.</p>
+      </details>
+
+      <details>
+        <summary>Sonido del entorno, bajo de volumen</summary>
+        <p>Cada escena lleva uno o dos sonidos del entorno (olas, teclado, voces lejanas). Son los que hacen que el espectador sienta el plano, aunque no los escuche conscientemente.</p>
+        <p>Volumen muy bajo: si el oyente los nota, es que están demasiado altos.</p>
+      </details>
+
+      <h2 id="guion"><span class="num">04</span>la estructura del guion: 9 frases</h2>
+      <p>Todo reel de este sistema se cuenta en exactamente 9 frases. Ni una más ni una menos. Cada frase cumple una función concreta.</p>
+      <p>Copia esta plantilla y rellena con tu tema:</p>
+      <div class="code-block"><pre>Frase 1  · Gancho: una afirmación fuerte o un desafío al espectador
+Frase 2  · Prueba rápida: qué construiste o viste funcionar
+Frase 3  · Promesa: qué es capaz de hacer esto
+Frase 4  · Herramienta 1: primer ingrediente clave
+Frase 5  · Herramienta 2: segundo ingrediente
+Frase 6  · Tu toque: qué lo hace único en tu caso
+Frase 7  · Filosofía: el principio en 2 palabras
+Frase 8  · Resultado: qué consigues con todo esto
+Frase 9  · Llamada: comenta X y te mando Y</pre></div>
+      <div class="callout warn">
+        <span class="ico">🎯</span>
+        <div>Regla de oro: la frase 9 no habla del producto, habla de la recompensa. La palabra clave tiene que ser corta y memorable.</div>
+      </div>
+
+      <a href="/metodo.html" class="cross-link">
+        <div class="label">quieres ir más allá</div>
+        <h3>el método claude</h3>
+        <p>Seis módulos para dominar Claude y construir sistemas útiles. Plantillas, pipelines y ejemplos paso a paso.</p>
+        <span class="arrow">ver el método →</span>
+      </a>
+
+      <h2 id="voz"><span class="num">05</span>voz</h2>
+      <p>Graba tu voz con ElevenLabs o usa una voz clonada. Le pasas tu guion y el servicio te devuelve el audio y un listado con el tiempo exacto en el que suena cada palabra.</p>
+      <p>Ajustes que funcionan bien:</p>
+      <ul>
+        <li>Estabilidad alta (un valor cercano a 0.8), así no mete pausas raras entre palabras</li>
+        <li>Fidelidad a la voz original alta (cerca de 0.9)</li>
+        <li>Estilo moderado (alrededor de 0.2), para que suene natural sin exagerar</li>
+      </ul>
+
+      <h2 id="imagen"><span class="num">06</span>fotogramas clave</h2>
+      <p>Un fotograma por escena humana. Las pantallas y ventanas gráficas no las generes con IA: las montas aparte en Remotion. Quedan mejor y son más rápidas de hacer.</p>
+      <p>La plantilla de descripción que le pasas a la IA siempre tiene estos 6 bloques:</p>
+      <ol>
+        <li>Tu personaje: rasgos faciales concretos (edad, pelo, piel, mirada)</li>
+        <li>Tu vestuario: ropa descrita con detalle, sin estampados complejos</li>
+        <li>La acción: qué está haciendo exactamente</li>
+        <li>La cámara: tipo de plano y encuadre vertical</li>
+        <li>La luz: dirección, temperatura, contraste</li>
+        <li>El ambiente: la sensación general del plano</li>
+      </ol>
+      <div class="callout">
+        <span class="ico">📌</span>
+        <div>Guarda los bloques 1, 2, 4, 5 y 6 como plantilla fija. Cada nuevo reel solo cambia el bloque 3 (la acción). Así mantienes continuidad visual entre reels.</div>
+      </div>
+
+      <h2 id="animacion"><span class="num">07</span>animación</h2>
+      <p>Coges el fotograma y le pasas una instrucción de movimiento. La IA genera un vídeo de 5 segundos.</p>
+      <p>Instrucciones que funcionan:</p>
+      <ul>
+        <li>"ligera respiración con cámara en mano, un leve acercamiento"</li>
+        <li>"el viento mueve el pelo hacia la derecha, gesto natural al hablar"</li>
+        <li>"pequeña sonrisa cómplice que aparece en el segundo 2"</li>
+      </ul>
+      <p>Importante: usa siempre el modo "imagen a vídeo". El modo "principio y final" deforma la ropa entre fotogramas.</p>
+
+      <h3>Sincronizar labios (solo si habla a cámara)</h3>
+      <p>Cuando el personaje habla directo a cámara, le pasas el vídeo animado y el trozo de audio que corresponde, y el servicio te devuelve el vídeo con los labios sincronizados a la voz.</p>
+
+      <h2 id="montaje"><span class="num">08</span>montaje</h2>
+      <p>En un ordenador normal, con Remotion, escribes la composición como si fuera código. Tiene tres partes clave:</p>
+      <ul>
+        <li>Los bloques de tiempo: qué plano o pantalla se ve en cada segundo</li>
+        <li>Los subtítulos: palabra a palabra, con resaltados de color en las más importantes</li>
+        <li>El audio: voz, efectos del entorno y base musical, cada uno con su volumen</li>
+      </ul>
+
+      <h2 id="mezcla"><span class="num">09</span>mezcla final</h2>
+      <p>Una vez montado, pasa el vídeo por FFmpeg con un ajuste de volumen que lo prepara para Instagram y TikTok. Esas plataformas aplastan audio que les llega demasiado alto, así que conviene entregarlo ajustado de antemano.</p>
+
+      <h3>Portada</h3>
+      <p>Elige un fotograma del primer segundo para la portada. No uses un frame en negro o una transición. La portada es lo que la gente ve en el feed antes de darle play.</p>
+
+      <h2 id="checklist"><span class="num">10</span>comprobar antes de publicar</h2>
+      <p>Repasa esta lista cada vez. Son 9 puntos, te lleva 2 minutos.</p>
+      <ol>
+        <li>Duración total: 27 segundos o menos</li>
+        <li>Los subtítulos se leen al pausar en cualquier frame</li>
+        <li>Ningún plano parece IA (hay poros, asimetrías, sombras coherentes)</li>
+        <li>La música no pisa ninguna palabra (compruébalo con auriculares)</li>
+        <li>La llamada a la acción aparece sola y grande en la última tarjeta</li>
+        <li>La portada es un fotograma nítido, no una transición</li>
+        <li>El pie de foto contiene la palabra clave exacta del automático</li>
+        <li>El automático está activo y lo has probado en privado</li>
+        <li>El volumen final está ajustado para redes sociales</li>
+      </ol>
+
+      <a href="/madrugon.html" class="cross-link">
+        <div class="label">guía siguiente</div>
+        <h3>cómo automatizarlo para que se haga solo</h3>
+        <p>Ahora que sabes producirlo a mano, automatízalo. Un agente hace el reel mientras duermes, tú solo revisas al despertar.</p>
+        <span class="arrow">abrir guía madrugón →</span>
+      </a>
+
+    </div>
+
+  </article>
+
+  <footer class="site-footer">
+    <div>
+      <a href="https://instagram.com/rafa.prompts" target="_blank" rel="noopener" class="handle">@rafa.prompts</a>
+      <div style="margin-top:8px; font-size:12px; opacity:0.7;">te enseño claude para todo lo que necesites construir</div>
+    </div>
+    <div style="text-align:right;">
+      <div>2026 : rafa.prompts</div>
+      <div style="margin-top:6px; opacity:0.6;">rafaprompts.com</div>
+    </div>
+  </footer>
+
+  <script src="app.js"></script>
+</body>
+</html>

@@ -308,8 +308,8 @@ img { max-width: 100%; display: block; }
   overflow: hidden;
   aspect-ratio: 1/1;
   background: var(--bg-cream-soft);
-  width: 200px;
-  height: 200px;
+  width: 140px;
+  height: 140px;
   border: 2px solid var(--border);
   flex-shrink: 0;
 }
@@ -319,7 +319,7 @@ img { max-width: 100%; display: block; }
   object-position: center 35%;
 }
 @media (max-width: 900px) {
-  .portrait { width: 160px; height: 160px; }
+  .portrait { width: 104px; height: 104px; }
 }
 
 /* ============================================================
@@ -1228,6 +1228,15 @@ details > *:not(summary) { margin-top: 12px; }
   color: var(--ink-mute);
 }
 .hero-proof .dot { opacity: 0.5; }
+@media (max-width: 600px) {
+  .hero-proof {
+    flex-wrap: nowrap;
+    gap: 8px;
+    font-size: 11px;
+    white-space: nowrap;
+    overflow: hidden;
+  }
+}
 
 /* Marquee */
 .marquee {
@@ -1506,6 +1515,7 @@ details > *:not(summary) { margin-top: 12px; }
   letter-spacing: -0.02em;
   margin: 0;
   filter: url(#sprayGrain);
+  order: 2;
 }
 .week-n {
   font-family: var(--mono);
@@ -1514,6 +1524,18 @@ details > *:not(summary) { margin-top: 12px; }
   letter-spacing: 0.2em;
   text-transform: uppercase;
   color: var(--accent);
+  order: 1;
+}
+@media (min-width: 601px) {
+  .week-head h3 { order: 0; }
+  .week-n { order: 0; }
+}
+@media (max-width: 600px) {
+  .week-head {
+    flex-direction: column;
+    align-items: flex-start;
+    gap: 6px;
+  }
 }
 
 .week-lessons {
@@ -1556,7 +1578,7 @@ details > *:not(summary) { margin-top: 12px; }
   border-radius: var(--r-xl);
 }
 .for-who-col.good { background: var(--paper); border: 1px solid var(--border); }
-.for-who-col.bad { background: var(--bg-cream-soft); border: 1px solid var(--border); }
+.for-who-col.bad { background: #fffcf3; border: 1px solid var(--border); }
 
 .for-who-col h2 {
   font-size: clamp(24px, 2.6vw, 34px);

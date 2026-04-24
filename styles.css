@@ -763,7 +763,7 @@ h3 {
 .sticky-buy .btn:hover { background: var(--paper); }
 
 @media (max-width: 640px) {
-  .sticky-buy { padding: 8px 8px 8px 16px; gap: 8px; font-size: 12px; }
+  .sticky-buy { padding: 8px 8px 8px 16px; gap: 16px; font-size: 12px; }
   .sticky-buy .label { font-size: 12px; }
   .sticky-buy .btn { padding: 10px 16px; font-size: 12px; }
 }

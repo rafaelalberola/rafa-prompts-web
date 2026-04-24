@@ -19,12 +19,12 @@
 
   <svg width="0" height="0" style="position:absolute">
     <defs>
-      <filter id="sprayGrain" x="-15%" y="-15%" width="130%" height="130%">
-        <feTurbulence type="fractalNoise" baseFrequency="0.7" numOctaves="2" seed="7" result="noise"/>
-        <feDisplacementMap in="SourceGraphic" in2="noise" scale="4" xChannelSelector="R" yChannelSelector="G" result="wobbled"/>
-        <feGaussianBlur in="wobbled" stdDeviation="0.9" result="blurred"/>
+      <filter id="sprayGrain" x="-10%" y="-10%" width="120%" height="120%">
+        <feTurbulence type="fractalNoise" baseFrequency="0.9" numOctaves="2" seed="7" result="noise"/>
+        <feDisplacementMap in="SourceGraphic" in2="noise" scale="1.6" xChannelSelector="R" yChannelSelector="G" result="wobbled"/>
+        <feGaussianBlur in="wobbled" stdDeviation="0.3" result="blurred"/>
         <feComponentTransfer in="blurred">
-          <feFuncA type="linear" slope="2.2" intercept="-0.1"/>
+          <feFuncA type="linear" slope="1.8" intercept="-0.05"/>
         </feComponentTransfer>
       </filter>
     </defs>
@@ -57,7 +57,7 @@
   <article class="resource">
 
     <aside class="toc">
-      <div class="label">en esta guía</div>
+      <div class="label">En esta guía</div>
       <ol>
         <li><a href="#qué-vas-a-montar">qué vas a montar</a></li>
         <li><a href="#arquitectura">cómo funciona</a></li>
@@ -79,11 +79,11 @@
       </p>
 
       <div class="callout warn">
-        <span class="ico">⚡</span>
+        <span class="ico" aria-hidden="true"><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polygon points="13 2 3 14 12 14 11 22 21 10 12 10 13 2"/></svg></span>
         <div>Antes de automatizar, haz al menos 3 reels a mano siguiendo la guía anterior. Te ahorras fallos ciegos cuando luego pongas el agente a correr de madrugada.</div>
       </div>
 
-      <h2 id="qué-vas-a-montar"><span class="num">01</span>qué vas a montar</h2>
+      <h2 id="qué-vas-a-montar"><span class="num">01</span>Qué vas a montar</h2>
       <p>Un agente autónomo que se ejecuta cada madrugada. Output esperado al despertarte:</p>
       <ul>
         <li>1 reel nuevo renderizado y ajustado de volumen</li>
@@ -93,7 +93,7 @@
         <li>Todo listo para revisar y publicar con 1 click</li>
       </ul>
 
-      <h2 id="arquitectura"><span class="num">02</span>cómo funciona</h2>
+      <h2 id="arquitectura"><span class="num">02</span>Cómo funciona</h2>
       <p>A las 6 de la mañana, un programador automático arranca el agente. El agente escribe el guion del día, llama a los servicios que generan imagen, vídeo y voz, y monta el resultado. Al terminar, te avisa por Telegram con el reel ya listo.</p>
       <div class="code-block"><pre>06:00 AM
    │
@@ -112,7 +112,7 @@ Te manda un Telegram: "reel listo para revisar"
    ▼
 Tú apruebas o rechazas. Si apruebas, se publica.</pre></div>
 
-      <h2 id="agente"><span class="num">03</span>lo que el agente sabe hacer</h2>
+      <h2 id="agente"><span class="num">03</span>Lo que el agente sabe hacer</h2>
       <p>Al agente le pasas un documento con las reglas de la casa. Es como el manual de instrucciones que sigue cada día.</p>
       <p>Este documento incluye:</p>
       <ul>
@@ -144,13 +144,13 @@ Produce un reel de 20 a 25 segundos cada día a las 6 AM.
 7. Avisarme por Telegram con enlace al preview</pre></div>
 
       <a href="/metodo.html" class="cross-link">
-        <div class="label">el paso siguiente</div>
-        <h3>el método claude</h3>
+        <div class="label">El paso siguiente</div>
+        <h3>El método Claude</h3>
         <p>Seis módulos para dominar Claude de punta a punta. El curso que ordena todo lo que estás aprendiendo aquí.</p>
         <span class="arrow">ver el método →</span>
       </a>
 
-      <h2 id="programador"><span class="num">04</span>el programador automático</h2>
+      <h2 id="programador"><span class="num">04</span>El programador automático</h2>
       <p>Hay dos formas sencillas de que el agente arranque solo cada madrugada. Elige la que te resulte más cómoda.</p>
 
       <h3>Opción A: una herramienta visual</h3>
@@ -162,7 +162,7 @@ Produce un reel de 20 a 25 segundos cada día a las 6 AM.
       <p>Una sola línea en un archivo de configuración:</p>
       <div class="code-block"><pre>0 6 * * *   ejecutar /ruta/agente_diario.py</pre></div>
 
-      <h2 id="revision"><span class="num">05</span>la revisión humana por Telegram</h2>
+      <h2 id="revision"><span class="num">05</span>La revisión humana por Telegram</h2>
       <p>No quieres publicar sin mirar primero. Esa parte del proceso nunca se automatiza del todo. Funciona así:</p>
       <ol>
         <li>El agente termina el reel a las ~6:30 AM</li>
@@ -173,11 +173,11 @@ Produce un reel de 20 a 25 segundos cada día a las 6 AM.
         <li>Si rechazas, el agente intenta de nuevo esa tarde o al día siguiente</li>
       </ol>
       <div class="callout warn">
-        <span class="ico">🛡️</span>
+        <span class="ico" aria-hidden="true"><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z"/></svg></span>
         <div>La aprobación humana es tu puerta de seguridad. La automatización completa (publicar sin revisar) suena bien hasta que un día el agente saca una frase fuera de tono y se te queda publicada 3 horas.</div>
       </div>
 
-      <h2 id="manychat"><span class="num">06</span>el automático de comentarios: el comentario se vuelve un DM</h2>
+      <h2 id="manychat"><span class="num">06</span>El automático de comentarios: el comentario se vuelve un DM</h2>
       <p>Cuando alguien comenta la palabra clave (por ejemplo "yate" o "madrugón") en el reel, un automático le manda un mensaje privado con el enlace a esta misma guía que estás leyendo.</p>
       <p>Además, hay un paso extra: antes de enviarle el enlace, le pedimos que te siga. Así el sistema suma seguidores al mismo tiempo que entrega el contenido.</p>
       <h3>El flujo que configuras</h3>
@@ -190,11 +190,11 @@ Produce un reel de 20 a 25 segundos cada día a las 6 AM.
         <li>Si aún no sigue, le recuerda con cariño que siga primero</li>
       </ol>
       <div class="callout warn">
-        <span class="ico">⚠️</span>
+        <span class="ico" aria-hidden="true"><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M10.29 3.86 1.82 18a2 2 0 0 0 1.71 3h16.94a2 2 0 0 0 1.71-3L13.71 3.86a2 2 0 0 0-3.42 0z"/><line x1="12" y1="9" x2="12" y2="13"/><line x1="12" y1="17" x2="12.01" y2="17"/></svg></span>
         <div>Una palabra clave única por reel. Si usas "yate" en 3 reels distintos, no vas a saber cuál convierte mejor.</div>
       </div>
 
-      <h2 id="empezar"><span class="num">07</span>empezar en 20 minutos</h2>
+      <h2 id="empezar"><span class="num">07</span>Empezar en 20 minutos</h2>
       <ol>
         <li>Haz tu primer reel a mano siguiendo la guía anterior</li>
         <li>Guarda todos tus ajustes y plantillas en un archivo de configuración</li>
@@ -206,7 +206,7 @@ Produce un reel de 20 a 25 segundos cada día a las 6 AM.
         <li>Ajusta las reglas del agente según lo que salga bien o mal</li>
       </ol>
 
-      <h2 id="problemas"><span class="num">08</span>problemas comunes</h2>
+      <h2 id="problemas"><span class="num">08</span>Problemas comunes</h2>
 
       <details>
         <summary>El agente escribe reels repetitivos</summary>
@@ -233,8 +233,8 @@ Produce un reel de 20 a 25 segundos cada día a las 6 AM.
       </details>
 
       <a href="/yate.html" class="cross-link">
-        <div class="label">guía anterior</div>
-        <h3>cómo hacer un reel como este</h3>
+        <div class="label">Guía anterior</div>
+        <h3>Cómo hacer un reel como este</h3>
         <p>Antes de automatizar, domina el flujo manual. Esta es la guía completa de producción.</p>
         <span class="arrow">abrir guía yate →</span>
       </a>
@@ -254,7 +254,7 @@ Produce un reel de 20 a 25 segundos cada día a las 6 AM.
       const drawer = document.getElementById('mobile-drawer');
       if (!burger || !drawer) return;
       const toggle = (force) => {
-        const open = force !== undefined ? force : !document.body.classList.contains('drawer-open');
+        const open = force !== undefined ? Force : !document.body.classList.contains('drawer-open');
         document.body.classList.toggle('drawer-open', open);
         burger.setAttribute('aria-expanded', open);
         drawer.setAttribute('aria-hidden', !open);

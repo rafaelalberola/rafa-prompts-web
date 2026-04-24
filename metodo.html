@@ -13,7 +13,7 @@
   <link rel="apple-touch-icon" href="/assets/img/apple-touch-icon.png">
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-  <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Archivo:wght@800;900&family=IBM+Plex+Mono:wght@400;600&family=Newsreader:ital,wght@1,400;1,500&display=swap">
+  <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Archivo:wght@400;500;700;800;900&family=IBM+Plex+Mono:wght@400;600&family=Newsreader:ital,wght@1,400;1,500&display=swap">
   <link rel="stylesheet" href="styles.css">
 </head>
 <body>
@@ -272,13 +272,14 @@
     </div>
   </footer>
 
+  <div class="sticky-buy" id="sticky-buy" aria-hidden="true">
+    <div class="label"><strong>El Método Claude</strong> : 297€ pago único</div>
+    <a href="#comprar" class="btn">empezar ahora</a>
+  </div>
+
   <script src="app.js"></script>
   <script>
-    // When the Gumroad product exists, set its URL here.
-    // All CTAs on this page and on index.html use this to redirect.
-    // To update: replace the value below with the product short_url from
-    //   scripts/create_gumroad_product.output.json
-    const GUMROAD_URL = 'https://helloimrafa.gumroad.com/l/poeoes'; // e.g. 'https://rafa.gumroad.com/l/metodo-claude'
+    const GUMROAD_URL = 'https://helloimrafa.gumroad.com/l/poeoes';
     if (GUMROAD_URL) {
       document.querySelectorAll('a[href="#comprar"]').forEach((a) => {
         a.setAttribute('href', GUMROAD_URL);
@@ -286,6 +287,25 @@
         a.setAttribute('rel', 'noopener');
       });
     }
+
+    // Sticky buy bar: show after scrolling past hero, hide near footer
+    (function() {
+      const bar = document.getElementById('sticky-buy');
+      if (!bar) return;
+      const heroSel = '.metodo-hero';
+      const footer = document.querySelector('.site-footer');
+      const onScroll = () => {
+        const heroEl = document.querySelector(heroSel);
+        const heroBottom = heroEl ? heroEl.getBoundingClientRect().bottom : 0;
+        const footerTop = footer ? footer.getBoundingClientRect().top : Infinity;
+        const show = heroBottom < -40 && footerTop > window.innerHeight - 40;
+        bar.classList.toggle('show', show);
+        bar.setAttribute('aria-hidden', !show);
+      };
+      window.addEventListener('scroll', onScroll, { passive: true });
+      window.addEventListener('resize', onScroll);
+      onScroll();
+    })();
   </script>
 </body>
 </html>

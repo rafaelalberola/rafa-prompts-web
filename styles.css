@@ -1727,8 +1727,9 @@ details > *:not(summary) { margin-top: 12px; }
 
 .pricing-price {
   display: flex;
-  align-items: baseline;
-  gap: 14px;
+  flex-direction: column;
+  align-items: flex-start;
+  gap: 8px;
   padding: 24px 0;
   border-top: 1px solid rgba(242, 239, 231, 0.14);
   border-bottom: 1px solid rgba(242, 239, 231, 0.14);

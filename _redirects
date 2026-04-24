@@ -1,0 +1,4 @@
+# Cloudflare Pages redirects
+# Legacy: por si alguien recibió un link de Notion antiguo
+/notion/yate     /yate.html       301
+/notion/madrugon /madrugon.html   301

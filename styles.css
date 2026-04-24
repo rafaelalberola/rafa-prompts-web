@@ -253,7 +253,7 @@ img { max-width: 100%; display: block; }
 .kicker, .eyebrow {
   font-family: var(--mono);
   font-size: 12px;
-  font-weight: 500;
+  font-weight: 700;
   letter-spacing: 0.18em;
   text-transform: uppercase;
   color: var(--accent);
@@ -606,7 +606,7 @@ h3 {
 .resource-card .tag {
   font-family: var(--mono);
   font-size: 12px;
-  font-weight: 500;
+  font-weight: 600;
   letter-spacing: 0.18em;
   text-transform: uppercase;
   color: var(--accent);
@@ -698,7 +698,7 @@ h3 {
 .final-cta {
   background: var(--ink);
   color: var(--bg-cream);
-  border-radius: var(--r-xl);
+  border-radius: 0;
   padding: 64px 48px;
   text-align: center;
   margin: 6vw var(--col);

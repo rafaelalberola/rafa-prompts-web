@@ -1734,3 +1734,93 @@ details > *:not(summary) { margin-top: 12px; }
   max-width: 48ch;
   margin: 0 0 32px;
 }
+
+/* ============================================================
+   Burger menu + mobile drawer
+   ============================================================ */
+
+.burger {
+  display: none;
+  width: 44px;
+  height: 44px;
+  padding: 0;
+  background: transparent;
+  border: 0;
+  cursor: pointer;
+  align-items: center;
+  justify-content: center;
+  position: relative;
+  z-index: 60;
+}
+.burger span {
+  position: absolute;
+  left: 12px;
+  width: 20px;
+  height: 2px;
+  background: var(--ink);
+  border-radius: 2px;
+  transition: transform 0.3s cubic-bezier(0.2, 0.6, 0.2, 1),
+              top 0.3s cubic-bezier(0.2, 0.6, 0.2, 1),
+              opacity 0.2s;
+}
+.burger span:nth-child(1) { top: 15px; }
+.burger span:nth-child(2) { top: 21px; }
+.burger span:nth-child(3) { top: 27px; }
+
+body.drawer-open .burger span:nth-child(1) {
+  top: 21px;
+  transform: rotate(45deg);
+}
+body.drawer-open .burger span:nth-child(2) {
+  opacity: 0;
+  transform: translateX(-8px);
+}
+body.drawer-open .burger span:nth-child(3) {
+  top: 21px;
+  transform: rotate(-45deg);
+}
+
+.mobile-drawer {
+  position: fixed;
+  inset: 0;
+  background: var(--bg-cream);
+  z-index: 55;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  opacity: 0;
+  pointer-events: none;
+  transition: opacity 0.3s ease;
+}
+body.drawer-open .mobile-drawer {
+  opacity: 1;
+  pointer-events: auto;
+}
+
+.drawer-nav {
+  display: flex;
+  flex-direction: column;
+  gap: 28px;
+  text-align: center;
+  padding: 40px var(--col);
+}
+.drawer-nav a {
+  font-family: var(--sans);
+  font-weight: 800;
+  font-size: 32px;
+  letter-spacing: -0.02em;
+  color: var(--ink);
+  line-height: 1;
+  transition: color 0.2s;
+}
+.drawer-nav a:hover { color: var(--accent); }
+.drawer-nav .btn {
+  margin-top: 20px;
+  font-size: 16px;
+  align-self: center;
+}
+
+@media (max-width: 900px) {
+  .site-header .nav { display: none; }
+  .burger { display: inline-flex; }
+}

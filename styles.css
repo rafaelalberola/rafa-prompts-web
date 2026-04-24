@@ -701,7 +701,7 @@ h3 {
   border-radius: 0;
   padding: 64px 48px;
   text-align: center;
-  margin: 6vw var(--col);
+  margin: 6vw var(--col) 0;
   max-width: calc(var(--content-max) - 2 * var(--col));
   margin-left: auto; margin-right: auto;
 }
@@ -753,6 +753,7 @@ h3 {
   font-size: 14px;
   font-weight: 500;
   color: rgba(242, 239, 231, 0.8);
+  white-space: nowrap;
 }
 .sticky-buy .label strong {
   color: var(--bg-cream);
@@ -762,8 +763,9 @@ h3 {
 .sticky-buy .btn:hover { background: var(--paper); }
 
 @media (max-width: 640px) {
-  .sticky-buy { padding: 8px 8px 8px 18px; gap: 10px; font-size: 13px; }
-  .sticky-buy .label { font-size: 13px; }
+  .sticky-buy { padding: 8px 8px 8px 16px; gap: 8px; font-size: 12px; }
+  .sticky-buy .label { font-size: 12px; }
+  .sticky-buy .btn { padding: 10px 16px; font-size: 12px; }
 }
 
 /* ============================================================

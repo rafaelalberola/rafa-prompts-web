@@ -1690,7 +1690,7 @@ details > *:not(summary) { margin-top: 12px; }
   position: relative;
   box-shadow: var(--shadow-lg);
 }
-@media (max-width: 640px) { .pricing-card { padding: 36px 24px; } }
+@media (max-width: 640px) { .pricing-card { padding: 36px 24px 24px; } }
 
 .pricing-head { margin-bottom: 28px; }
 .pricing-badge {

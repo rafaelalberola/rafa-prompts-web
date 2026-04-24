@@ -917,7 +917,8 @@ h3 {
   align-items: center;
 }
 @media (max-width: 700px) {
-  .bio-inline { grid-template-columns: 104px 1fr; gap: 20px; }
+  .bio-inline { display: block; text-align: center; }
+  .bio-inline .portrait-small { margin: 0 auto 20px; }
 }
 .portrait-small {
   position: relative;
@@ -925,7 +926,7 @@ h3 {
   height: 140px;
   border-radius: 50%;
   overflow: hidden;
-  border: 2px solid var(--border);
+  border: 1px solid var(--border);
   background: var(--bg-cream-soft);
   flex-shrink: 0;
 }

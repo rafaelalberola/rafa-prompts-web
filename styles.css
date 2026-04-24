@@ -341,7 +341,7 @@ h2 {
   letter-spacing: -0.025em;
   color: var(--ink);
   text-wrap: balance;
-  /* spray removed */
+  filter: url(#sprayGrain);
 }
 
 h3 {
@@ -530,7 +530,7 @@ h3 {
   display: flex;
   align-items: baseline;
   gap: 12px;
-  /* spray removed */
+  filter: url(#sprayGrain);
 }
 .method-price small {
   font-family: var(--mono);
@@ -985,7 +985,7 @@ h3 {
   letter-spacing: -0.02em;
   margin: 56px 0 16px;
   scroll-margin-top: 90px;
-  /* spray removed */
+  filter: url(#sprayGrain);
 }
 .resource-content h2 .num {
   font-family: var(--mono);
@@ -1375,7 +1375,7 @@ details > *:not(summary) { margin-top: 12px; }
   font-size: clamp(22px, 2.4vw, 30px);
   line-height: 1.1;
   letter-spacing: -0.02em;
-  /* spray removed */
+  filter: url(#sprayGrain);
 }
 .tile .tile-headline em {
   font-family: var(--serif);
@@ -1431,7 +1431,7 @@ details > *:not(summary) { margin-top: 12px; }
   line-height: 1;
   letter-spacing: -0.035em;
   color: var(--accent);
-  /* spray removed */
+  filter: url(#sprayGrain);
   margin-bottom: 8px;
 }
 .stat-label {
@@ -1490,7 +1490,7 @@ details > *:not(summary) { margin-top: 12px; }
   font-size: clamp(22px, 2.4vw, 32px);
   letter-spacing: -0.02em;
   margin: 0;
-  /* spray removed */
+  filter: url(#sprayGrain);
 }
 .week-n {
   font-family: var(--mono);
@@ -1662,7 +1662,7 @@ details > *:not(summary) { margin-top: 12px; }
   letter-spacing: -0.025em;
   color: var(--bg-cream);
   margin: 0 0 6px;
-  /* spray removed */
+  filter: url(#sprayGrain);
 }
 .pricing-tag {
   font-family: var(--mono);
@@ -1689,7 +1689,7 @@ details > *:not(summary) { margin-top: 12px; }
   line-height: 1;
   letter-spacing: -0.035em;
   color: var(--accent);
-  /* spray removed */
+  filter: url(#sprayGrain);
 }
 .pricing-price .note {
   font-family: var(--mono);

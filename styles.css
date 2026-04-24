@@ -41,6 +41,17 @@
 * { box-sizing: border-box; }
 *::selection { background: var(--accent); color: var(--paper); }
 
+:focus { outline: none; }
+:focus-visible {
+  outline: 2px solid var(--accent);
+  outline-offset: 3px;
+  border-radius: 4px;
+}
+a:focus-visible, button:focus-visible, summary:focus-visible, details:focus-visible {
+  outline: 2px solid var(--accent);
+  outline-offset: 3px;
+}
+
 html { scroll-behavior: smooth; }
 
 body {
@@ -571,6 +582,8 @@ h3 {
   border-radius: var(--r-lg);
   transition: transform 0.2s, box-shadow 0.2s, border-color 0.2s;
   color: var(--ink);
+  cursor: pointer;
+  text-decoration: none;
 }
 .resource-card:hover {
   transform: translateY(-4px);
@@ -697,6 +710,7 @@ h3 {
   max-width: 44ch;
   margin: 0 auto 32px;
   color: rgba(242, 239, 231, 0.72);
+  text-wrap: balance;
 }
 
 .final-cta .btn.accent { background: var(--accent); color: var(--ink); }
@@ -874,14 +888,15 @@ h3 {
   max-width: var(--content-max);
   margin-left: auto; margin-right: auto;
   display: flex;
-  justify-content: space-between;
-  align-items: flex-end;
+  justify-content: center;
+  align-items: center;
   flex-wrap: wrap;
   gap: 24px;
   font-family: var(--sans);
   font-size: 13px;
   color: var(--ink-mute);
   border-top: 1px solid var(--border);
+  text-align: center;
 }
 
 .site-footer .handle {

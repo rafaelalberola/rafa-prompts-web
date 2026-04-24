@@ -1214,7 +1214,7 @@ details > *:not(summary) { margin-top: 12px; }
   background: var(--ink);
   color: var(--bg-cream);
   padding: 5vw 5vw;
-  margin: 4vw 0;
+  margin: 0;
 }
 
 .dark-section .kicker,
@@ -1254,7 +1254,8 @@ details > *:not(summary) { margin-top: 12px; }
   padding: 24px 0;
   border-top: 1px solid var(--border);
   border-bottom: 1px solid var(--border);
-  margin: 2vw 0;
+  margin: 0;
+  background: var(--paper);
 }
 .marquee-track {
   display: inline-block;

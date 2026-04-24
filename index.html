@@ -1,0 +1,215 @@
+<!doctype html>
+<html lang="es">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>rafa.prompts : te enseño claude</title>
+  <meta name="description" content="Aprende a usar Claude para construir lo que necesites. Contenido, operaciones y automatizaciones. Sistemas reales, sin jerga técnica.">
+  <meta property="og:title" content="rafa.prompts : te enseño claude">
+  <meta property="og:description" content="Aprende a usar Claude para construir lo que necesites. Sistemas reales que puedes copiar esta misma semana.">
+  <meta property="og:type" content="website">
+  <meta property="og:image" content="/assets/img/og-image.png">
+  <link rel="icon" href="/assets/img/favicon.ico">
+  <link rel="icon" type="image/png" sizes="32x32" href="/assets/img/favicon-32.png">
+  <link rel="apple-touch-icon" href="/assets/img/apple-touch-icon.png">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Archivo:wght@800;900&family=IBM+Plex+Mono:wght@400;600&family=Newsreader:ital,wght@1,400;1,500&display=swap">
+  <link rel="stylesheet" href="styles.css">
+</head>
+<body>
+
+  <svg width="0" height="0" style="position:absolute">
+    <defs>
+      <filter id="sprayGrain" x="-15%" y="-15%" width="130%" height="130%">
+        <feTurbulence type="fractalNoise" baseFrequency="0.7" numOctaves="2" seed="7" result="noise"/>
+        <feDisplacementMap in="SourceGraphic" in2="noise" scale="4" xChannelSelector="R" yChannelSelector="G" result="wobbled"/>
+        <feGaussianBlur in="wobbled" stdDeviation="0.9" result="blurred"/>
+        <feComponentTransfer in="blurred">
+          <feFuncA type="linear" slope="2.2" intercept="-0.1"/>
+        </feComponentTransfer>
+      </filter>
+    </defs>
+  </svg>
+
+  <div class="progress" id="progress"></div>
+
+  <header class="site-header">
+    <a href="/" class="brand"><strong>rafa</strong>.prompts</a>
+    <nav class="nav">
+      <a href="/metodo.html">método</a>
+      <a href="#recursos">recursos</a>
+      <a href="#faq">faq</a>
+    </nav>
+  </header>
+
+  <main>
+
+    <section class="hero hero-personal">
+      <div class="hero-copy">
+        <div class="kicker">rafa : product designer</div>
+        <h1>
+          te enseño claude
+          <span class="italic">para todo lo que necesites construir</span>
+        </h1>
+        <p class="intro">
+          Soy diseñador de producto. Llevo años usando Claude todos los días para escribir, diseñar, automatizar e investigar. Enseño a personas como tú a hacer lo mismo, sin necesidad de saber programar.
+        </p>
+        <div class="actions">
+          <a href="/metodo.html" class="btn accent">conoce el método</a>
+          <a href="#recursos" class="btn">recursos gratis</a>
+        </div>
+      </div>
+      <div class="portrait">
+        <img src="/assets/img/rafa-portrait.webp" alt="Rafa, product designer que enseña Claude" loading="eager">
+      </div>
+    </section>
+
+    <section class="bio" id="quien-soy">
+      <h2>quién soy</h2>
+      <div>
+        <p>
+          Me llamo Rafa. Soy diseñador de producto, llevo años construyendo cosas en internet: webs, apps, piezas de marca. Hace un par de años empecé a usar Claude en serio y cambió cómo trabajo. Ahora hago en una tarde lo que antes me llevaba una semana.
+        </p>
+        <p>
+          Enseño Claude porque es la herramienta que mejor se entiende con la gente que no programa. Le hablas en tu idioma, lee documentos largos sin perderse, razona bien y no se inventa respuestas cuando no sabe. Es la primera herramienta de IA que merece que pares a aprenderla como se debe.
+        </p>
+        <p>
+          Espero que vengas con algo concreto que quieras resolver: una tarea que repites cada semana, una newsletter que te cuesta escribir, un proceso que te come horas. No te voy a vender magia, te voy a dar un sistema que <em>funciona</em> y que puedes adaptar mañana mismo.
+        </p>
+      </div>
+    </section>
+
+    <section class="teaching" id="lo-que-enseno">
+      <h2 class="section-title">lo que enseño</h2>
+      <div class="teaching-grid">
+        <div class="teaching-card">
+          <div class="num">01 : contenido</div>
+          <h3>escribir mejor y más rápido</h3>
+          <p>
+            Artículos largos, newsletters, guiones para redes, descripciones de producto. Claude como segunda cabeza: tú decides, él ejecuta y pule.
+          </p>
+        </div>
+        <div class="teaching-card">
+          <div class="num">02 : operaciones</div>
+          <h3>ordenar tu día a día</h3>
+          <p>
+            Procesar el inbox, resumir reuniones, preparar propuestas, analizar feedback de clientes. Horas en blanco que recuperas cada semana.
+          </p>
+        </div>
+        <div class="teaching-card">
+          <div class="num">03 : automatización</div>
+          <h3>sistemas que funcionan solos</h3>
+          <p>
+            Conectar Claude con tus herramientas para que ciertas tareas se hagan sin ti. Desde un resumen diario hasta un triaje de leads.
+          </p>
+        </div>
+      </div>
+    </section>
+
+    <section class="method">
+      <div class="method-hero">
+        <div class="eyebrow">producto principal</div>
+        <h2>
+          el método claude
+          <span class="italic">seis módulos para dominar la herramienta</span>
+        </h2>
+        <p>
+          El curso que me hubiera gustado encontrar cuando empecé. Seis módulos cortos, con plantillas, pipelines reales y ejemplos paso a paso. Sin jerga, sin relleno, sin vídeos de dos horas que nadie termina.
+        </p>
+        <div class="method-pills">
+          <span class="method-pill">01 : pensar en claude</span>
+          <span class="method-pill">02 : el claude.md</span>
+          <span class="method-pill">03 : skills y agentes</span>
+          <span class="method-pill">04 : pipelines reales</span>
+          <span class="method-pill">05 : orquestación</span>
+          <span class="method-pill">06 : iteración y medida</span>
+        </div>
+        <div class="method-meta">
+          <div class="method-price">297€<small>pago único</small></div>
+          <div class="actions">
+            <a href="/metodo.html" class="btn">ver el método completo</a>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <section class="resources" id="recursos">
+      <h2 class="section-title">recursos gratuitos</h2>
+      <div class="resource-grid">
+
+        <a href="/yate.html" class="resource-card">
+          <div class="tag">guía 01 : producción</div>
+          <h3>cómo hacer un reel como este</h3>
+          <p>
+            El sistema completo para producir un reel hiperrealista con IA. Guion, imagen, vídeo, voz, subtítulos, sonido y mezcla final. Todo.
+          </p>
+          <span class="arrow">abrir guía</span>
+        </a>
+
+        <a href="/madrugon.html" class="resource-card">
+          <div class="tag">guía 02 : automatización</div>
+          <h3>cómo automatizarlo para que se haga solo</h3>
+          <p>
+            Tu agente se levanta de madrugada, escribe el guion, genera y monta. Tú solo revisas y publicas. La evolución natural del primer sistema.
+          </p>
+          <span class="arrow">abrir guía</span>
+        </a>
+
+      </div>
+    </section>
+
+    <section class="faq" id="faq">
+      <h2 class="section-title">preguntas frecuentes</h2>
+      <div class="faq-list">
+        <details>
+          <summary>¿Necesito saber programar?</summary>
+          <p>No. El método está pensado para gente que no programa. Nunca vas a tocar código. Vas a escribir instrucciones claras y a usar plantillas que te doy hechas.</p>
+        </details>
+        <details>
+          <summary>¿Qué plan de Claude necesito?</summary>
+          <p>Con el plan gratuito puedes seguir los primeros módulos. Para aprovechar el curso al 100% (sobre todo las automatizaciones) necesitas el plan de pago de Claude. Cuesta lo mismo que una suscripción normal cualquiera.</p>
+        </details>
+        <details>
+          <summary>¿Cuánto tiempo me va a llevar?</summary>
+          <p>Los seis módulos suman unas 3 horas de contenido. Lo recomendable es hacer uno por día durante una semana, aplicando cada uno a tu caso real. En 7 días tienes un sistema tuyo funcionando.</p>
+        </details>
+        <details>
+          <summary>¿Esto me sirve si soy creador de contenido?</summary>
+          <p>Sí. De hecho es uno de los perfiles que más rápido ve resultados. El módulo 1 y el 4 son especialmente útiles: guionizar, investigar, producir copy, procesar ideas sueltas. Ahorras horas a la semana.</p>
+        </details>
+        <details>
+          <summary>¿Y si soy founder o llevo un equipo pequeño?</summary>
+          <p>También. El módulo 5 de orquestación está pensado justo para eso. Te enseña a montar pequeños sistemas que hacen tareas concretas de tu operación: triaje de emails, resúmenes, análisis de datos sueltos.</p>
+        </details>
+        <details>
+          <summary>¿Qué me llevo exactamente cuando compre?</summary>
+          <p>Ocho PDFs: los seis módulos, una guía de "empezar aquí" y una biblioteca con 50 prompts listos para copiar y pegar. Todo descargable. Lo tienes tuyo para siempre.</p>
+        </details>
+        <details>
+          <summary>¿Hay actualizaciones?</summary>
+          <p>Sí. Cuando hay una actualización importante la recibes sin coste. El material cambia rápido, el método se mantiene.</p>
+        </details>
+        <details>
+          <summary>¿Qué pasa si no me sirve?</summary>
+          <p>Tienes 14 días para pedirme el reembolso. Me escribes por DM con una línea de qué fallo y te devuelvo el dinero sin preguntas. Prefiero eso a tener a alguien descontento.</p>
+        </details>
+      </div>
+    </section>
+
+  </main>
+
+  <footer class="site-footer">
+    <div>
+      <a href="https://instagram.com/rafa.prompts" target="_blank" rel="noopener" class="handle">@rafa.prompts</a>
+      <div style="margin-top:8px; font-size:12px; opacity:0.7;">te enseño claude para todo lo que necesites construir</div>
+    </div>
+    <div style="text-align:right;">
+      <div>2026 : rafa.prompts</div>
+      <div style="margin-top:6px; opacity:0.6;">rafaprompts.com</div>
+    </div>
+  </footer>
+
+  <script src="app.js"></script>
+</body>
+</html>

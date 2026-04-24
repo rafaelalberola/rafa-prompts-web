@@ -43,7 +43,21 @@
       <a href="#faq">FAQ</a>
       <a href="#comprar" class="btn">Empezar · 297€</a>
     </nav>
+    <button class="burger" id="burger" aria-label="Abrir menú" aria-expanded="false" aria-controls="mobile-drawer">
+      <span></span><span></span><span></span>
+    </button>
   </header>
+
+  <div class="mobile-drawer" id="mobile-drawer" aria-hidden="true">
+    <nav class="drawer-nav">
+      <a href="#para-ti">Para quién</a>
+      <a href="#curriculum">Curriculum</a>
+      <a href="#precio">Precio</a>
+      <a href="#recursos">Recursos gratis</a>
+      <a href="#faq">FAQ</a>
+      <a href="#comprar" class="btn accent large">Empezar · 297€</a>
+    </nav>
+  </div>
 
   <main>
 
@@ -392,6 +406,25 @@
       };
       window.addEventListener('scroll', onScroll, { passive: true });
       onScroll();
+    })();
+
+    // Burger menu toggle
+    (function() {
+      const burger = document.getElementById('burger');
+      const drawer = document.getElementById('mobile-drawer');
+      if (!burger || !drawer) return;
+      const toggle = (force) => {
+        const open = force !== undefined ? force : !document.body.classList.contains('drawer-open');
+        document.body.classList.toggle('drawer-open', open);
+        burger.setAttribute('aria-expanded', open);
+        drawer.setAttribute('aria-hidden', !open);
+        document.body.style.overflow = open ? 'hidden' : '';
+      };
+      burger.addEventListener('click', () => toggle());
+      drawer.querySelectorAll('a').forEach(a => a.addEventListener('click', () => toggle(false)));
+      document.addEventListener('keydown', (e) => {
+        if (e.key === 'Escape') toggle(false);
+      });
     })();
   </script>
 </body>

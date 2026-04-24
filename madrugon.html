@@ -35,9 +35,9 @@
   <header class="site-header">
     <a href="/" class="brand"><strong>rafa</strong>.prompts</a>
     <nav class="nav">
-      <a href="/metodo.html">método</a>
-      <a href="/#recursos">recursos</a>
-      <a href="/#faq">faq</a>
+      <a href="/metodo.html">Método</a>
+      <a href="/#recursos">Recursos</a>
+      <a href="/#faq">FAQ</a>
       <a href="/metodo.html" class="btn">Empezar · 297€</a>
     </nav>
     <button class="burger" id="burger" aria-label="Abrir menú" aria-expanded="false" aria-controls="mobile-drawer">
@@ -46,10 +46,11 @@
   </header>
 
   <div class="mobile-drawer" id="mobile-drawer" aria-hidden="true">
+    <button class="drawer-close" id="drawer-close" aria-label="Cerrar menú"><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><line x1="18" y1="6" x2="6" y2="18"/><line x1="6" y1="6" x2="18" y2="18"/></svg></button>
     <nav class="drawer-nav">
-      <a href="/metodo.html">método</a>
-      <a href="/#recursos">recursos</a>
-      <a href="/#faq">faq</a>
+      <a href="/metodo.html">Método</a>
+      <a href="/#recursos">Recursos</a>
+      <a href="/#faq">FAQ</a>
       <a href="/metodo.html" class="btn accent large">Empezar · 297€</a>
     </nav>
   </div>
@@ -59,14 +60,14 @@
     <aside class="toc">
       <div class="label">En esta guía</div>
       <ol>
-        <li><a href="#qué-vas-a-montar">qué vas a montar</a></li>
-        <li><a href="#arquitectura">cómo funciona</a></li>
-        <li><a href="#agente">lo que el agente hace</a></li>
-        <li><a href="#programador">el programador automático</a></li>
-        <li><a href="#revision">la revisión humana</a></li>
-        <li><a href="#manychat">el automático de comentarios</a></li>
-        <li><a href="#empezar">empezar en 20 minutos</a></li>
-        <li><a href="#problemas">problemas comunes</a></li>
+        <li><a href="#qué-vas-a-montar">Qué vas a montar</a></li>
+        <li><a href="#arquitectura">Cómo funciona</a></li>
+        <li><a href="#agente">Lo que el agente hace</a></li>
+        <li><a href="#programador">El programador automático</a></li>
+        <li><a href="#revision">La revisión humana</a></li>
+        <li><a href="#manychat">El automático de comentarios</a></li>
+        <li><a href="#empezar">Empezar en 20 minutos</a></li>
+        <li><a href="#problemas">Problemas comunes</a></li>
       </ol>
     </aside>
 
@@ -147,7 +148,7 @@ Produce un reel de 20 a 25 segundos cada día a las 6 AM.
         <div class="label">El paso siguiente</div>
         <h3>El método Claude</h3>
         <p>Seis módulos para dominar Claude de punta a punta. El curso que ordena todo lo que estás aprendiendo aquí.</p>
-        <span class="arrow">ver el método →</span>
+        <span class="arrow">Ver el método →</span>
       </a>
 
       <h2 id="programador"><span class="num">04</span>El programador automático</h2>
@@ -236,7 +237,7 @@ Produce un reel de 20 a 25 segundos cada día a las 6 AM.
         <div class="label">Guía anterior</div>
         <h3>Cómo hacer un reel como este</h3>
         <p>Antes de automatizar, domina el flujo manual. Esta es la guía completa de producción.</p>
-        <span class="arrow">abrir guía yate →</span>
+        <span class="arrow">Abrir guía yate →</span>
       </a>
 
     </div>
@@ -254,13 +255,15 @@ Produce un reel de 20 a 25 segundos cada día a las 6 AM.
       const drawer = document.getElementById('mobile-drawer');
       if (!burger || !drawer) return;
       const toggle = (force) => {
-        const open = force !== undefined ? Force : !document.body.classList.contains('drawer-open');
+        const open = force !== undefined ? force : !document.body.classList.contains('drawer-open');
         document.body.classList.toggle('drawer-open', open);
         burger.setAttribute('aria-expanded', open);
         drawer.setAttribute('aria-hidden', !open);
         document.body.style.overflow = open ? 'hidden' : '';
       };
       burger.addEventListener('click', () => toggle());
+      const close = document.getElementById('drawer-close');
+      if (close) close.addEventListener('click', () => toggle(false));
       drawer.querySelectorAll('a').forEach(a => a.addEventListener('click', () => toggle(false)));
       document.addEventListener('keydown', (e) => { if (e.key === 'Escape') toggle(false); });
     })();

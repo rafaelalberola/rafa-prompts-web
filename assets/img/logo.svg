@@ -1,0 +1,11 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 440 64" width="440" height="64" role="img" aria-label="rafa.prompts">
+  <title>rafa.prompts</title>
+  <style>
+    .rp-sans { font-family: 'Archivo', system-ui, sans-serif; letter-spacing: -0.02em; }
+    .rp-rafa { font-weight: 900; fill: #0A0A0A; }
+    .rp-prompts { font-weight: 800; fill: #DA7756; }
+  </style>
+  <text x="0" y="50" class="rp-sans rp-rafa" font-size="56">rafa</text>
+  <text x="134" y="50" class="rp-sans rp-prompts" font-size="56">.prompts</text>
+</svg>

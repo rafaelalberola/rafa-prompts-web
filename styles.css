@@ -896,7 +896,7 @@ h3 {
    ============================================================ */
 
 .site-footer {
-  padding: 4vw var(--col) 3vw;
+  padding: 4vw var(--col) 8vw 4vw;
   margin-top: 2vw;
   max-width: var(--content-max);
   margin-left: auto; margin-right: auto;

@@ -1490,11 +1490,11 @@ details > *:not(summary) { margin-top: 12px; }
 .curriculum .section-title .italic {
   display: block;
   font-family: var(--serif);
-  font-weight: 500;
+  font-weight: 600;
   font-style: italic;
-  font-size: 0.55em;
+  font-size: 1.15em;
   color: var(--accent);
-  margin-top: 10px;
+  margin-top: 4px;
   filter: none;
 }
 

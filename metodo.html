@@ -1,0 +1,291 @@
+<!doctype html>
+<html lang="es">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>El Método Claude : curso completo · rafa.prompts</title>
+  <meta name="description" content="Seis módulos para dominar Claude y construir sistemas útiles, sin jerga ni relleno. Pago único, material descargable, actualizaciones incluidas.">
+  <meta property="og:title" content="El Método Claude · rafa.prompts">
+  <meta property="og:description" content="Seis módulos para dominar Claude. Pago único 297€.">
+  <meta property="og:type" content="website">
+  <meta property="og:image" content="/assets/img/metodo-cover.png">
+  <link rel="icon" href="/assets/img/favicon.ico">
+  <link rel="apple-touch-icon" href="/assets/img/apple-touch-icon.png">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Archivo:wght@800;900&family=IBM+Plex+Mono:wght@400;600&family=Newsreader:ital,wght@1,400;1,500&display=swap">
+  <link rel="stylesheet" href="styles.css">
+</head>
+<body>
+
+  <svg width="0" height="0" style="position:absolute">
+    <defs>
+      <filter id="sprayGrain" x="-15%" y="-15%" width="130%" height="130%">
+        <feTurbulence type="fractalNoise" baseFrequency="0.7" numOctaves="2" seed="7" result="noise"/>
+        <feDisplacementMap in="SourceGraphic" in2="noise" scale="4" xChannelSelector="R" yChannelSelector="G" result="wobbled"/>
+        <feGaussianBlur in="wobbled" stdDeviation="0.9" result="blurred"/>
+        <feComponentTransfer in="blurred">
+          <feFuncA type="linear" slope="2.2" intercept="-0.1"/>
+        </feComponentTransfer>
+      </filter>
+    </defs>
+  </svg>
+
+  <div class="progress" id="progress"></div>
+
+  <header class="site-header">
+    <a href="/" class="brand"><strong>rafa</strong>.prompts</a>
+    <nav class="nav">
+      <a href="/">inicio</a>
+      <a href="#modulos">módulos</a>
+      <a href="#faq">faq</a>
+    </nav>
+  </header>
+
+  <main>
+
+    <section class="metodo-hero">
+      <div class="kicker">el curso</div>
+      <h1>
+        el método claude
+        <span class="italic">dominar la herramienta, sin rodeos</span>
+      </h1>
+      <p class="lede">
+        Seis módulos cortos. Plantillas listas. Pipelines probados. El curso que me hubiera gustado encontrar cuando empecé a usar Claude en serio.
+      </p>
+      <div class="meta-row">
+        <div class="price">297€<small>pago único · acceso para siempre</small></div>
+        <div class="actions">
+          <a id="cta-top" href="#comprar" class="btn accent">empezar ahora</a>
+        </div>
+      </div>
+    </section>
+
+    <section class="metodo-section" id="para-ti">
+      <h2 class="section-title">para quién es este curso</h2>
+      <div class="for-list">
+        <div class="for-card">
+          <div class="n">01</div>
+          <h3>creadores y freelances</h3>
+          <p>Escribes mucho (guiones, newsletters, posts, copy de clientes) y quieres ir más rápido sin perder tu voz.</p>
+        </div>
+        <div class="for-card">
+          <div class="n">02</div>
+          <h3>founders de equipo pequeño</h3>
+          <p>Llevas una empresa de menos de 20 personas y necesitas automatizar procesos que te comen el día.</p>
+        </div>
+        <div class="for-card">
+          <div class="n">03</div>
+          <h3>profesionales curiosos</h3>
+          <p>Sabes que la IA va a cambiarlo todo y quieres ser de los que lo dominan, no de los que van detrás.</p>
+        </div>
+      </div>
+    </section>
+
+    <section class="metodo-section" id="modulos">
+      <h2 class="section-title">los seis módulos</h2>
+      <div class="modules-grid">
+
+        <div class="module-card">
+          <img src="/assets/img/modulo-01-cover.png" alt="Módulo 01 : Pensar en Claude">
+          <div class="body">
+            <div class="kicker">módulo 01 · 25 min</div>
+            <h3>pensar en claude</h3>
+            <p>El modelo mental que cambia todo. Cuándo Claude te ahorra horas y cuándo te hace perderlas.</p>
+            <ul>
+              <li>Entender qué problemas resuelve bien (y cuáles no)</li>
+              <li>Cómo estructurar lo que le pides</li>
+              <li>Distinguir una conversación de una orquestación</li>
+              <li>Decidir si vale la pena automatizar algo</li>
+            </ul>
+          </div>
+        </div>
+
+        <div class="module-card">
+          <img src="/assets/img/modulo-02-cover.png" alt="Módulo 02 : El CLAUDE.md">
+          <div class="body">
+            <div class="kicker">módulo 02 · 30 min</div>
+            <h3>el claude.md</h3>
+            <p>Un documento que hace que Claude se comporte como tú quieres, sin repetir instrucciones cada vez.</p>
+            <ul>
+              <li>Qué es y por qué funciona</li>
+              <li>La estructura mínima que aguanta</li>
+              <li>5 plantillas listas para adaptar</li>
+              <li>Escribir el tuyo en menos de 20 minutos</li>
+            </ul>
+          </div>
+        </div>
+
+        <div class="module-card">
+          <img src="/assets/img/modulo-03-cover.png" alt="Módulo 03 : Skills y agentes">
+          <div class="body">
+            <div class="kicker">módulo 03 · 30 min</div>
+            <h3>skills y agentes</h3>
+            <p>Cómo convertir tareas que repites en piezas reutilizables. Cuándo una tarea merece volverse un agente que trabaja solo.</p>
+            <ul>
+              <li>Distinguir una skill de un agente</li>
+              <li>Cuándo usar cada uno</li>
+              <li>Tu primera skill reutilizable en 15 minutos</li>
+              <li>Diseñar un agente simple que haga una tarea por ti</li>
+            </ul>
+          </div>
+        </div>
+
+        <div class="module-card">
+          <img src="/assets/img/modulo-04-cover.png" alt="Módulo 04 : Pipelines reales">
+          <div class="body">
+            <div class="kicker">módulo 04 · 35 min</div>
+            <h3>pipelines reales</h3>
+            <p>Cuatro casos completos paso a paso. Artículos, investigación de mercado, inbox y datos. Copia, adapta, pon en marcha.</p>
+            <ul>
+              <li>Un artículo de 1500 palabras en 30 minutos</li>
+              <li>Investigación de mercado en 45 minutos</li>
+              <li>Procesar el inbox en 15 minutos</li>
+              <li>Analizar un CSV en 20 minutos</li>
+            </ul>
+          </div>
+        </div>
+
+        <div class="module-card">
+          <img src="/assets/img/modulo-05-cover.png" alt="Módulo 05 : Orquestación">
+          <div class="body">
+            <div class="kicker">módulo 05 · 30 min</div>
+            <h3>orquestación</h3>
+            <p>Conectar Claude con otras herramientas. El salto de hacer tareas a mano a sistemas que funcionan solos mientras tú vives tu vida.</p>
+            <ul>
+              <li>El patrón universal : disparo, proceso, destino</li>
+              <li>Las 3 herramientas visuales que cubren el 95% de casos</li>
+              <li>3 automatizaciones reales que puedes copiar</li>
+              <li>Escoger la tuya y saber cómo empezar</li>
+            </ul>
+          </div>
+        </div>
+
+        <div class="module-card">
+          <img src="/assets/img/modulo-06-cover.png" alt="Módulo 06 : Iteración y medida">
+          <div class="body">
+            <div class="kicker">módulo 06 · 25 min</div>
+            <h3>iteración y medida</h3>
+            <p>Cómo saber si un sistema funciona. Qué medir, qué ignorar, cómo mejorarlo sin romperlo.</p>
+            <ul>
+              <li>Las 3 métricas que importan</li>
+              <li>Qué métricas son vanidad</li>
+              <li>Ritual semanal de 15 minutos</li>
+              <li>Llegar al mes 3 con el sistema vivo</li>
+            </ul>
+          </div>
+        </div>
+
+      </div>
+
+      <div class="callout" style="margin-top: 40px;">
+        <span class="ico">📦</span>
+        <div>
+          Incluye también : <strong>guía "empezar aquí"</strong> (instalación, primeros pasos) y la <strong>biblioteca de 50 prompts</strong> listos para copiar y pegar en tus conversaciones. Todo en PDF, descargable, tuyo para siempre.
+        </div>
+      </div>
+    </section>
+
+    <section class="metodo-section" id="sobre-mi">
+      <h2 class="section-title">quién te lo enseña</h2>
+      <div class="bio-inline">
+        <div class="portrait-small">
+          <img src="/assets/img/rafa-portrait.webp" alt="Rafa">
+        </div>
+        <div>
+          <p>
+            Soy Rafa. Diseñador de producto con más de diez años construyendo cosas en internet: webs, apps, piezas de marca. Llevo dos años usando Claude todos los días en mi trabajo real.
+          </p>
+          <p>
+            Enseño lo que aplico. Cada plantilla, cada pipeline, cada ejemplo del curso sale de un proyecto mío que funciona. Nada es teoría.
+          </p>
+          <p>
+            Si tienes dudas antes de comprar, escríbeme a <a href="https://instagram.com/rafa.prompts" target="_blank" rel="noopener">@rafa.prompts</a> y te contesto yo.
+          </p>
+        </div>
+      </div>
+    </section>
+
+    <section class="metodo-section" id="testimonios">
+      <h2 class="section-title">lo que dicen los alumnos</h2>
+      <div class="placeholder-block">
+        en cuanto los primeros alumnos terminen el curso, pondré sus respuestas aquí · si compras ahora entras en la primera tanda
+      </div>
+    </section>
+
+    <section class="metodo-section" id="faq">
+      <h2 class="section-title">preguntas frecuentes</h2>
+      <div class="faq-list">
+        <details>
+          <summary>¿Qué me llevo exactamente?</summary>
+          <p>Ocho PDFs descargables : los seis módulos, una guía de "empezar aquí" con la instalación y primeros pasos, y una biblioteca con 50 prompts listos para copiar. Todo tuyo para siempre.</p>
+        </details>
+        <details>
+          <summary>¿Necesito saber programar?</summary>
+          <p>No. El curso está hecho para gente que no programa. Nunca vas a tocar código. Escribes instrucciones claras y usas plantillas ya hechas.</p>
+        </details>
+        <details>
+          <summary>¿Qué plan de Claude necesito?</summary>
+          <p>El plan gratuito cubre los primeros módulos. Para aprovechar todo el curso (especialmente orquestación) necesitas el plan de pago de Claude. Cuesta como cualquier suscripción mensual.</p>
+        </details>
+        <details>
+          <summary>¿Cuánto tiempo me lleva?</summary>
+          <p>Unas 3 horas de contenido total. Recomendado : un módulo al día durante una semana, aplicando cada uno a tu caso real. En 7 días tienes un sistema tuyo funcionando.</p>
+        </details>
+        <details>
+          <summary>¿Hay vídeos?</summary>
+          <p>No. Todo el material es PDF con ejemplos, capturas y pasos numerados. Va directo al grano, sin relleno. Se lee mejor de lo que se ve.</p>
+        </details>
+        <details>
+          <summary>¿Y si no me sirve?</summary>
+          <p>Tienes 14 días para pedir el reembolso. Me escribes por DM con una línea explicando qué fallo y te devuelvo el dinero. Sin preguntas.</p>
+        </details>
+        <details>
+          <summary>¿Hay actualizaciones?</summary>
+          <p>Sí. Cuando saco una versión nueva, la recibes sin coste. El material cambia rápido, el método se mantiene.</p>
+        </details>
+        <details>
+          <summary>¿Puedo compartirlo con mi equipo?</summary>
+          <p>La licencia es individual. Si lo quieres para tu equipo escríbeme y te preparo un paquete con buen precio según el número de personas.</p>
+        </details>
+      </div>
+    </section>
+
+    <section class="final-cta" id="comprar">
+      <div class="kicker" style="color: rgba(17,17,17,0.7);">listo para empezar</div>
+      <h2>empieza ahora</h2>
+      <p>Seis módulos. Plantillas. Pipelines. 297€ una sola vez. Acceso para siempre. 14 días de reembolso sin preguntas.</p>
+      <a id="cta-bottom" href="#comprar" class="btn">empezar ahora</a>
+      <div style="font-family: var(--mono); font-size: 12px; letter-spacing: 0.14em; opacity: 0.7;">pago seguro por gumroad</div>
+    </section>
+
+  </main>
+
+  <footer class="site-footer">
+    <div>
+      <a href="https://instagram.com/rafa.prompts" target="_blank" rel="noopener" class="handle">@rafa.prompts</a>
+      <div style="margin-top:8px; font-size:12px; opacity:0.7;">te enseño claude para todo lo que necesites construir</div>
+    </div>
+    <div style="text-align:right;">
+      <div>2026 : rafa.prompts</div>
+      <div style="margin-top:6px; opacity:0.6;">rafaprompts.com</div>
+    </div>
+  </footer>
+
+  <script src="app.js"></script>
+  <script>
+    // When the Gumroad product exists, set its URL here.
+    // All CTAs on this page and on index.html use this to redirect.
+    // To update: replace the value below with the product short_url from
+    //   scripts/create_gumroad_product.output.json
+    const GUMROAD_URL = ''; // e.g. 'https://rafa.gumroad.com/l/metodo-claude'
+    if (GUMROAD_URL) {
+      document.querySelectorAll('a[href="#comprar"]').forEach((a) => {
+        a.setAttribute('href', GUMROAD_URL);
+        a.setAttribute('target', '_blank');
+        a.setAttribute('rel', 'noopener');
+      });
+    }
+  </script>
+</body>
+</html>

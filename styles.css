@@ -1416,6 +1416,9 @@ details > *:not(summary) { margin-top: 12px; }
   font-weight: 500;
   font-size: 1em;
 }
+@media (max-width: 600px) {
+  .tile .tile-headline em { display: block; }
+}
 .tile p {
   font-size: 14px;
   line-height: 1.5;

@@ -1,0 +1,21 @@
+# raw course material (PDFs live in Gumroad, not the public site)
+course/pdfs/
+course_content/
+
+# build helpers (not needed at runtime on Pages)
+scripts/
+
+# local env / secrets
+.env
+.env.local
+.dev.vars
+
+# OS / editor
+.DS_Store
+*.log
+.vscode/
+.idea/
+
+# node / cloudflare
+node_modules/
+.wrangler/

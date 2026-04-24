@@ -1102,17 +1102,26 @@ h3 {
 
 .callout {
   margin: 28px 0;
-  padding: 20px 24px;
-  border-left: 3px solid var(--accent);
+  padding: 22px 24px;
   background: var(--accent-soft);
   border-radius: var(--r-md);
   font-size: 16px;
   line-height: 1.55;
   display: flex;
-  gap: 14px;
+  flex-direction: column;
+  gap: 12px;
   align-items: flex-start;
 }
-.callout .ico { font-size: 20px; line-height: 1; flex-shrink: 0; }
+.callout .ico {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  width: 28px;
+  height: 28px;
+  color: var(--accent);
+  flex-shrink: 0;
+}
+.callout .ico svg { width: 22px; height: 22px; stroke-width: 2; }
 
 .code-block {
   position: relative;

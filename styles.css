@@ -823,11 +823,11 @@ h3 {
   font-family: var(--serif);
   font-style: italic;
   font-weight: 600;
-  font-size: 1.15em;
+  font-size: 0.75em;
   line-height: 0.9;
   letter-spacing: -0.01em;
   color: var(--accent);
-  margin-top: 6px;
+  margin-top: 24px;
   filter: none;
 }
 .metodo-hero .lede {

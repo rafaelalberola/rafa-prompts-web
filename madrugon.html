@@ -1,0 +1,241 @@
+<!doctype html>
+<html lang="es">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>madrugón : cómo automatizarlo para que se haga solo · rafa.prompts</title>
+  <meta name="description" content="Tu agente se levanta a las 6 AM, escribe el guion, genera y monta. Tú solo revisas y publicas.">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Archivo:wght@800;900&family=IBM+Plex+Mono:wght@400;600&family=Newsreader:ital,wght@1,400;1,500&display=swap">
+  <link rel="stylesheet" href="styles.css">
+</head>
+<body>
+
+  <svg width="0" height="0" style="position:absolute">
+    <defs>
+      <filter id="sprayGrain" x="-15%" y="-15%" width="130%" height="130%">
+        <feTurbulence type="fractalNoise" baseFrequency="0.7" numOctaves="2" seed="7" result="noise"/>
+        <feDisplacementMap in="SourceGraphic" in2="noise" scale="4" xChannelSelector="R" yChannelSelector="G" result="wobbled"/>
+        <feGaussianBlur in="wobbled" stdDeviation="0.9" result="blurred"/>
+        <feComponentTransfer in="blurred">
+          <feFuncA type="linear" slope="2.2" intercept="-0.1"/>
+        </feComponentTransfer>
+      </filter>
+    </defs>
+  </svg>
+
+  <div class="progress" id="progress"></div>
+
+  <header class="site-header">
+    <a href="/" class="brand"><strong>rafa</strong>.prompts</a>
+    <nav class="nav">
+      <a href="/metodo.html">método</a>
+      <a href="/#recursos">recursos</a>
+      <a href="/#faq">faq</a>
+    </nav>
+  </header>
+
+  <article class="resource">
+
+    <aside class="toc">
+      <div class="label">en esta guía</div>
+      <ol>
+        <li><a href="#qué-vas-a-montar">qué vas a montar</a></li>
+        <li><a href="#arquitectura">cómo funciona</a></li>
+        <li><a href="#agente">lo que el agente hace</a></li>
+        <li><a href="#programador">el programador automático</a></li>
+        <li><a href="#revision">la revisión humana</a></li>
+        <li><a href="#manychat">el automático de comentarios</a></li>
+        <li><a href="#empezar">empezar en 20 minutos</a></li>
+        <li><a href="#problemas">problemas comunes</a></li>
+      </ol>
+    </aside>
+
+    <div class="resource-content">
+
+      <div class="reading-time">6 min de lectura · guía 02</div>
+      <h1>Cómo automatizarlo para que se haga solo</h1>
+      <p class="lede">
+        Ya sabes hacer un reel a mano. Ahora toca que se haga solo cada madrugada. Al despertarte, tienes un reel nuevo renderizado, listo para revisar y publicar con un click.
+      </p>
+
+      <div class="callout warn">
+        <span class="ico">⚡</span>
+        <div>Antes de automatizar, haz al menos 3 reels a mano siguiendo la guía anterior. Te ahorras fallos ciegos cuando luego pongas el agente a correr de madrugada.</div>
+      </div>
+
+      <h2 id="qué-vas-a-montar"><span class="num">01</span>qué vas a montar</h2>
+      <p>Un agente autónomo que se ejecuta cada madrugada. Output esperado al despertarte:</p>
+      <ul>
+        <li>1 reel nuevo renderizado y ajustado de volumen</li>
+        <li>Pie de foto para Instagram y TikTok</li>
+        <li>Portada extraída</li>
+        <li>Subtítulos para accesibilidad</li>
+        <li>Todo listo para revisar y publicar con 1 click</li>
+      </ul>
+
+      <h2 id="arquitectura"><span class="num">02</span>cómo funciona</h2>
+      <p>A las 6 de la mañana, un programador automático arranca el agente. El agente escribe el guion del día, llama a los servicios que generan imagen, vídeo y voz, y monta el resultado. Al terminar, te avisa por Telegram con el reel ya listo.</p>
+      <div class="code-block"><pre>06:00 AM
+   │
+   ▼
+El agente elige un tema y escribe el guion
+   │
+   ▼
+Genera la voz, los planos y los vídeos
+   │
+   ▼
+Monta todo en un reel completo
+   │
+   ▼
+Te manda un Telegram: "reel listo para revisar"
+   │
+   ▼
+Tú apruebas o rechazas. Si apruebas, se publica.</pre></div>
+
+      <h2 id="agente"><span class="num">03</span>lo que el agente sabe hacer</h2>
+      <p>Al agente le pasas un documento con las reglas de la casa. Es como el manual de instrucciones que sigue cada día.</p>
+      <p>Este documento incluye:</p>
+      <ul>
+        <li>Su misión: producir un reel de 20 a 25 segundos al día</li>
+        <li>Su horario: todos los días a las 6 AM</li>
+        <li>Sus herramientas: qué servicios puede usar</li>
+        <li>Sus límites: qué no puede hacer (por ejemplo, publicar sin tu aprobación)</li>
+        <li>Su proceso: en qué orden ejecuta las cosas</li>
+      </ul>
+
+      <h3>Plantilla del documento del agente</h3>
+      <div class="code-block"><pre># Agente diario
+
+## Qué hace
+Produce un reel de 20 a 25 segundos cada día a las 6 AM.
+
+## Reglas
+- Siempre trabaja sobre la plantilla de personaje ya definida
+- Nunca sube un vídeo sin que tú lo apruebes por Telegram
+- Si algo falla 3 veces seguidas, para y avisa
+
+## Proceso
+1. Mirar los 7 hooks más populares de la semana
+2. Escribir el guion en 9 frases
+3. Marcar la palabra clave a resaltar en cada frase
+4. Generar voz, imágenes y vídeos en ese orden
+5. Montar todo
+6. Preparar pie de foto y portada
+7. Avisarme por Telegram con enlace al preview</pre></div>
+
+      <a href="/metodo.html" class="cross-link">
+        <div class="label">el paso siguiente</div>
+        <h3>el método claude</h3>
+        <p>Seis módulos para dominar Claude de punta a punta. El curso que ordena todo lo que estás aprendiendo aquí.</p>
+        <span class="arrow">ver el método →</span>
+      </a>
+
+      <h2 id="programador"><span class="num">04</span>el programador automático</h2>
+      <p>Hay dos formas sencillas de que el agente arranque solo cada madrugada. Elige la que te resulte más cómoda.</p>
+
+      <h3>Opción A: una herramienta visual</h3>
+      <p>Te permite conectar bloques en una pantalla. Uno de ellos es "programador", otro es "ejecutar el agente", otro es "avisar por Telegram". Los unes con flechas y listo.</p>
+      <p>Esta opción es ideal si no tienes experiencia programando. Es visual, se entiende a primera vista y la puedes editar tocando cajitas.</p>
+
+      <h3>Opción B: una instrucción en tu propio servidor</h3>
+      <p>Si tienes un servidor propio (un VPS básico vale) puedes añadir una línea que dice: "todos los días a las 6 AM, ejecuta esta instrucción".</p>
+      <p>Una sola línea en un archivo de configuración:</p>
+      <div class="code-block"><pre>0 6 * * *   ejecutar /ruta/agente_diario.py</pre></div>
+
+      <h2 id="revision"><span class="num">05</span>la revisión humana por Telegram</h2>
+      <p>No quieres publicar sin mirar primero. Esa parte del proceso nunca se automatiza del todo. Funciona así:</p>
+      <ol>
+        <li>El agente termina el reel a las ~6:30 AM</li>
+        <li>Te manda un mensaje de Telegram con el vídeo adjunto y el pie de foto propuesto</li>
+        <li>Tú lo ves en el móvil tomando café</li>
+        <li>Respondes /apruebo o /rechazo</li>
+        <li>Si apruebas, otro proceso lo sube a Instagram automáticamente</li>
+        <li>Si rechazas, el agente intenta de nuevo esa tarde o al día siguiente</li>
+      </ol>
+      <div class="callout warn">
+        <span class="ico">🛡️</span>
+        <div>La aprobación humana es tu puerta de seguridad. La automatización completa (publicar sin revisar) suena bien hasta que un día el agente saca una frase fuera de tono y se te queda publicada 3 horas.</div>
+      </div>
+
+      <h2 id="manychat"><span class="num">06</span>el automático de comentarios: el comentario se vuelve un DM</h2>
+      <p>Cuando alguien comenta la palabra clave (por ejemplo "yate" o "madrugón") en el reel, un automático le manda un mensaje privado con el enlace a esta misma guía que estás leyendo.</p>
+      <p>Además, hay un paso extra: antes de enviarle el enlace, le pedimos que te siga. Así el sistema suma seguidores al mismo tiempo que entrega el contenido.</p>
+      <h3>El flujo que configuras</h3>
+      <ol>
+        <li>Disparador: alguien comenta la palabra clave en tu reel</li>
+        <li>Mensaje 1: "ey, gracias por pasarte 🙌 dale al botón y te lo mando"</li>
+        <li>Botón: "lo quiero"</li>
+        <li>Al pulsar: "un paso: sígueme y te llega al instante 🔥"</li>
+        <li>Cuando el usuario sigue, el sistema envía el enlace al recurso</li>
+        <li>Si aún no sigue, le recuerda con cariño que siga primero</li>
+      </ol>
+      <div class="callout warn">
+        <span class="ico">⚠️</span>
+        <div>Una palabra clave única por reel. Si usas "yate" en 3 reels distintos, no vas a saber cuál convierte mejor.</div>
+      </div>
+
+      <h2 id="empezar"><span class="num">07</span>empezar en 20 minutos</h2>
+      <ol>
+        <li>Haz tu primer reel a mano siguiendo la guía anterior</li>
+        <li>Guarda todos tus ajustes y plantillas en un archivo de configuración</li>
+        <li>Crea tu plantilla de personaje (cara, ropa, luz, ambiente)</li>
+        <li>Cuando el reel a mano salga bien, copia los mismos pasos en un programa que los ejecute en orden</li>
+        <li>Añade el programador automático</li>
+        <li>Conecta Telegram para la aprobación</li>
+        <li>Prueba una noche: vete a dormir y comprueba al día siguiente</li>
+        <li>Ajusta las reglas del agente según lo que salga bien o mal</li>
+      </ol>
+
+      <h2 id="problemas"><span class="num">08</span>problemas comunes</h2>
+
+      <details>
+        <summary>El agente escribe reels repetitivos</summary>
+        <p>Causa: el agente lee siempre los mismos ganchos porque no se refresca la biblioteca.</p>
+        <p>Solución: que un paso previo del día revise las cuentas de referencia de la semana y actualice la lista de ganchos antes de que el agente escriba.</p>
+      </details>
+
+      <details>
+        <summary>Los vídeos tardan demasiado y el proceso falla</summary>
+        <p>Causa: la generación de vídeo puede tardar 4 o 5 minutos por plano, y si el tiempo máximo está puesto bajo, se corta.</p>
+        <p>Solución: sube el tiempo máximo a 30 minutos y añade reintentos. Si falla 3 veces, el agente para y te avisa.</p>
+      </details>
+
+      <details>
+        <summary>El mensaje automático no se dispara</summary>
+        <p>Causa: la cuenta de Instagram aún no está en modo profesional, o no está bien enlazada con tu página de Facebook.</p>
+        <p>Solución: confirma que tu cuenta es tipo Creador o Empresa, que está vinculada a una página de Facebook tuya, y que autorizaste todos los permisos al conectar.</p>
+      </details>
+
+      <details>
+        <summary>El montaje consume toda la memoria</summary>
+        <p>Causa: montar un reel completo en un servidor pequeño necesita más memoria de la que tiene.</p>
+        <p>Solución: monta el reel en tu propio ordenador en vez de en el servidor. El resultado lo envías al servidor por FTP. También puedes subir el tamaño del servidor si produces muchos al día.</p>
+      </details>
+
+      <a href="/yate.html" class="cross-link">
+        <div class="label">guía anterior</div>
+        <h3>cómo hacer un reel como este</h3>
+        <p>Antes de automatizar, domina el flujo manual. Esta es la guía completa de producción.</p>
+        <span class="arrow">abrir guía yate →</span>
+      </a>
+
+    </div>
+
+  </article>
+
+  <footer class="site-footer">
+    <div>
+      <a href="https://instagram.com/rafa.prompts" target="_blank" rel="noopener" class="handle">@rafa.prompts</a>
+      <div style="margin-top:8px; font-size:12px; opacity:0.7;">te enseño claude para todo lo que necesites construir</div>
+    </div>
+    <div style="text-align:right;">
+      <div>2026 : rafa.prompts</div>
+      <div style="margin-top:6px; opacity:0.6;">rafaprompts.com</div>
+    </div>
+  </footer>
+
+  <script src="app.js"></script>
+</body>
+</html>

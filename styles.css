@@ -910,6 +910,31 @@ h3 {
   margin: 0 auto;
 }
 
+.bio-inline {
+  display: grid;
+  grid-template-columns: 180px 1fr;
+  gap: 32px;
+  align-items: start;
+}
+@media (max-width: 700px) {
+  .bio-inline { grid-template-columns: 1fr; }
+}
+.portrait-small {
+  width: 180px;
+  border-radius: var(--r-lg);
+  overflow: hidden;
+  border: 1px solid var(--border);
+  background: var(--bg-cream-soft);
+  aspect-ratio: 1 / 1;
+}
+.portrait-small img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  object-position: center 35%;
+  display: block;
+}
+
 .modules-grid {
   display: grid;
   grid-template-columns: repeat(3, 1fr);

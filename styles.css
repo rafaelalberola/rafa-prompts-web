@@ -278,9 +278,9 @@ img { max-width: 100%; display: block; }
   display: block;
   font-family: var(--serif);
   font-style: italic;
-  font-weight: 500;
-  font-size: 0.55em;
-  line-height: 1.15;
+  font-weight: 600;
+  font-size: 0.95em;
+  line-height: 0.95;
   letter-spacing: -0.01em;
   color: var(--accent);
   margin-top: 0.2em;

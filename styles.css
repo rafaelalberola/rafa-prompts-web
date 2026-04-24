@@ -1608,28 +1608,28 @@ details > *:not(summary) { margin-top: 12px; }
   line-height: 1.55;
   color: var(--ink);
 }
-.check-list li::before {
-  content: "";
+.check-list li::before,
+.cross-list li::before {
   position: absolute;
-  left: 0; top: 2px;
+  left: 0; top: 1px;
   width: 22px; height: 22px;
   border-radius: 50%;
-  background: var(--accent);
-  -webkit-mask: url("data:image/svg+xml;utf8,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24'><circle cx='12' cy='12' r='12' fill='%23000'/><path d='M7 12l3 3 7-7' stroke='%23fff' stroke-width='2.5' fill='none' stroke-linecap='round' stroke-linejoin='round'/></svg>") center/contain no-repeat;
-          mask: url("data:image/svg+xml;utf8,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24'><circle cx='12' cy='12' r='12' fill='%23000'/><path d='M7 12l3 3 7-7' stroke='%23fff' stroke-width='2.5' fill='none' stroke-linecap='round' stroke-linejoin='round'/></svg>") center/contain no-repeat;
+  display: grid;
+  place-items: center;
+  font-size: 12px;
+  font-weight: 800;
+  line-height: 1;
+}
+.check-list li::before {
+  content: "✓";
+  background: #2e7d4f;
+  color: #fff;
 }
 .cross-list li::before {
   content: "✕";
-  position: absolute;
-  left: 0; top: -2px;
-  width: 22px; height: 22px;
-  display: grid;
-  place-items: center;
-  border-radius: 50%;
   background: rgba(17, 17, 17, 0.08);
   color: var(--ink-soft);
   font-size: 11px;
-  font-weight: 800;
 }
 
 /* Testimonials placeholder */

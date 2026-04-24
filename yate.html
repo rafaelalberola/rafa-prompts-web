@@ -19,12 +19,12 @@
 
   <svg width="0" height="0" style="position:absolute">
     <defs>
-      <filter id="sprayGrain" x="-15%" y="-15%" width="130%" height="130%">
-        <feTurbulence type="fractalNoise" baseFrequency="0.7" numOctaves="2" seed="7" result="noise"/>
-        <feDisplacementMap in="SourceGraphic" in2="noise" scale="4" xChannelSelector="R" yChannelSelector="G" result="wobbled"/>
-        <feGaussianBlur in="wobbled" stdDeviation="0.9" result="blurred"/>
+      <filter id="sprayGrain" x="-10%" y="-10%" width="120%" height="120%">
+        <feTurbulence type="fractalNoise" baseFrequency="0.9" numOctaves="2" seed="7" result="noise"/>
+        <feDisplacementMap in="SourceGraphic" in2="noise" scale="1.6" xChannelSelector="R" yChannelSelector="G" result="wobbled"/>
+        <feGaussianBlur in="wobbled" stdDeviation="0.3" result="blurred"/>
         <feComponentTransfer in="blurred">
-          <feFuncA type="linear" slope="2.2" intercept="-0.1"/>
+          <feFuncA type="linear" slope="1.8" intercept="-0.05"/>
         </feComponentTransfer>
       </filter>
     </defs>
@@ -57,7 +57,7 @@
   <article class="resource">
 
     <aside class="toc">
-      <div class="label">en esta guía</div>
+      <div class="label">En esta guía</div>
       <ol>
         <li><a href="#qué-vas-a-crear">qué vas a crear</a></li>
         <li><a href="#herramientas">las herramientas</a></li>
@@ -81,11 +81,11 @@
       </p>
 
       <div class="callout">
-        <span class="ico">🛟</span>
+        <span class="ico" aria-hidden="true"><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="10"/><circle cx="12" cy="12" r="4"/><line x1="4.93" y1="4.93" x2="9.17" y2="9.17"/><line x1="14.83" y1="14.83" x2="19.07" y2="19.07"/><line x1="14.83" y1="9.17" x2="19.07" y2="4.93"/><line x1="14.83" y1="9.17" x2="18.36" y2="5.64"/><line x1="4.93" y1="19.07" x2="9.17" y2="14.83"/></svg></span>
         <div>Lee cada paso en orden. Si te atascas, escríbeme "ayuda" por DM y te desbloqueo.</div>
       </div>
 
-      <h2 id="qué-vas-a-crear"><span class="num">01</span>qué vas a crear</h2>
+      <h2 id="qué-vas-a-crear"><span class="num">01</span>Qué vas a crear</h2>
       <p>
         Un vídeo vertical de unos 20 a 25 segundos que se siente hecho a mano, no generado por un ordenador.
       </p>
@@ -99,7 +99,7 @@
         <li>Una mezcla final optimizada para Instagram y TikTok</li>
       </ul>
 
-      <h2 id="herramientas"><span class="num">02</span>las herramientas que vas a usar</h2>
+      <h2 id="herramientas"><span class="num">02</span>Las herramientas que vas a usar</h2>
       <p>Todo lo que necesitas está en servicios online y en tu propio ordenador.</p>
       <h3>Inteligencia</h3>
       <ul>
@@ -121,7 +121,7 @@
         <li>FFmpeg: ajusta el volumen final para redes sociales</li>
       </ul>
 
-      <h2 id="principios"><span class="num">03</span>principios para que no parezca IA</h2>
+      <h2 id="principios"><span class="num">03</span>Principios para que no parezca IA</h2>
       <p>Estos 8 principios son la diferencia entre un vídeo que alguien mira 2 segundos y otro que retiene hasta el final. Aplícalos todos.</p>
 
       <details>
@@ -169,7 +169,7 @@
         <p>Volumen muy bajo: si el oyente los nota, es que están demasiado altos.</p>
       </details>
 
-      <h2 id="guion"><span class="num">04</span>la estructura del guion: 9 frases</h2>
+      <h2 id="guion"><span class="num">04</span>La estructura del guion: 9 frases</h2>
       <p>Todo reel de este sistema se cuenta en exactamente 9 frases. Ni una más ni una menos. Cada frase cumple una función concreta.</p>
       <p>Copia esta plantilla y rellena con tu tema:</p>
       <div class="code-block"><pre>Frase 1  · Gancho: una afirmación fuerte o un desafío al espectador
@@ -182,18 +182,18 @@ Frase 7  · Filosofía: el principio en 2 palabras
 Frase 8  · Resultado: qué consigues con todo esto
 Frase 9  · Llamada: comenta X y te mando Y</pre></div>
       <div class="callout warn">
-        <span class="ico">🎯</span>
+        <span class="ico" aria-hidden="true"><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="10"/><circle cx="12" cy="12" r="6"/><circle cx="12" cy="12" r="2"/></svg></span>
         <div>Regla de oro: la frase 9 no habla del producto, habla de la recompensa. La palabra clave tiene que ser corta y memorable.</div>
       </div>
 
       <a href="/metodo.html" class="cross-link">
-        <div class="label">quieres ir más allá</div>
-        <h3>el método claude</h3>
+        <div class="label">Quieres ir más allá</div>
+        <h3>El método Claude</h3>
         <p>Seis módulos para dominar Claude y construir sistemas útiles. Plantillas, pipelines y ejemplos paso a paso.</p>
         <span class="arrow">ver el método →</span>
       </a>
 
-      <h2 id="voz"><span class="num">05</span>voz</h2>
+      <h2 id="voz"><span class="num">05</span>Voz</h2>
       <p>Graba tu voz con ElevenLabs o usa una voz clonada. Le pasas tu guion y el servicio te devuelve el audio y un listado con el tiempo exacto en el que suena cada palabra.</p>
       <p>Ajustes que funcionan bien:</p>
       <ul>
@@ -202,7 +202,7 @@ Frase 9  · Llamada: comenta X y te mando Y</pre></div>
         <li>Estilo moderado (alrededor de 0.2), para que suene natural sin exagerar</li>
       </ul>
 
-      <h2 id="imagen"><span class="num">06</span>fotogramas clave</h2>
+      <h2 id="imagen"><span class="num">06</span>Fotogramas clave</h2>
       <p>Un fotograma por escena humana. Las pantallas y ventanas gráficas no las generes con IA: las montas aparte en Remotion. Quedan mejor y son más rápidas de hacer.</p>
       <p>La plantilla de descripción que le pasas a la IA siempre tiene estos 6 bloques:</p>
       <ol>
@@ -214,11 +214,11 @@ Frase 9  · Llamada: comenta X y te mando Y</pre></div>
         <li>El ambiente: la sensación general del plano</li>
       </ol>
       <div class="callout">
-        <span class="ico">📌</span>
+        <span class="ico" aria-hidden="true"><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><line x1="12" y1="17" x2="12" y2="22"/><path d="M5 17h14v-1.76a2 2 0 0 0-1.11-1.79l-1.78-.9A2 2 0 0 1 15 10.76V6h1a2 2 0 0 0 0-4H8a2 2 0 0 0 0 4h1v4.76a2 2 0 0 1-1.11 1.79l-1.78.9A2 2 0 0 0 5 15.24Z"/></svg></span>
         <div>Guarda los bloques 1, 2, 4, 5 y 6 como plantilla fija. Cada nuevo reel solo cambia el bloque 3 (la acción). Así mantienes continuidad visual entre reels.</div>
       </div>
 
-      <h2 id="animacion"><span class="num">07</span>animación</h2>
+      <h2 id="animacion"><span class="num">07</span>Animación</h2>
       <p>Coges el fotograma y le pasas una instrucción de movimiento. La IA genera un vídeo de 5 segundos.</p>
       <p>Instrucciones que funcionan:</p>
       <ul>
@@ -231,7 +231,7 @@ Frase 9  · Llamada: comenta X y te mando Y</pre></div>
       <h3>Sincronizar labios (solo si habla a cámara)</h3>
       <p>Cuando el personaje habla directo a cámara, le pasas el vídeo animado y el trozo de audio que corresponde, y el servicio te devuelve el vídeo con los labios sincronizados a la voz.</p>
 
-      <h2 id="montaje"><span class="num">08</span>montaje</h2>
+      <h2 id="montaje"><span class="num">08</span>Montaje</h2>
       <p>En un ordenador normal, con Remotion, escribes la composición como si fuera código. Tiene tres partes clave:</p>
       <ul>
         <li>Los bloques de tiempo: qué plano o pantalla se ve en cada segundo</li>
@@ -239,13 +239,13 @@ Frase 9  · Llamada: comenta X y te mando Y</pre></div>
         <li>El audio: voz, efectos del entorno y base musical, cada uno con su volumen</li>
       </ul>
 
-      <h2 id="mezcla"><span class="num">09</span>mezcla final</h2>
+      <h2 id="mezcla"><span class="num">09</span>Mezcla final</h2>
       <p>Una vez montado, pasa el vídeo por FFmpeg con un ajuste de volumen que lo prepara para Instagram y TikTok. Esas plataformas aplastan audio que les llega demasiado alto, así que conviene entregarlo ajustado de antemano.</p>
 
       <h3>Portada</h3>
       <p>Elige un fotograma del primer segundo para la portada. No uses un frame en negro o una transición. La portada es lo que la gente ve en el feed antes de darle play.</p>
 
-      <h2 id="checklist"><span class="num">10</span>comprobar antes de publicar</h2>
+      <h2 id="checklist"><span class="num">10</span>Comprobar antes de publicar</h2>
       <p>Repasa esta lista cada vez. Son 9 puntos, te lleva 2 minutos.</p>
       <ol>
         <li>Duración total: 27 segundos o menos</li>
@@ -260,8 +260,8 @@ Frase 9  · Llamada: comenta X y te mando Y</pre></div>
       </ol>
 
       <a href="/madrugon.html" class="cross-link">
-        <div class="label">guía siguiente</div>
-        <h3>cómo automatizarlo para que se haga solo</h3>
+        <div class="label">Guía siguiente</div>
+        <h3>Cómo automatizarlo para que se haga solo</h3>
         <p>Ahora que sabes producirlo a mano, automatízalo. Un agente hace el reel mientras duermes, tú solo revisas al despertar.</p>
         <span class="arrow">abrir guía madrugón →</span>
       </a>
@@ -281,7 +281,7 @@ Frase 9  · Llamada: comenta X y te mando Y</pre></div>
       const drawer = document.getElementById('mobile-drawer');
       if (!burger || !drawer) return;
       const toggle = (force) => {
-        const open = force !== undefined ? force : !document.body.classList.contains('drawer-open');
+        const open = force !== undefined ? Force : !document.body.classList.contains('drawer-open');
         document.body.classList.toggle('drawer-open', open);
         burger.setAttribute('aria-expanded', open);
         drawer.setAttribute('aria-hidden', !open);

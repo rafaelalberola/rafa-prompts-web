@@ -1,0 +1,221 @@
+<!doctype html>
+<html lang="es">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>portero : un agente que filtra tus DMs · rafa.prompts</title>
+  <meta name="description" content="Cómo montar un agente que responde DMs como tú, filtra leads cualificados y te avisa solo cuando merece la pena. Sistema completo paso a paso.">
+  <link rel="icon" type="image/svg+xml" href="/assets/img/favicon.svg">
+  <link rel="icon" href="/assets/img/favicon.ico">
+  <link rel="icon" type="image/png" sizes="32x32" href="/assets/img/favicon-32.png">
+  <link rel="icon" type="image/png" sizes="16x16" href="/assets/img/favicon-16.png">
+  <link rel="apple-touch-icon" href="/assets/img/apple-touch-icon.png">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Archivo:wght@400;500;700;800;900&family=IBM+Plex+Mono:wght@400;600&family=Newsreader:ital,wght@1,400;1,500&display=swap">
+  <link rel="stylesheet" href="styles.css">
+</head>
+<body>
+
+  <svg width="0" height="0" style="position:absolute">
+    <defs>
+      <filter id="sprayGrain" x="-10%" y="-10%" width="120%" height="120%">
+        <feTurbulence type="fractalNoise" baseFrequency="0.9" numOctaves="2" seed="7" result="noise"/>
+        <feDisplacementMap in="SourceGraphic" in2="noise" scale="1.6" xChannelSelector="R" yChannelSelector="G" result="wobbled"/>
+        <feGaussianBlur in="wobbled" stdDeviation="0.3" result="blurred"/>
+        <feComponentTransfer in="blurred">
+          <feFuncA type="linear" slope="1.8" intercept="-0.05"/>
+        </feComponentTransfer>
+      </filter>
+    </defs>
+  </svg>
+
+  <div class="progress" id="progress"></div>
+
+  <header class="site-header">
+    <a href="/" class="brand"><strong>rafa</strong>.prompts</a>
+    <nav class="nav">
+      <a href="/metodo.html">Método</a>
+      <a href="/#recursos">Recursos</a>
+      <a href="/#faq">FAQ</a>
+      <a href="/metodo.html" class="btn">Empezar · 297€</a>
+    </nav>
+    <button class="burger" id="burger" aria-label="Abrir menú" aria-expanded="false" aria-controls="mobile-drawer">
+      <span></span><span></span><span></span>
+    </button>
+  </header>
+
+  <div class="mobile-drawer" id="mobile-drawer" aria-hidden="true">
+    <button class="drawer-close" id="drawer-close" aria-label="Cerrar menú"><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><line x1="18" y1="6" x2="6" y2="18"/><line x1="6" y1="6" x2="18" y2="18"/></svg></button>
+    <nav class="drawer-nav">
+      <a href="/metodo.html">Método</a>
+      <a href="/#recursos">Recursos</a>
+      <a href="/#faq">FAQ</a>
+      <a href="/metodo.html" class="btn accent large">Empezar · 297€</a>
+    </nav>
+  </div>
+
+  <article class="resource">
+
+    <aside class="toc">
+      <div class="label">En esta guía</div>
+      <ol>
+        <li><a href="#problema">El problema de los DMs sin filtro</a></li>
+        <li><a href="#agente">Qué hace exactamente un portero</a></li>
+        <li><a href="#voz">Enseñarle a hablar como tú</a></li>
+        <li><a href="#filtros">Los 4 tipos de mensaje y qué hacer con cada uno</a></li>
+        <li><a href="#aviso">Cuándo te avisa a ti</a></li>
+        <li><a href="#empezar">Empezar en 30 minutos</a></li>
+        <li><a href="#errores">Errores que cometen casi todos</a></li>
+      </ol>
+    </aside>
+
+    <div class="resource-content">
+
+      <div class="reading-time">7 min de lectura · guía 05</div>
+      <h1>Un agente que filtra tus DMs como un portero de hotel</h1>
+      <p class="lede">
+        Cuando tu cuenta crece, los DMs se acumulan. La mayoría no merecen tu tiempo. Aquí tienes el sistema para que un agente filtre, responda y te avise solo cuando hay alguien que merece la pena.
+      </p>
+
+      <div class="callout">
+        <span class="ico" aria-hidden="true"><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z"/></svg></span>
+        <div>El portero no responde por ti. Hace de filtro y de bienvenida. Las decisiones importantes siguen siendo tuyas.</div>
+      </div>
+
+      <h2 id="problema"><span class="num">01</span>El problema real de los DMs sin filtro</h2>
+      <p>Si publicas con frecuencia, los DMs se llenan de cuatro tipos de mensaje:</p>
+      <ul>
+        <li>Gente que pregunta lo que ya está en tus reels o landing</li>
+        <li>Gente que quiere algo gratis y desaparece sin más</li>
+        <li>Saludos sin propósito, fotos de su gato, mensajes vacíos</li>
+        <li>Una persona real con una pregunta concreta sobre algo que vendes</li>
+      </ul>
+      <p>El problema es que los cuatro tipos llegan al mismo sitio. Si los respondes tú a mano, pierdes una hora al día y la persona del cuarto tipo se pierde entre los otros tres.</p>
+
+      <h2 id="agente"><span class="num">02</span>Qué hace exactamente un portero</h2>
+      <p>Un portero es un agente que vive entre tus DMs y tú. Hace tres cosas:</p>
+      <ol>
+        <li><strong>Lee cada mensaje nuevo</strong> y lo clasifica en uno de los 4 tipos.</li>
+        <li><strong>Responde directamente</strong> los tipos 1, 2 y 3 con tu tono. Manda recursos útiles, agradece, cierra la conversación si toca.</li>
+        <li><strong>Te avisa a ti</strong> solo cuando llega un tipo 4. En el aviso te resume quién es, qué pregunta y por qué cree que merece tu atención.</li>
+      </ol>
+      <p>Tu trabajo pasa de "leer 80 mensajes" a "leer 5 alertas". Y los 80 reciben respuesta igualmente, en menos de un minuto.</p>
+
+      <h2 id="voz"><span class="num">03</span>Enseñarle a hablar como tú</h2>
+      <p>El portero solo funciona si la gente que le escribe no nota la diferencia. Para conseguirlo, le pasas un documento corto que define cómo escribes tú.</p>
+      <p>El documento incluye 5 secciones:</p>
+      <ul>
+        <li><strong>Tu tono:</strong> tres adjetivos. Por ejemplo: directo, cálido, sin floritura.</li>
+        <li><strong>Tus muletillas:</strong> palabras o frases que usas mucho. "Vale", "perfecto", "te paso esto".</li>
+        <li><strong>Lo que nunca dices:</strong> palabras que rechazas. "Brutal", "increíble", "te va a flipar".</li>
+        <li><strong>5 ejemplos reales</strong> de respuestas tuyas pasadas, copiadas tal cual.</li>
+        <li><strong>Tus límites:</strong> qué no puede prometer en tu nombre. Precios concretos, plazos, ofertas.</li>
+      </ul>
+
+      <h2 id="filtros"><span class="num">04</span>Los 4 tipos de mensaje y qué hacer con cada uno</h2>
+
+      <h3>Tipo 1: pregunta que ya está en una landing</h3>
+      <p>Si alguien pregunta cuánto cuesta el curso, qué incluye, cómo funciona, el portero responde con una frase y enlaza a la página correspondiente. Sin enredarse.</p>
+      <p>Ejemplo: <em>"Toda la info aquí: rafaprompts.com/metodo. Si después de leerla te queda alguna duda, escríbeme."</em></p>
+
+      <h3>Tipo 2: quiere algo gratis</h3>
+      <p>Si alguien pide la plantilla, el PDF o el sistema sin haber comentado la palabra clave del reel, el portero le explica cómo conseguirlo y le pasa el reel relevante.</p>
+      <p>Ejemplo: <em>"El sistema completo está en este reel: comenta YATE en el reel del barco y te llega al email."</em></p>
+
+      <h3>Tipo 3: saludo sin propósito</h3>
+      <p>Saludos, emojis sueltos, mensajes vacíos. El portero agradece, presenta brevemente la cuenta y deja una puerta abierta.</p>
+      <p>Ejemplo: <em>"Gracias por escribir. Subo cosas sobre cómo usar Claude para construir contenido y procesos. Si te interesa algo en concreto, dime y te paso el recurso."</em></p>
+
+      <h3>Tipo 4: persona real con pregunta concreta</h3>
+      <p>Aquí el portero NO responde. Te avisa a ti, con un resumen de tres líneas: quién es, qué pregunta, por qué clasificó como tipo 4. Tú decides cómo responder.</p>
+      <p>Las señales que activan tipo 4: pregunta sobre tu trabajo concreto, menciona su empresa, ofrece colaboración real, da contexto personal.</p>
+
+      <a href="/metodo.html" class="cross-link">
+        <div class="label">Quieres ir más allá</div>
+        <h3>El método Claude</h3>
+        <p>El módulo 03 enseña a construir agentes desde cero. El módulo 05 muestra cómo orquestarlos con tus herramientas habituales. El portero entero está en menos de 100 líneas de instrucciones.</p>
+        <span class="arrow">Ver el método →</span>
+      </a>
+
+      <h2 id="aviso"><span class="num">05</span>Cuándo te avisa a ti y cómo</h2>
+      <p>El aviso llega por el canal que elijas. Lo más práctico: Telegram personal, porque no se mezcla con tu correo de trabajo.</p>
+      <p>Cada aviso incluye exactamente esto:</p>
+      <div class="code-block"><pre>De: @nombre_usuario
+Mensaje original: "[el mensaje completo]"
+
+Resumen del portero:
+- Tipo: 4 (persona real)
+- Por qué: pregunta sobre cómo aplicar Claude a su agencia
+- Sugerencia: responde tú, esto huele a cliente real
+
+Acción: abrir DM en Instagram</pre></div>
+      <div class="callout warn">
+        <span class="ico" aria-hidden="true"><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M10.29 3.86 1.82 18a2 2 0 0 0 1.71 3h16.94a2 2 0 0 0 1.71-3L13.71 3.86a2 2 0 0 0-3.42 0z"/><line x1="12" y1="9" x2="12" y2="13"/><line x1="12" y1="17" x2="12.01" y2="17"/></svg></span>
+        <div>El portero nunca debe responder en tu nombre a un tipo 4. Esa conversación es la que te trae clientes. La quieres llevar tú.</div>
+      </div>
+
+      <h2 id="empezar"><span class="num">06</span>Empezar en 30 minutos</h2>
+      <p>No hace falta saber programar. Hay dos caminos según cuánto control quieras.</p>
+
+      <h3>Opción A: con Manychat (la fácil)</h3>
+      <ul>
+        <li>Conectas tu cuenta de Instagram a Manychat</li>
+        <li>Defines reglas simples basadas en palabras clave del mensaje</li>
+        <li>Para casos que las reglas no cubren, el mensaje te llega a ti</li>
+        <li>No es tan inteligente como un agente, pero filtra el 70% de los mensajes</li>
+      </ul>
+
+      <h3>Opción B: con Claude (la potente)</h3>
+      <ul>
+        <li>Conectas tus DMs a un servidor pequeño que llama a Claude por cada mensaje nuevo</li>
+        <li>Claude aplica tu documento de tono y decide cómo responder</li>
+        <li>Si el mensaje es tipo 4, te llega un Telegram con el resumen</li>
+        <li>Más trabajo de setup, pero clasifica y responde como tú</li>
+      </ul>
+
+      <h2 id="errores"><span class="num">07</span>Errores que cometen casi todos</h2>
+      <ol>
+        <li><strong>Dejar al portero responder a todos los DMs.</strong> Si responde a clientes potenciales, pierdes ventas. Tipo 4 siempre lo respondes tú.</li>
+        <li><strong>Documento de tono demasiado corto.</strong> Sin 5 ejemplos reales, suena a mensaje genérico. Inviertes 30 minutos buenos en escribir esa parte.</li>
+        <li><strong>No revisar las respuestas la primera semana.</strong> El portero se equivoca al principio. Cada mañana revisas 10 conversaciones y corriges en el documento.</li>
+        <li><strong>Hacer al portero "amigable":</strong> sin malabares, sin emojis decorativos, sin "espero que estés genial". Tu portero es un asistente útil, no un community manager corporativo.</li>
+      </ol>
+
+      <a href="/tienda.html" class="cross-link">
+        <div class="label">Guía siguiente</div>
+        <h3>Cómo monetizar tu cuenta sin sponsors</h3>
+        <p>Ya tienes audiencia y filtros. Ahora toca convertir. Aprende cómo construir un funnel propio que vende sin colaboraciones de marca.</p>
+        <span class="arrow">Abrir guía tienda →</span>
+      </a>
+
+    </div>
+
+  </article>
+
+  <footer class="site-footer">
+    <a href="https://instagram.com/rafa.prompts" target="_blank" rel="noopener" class="handle">@rafa.prompts</a>
+  </footer>
+
+  <script src="app.js"></script>
+  <script>
+    (function() {
+      const burger = document.getElementById('burger');
+      const drawer = document.getElementById('mobile-drawer');
+      if (!burger || !drawer) return;
+      const toggle = (force) => {
+        const open = force !== undefined ? force : !document.body.classList.contains('drawer-open');
+        document.body.classList.toggle('drawer-open', open);
+        burger.setAttribute('aria-expanded', open);
+        drawer.setAttribute('aria-hidden', !open);
+        document.body.style.overflow = open ? 'hidden' : '';
+      };
+      burger.addEventListener('click', () => toggle());
+      const close = document.getElementById('drawer-close');
+      if (close) close.addEventListener('click', () => toggle(false));
+      drawer.querySelectorAll('a').forEach(a => a.addEventListener('click', () => toggle(false)));
+      document.addEventListener('keydown', (e) => { if (e.key === 'Escape') toggle(false); });
+    })();
+  </script>
+</body>
+</html>

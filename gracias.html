@@ -1,0 +1,83 @@
+<!doctype html>
+<html lang="es">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Gracias por tu compra · rafa.prompts</title>
+  <meta name="description" content="Tu acceso a El método Claude está listo. Revisa tu email para descargar los PDFs.">
+  <meta name="robots" content="noindex">
+  <link rel="icon" type="image/svg+xml" href="/assets/img/favicon.svg">
+  <link rel="icon" href="/assets/img/favicon.ico">
+  <link rel="icon" type="image/png" sizes="32x32" href="/assets/img/favicon-32.png">
+  <link rel="apple-touch-icon" href="/assets/img/apple-touch-icon.png">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Archivo:wght@400;500;700;800;900&family=IBM+Plex+Mono:wght@400;600&family=Newsreader:ital,wght@1,400;1,500&display=swap">
+  <link rel="stylesheet" href="styles.css">
+</head>
+<body>
+
+  <svg width="0" height="0" style="position:absolute">
+    <defs>
+      <filter id="sprayGrain" x="-10%" y="-10%" width="120%" height="120%">
+        <feTurbulence type="fractalNoise" baseFrequency="0.9" numOctaves="2" seed="7" result="noise"/>
+        <feDisplacementMap in="SourceGraphic" in2="noise" scale="1.6" xChannelSelector="R" yChannelSelector="G" result="wobbled"/>
+        <feGaussianBlur in="wobbled" stdDeviation="0.3" result="blurred"/>
+        <feComponentTransfer in="blurred">
+          <feFuncA type="linear" slope="1.8" intercept="-0.05"/>
+        </feComponentTransfer>
+      </filter>
+    </defs>
+  </svg>
+
+  <header class="site-header">
+    <a href="/" class="brand"><strong>rafa</strong>.prompts</a>
+  </header>
+
+  <main>
+    <section class="thanks">
+      <div class="thanks-card">
+        <div class="thanks-mark" aria-hidden="true">
+          <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round"><path d="M20 6L9 17l-5-5"/></svg>
+        </div>
+        <div class="kicker">Compra confirmada</div>
+        <h1>
+          Gracias por unirte
+          <span class="italic">empezamos.</span>
+        </h1>
+        <p class="lede">
+          En unos minutos vas a recibir un email con el enlace de acceso a tus 8 PDFs. Mientras tanto, esto es lo que tienes que saber:
+        </p>
+
+        <ol class="thanks-steps">
+          <li>
+            <strong>Revisa tu bandeja de entrada</strong> — el email llega desde <code>hola@rafaprompts.com</code> con asunto <em>"Tus PDFs de El método Claude están listos"</em>.
+          </li>
+          <li>
+            <strong>Si no lo ves en 5 minutos, mira en spam o promociones.</strong> Marca el remitente como "no spam" para futuras actualizaciones.
+          </li>
+          <li>
+            <strong>Cada PDF lleva tu nombre y email impresos</strong> en el pie de página. Son tuyos para siempre.
+          </li>
+          <li>
+            <strong>El acceso es de por vida</strong> con actualizaciones gratuitas. Cuando saque una nueva versión, llega al mismo email.
+          </li>
+        </ol>
+
+        <div class="thanks-help">
+          <p>¿No te llegó el email tras 30 minutos? Escríbeme directamente a <a href="mailto:hola@rafaprompts.com">hola@rafaprompts.com</a> con tu nombre y te lo reenvío en menos de un día.</p>
+        </div>
+
+        <div class="thanks-cta">
+          <a href="/" class="btn">Volver al inicio</a>
+        </div>
+      </div>
+    </section>
+  </main>
+
+  <footer class="site-footer">
+    <a href="https://instagram.com/rafa.prompts" target="_blank" rel="noopener" class="handle">@rafa.prompts</a>
+  </footer>
+
+</body>
+</html>

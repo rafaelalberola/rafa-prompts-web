@@ -1,0 +1,118 @@
+<!doctype html>
+<html lang="es">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Tus descargas · El método Claude</title>
+  <meta name="robots" content="noindex">
+  <link rel="icon" type="image/svg+xml" href="/assets/img/favicon.svg">
+  <link rel="icon" href="/assets/img/favicon.ico">
+  <link rel="apple-touch-icon" href="/assets/img/apple-touch-icon.png">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Archivo:wght@400;500;700;800;900&family=IBM+Plex+Mono:wght@400;600&family=Newsreader:ital,wght@1,400;1,500&display=swap">
+  <link rel="stylesheet" href="styles.css">
+</head>
+<body>
+
+  <svg width="0" height="0" style="position:absolute">
+    <defs>
+      <filter id="sprayGrain" x="-10%" y="-10%" width="120%" height="120%">
+        <feTurbulence type="fractalNoise" baseFrequency="0.9" numOctaves="2" seed="7" result="noise"/>
+        <feDisplacementMap in="SourceGraphic" in2="noise" scale="1.6" xChannelSelector="R" yChannelSelector="G" result="wobbled"/>
+        <feGaussianBlur in="wobbled" stdDeviation="0.3" result="blurred"/>
+        <feComponentTransfer in="blurred">
+          <feFuncA type="linear" slope="1.8" intercept="-0.05"/>
+        </feComponentTransfer>
+      </filter>
+    </defs>
+  </svg>
+
+  <header class="site-header">
+    <a href="/" class="brand"><strong>rafa</strong>.prompts</a>
+  </header>
+
+  <main>
+    <section class="downloads">
+      <div class="downloads-head">
+        <div class="kicker">Tu acceso</div>
+        <h1>Tus descargas <span class="italic">El método Claude.</span></h1>
+        <p id="downloads-meta" class="downloads-meta">Cargando…</p>
+      </div>
+
+      <div id="downloads-state" class="downloads-state">
+        <p>Verificando tu enlace…</p>
+      </div>
+
+      <div id="downloads-list" class="downloads-list" hidden></div>
+
+      <div class="downloads-footer">
+        <p>
+          Cada PDF se firma al vuelo con tu nombre y email para evitar que circule sin tu consentimiento. Compártelos solo con quien quieras que aparezca <em>tu</em> nombre en cada página.
+        </p>
+        <p>
+          Si pierdes el enlace, escríbeme a <a href="mailto:hola@rafaprompts.com">hola@rafaprompts.com</a> y te lo reenvío.
+        </p>
+      </div>
+    </section>
+  </main>
+
+  <footer class="site-footer">
+    <a href="https://instagram.com/rafa.prompts" target="_blank" rel="noopener" class="handle">@rafa.prompts</a>
+  </footer>
+
+  <script>
+    const API = 'https://rafa-prompts-api.prxystudio.workers.dev';
+    const params = new URLSearchParams(location.search);
+    const token = params.get('t') || params.get('token');
+    const meta = document.getElementById('downloads-meta');
+    const state = document.getElementById('downloads-state');
+    const list = document.getElementById('downloads-list');
+
+    function escapeHtml(s) { return String(s).replace(/[&<>"']/g, c => ({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[c])); }
+
+    async function init() {
+      if (!token) {
+        state.innerHTML = '<p class="error">No has indicado un código de acceso. Revisa el enlace que te llegó por email.</p>';
+        meta.textContent = '';
+        return;
+      }
+      try {
+        const r = await fetch(`${API}/session?t=${encodeURIComponent(token)}`);
+        if (!r.ok) {
+          const err = await r.json().catch(() => ({}));
+          if (err.error === 'invalid_or_expired') {
+            state.innerHTML = '<p class="error">Tu enlace ha caducado o no es válido. Escríbeme a <a href="mailto:hola@rafaprompts.com">hola@rafaprompts.com</a> y te lo regenero.</p>';
+          } else {
+            state.innerHTML = `<p class="error">Algo no va bien (${err.error || r.status}). Escríbeme y lo arreglamos.</p>`;
+          }
+          meta.textContent = '';
+          return;
+        }
+        const data = await r.json();
+        meta.innerHTML = `Acceso para <strong>${escapeHtml(data.email)}</strong> · Te quedan ${data.downloads_left} descargas`;
+        state.hidden = true;
+        list.hidden = false;
+        list.innerHTML = data.files.map((f) => `
+          <a class="download-card" href="${API}/download?t=${encodeURIComponent(token)}&file=${encodeURIComponent(f.slug)}" download>
+            <div class="download-meta">
+              <div class="download-num">${String(f.order).padStart(2,'0')}</div>
+              <div>
+                <div class="download-title">${escapeHtml(f.title)}</div>
+                <div class="download-sub">PDF · marcado con tu nombre</div>
+              </div>
+            </div>
+            <span class="download-arrow" aria-hidden="true">
+              <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"/><polyline points="7 10 12 15 17 10"/><line x1="12" y1="15" x2="12" y2="3"/></svg>
+            </span>
+          </a>
+        `).join('');
+      } catch (e) {
+        state.innerHTML = `<p class="error">No se pudo conectar con el servidor. Inténtalo en un minuto o escríbeme a <a href="mailto:hola@rafaprompts.com">hola@rafaprompts.com</a>.</p>`;
+        meta.textContent = '';
+      }
+    }
+    init();
+  </script>
+</body>
+</html>

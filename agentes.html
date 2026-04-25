@@ -1,0 +1,231 @@
+<!doctype html>
+<html lang="es">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>agentes : tu prompt no funciona, divídelo en 3 · rafa.prompts</title>
+  <meta name="description" content="Cuando un prompt gigante da resultados mediocres, el problema no es Claude. Es el reparto. Aprende a partirlo en 3 agentes con una misión clara cada uno.">
+  <link rel="icon" type="image/svg+xml" href="/assets/img/favicon.svg">
+  <link rel="icon" href="/assets/img/favicon.ico">
+  <link rel="icon" type="image/png" sizes="32x32" href="/assets/img/favicon-32.png">
+  <link rel="icon" type="image/png" sizes="16x16" href="/assets/img/favicon-16.png">
+  <link rel="apple-touch-icon" href="/assets/img/apple-touch-icon.png">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Archivo:wght@400;500;700;800;900&family=IBM+Plex+Mono:wght@400;600&family=Newsreader:ital,wght@1,400;1,500&display=swap">
+  <link rel="stylesheet" href="styles.css">
+</head>
+<body>
+
+  <svg width="0" height="0" style="position:absolute">
+    <defs>
+      <filter id="sprayGrain" x="-10%" y="-10%" width="120%" height="120%">
+        <feTurbulence type="fractalNoise" baseFrequency="0.9" numOctaves="2" seed="7" result="noise"/>
+        <feDisplacementMap in="SourceGraphic" in2="noise" scale="1.6" xChannelSelector="R" yChannelSelector="G" result="wobbled"/>
+        <feGaussianBlur in="wobbled" stdDeviation="0.3" result="blurred"/>
+        <feComponentTransfer in="blurred">
+          <feFuncA type="linear" slope="1.8" intercept="-0.05"/>
+        </feComponentTransfer>
+      </filter>
+    </defs>
+  </svg>
+
+  <div class="progress" id="progress"></div>
+
+  <header class="site-header">
+    <a href="/" class="brand"><strong>rafa</strong>.prompts</a>
+    <nav class="nav">
+      <a href="/metodo.html">Método</a>
+      <a href="/#recursos">Recursos</a>
+      <a href="/#faq">FAQ</a>
+      <a href="/metodo.html" class="btn">Empezar · 297€</a>
+    </nav>
+    <button class="burger" id="burger" aria-label="Abrir menú" aria-expanded="false" aria-controls="mobile-drawer">
+      <span></span><span></span><span></span>
+    </button>
+  </header>
+
+  <div class="mobile-drawer" id="mobile-drawer" aria-hidden="true">
+    <button class="drawer-close" id="drawer-close" aria-label="Cerrar menú"><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><line x1="18" y1="6" x2="6" y2="18"/><line x1="6" y1="6" x2="18" y2="18"/></svg></button>
+    <nav class="drawer-nav">
+      <a href="/metodo.html">Método</a>
+      <a href="/#recursos">Recursos</a>
+      <a href="/#faq">FAQ</a>
+      <a href="/metodo.html" class="btn accent large">Empezar · 297€</a>
+    </nav>
+  </div>
+
+  <article class="resource">
+
+    <aside class="toc">
+      <div class="label">En esta guía</div>
+      <ol>
+        <li><a href="#por-que-falla">Por qué un prompt gigante falla</a></li>
+        <li><a href="#reparto">La regla del reparto</a></li>
+        <li><a href="#investigador">Agente 1: investigador</a></li>
+        <li><a href="#escritor">Agente 2: escritor</a></li>
+        <li><a href="#revisor">Agente 3: revisor</a></li>
+        <li><a href="#coordinacion">Cómo coordinarlos</a></li>
+        <li><a href="#empezar">Empezar en 30 minutos</a></li>
+        <li><a href="#errores">Errores comunes</a></li>
+      </ol>
+    </aside>
+
+    <div class="resource-content">
+
+      <div class="reading-time">8 min de lectura · guía 05</div>
+      <h1>Tu prompt no funciona: divídelo en 3 agentes</h1>
+      <p class="lede">
+        Si llevas semanas peleándote con un prompt gigante y los resultados son mediocres, el problema no es Claude. Es que le estás pidiendo a una sola persona el trabajo de tres.
+      </p>
+
+      <div class="callout">
+        <span class="ico" aria-hidden="true"><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="9" cy="7" r="4"/><path d="M3 21v-2a4 4 0 0 1 4-4h4a4 4 0 0 1 4 4v2"/><circle cx="17" cy="7" r="4"/><path d="M23 21v-2a4 4 0 0 0-3-3.87"/></svg></span>
+        <div>Esta guía no enseña a usar Claude desde cero. Asume que ya sabes mandarle un prompt y leer su respuesta. Lo que enseña es a dejar de mandarle uno solo y a empezar a mandarle tres.</div>
+      </div>
+
+      <h2 id="por-que-falla"><span class="num">01</span>Por qué un prompt gigante falla</h2>
+      <p>El error típico: tienes una tarea compleja (escribir un artículo, montar un reel, analizar competencia) y le mandas a Claude un prompt larguísimo con todo dentro. Investiga, escribe, revisa, ajusta el tono, mete las cifras, evita estos errores, sigue este formato.</p>
+      <p>Lo que pasa: el resultado es genérico. Suena a IA. Le falta una de las tres cosas (datos reales, voz tuya o rigor). Y cuanto más largo haces el prompt, peor se pone.</p>
+      <p>La metáfora útil: imagínate un becario al que le sueltas todo el brief de una vez. Va a cumplir el 60% de las cosas y a olvidarse del resto. No porque sea malo. Porque la mente humana (y la del modelo) no puede llevar 30 instrucciones a la vez con la misma calidad.</p>
+      <p>La solución no es escribir un prompt todavía más largo. Es dividir el trabajo entre tres "becarios" especializados.</p>
+
+      <h2 id="reparto"><span class="num">02</span>La regla del reparto</h2>
+      <p>Cualquier tarea de creación de contenido se puede dividir en tres bloques que casi nunca conviene mezclar:</p>
+      <ol>
+        <li><strong>Investigar:</strong> reunir datos, ejemplos, citas, cifras</li>
+        <li><strong>Escribir:</strong> producir el primer borrador con voz y estructura</li>
+        <li><strong>Revisar:</strong> detectar errores, suavizar, recortar y endurecer</li>
+      </ol>
+      <p>Cada bloque pide un mindset distinto. Investigar pide curiosidad y amplitud. Escribir pide compromiso y velocidad. Revisar pide frialdad y dureza. Si los mezclas en un solo prompt, el modelo intenta hacerlos todos a la vez y sale algo a medias.</p>
+      <p>La regla del reparto: cada agente recibe una sola misión, un contexto acotado y un límite duro de qué NO debe hacer.</p>
+
+      <h2 id="investigador"><span class="num">03</span>Agente 1: investigador</h2>
+      <p><strong>Su única misión:</strong> recoger materiales en bruto. Datos, citas, ejemplos, cifras concretas, casos reales.</p>
+      <p><strong>Contexto que recibe:</strong> el tema, el público al que va dirigido, y entre 3 y 5 fuentes (artículos, transcripciones, datos propios). Nada más.</p>
+      <p><strong>Su límite duro:</strong> no escribe el contenido final. Solo entrega una lista estructurada de hallazgos.</p>
+      <p>Ejemplo de instrucciones cortas:</p>
+      <div class="code-block"><pre>Eres un investigador. Te paso un tema y unas
+fuentes. Devuelve:
+
+1. Las 5 cifras más concretas que encuentres
+2. Las 3 citas reales más útiles
+3. 2 ejemplos verídicos que ilustren el tema
+4. 1 contradicción o matiz que merezca explorarse
+
+No escribas párrafos. No interpretes. Solo extrae.</pre></div>
+      <p>Lo que cambia: en vez de pedirle "escríbeme un artículo", le pides "dame los ladrillos". Lo siguiente lo construyes tú con el escritor.</p>
+
+      <h2 id="escritor"><span class="num">04</span>Agente 2: escritor</h2>
+      <p><strong>Su única misión:</strong> producir el primer borrador con voz tuya y estructura clara.</p>
+      <p><strong>Contexto que recibe:</strong> los hallazgos del investigador, una guía de tono breve (3 a 5 reglas) y la estructura objetivo (cuántas secciones, en qué orden).</p>
+      <p><strong>Su límite duro:</strong> no investiga. No inventa cifras. Si necesita un dato que no está en los hallazgos, deja un hueco entre corchetes y sigue.</p>
+      <p>Ejemplo de instrucciones cortas:</p>
+      <div class="code-block"><pre>Eres un escritor. Te paso unos hallazgos y una
+guía de tono. Devuelve un borrador con:
+
+- Estructura: 5 secciones con subtítulo
+- Tono: frases cortas, tú al lector, sin jerga
+- Cifras: solo las que aparecen en los hallazgos
+- Si falta un dato, escribe [DATO PENDIENTE]
+
+No revises tu propio texto. Otro agente lo hará.</pre></div>
+      <p>Lo que cambia: el escritor no se distrae buscando datos ni dudando si tal frase suena bien. Solo monta.</p>
+
+      <h2 id="revisor"><span class="num">05</span>Agente 3: revisor</h2>
+      <p><strong>Su única misión:</strong> destrozar el borrador del escritor para dejarlo más corto, más claro y más tuyo.</p>
+      <p><strong>Contexto que recibe:</strong> el borrador y una lista corta de patrones a eliminar (palabras prohibidas, construcciones tipo, longitud máxima).</p>
+      <p><strong>Su límite duro:</strong> no añade ideas nuevas. Solo recorta, sustituye y endurece.</p>
+      <p>Ejemplo de instrucciones cortas:</p>
+      <div class="code-block"><pre>Eres un revisor duro. Te paso un borrador.
+Devuelve la versión corregida aplicando estas
+reglas:
+
+- Borra adverbios en -mente
+- Elimina "increíble", "brutal", "alucinante"
+- Frases de máximo 18 palabras
+- Sustituye adjetivos por cifras siempre que puedas
+- Si una frase no aporta, bórrala
+
+No añadas información nueva. Solo recorta.</pre></div>
+      <p>Lo que cambia: el revisor no escribe, audita. Y al separarlo, puedes ser mucho más exigente con él que cuando todo iba en el mismo prompt.</p>
+
+      <a href="/metodo.html" class="cross-link">
+        <div class="label">Quieres ir más allá</div>
+        <h3>El método Claude</h3>
+        <p>Seis módulos para construir sistemas con Claude. Cómo orquestar varios agentes en serie, cómo guardar contextos largos y cuándo conviene cambiar de modelo.</p>
+        <span class="arrow">Ver el método →</span>
+      </a>
+
+      <h2 id="coordinacion"><span class="num">06</span>Cómo coordinarlos</h2>
+      <p>No hace falta nada sofisticado. Para empezar, un orquestador en serie funciona bien:</p>
+      <ol>
+        <li>Llamas al investigador y guardas su respuesta</li>
+        <li>Pasas esa respuesta al escritor y guardas el borrador</li>
+        <li>Pasas el borrador al revisor y obtienes la versión final</li>
+      </ol>
+      <p>Lo puedes hacer manualmente en tres ventanas de Claude (copia y pega entre una y otra) o automatizado con un script de 30 líneas. Las dos opciones funcionan. Empieza por la manual: es más educativa.</p>
+      <p>Cuando la manual se te quede pequeña (porque produces lo mismo cada semana), pasa a un script o a una herramienta de automatización que llame a Claude tres veces seguidas y junte los outputs.</p>
+      <div class="callout warn">
+        <span class="ico" aria-hidden="true"><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M10.29 3.86 1.82 18a2 2 0 0 0 1.71 3h16.94a2 2 0 0 0 1.71-3L13.71 3.86a2 2 0 0 0-3.42 0z"/><line x1="12" y1="9" x2="12" y2="13"/><line x1="12" y1="17" x2="12.01" y2="17"/></svg></span>
+        <div>Resiste la tentación de automatizar antes de tiempo. Si todavía no sabes qué resultado bueno quieres, ningún script te lo va a dar. Primero la mano, luego la máquina.</div>
+      </div>
+
+      <h2 id="empezar"><span class="num">07</span>Empezar en 30 minutos</h2>
+      <p>Plan concreto para probarlo hoy:</p>
+      <ol>
+        <li>Elige una tarea que te haya frustrado con un prompt gigante (un artículo, un guion, un análisis)</li>
+        <li>Abre tres conversaciones nuevas en Claude</li>
+        <li>En la primera, pega el prompt del investigador (10 minutos)</li>
+        <li>Copia su respuesta a la segunda y pega el prompt del escritor (10 minutos)</li>
+        <li>Copia el borrador a la tercera y pega el prompt del revisor (10 minutos)</li>
+        <li>Compara el resultado final con lo que sacabas con tu prompt gigante</li>
+      </ol>
+      <p>La primera vez se siente raro porque haces 3 pasos donde antes hacías 1. La segunda vez se siente normal. La tercera, ya no quieres volver atrás.</p>
+
+      <h2 id="errores"><span class="num">08</span>Errores comunes</h2>
+      <ol>
+        <li><strong>Mezclar misiones.</strong> Si tu agente "escritor" también revisa, vuelves al problema original. Cada uno hace una sola cosa.</li>
+        <li><strong>Pasarle todo el contexto a todos.</strong> El escritor no necesita las fuentes originales. Solo los hallazgos. Menos contexto = mejor resultado.</li>
+        <li><strong>Saltarte el revisor.</strong> Es el agente que más cambia el resultado. Si tienes prisa, salta antes el investigador (pide datos tú a mano), pero nunca el revisor.</li>
+        <li><strong>Hacer prompts largos por agente.</strong> Si tu prompt de cualquier agente pasa de 200 palabras, lo estás cargando demasiado. Recorta.</li>
+        <li><strong>No guardar los prompts.</strong> Estos 3 prompts son tu activo. Guárdalos en una nota fija y reúsalos en cada sesión. Mejóralos cada vez que un resultado te decepcione.</li>
+      </ol>
+
+      <a href="/voz.html" class="cross-link">
+        <div class="label">Guía siguiente</div>
+        <h3>Cómo enseñar tu voz a Claude</h3>
+        <p>Tienes el reparto en tres agentes. Ahora toca que el escritor suene a ti, no a un becario neutro. Aprende a entrenar tu voz con menos texto del que crees.</p>
+        <span class="arrow">Abrir guía voz →</span>
+      </a>
+
+    </div>
+
+  </article>
+
+  <footer class="site-footer">
+    <a href="https://instagram.com/rafa.prompts" target="_blank" rel="noopener" class="handle">@rafa.prompts</a>
+  </footer>
+
+  <script src="app.js"></script>
+  <script>
+    (function() {
+      const burger = document.getElementById('burger');
+      const drawer = document.getElementById('mobile-drawer');
+      if (!burger || !drawer) return;
+      const toggle = (force) => {
+        const open = force !== undefined ? force : !document.body.classList.contains('drawer-open');
+        document.body.classList.toggle('drawer-open', open);
+        burger.setAttribute('aria-expanded', open);
+        drawer.setAttribute('aria-hidden', !open);
+        document.body.style.overflow = open ? 'hidden' : '';
+      };
+      burger.addEventListener('click', () => toggle());
+      const close = document.getElementById('drawer-close');
+      if (close) close.addEventListener('click', () => toggle(false));
+      drawer.querySelectorAll('a').forEach(a => a.addEventListener('click', () => toggle(false)));
+      document.addEventListener('keydown', (e) => { if (e.key === 'Escape') toggle(false); });
+    })();
+  </script>
+</body>
+</html>

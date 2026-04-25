@@ -1,0 +1,290 @@
+<!doctype html>
+<html lang="es">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>dms : automatiza tus DMs sin perder clientes · rafa.prompts</title>
+  <meta name="description" content="Cómo poner un agente a responder tus mensajes privados sin enfriar al cliente real. Los 4 tipos de mensaje, plantillas y aviso por Telegram.">
+  <link rel="icon" type="image/svg+xml" href="/assets/img/favicon.svg">
+  <link rel="icon" href="/assets/img/favicon.ico">
+  <link rel="icon" type="image/png" sizes="32x32" href="/assets/img/favicon-32.png">
+  <link rel="icon" type="image/png" sizes="16x16" href="/assets/img/favicon-16.png">
+  <link rel="apple-touch-icon" href="/assets/img/apple-touch-icon.png">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Archivo:wght@400;500;700;800;900&family=IBM+Plex+Mono:wght@400;600&family=Newsreader:ital,wght@1,400;1,500&display=swap">
+  <link rel="stylesheet" href="styles.css">
+</head>
+<body>
+
+  <svg width="0" height="0" style="position:absolute">
+    <defs>
+      <filter id="sprayGrain" x="-10%" y="-10%" width="120%" height="120%">
+        <feTurbulence type="fractalNoise" baseFrequency="0.9" numOctaves="2" seed="7" result="noise"/>
+        <feDisplacementMap in="SourceGraphic" in2="noise" scale="1.6" xChannelSelector="R" yChannelSelector="G" result="wobbled"/>
+        <feGaussianBlur in="wobbled" stdDeviation="0.3" result="blurred"/>
+        <feComponentTransfer in="blurred">
+          <feFuncA type="linear" slope="1.8" intercept="-0.05"/>
+        </feComponentTransfer>
+      </filter>
+    </defs>
+  </svg>
+
+  <div class="progress" id="progress"></div>
+
+  <header class="site-header">
+    <a href="/" class="brand"><strong>rafa</strong>.prompts</a>
+    <nav class="nav">
+      <a href="/metodo.html">Método</a>
+      <a href="/#recursos">Recursos</a>
+      <a href="/#faq">FAQ</a>
+      <a href="/metodo.html" class="btn">Empezar · 297€</a>
+    </nav>
+    <button class="burger" id="burger" aria-label="Abrir menú" aria-expanded="false" aria-controls="mobile-drawer">
+      <span></span><span></span><span></span>
+    </button>
+  </header>
+
+  <div class="mobile-drawer" id="mobile-drawer" aria-hidden="true">
+    <button class="drawer-close" id="drawer-close" aria-label="Cerrar menú"><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><line x1="18" y1="6" x2="6" y2="18"/><line x1="6" y1="6" x2="18" y2="18"/></svg></button>
+    <nav class="drawer-nav">
+      <a href="/metodo.html">Método</a>
+      <a href="/#recursos">Recursos</a>
+      <a href="/#faq">FAQ</a>
+      <a href="/metodo.html" class="btn accent large">Empezar · 297€</a>
+    </nav>
+  </div>
+
+  <article class="resource">
+
+    <aside class="toc">
+      <div class="label">En esta guía</div>
+      <ol>
+        <li><a href="#problema">El problema de los DMs</a></li>
+        <li><a href="#tipos">Los 4 tipos de mensaje</a></li>
+        <li><a href="#tipo-1">Tipo 1: preguntas FAQ</a></li>
+        <li><a href="#tipo-2">Tipo 2: quieren algo gratis</a></li>
+        <li><a href="#tipo-3">Tipo 3: saludos vacíos</a></li>
+        <li><a href="#tipo-4">Tipo 4: cliente real</a></li>
+        <li><a href="#aviso">El aviso por Telegram</a></li>
+        <li><a href="#empezar">Empezar en 30 minutos</a></li>
+        <li><a href="#errores">Errores comunes</a></li>
+      </ol>
+    </aside>
+
+    <div class="resource-content">
+
+      <div class="reading-time">7 min de lectura · guía 06</div>
+      <h1>Automatiza tus DMs sin perder clientes</h1>
+      <p class="lede">
+        El 90% de los DMs que recibes se pueden contestar sin tu cabeza. El 10% restante son los que pagan. Aquí tienes el sistema para no confundirlos.
+      </p>
+
+      <div class="callout">
+        <span class="ico" aria-hidden="true"><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M21 11.5a8.38 8.38 0 0 1-.9 3.8 8.5 8.5 0 0 1-7.6 4.7 8.38 8.38 0 0 1-3.8-.9L3 21l1.9-5.7a8.38 8.38 0 0 1-.9-3.8 8.5 8.5 0 0 1 4.7-7.6 8.38 8.38 0 0 1 3.8-.9h.5a8.48 8.48 0 0 1 8 8v.5z"/></svg></span>
+        <div>El objetivo no es contestar todos los mensajes. Es no perder los 2 o 3 al mes que se convierten en cliente. El resto, da igual si los responde un agente o el silencio.</div>
+      </div>
+
+      <h2 id="problema"><span class="num">01</span>El problema real de los DMs</h2>
+      <p>Si tu cuenta crece, los mensajes privados crecen más rápido. La mayoría no son interesantes: preguntas que ya están en tu bio, gente pidiendo gratis lo que ya cobras, saludos sin contenido.</p>
+      <p>El instinto típico es uno de estos dos:</p>
+      <ul>
+        <li>Contestar todos por culpa, lo que te quema y te roba 1 a 2 horas al día</li>
+        <li>Ignorar todos por agotamiento, lo que te hace perder los pocos que sí valen</li>
+      </ul>
+      <p>Las dos opciones son malas. La buena es la tercera: que un agente lea cada mensaje, decida de qué tipo es, conteste los rutinarios él mismo y te avise solo cuando llega uno que importa.</p>
+
+      <h2 id="tipos"><span class="num">02</span>Los 4 tipos de mensaje</h2>
+      <p>Cualquier DM que recibas cae en uno de estos 4 cubos. El sistema entero gira alrededor de clasificarlos bien.</p>
+      <ol>
+        <li><strong>Tipo 1: pregunta FAQ.</strong> Algo que ya está en tu bio, en tu landing o en una guía pública.</li>
+        <li><strong>Tipo 2: piden gratis.</strong> Quieren tu trabajo sin pagar, o tu opinión sobre su proyecto.</li>
+        <li><strong>Tipo 3: saludo vacío.</strong> Un emoji, un "hola" sin más, una reacción a una storie.</li>
+        <li><strong>Tipo 4: cliente real.</strong> Alguien con un problema concreto, un presupuesto implícito y prisa.</li>
+      </ol>
+      <p>Los 3 primeros tipos los responde el agente entero. El 4 nunca, jamás. El 4 te llega a ti directo.</p>
+
+      <h2 id="tipo-1"><span class="num">03</span>Tipo 1: preguntas FAQ</h2>
+      <p>Son las más frecuentes y las más fáciles. La gente quiere saber el precio, los plazos, si trabajas con su sector, dónde está el enlace, etc.</p>
+      <p>Ejemplo de mensaje real:</p>
+      <div class="code-block"><pre>"Hola Rafa, ¿cuánto vale el método? ¿Tiene
+acceso de por vida o es por meses?"</pre></div>
+      <p>Plantilla de respuesta del agente:</p>
+      <div class="code-block"><pre>"hola, te lo cuento rápido:
+
+el método cuesta 297 euros, pago único, acceso
+de por vida con todas las actualizaciones.
+
+aquí tienes el detalle completo: rafa.prompts/metodo
+
+si después de leer te queda una duda concreta,
+me escribes y te la contesto yo personalmente."</pre></div>
+      <p>Lo importante: la respuesta es corta, directa y termina con la puerta abierta a una conversación humana <em>solo si la duda persiste</em>. Eso filtra al curioso del interesado.</p>
+
+      <h2 id="tipo-2"><span class="num">04</span>Tipo 2: quieren algo gratis</h2>
+      <p>Llegan disfrazados de halago: <em>"me encanta lo que haces, ¿podrías echarle un ojo a mi cuenta?"</em>, <em>"te leo desde hace meses, ¿me ayudas a montar mi automatización?"</em></p>
+      <p>Si los contestas, abres la puerta a 30 minutos de ida y vuelta sin retorno. Si los ignoras, suenas borde.</p>
+      <p>Plantilla de respuesta del agente:</p>
+      <div class="code-block"><pre>"gracias por escribir, de verdad.
+
+trabajo así con la gente:
+
+opción A, gratis: todo lo que sé está aquí
+público y ordenado: rafa.prompts
+
+opción B, pagando: el método tiene los pasos
+exactos y plantillas listas para tu caso:
+rafa.prompts/metodo
+
+los DMs de auditoría individual no los hago
+sin presupuesto. te lo digo claro porque te
+respeto el tiempo, y para no quedarme corto."</pre></div>
+      <p>El tono importa. Esta plantilla, escrita con jerga vendedora, ofende. Escrita con calma, cierra el caso bien y sin enfadar a nadie.</p>
+
+      <h2 id="tipo-3"><span class="num">05</span>Tipo 3: saludos vacíos</h2>
+      <p>Un <em>"hola"</em>, una reacción a una storie, un emoji suelto. Son un test inconsciente para ver si respondes.</p>
+      <p>El agente puede responder algo cálido y corto que no obliga a nada:</p>
+      <div class="code-block"><pre>"ey, gracias por pasarte 🙌
+si quieres ver lo último, lo tengo aquí:
+rafa.prompts"</pre></div>
+      <p>El emoji es el único permitido en una respuesta automática y solo en este tipo. Suaviza sin sonar borde.</p>
+      <p>Si la persona contesta con algo concreto, el agente vuelve a clasificar y actúa según el tipo nuevo. Si no contesta, se acabó la conversación. Sin más.</p>
+
+      <h2 id="tipo-4"><span class="num">06</span>Tipo 4: cliente real (NUNCA lo responde el agente)</h2>
+      <p>Este es el corazón de toda la guía. Si te equivocas en este tipo, pierdes clientes. Si lo aciertas, el sistema entero merece la pena.</p>
+      <p>Cómo se reconoce un mensaje de tipo 4:</p>
+      <ul>
+        <li>Describe un problema concreto con números (cifras de equipo, horas, ingresos)</li>
+        <li>Menciona una empresa o proyecto con nombre propio</li>
+        <li>Pregunta por trabajar contigo de forma específica (no vaga)</li>
+        <li>Tiene urgencia implícita: <em>"empezamos la semana que viene"</em>, <em>"tengo un evento en 2 semanas"</em></li>
+        <li>Habla en plural (<em>"en mi equipo somos 8"</em>) con detalles operativos reales</li>
+      </ul>
+      <p>Cuando el agente detecta una de estas señales, no responde nada al usuario. Lo que hace es avisarte a ti por Telegram con todo el contexto, para que respondas tú en persona, en frío, con la cabeza puesta.</p>
+      <div class="callout warn">
+        <span class="ico" aria-hidden="true"><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z"/></svg></span>
+        <div>Que el agente no responda al tipo 4 es la regla más importante. Una respuesta automática a un cliente real, por bien escrita que esté, suena a plantilla y enfría la venta. Mejor 30 minutos de silencio y luego tú, que un mensaje instantáneo del bot.</div>
+      </div>
+
+      <a href="/metodo.html" class="cross-link">
+        <div class="label">Quieres ir más allá</div>
+        <h3>El método Claude</h3>
+        <p>El módulo 04 enseña a montar el clasificador de DMs entero, con las plantillas exactas, el aviso por Telegram y la lógica que filtra cliente real de curioso.</p>
+        <span class="arrow">Ver el método →</span>
+      </a>
+
+      <h2 id="aviso"><span class="num">07</span>El aviso por Telegram</h2>
+      <p>Cuando el agente detecta un tipo 4, te manda un Telegram con esta estructura. Ni más, ni menos. La idea es que en 10 segundos sepas si pararte a contestar ahora o más tarde.</p>
+      <div class="code-block"><pre>📩 DM CALIENTE
+
+de: @maria_ceo
+plataforma: Instagram
+hora: 09:42
+
+mensaje:
+"Hola Rafa, soy de una agencia de 12 personas
+en Madrid. Pasamos 15h/semana copiando datos
+entre Notion y Airtable. Vimos tu reel del
+yate. ¿Podemos hablar la semana que viene?"
+
+por qué es tipo 4:
+- empresa con nombre y tamaño
+- problema con horas concretas
+- petición específica de llamada
+- urgencia: "la semana que viene"
+
+lo que sé del perfil:
+- 14k seguidores, agencia creativa
+- ya nos sigue desde hace 4 meses
+- comentó 2 reels este mes
+
+sugerencia:
+respondele tú, hoy mismo si puedes.
+plantilla de tu primera respuesta abajo.
+
+primera respuesta sugerida:
+"Hola María, gracias por escribir. Me cuadra
+hablar el martes a las 11. Te paso enlace de
+calendario aquí: ..."
+
+abrir DM directo:
+[botón a Instagram]</pre></div>
+      <p>Cinco bloques. Cada bloque tiene una función concreta y se puede leer salteado. El último bloque tiene el botón directo al chat de la persona, para que un toque te lleve al sitio.</p>
+
+      <h2 id="empezar"><span class="num">08</span>Empezar en 30 minutos</h2>
+      <ol>
+        <li>Lista los 50 últimos DMs que has recibido</li>
+        <li>Clasifícalos a mano en los 4 tipos</li>
+        <li>Anota qué porcentaje cae en cada tipo</li>
+        <li>Para tipo 1, escribe 5 plantillas de respuesta cortas</li>
+        <li>Para tipo 2, escribe 1 plantilla con tu mejor "no, gracias"</li>
+        <li>Para tipo 3, escribe 1 saludo cálido con enlace</li>
+        <li>Para tipo 4, no escribas plantilla: define las 5 señales que lo identifican</li>
+        <li>Conecta tu cuenta a un servicio que lea tus DMs y aplique las reglas</li>
+        <li>Prueba 1 semana en silencio: que solo te llegue el aviso por Telegram</li>
+        <li>Ajusta plantillas y señales según lo que veas</li>
+      </ol>
+
+      <h2 id="errores"><span class="num">09</span>Errores comunes</h2>
+
+      <details>
+        <summary>El agente responde a un cliente real como si fuera FAQ</summary>
+        <p>Causa: las señales de tipo 4 son demasiado vagas. El agente clasifica por defecto al cubo más probable.</p>
+        <p>Solución: añade señales específicas y obligatorias (mención de empresa, número, urgencia). Cuando dudes, manda al cubo 4. Es mejor avisarte de más que de menos.</p>
+      </details>
+
+      <details>
+        <summary>Las plantillas suenan a robot</summary>
+        <p>Causa: se han escrito en un día sin volver a leerlas con calma.</p>
+        <p>Solución: léelas en voz alta. Si suenan postizas, reescríbelas como si las dijeras a un amigo. La sección de tono del archivo de instrucciones (ver guía voz) las debería empapar.</p>
+      </details>
+
+      <details>
+        <summary>Te llegan demasiados avisos por Telegram</summary>
+        <p>Causa: las señales de tipo 4 están muy abiertas y todos los DMs medio interesantes te llegan.</p>
+        <p>Solución: aprieta las señales. Pide al menos 2 de las 5 señales para clasificar como tipo 4. Si solo tiene 1, va al tipo 2 con plantilla de "trabajo así" y se acabó.</p>
+      </details>
+
+      <details>
+        <summary>Pierdes seguidores que se sienten ignorados</summary>
+        <p>Causa: la plantilla del tipo 3 (saludo) es demasiado fría o tarda demasiado en responder.</p>
+        <p>Solución: que tarde entre 1 y 5 minutos (no instantáneo, suena a bot, no más de 5, suena a olvido). Y que el tono sea cálido sin ser efusivo.</p>
+      </details>
+
+      <a href="/automatizar.html" class="cross-link">
+        <div class="label">Guía siguiente</div>
+        <h3>Qué automatizar primero: auditoría 20 min</h3>
+        <p>Ya sabes automatizar los DMs. Pero ¿es lo primero que tendrías que automatizar? Aquí tienes el método para decidirlo en 20 minutos.</p>
+        <span class="arrow">Abrir guía automatizar →</span>
+      </a>
+
+    </div>
+
+  </article>
+
+  <footer class="site-footer">
+    <a href="https://instagram.com/rafa.prompts" target="_blank" rel="noopener" class="handle">@rafa.prompts</a>
+  </footer>
+
+  <script src="app.js"></script>
+  <script>
+    (function() {
+      const burger = document.getElementById('burger');
+      const drawer = document.getElementById('mobile-drawer');
+      if (!burger || !drawer) return;
+      const toggle = (force) => {
+        const open = force !== undefined ? force : !document.body.classList.contains('drawer-open');
+        document.body.classList.toggle('drawer-open', open);
+        burger.setAttribute('aria-expanded', open);
+        drawer.setAttribute('aria-hidden', !open);
+        document.body.style.overflow = open ? 'hidden' : '';
+      };
+      burger.addEventListener('click', () => toggle());
+      const close = document.getElementById('drawer-close');
+      if (close) close.addEventListener('click', () => toggle(false));
+      drawer.querySelectorAll('a').forEach(a => a.addEventListener('click', () => toggle(false)));
+      document.addEventListener('keydown', (e) => { if (e.key === 'Escape') toggle(false); });
+    })();
+  </script>
+</body>
+</html>

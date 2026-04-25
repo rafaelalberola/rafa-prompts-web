@@ -1551,15 +1551,20 @@ details > *:not(summary) { margin-top: 12px; }
 .checkout-overlay {
   position: fixed;
   inset: 0;
-  background: rgba(17,17,17,0.6);
+  background: rgba(17,17,17,0.55);
+  backdrop-filter: blur(4px);
+  -webkit-backdrop-filter: blur(4px);
   z-index: 80;
   display: flex;
   align-items: center;
   justify-content: center;
-  padding: 16px;
+  padding: 5vh 5vw;
   opacity: 0;
   pointer-events: none;
   transition: opacity 0.25s;
+}
+@media (max-width: 600px) {
+  .checkout-overlay { padding: 4vh 4vw; }
 }
 .checkout-overlay.show { opacity: 1; pointer-events: auto; }
 .checkout-modal {
@@ -1569,16 +1574,19 @@ details > *:not(summary) { margin-top: 12px; }
   border-radius: var(--r-xl);
   overflow: hidden;
   position: relative;
-  max-height: 92vh;
+  max-height: 90vh;
   display: flex;
   flex-direction: column;
+  box-shadow: var(--shadow-lg);
 }
 .checkout-modal-head {
   display: flex;
   justify-content: space-between;
   align-items: center;
-  padding: 16px 20px;
+  padding: 14px 16px 14px 20px;
   border-bottom: 1px solid var(--border);
+  background: var(--paper);
+  flex-shrink: 0;
 }
 .checkout-modal-head .title {
   font-family: var(--sans);
@@ -1586,20 +1594,22 @@ details > *:not(summary) { margin-top: 12px; }
   font-size: 14px;
 }
 .checkout-close {
-  width: 36px; height: 36px;
-  background: transparent;
-  border: 0;
+  width: 40px; height: 40px;
+  background: rgba(17,17,17,0.06);
+  border: 1px solid var(--border);
   color: var(--ink);
   cursor: pointer;
   display: inline-flex;
   align-items: center;
   justify-content: center;
   border-radius: 50%;
-  transition: background 0.2s;
+  transition: background 0.2s, color 0.2s, transform 0.2s;
+  flex-shrink: 0;
 }
-.checkout-close:hover { background: rgba(0,0,0,0.06); color: var(--accent); }
-.checkout-body { flex: 1; overflow-y: auto; }
-.checkout-body #checkout { min-height: 600px; }
+.checkout-close:hover { background: var(--ink); color: var(--paper); transform: scale(1.05); }
+.checkout-close svg { width: 20px; height: 20px; }
+.checkout-body { flex: 1; overflow-y: auto; -webkit-overflow-scrolling: touch; }
+.checkout-body #checkout { min-height: 540px; }
 
 /* ============================================================
    Utilities

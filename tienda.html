@@ -1,0 +1,213 @@
+<!doctype html>
+<html lang="es">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>tienda : cómo monetizar sin sponsors · rafa.prompts</title>
+  <meta name="description" content="El sistema completo para vender un curso o servicio propio desde tu cuenta. Cero colaboraciones, cero anuncios, todo el control y casi todo el margen.">
+  <link rel="icon" type="image/svg+xml" href="/assets/img/favicon.svg">
+  <link rel="icon" href="/assets/img/favicon.ico">
+  <link rel="icon" type="image/png" sizes="32x32" href="/assets/img/favicon-32.png">
+  <link rel="icon" type="image/png" sizes="16x16" href="/assets/img/favicon-16.png">
+  <link rel="apple-touch-icon" href="/assets/img/apple-touch-icon.png">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Archivo:wght@400;500;700;800;900&family=IBM+Plex+Mono:wght@400;600&family=Newsreader:ital,wght@1,400;1,500&display=swap">
+  <link rel="stylesheet" href="styles.css">
+</head>
+<body>
+
+  <svg width="0" height="0" style="position:absolute">
+    <defs>
+      <filter id="sprayGrain" x="-10%" y="-10%" width="120%" height="120%">
+        <feTurbulence type="fractalNoise" baseFrequency="0.9" numOctaves="2" seed="7" result="noise"/>
+        <feDisplacementMap in="SourceGraphic" in2="noise" scale="1.6" xChannelSelector="R" yChannelSelector="G" result="wobbled"/>
+        <feGaussianBlur in="wobbled" stdDeviation="0.3" result="blurred"/>
+        <feComponentTransfer in="blurred">
+          <feFuncA type="linear" slope="1.8" intercept="-0.05"/>
+        </feComponentTransfer>
+      </filter>
+    </defs>
+  </svg>
+
+  <div class="progress" id="progress"></div>
+
+  <header class="site-header">
+    <a href="/" class="brand"><strong>rafa</strong>.prompts</a>
+    <nav class="nav">
+      <a href="/metodo.html">Método</a>
+      <a href="/#recursos">Recursos</a>
+      <a href="/#faq">FAQ</a>
+      <a href="/metodo.html" class="btn">Empezar · 297€</a>
+    </nav>
+    <button class="burger" id="burger" aria-label="Abrir menú" aria-expanded="false" aria-controls="mobile-drawer">
+      <span></span><span></span><span></span>
+    </button>
+  </header>
+
+  <div class="mobile-drawer" id="mobile-drawer" aria-hidden="true">
+    <button class="drawer-close" id="drawer-close" aria-label="Cerrar menú"><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><line x1="18" y1="6" x2="6" y2="18"/><line x1="6" y1="6" x2="18" y2="18"/></svg></button>
+    <nav class="drawer-nav">
+      <a href="/metodo.html">Método</a>
+      <a href="/#recursos">Recursos</a>
+      <a href="/#faq">FAQ</a>
+      <a href="/metodo.html" class="btn accent large">Empezar · 297€</a>
+    </nav>
+  </div>
+
+  <article class="resource">
+
+    <aside class="toc">
+      <div class="label">En esta guía</div>
+      <ol>
+        <li><a href="#por-que-no-sponsors">Por qué dejar los sponsors</a></li>
+        <li><a href="#producto">Tu primer producto en 7 días</a></li>
+        <li><a href="#funnel">El funnel mínimo viable</a></li>
+        <li><a href="#landing">La landing que convierte</a></li>
+        <li><a href="#email">El email de bienvenida</a></li>
+        <li><a href="#precio">Cómo poner precio</a></li>
+        <li><a href="#errores">Errores caros</a></li>
+      </ol>
+    </aside>
+
+    <div class="resource-content">
+
+      <div class="reading-time">8 min de lectura · guía 06</div>
+      <h1>Cómo monetizar tu cuenta sin colaboraciones de marca</h1>
+      <p class="lede">
+        Vender lo tuyo paga más, no depende de nadie y no obliga a publicar contenido que no encaja con tu cuenta. Aquí tienes el sistema entero, en 7 días.
+      </p>
+
+      <div class="callout">
+        <span class="ico" aria-hidden="true"><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M3 9l9-7 9 7v11a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2z"/><polyline points="9 22 9 12 15 12 15 22"/></svg></span>
+        <div>No necesitas ser una cuenta grande. Una cuenta de 2.000 seguidores con un producto bien pensado vende más que una de 50.000 sin él.</div>
+      </div>
+
+      <h2 id="por-que-no-sponsors"><span class="num">01</span>Por qué dejar los sponsors</h2>
+      <p>Las colaboraciones de marca son rápidas, pero tienen tres problemas que la gente que vive de ellas conoce y no cuenta:</p>
+      <ul>
+        <li><strong>Cobras una vez.</strong> Tu producto cobra cada mes. La diferencia se nota a los seis meses.</li>
+        <li><strong>Diluyes la cuenta.</strong> Cada sponsor aleja a tu audiencia un poco más de por qué te seguían. A los 30 sponsors, no eres tú, eres una valla publicitaria.</li>
+        <li><strong>Dependes de otros.</strong> Si la marca cambia de prioridades, tu ingreso cae a cero en una semana.</li>
+      </ul>
+      <p>Vender lo tuyo es más lento al principio y mucho más sostenible.</p>
+
+      <h2 id="producto"><span class="num">02</span>Tu primer producto en 7 días</h2>
+      <p>El error es pasar 6 meses construyendo un producto perfecto. Lo correcto: lanza algo pequeño en una semana y aprende vendiendo.</p>
+      <p>Tres formatos que funcionan al principio, ordenados por rapidez:</p>
+
+      <details>
+        <summary>Plantilla o pack de recursos (1-2 días, 19-49€)</summary>
+        <p>Una plantilla, un pack de 50 prompts, un sistema documentado en PDF. Crea valor inmediato, prueba si tu audiencia paga.</p>
+        <p>Ejemplo: pack de 50 prompts para creadores. Pago único, descarga directa, cero soporte.</p>
+      </details>
+
+      <details>
+        <summary>Curso PDF o vídeo corto (3-7 días, 97-297€)</summary>
+        <p>Un curso autocontenido. PDF con pasos numerados o vídeos de 5 minutos. Más trabajo, mejor margen, conversión real.</p>
+        <p>Ejemplo: curso completo de 6 módulos para usar Claude profesionalmente. Acceso de por vida, actualizaciones gratis.</p>
+      </details>
+
+      <details>
+        <summary>Servicio propio (1 semana, 500-2.500€)</summary>
+        <p>Auditoría, consultoría, implementación. Caro y limitado, pero genera caja rápido y enseña qué pide el mercado.</p>
+        <p>Ejemplo: auditoría del proceso de contenido de una marca, 2 horas, 800€. Salida: documento con 3 cambios concretos.</p>
+      </details>
+
+      <h2 id="funnel"><span class="num">03</span>El funnel mínimo viable</h2>
+      <p>Olvida los embudos de 7 etapas. Al principio te sirve este, con 3 piezas:</p>
+      <ol>
+        <li><strong>Reel con palabra clave</strong> que conecta con un dolor real de tu audiencia</li>
+        <li><strong>Landing dedicada</strong> que enseña gratis lo que prometes en el reel y al final ofrece tu producto</li>
+        <li><strong>Email de bienvenida</strong> con el regalo + introducción a tu producto</li>
+      </ol>
+      <p>Si esto funciona, lo demás (drips, secuencias, retargeting) viene después. Si esto no funciona, lo demás tampoco.</p>
+
+      <h2 id="landing"><span class="num">04</span>La landing que convierte</h2>
+      <p>Tu landing tiene un trabajo: confirmar que tu reel decía la verdad. Si lo confirma, el lector está listo para pagar.</p>
+      <p>Estructura mínima:</p>
+      <ol>
+        <li><strong>Título igual al gancho del reel.</strong> El cerebro reconoce y se relaja.</li>
+        <li><strong>Una frase de promesa</strong> en letra grande. Lo que va a aprender en los próximos minutos.</li>
+        <li><strong>El contenido completo gratis.</strong> Sin formularios, sin email gating. Quien quiere leer, lee.</li>
+        <li><strong>Un bloque al medio</strong> que enlaza a tu producto, sin agresividad.</li>
+        <li><strong>Un cross-link al final</strong> a la siguiente guía o al producto principal.</li>
+      </ol>
+      <div class="callout warn">
+        <span class="ico" aria-hidden="true"><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M10.29 3.86 1.82 18a2 2 0 0 0 1.71 3h16.94a2 2 0 0 0 1.71-3L13.71 3.86a2 2 0 0 0-3.42 0z"/><line x1="12" y1="9" x2="12" y2="13"/><line x1="12" y1="17" x2="12.01" y2="17"/></svg></span>
+        <div>Reglas que casi nadie respeta: nada de pop-ups, nada de banners de cookies enormes, nada de formularios obligatorios. Tu landing es para regalar, no para capturar.</div>
+      </div>
+
+      <h2 id="email"><span class="num">05</span>El email de bienvenida</h2>
+      <p>Cuando alguien comenta tu palabra clave, recibe un email automático. Este es el momento de mayor atención que vas a tener con esa persona en su vida.</p>
+      <p>Estructura del email:</p>
+      <ol>
+        <li><strong>Asunto corto y útil.</strong> "Tu pack de 50 prompts" no "Hola y bienvenido a la familia"</li>
+        <li><strong>Saludo con su nombre</strong> si lo tienes, sin floritura</li>
+        <li><strong>El recurso prometido</strong> en el primer enlace</li>
+        <li><strong>Una línea sobre quién eres</strong> y qué subes</li>
+        <li><strong>Una pregunta abierta</strong>. "¿En qué proceso lo vas a aplicar?". Inicia conversación.</li>
+        <li><strong>Tu firma con tu instagram</strong> y tu producto principal en el pie</li>
+      </ol>
+
+      <a href="/metodo.html" class="cross-link">
+        <div class="label">Quieres ir más allá</div>
+        <h3>El método Claude</h3>
+        <p>El curso completo cubre cómo construir cada pieza de este funnel con Claude: la landing, los emails, las plantillas y los pipelines de medida. Los 6 módulos paso a paso.</p>
+        <span class="arrow">Ver el método →</span>
+      </a>
+
+      <h2 id="precio"><span class="num">06</span>Cómo poner precio sin equivocarte</h2>
+      <p>El precio es la parte más debatida y la menos importante al principio. Tres reglas simples:</p>
+      <ul>
+        <li><strong>Precio impar acaba en 7.</strong> 17€, 47€, 97€, 297€. Convierte mejor que cifras redondas. No es magia, es señal de que has pensado el precio.</li>
+        <li><strong>Pago único antes que suscripción.</strong> Más simple de entender, más fácil de comprar, menos abandono.</li>
+        <li><strong>Sube el precio cada 30 ventas.</strong> Empieza barato, sube según demanda. Si ya vendes 30, es señal de que el mercado dice "vale".</li>
+      </ul>
+
+      <h2 id="errores"><span class="num">07</span>Errores caros</h2>
+      <ol>
+        <li><strong>Lanzar sin haber publicado el reel.</strong> Sin tráfico, ningún producto vende. Primero el reel y la palabra clave funcionando, después la tienda.</li>
+        <li><strong>Construir el producto perfecto antes de venderlo.</strong> Vende un PDF de 30 páginas. Si vende, hazlo de 100. No al revés.</li>
+        <li><strong>Usar plataforma cara antes de tiempo.</strong> Stripe basta para los primeros meses. Saltas a algo más caro cuando la herramienta empieza a frenarte de verdad, no antes.</li>
+        <li><strong>No tener garantía.</strong> 14 días de devolución sin preguntas baja la fricción. Casi nadie la usa, todos compran más fácil.</li>
+        <li><strong>Pensar que la audiencia te debe comprar.</strong> Nadie te debe nada. Tu trabajo es ofrecer algo que merezca el dinero. Si no compran, escucha.</li>
+      </ol>
+
+      <a href="/yate.html" class="cross-link">
+        <div class="label">Empezar la serie</div>
+        <h3>Cómo hacer un reel como este</h3>
+        <p>Vuelve al principio de la serie. Aprende a producir el reel que va a traer la audiencia que tu tienda necesita.</p>
+        <span class="arrow">Abrir guía yate →</span>
+      </a>
+
+    </div>
+
+  </article>
+
+  <footer class="site-footer">
+    <a href="https://instagram.com/rafa.prompts" target="_blank" rel="noopener" class="handle">@rafa.prompts</a>
+  </footer>
+
+  <script src="app.js"></script>
+  <script>
+    (function() {
+      const burger = document.getElementById('burger');
+      const drawer = document.getElementById('mobile-drawer');
+      if (!burger || !drawer) return;
+      const toggle = (force) => {
+        const open = force !== undefined ? force : !document.body.classList.contains('drawer-open');
+        document.body.classList.toggle('drawer-open', open);
+        burger.setAttribute('aria-expanded', open);
+        drawer.setAttribute('aria-hidden', !open);
+        document.body.style.overflow = open ? 'hidden' : '';
+      };
+      burger.addEventListener('click', () => toggle());
+      const close = document.getElementById('drawer-close');
+      if (close) close.addEventListener('click', () => toggle(false));
+      drawer.querySelectorAll('a').forEach(a => a.addEventListener('click', () => toggle(false)));
+      document.addEventListener('keydown', (e) => { if (e.key === 'Escape') toggle(false); });
+    })();
+  </script>
+</body>
+</html>

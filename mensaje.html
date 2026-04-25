@@ -1,0 +1,224 @@
+<!doctype html>
+<html lang="es">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>mensaje : valida un mensaje sin gastar en anuncios · rafa.prompts</title>
+  <meta name="description" content="Cómo probar si tu copy convence antes de invertir un euro en ads. Diez variantes, un agente cliente que las rechaza y solo dos que sobreviven.">
+  <link rel="icon" type="image/svg+xml" href="/assets/img/favicon.svg">
+  <link rel="icon" href="/assets/img/favicon.ico">
+  <link rel="icon" type="image/png" sizes="32x32" href="/assets/img/favicon-32.png">
+  <link rel="icon" type="image/png" sizes="16x16" href="/assets/img/favicon-16.png">
+  <link rel="apple-touch-icon" href="/assets/img/apple-touch-icon.png">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Archivo:wght@400;500;700;800;900&family=IBM+Plex+Mono:wght@400;600&family=Newsreader:ital,wght@1,400;1,500&display=swap">
+  <link rel="stylesheet" href="styles.css">
+</head>
+<body>
+
+  <svg width="0" height="0" style="position:absolute">
+    <defs>
+      <filter id="sprayGrain" x="-10%" y="-10%" width="120%" height="120%">
+        <feTurbulence type="fractalNoise" baseFrequency="0.9" numOctaves="2" seed="7" result="noise"/>
+        <feDisplacementMap in="SourceGraphic" in2="noise" scale="1.6" xChannelSelector="R" yChannelSelector="G" result="wobbled"/>
+        <feGaussianBlur in="wobbled" stdDeviation="0.3" result="blurred"/>
+        <feComponentTransfer in="blurred">
+          <feFuncA type="linear" slope="1.8" intercept="-0.05"/>
+        </feComponentTransfer>
+      </filter>
+    </defs>
+  </svg>
+
+  <div class="progress" id="progress"></div>
+
+  <header class="site-header">
+    <a href="/" class="brand"><strong>rafa</strong>.prompts</a>
+    <nav class="nav">
+      <a href="/metodo.html">Método</a>
+      <a href="/#recursos">Recursos</a>
+      <a href="/#faq">FAQ</a>
+      <a href="/metodo.html" class="btn">Empezar · 297€</a>
+    </nav>
+    <button class="burger" id="burger" aria-label="Abrir menú" aria-expanded="false" aria-controls="mobile-drawer">
+      <span></span><span></span><span></span>
+    </button>
+  </header>
+
+  <div class="mobile-drawer" id="mobile-drawer" aria-hidden="true">
+    <button class="drawer-close" id="drawer-close" aria-label="Cerrar menú"><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><line x1="18" y1="6" x2="6" y2="18"/><line x1="6" y1="6" x2="18" y2="18"/></svg></button>
+    <nav class="drawer-nav">
+      <a href="/metodo.html">Método</a>
+      <a href="/#recursos">Recursos</a>
+      <a href="/#faq">FAQ</a>
+      <a href="/metodo.html" class="btn accent large">Empezar · 297€</a>
+    </nav>
+  </div>
+
+  <article class="resource">
+
+    <aside class="toc">
+      <div class="label">En esta guía</div>
+      <ol>
+        <li><a href="#cara">Por qué validar con dinero es lo más caro</a></li>
+        <li><a href="#cuatro-pasos">Validar con texto en 4 pasos</a></li>
+        <li><a href="#variantes">Genera 10 variantes</a></li>
+        <li><a href="#cliente">El agente cliente</a></li>
+        <li><a href="#rechazo">Las 2 reglas del rechazo</a></li>
+        <li><a href="#sobreviven">Las 2 que sobreviven</a></li>
+        <li><a href="#prompt">Plantilla del prompt cliente</a></li>
+        <li><a href="#errores">Errores comunes</a></li>
+      </ol>
+    </aside>
+
+    <div class="resource-content">
+
+      <div class="reading-time">7 min de lectura · guía 06</div>
+      <h1>Valida un mensaje sin gastar en anuncios</h1>
+      <p class="lede">
+        Antes de poner un anuncio, sabes en una tarde si tu mensaje convence. Lo prueba un agente que actúa como tu cliente ideal y rechaza casi todo. Solo lo que aguanta su filtro merece presupuesto.
+      </p>
+
+      <div class="callout">
+        <span class="ico" aria-hidden="true"><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="10"/><path d="M9 12l2 2 4-4"/></svg></span>
+        <div>El test no sustituye al mercado real. Sustituye al primer rechazo, ese que te ahorra publicar algo que ya estaba muerto al nacer.</div>
+      </div>
+
+      <h2 id="cara"><span class="num">01</span>Por qué validar con dinero es lo más caro</h2>
+      <p>El reflejo del marketing tradicional es: lanza un anuncio pequeño, mira si convierte, decide. Suena barato. No lo es.</p>
+      <p>Para que un anuncio te diga algo fiable, necesita unos cientos de impresiones. Eso son días, fatiga creativa y dinero gastado en un mensaje que igual está roto desde la primera palabra. Y lo peor: cuando el resultado llega, no sabes si falló el copy, la imagen, el público o la oferta.</p>
+      <p>Hay un paso anterior que cuesta cero. Pasar el mensaje por un filtro que actúa como tu cliente y te dice por qué no le interesa. Si ahí ya cae, en el feed cae más fuerte.</p>
+
+      <h2 id="cuatro-pasos"><span class="num">02</span>Validar con texto en 4 pasos</h2>
+      <p>Todo el flujo encaja en una tarde. Sin herramientas raras, sin presupuesto.</p>
+      <ol>
+        <li>Escribes tu mensaje original, el que ibas a poner en el anuncio.</li>
+        <li>Pides a Claude que genere 10 variantes con ángulos distintos.</li>
+        <li>Pasas las 11 versiones (original + 10) por un agente cliente que rechaza con razones concretas.</li>
+        <li>Te quedas con las que sobreviven a las dos reglas del rechazo. Esas son las que merecen presupuesto.</li>
+      </ol>
+      <p>El cuello de botella no es la herramienta. Es saber describir bien al cliente para que el agente piense como él.</p>
+
+      <h2 id="variantes"><span class="num">03</span>Genera 10 variantes</h2>
+      <p>Una sola versión no se puede validar. La comparas contra qué. Pides 10 con ángulos distintos para tener material que rechazar.</p>
+      <p>El prompt para generarlas es directo: pegas tu mensaje original, describes a quién va dirigido, y pides que cada variante use un ángulo diferente. Estos son los 10 ángulos que mejor cubren el espectro:</p>
+      <ul>
+        <li>Dolor concreto del cliente, en su lenguaje</li>
+        <li>Resultado medible, con cifra</li>
+        <li>Antes y después de un caso real</li>
+        <li>Pregunta que el cliente ya se hizo</li>
+        <li>Confesión propia de un fallo que tú cometiste</li>
+        <li>Comparativa con la alternativa que ya usa</li>
+        <li>Demostración rápida de cómo funciona</li>
+        <li>Coste de no actuar, sin amenazar</li>
+        <li>Promesa fuerte que vas a cumplir en el cuerpo</li>
+        <li>Historia corta de un cliente real, sin nombre</li>
+      </ul>
+      <p>Los 10 ángulos se rellenan con tu mismo producto y tu mismo cliente. Cambia el envoltorio, no el fondo.</p>
+
+      <h2 id="cliente"><span class="num">04</span>El agente cliente</h2>
+      <p>Un agente cliente es Claude jugando a ser tu cliente ideal. Tú le das una ficha muy concreta de quién es, qué hace, qué quiere y qué le da pereza, y le pides que reaccione a cada mensaje como si lo viera en su feed.</p>
+      <p>Tres claves para que el agente sirva:</p>
+      <ul>
+        <li>La ficha del cliente tiene que estar basada en un cliente real al que has hablado, no en una idea abstracta.</li>
+        <li>El agente recibe los mensajes uno por uno, sin saber que vienen del mismo autor. Si los lee en bloque, los compara y eso ensucia el juicio.</li>
+        <li>Tiene instrucciones para rechazar por defecto. Solo aprueba lo que de verdad le movería a darle al guardar o al perfil.</li>
+      </ul>
+
+      <h2 id="rechazo"><span class="num">05</span>Las 2 reglas del rechazo</h2>
+      <p>El agente trabaja con dos reglas duras. Si el mensaje cae en alguna, lo rechaza con una frase corta que explica por qué.</p>
+      <h3>Regla 1: si tienes que esforzarte para entender qué te ofrecen, no</h3>
+      <p>Tu cliente está mirando el móvil en el sofá. Si la primera frase del mensaje requiere releerla o ya usa una palabra rara, sigue. La regla es brutal con la jerga, con las metáforas vacías y con cualquier saludo previo al mensaje.</p>
+      <h3>Regla 2: si la promesa no encaja con tu día, no</h3>
+      <p>El agente compara la promesa del mensaje con su rutina diaria. Si dice "ahorra 10 horas a la semana" pero el cliente ya tiene a alguien que hace eso, no le mueve. Si dice "monta un funnel en 3 días" pero el cliente no tiene producto, tampoco. La promesa solo funciona si toca un dolor que el cliente nota hoy.</p>
+
+      <h2 id="sobreviven"><span class="num">06</span>Las 2 que sobreviven</h2>
+      <p>De 11 mensajes, normalmente sobreviven 1 o 2. Eso es lo normal. Si sobreviven 7, tu agente cliente es demasiado blando o tu ficha está mal definida.</p>
+      <p>Ejemplo de un caso real. El mensaje original era: <em>"Te ayudo a escalar tu negocio con automatizaciones inteligentes basadas en IA."</em></p>
+      <p>Las 10 variantes cubrían los 10 ángulos. El agente rechazó 9 con razones tipo:</p>
+      <ul>
+        <li>"escalar tu negocio" no me dice qué pasa el lunes a las 9</li>
+        <li>"automatizaciones inteligentes" suena a folleto, no a algo que use</li>
+        <li>"basadas en IA" no es una promesa, es un ingrediente</li>
+        <li>la cifra no es creíble si no me dices de dónde sale</li>
+      </ul>
+      <p>Las 2 que sobrevivieron fueron las que mostraban un proceso concreto que el cliente reconocía como suyo. Una con un dolor de operaciones (<em>el equipo pega datos a mano cada lunes</em>) y otra con una pregunta directa (<em>¿qué tarea de tu equipo es la más mecánica?</em>). Las dos pasaron a anuncio. Una funcionó. La otra no. Pero ya partías de algo que el filtro había aprobado.</p>
+
+      <h2 id="prompt"><span class="num">07</span>Plantilla del prompt cliente</h2>
+      <p>Esta es la plantilla que te puedes copiar. Cambia los bloques entre corchetes con la información de tu cliente real.</p>
+      <div class="code-block"><pre>Eres [nombre], [edad] años, [cargo] en una empresa de [sector]
+con [tamaño] empleados. Trabajas [horas] al día y tu mayor
+frustración profesional es [dolor concreto].
+
+Hoy son las [hora] de un [día]. Estás haciendo scroll en
+Instagram porque [contexto: descanso, espera, etc].
+
+Te voy a enseñar un mensaje que aparece en tu feed. Quiero
+que reacciones como reaccionarías de verdad, no como un
+crítico. Aplica estas dos reglas:
+
+1. Si tienes que releer o no entiendes la oferta a la
+   primera, sigue scrolleando.
+
+2. Si la promesa no encaja con tu día de hoy, sigue.
+
+Si pasas las dos reglas, dime qué harías: guardar, ir al
+perfil, escribir un comentario. Si no, dime en una frase
+corta por qué seguiste.
+
+Mensaje:
+[pega aquí una variante]</pre></div>
+
+      <a href="/metodo.html" class="cross-link">
+        <div class="label">Quieres ir más allá</div>
+        <h3>El método Claude</h3>
+        <p>El módulo de validación enseña a montar agentes cliente reutilizables, fichas por arquetipo y un sistema para iterar mensajes en paralelo sin perder el hilo.</p>
+        <span class="arrow">Ver el método →</span>
+      </a>
+
+      <h2 id="errores"><span class="num">08</span>Errores comunes</h2>
+      <ol>
+        <li><strong>Ficha de cliente genérica.</strong> Si describes "founder de empresa SaaS", el agente te da respuestas de folleto. Pon nombre, hora del día, lo que tiene en la mesa ahora mismo.</li>
+        <li><strong>Pasar las 11 variantes en bloque.</strong> El agente las compara entre sí en lugar de juzgarlas como las vería en el feed. Una conversación, un mensaje.</li>
+        <li><strong>Discutir el rechazo.</strong> Si el agente rechaza una variante y tú insistes "pero si esta es buena", lo único que haces es entrenarle a aprobar. No discutas, reescribe.</li>
+        <li><strong>Quedarte solo con las que aprobó.</strong> Las rechazadas también te enseñan: el patrón de rechazo te dice qué tipo de mensaje no funciona con este cliente.</li>
+        <li><strong>Saltarse el test cuando "ya tienes claro" el mensaje.</strong> Esos son los anuncios que más caro acaban saliendo. El filtro tarda 20 minutos. El feed tarda semanas.</li>
+      </ol>
+
+      <a href="/vender.html" class="cross-link">
+        <div class="label">Guía siguiente</div>
+        <h3>Vende producto propio sin sponsors ni anuncios</h3>
+        <p>Ya tienes un mensaje validado. Ahora monta el funnel mínimo que convierte ese mensaje en clientes, sin pasar por marcas que te paguen.</p>
+        <span class="arrow">Abrir guía vender →</span>
+      </a>
+
+    </div>
+
+  </article>
+
+  <footer class="site-footer">
+    <a href="https://instagram.com/rafa.prompts" target="_blank" rel="noopener" class="handle">@rafa.prompts</a>
+  </footer>
+
+  <script src="app.js"></script>
+  <script>
+    (function() {
+      const burger = document.getElementById('burger');
+      const drawer = document.getElementById('mobile-drawer');
+      if (!burger || !drawer) return;
+      const toggle = (force) => {
+        const open = force !== undefined ? force : !document.body.classList.contains('drawer-open');
+        document.body.classList.toggle('drawer-open', open);
+        burger.setAttribute('aria-expanded', open);
+        drawer.setAttribute('aria-hidden', !open);
+        document.body.style.overflow = open ? 'hidden' : '';
+      };
+      burger.addEventListener('click', () => toggle());
+      const close = document.getElementById('drawer-close');
+      if (close) close.addEventListener('click', () => toggle(false));
+      drawer.querySelectorAll('a').forEach(a => a.addEventListener('click', () => toggle(false)));
+      document.addEventListener('keydown', (e) => { if (e.key === 'Escape') toggle(false); });
+    })();
+  </script>
+</body>
+</html>

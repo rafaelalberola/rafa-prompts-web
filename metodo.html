@@ -280,16 +280,73 @@
     <a href="#comprar" class="btn">Empezar</a>
   </div>
 
+  <div class="checkout-overlay" id="checkout-overlay" aria-hidden="true">
+    <div class="checkout-modal" role="dialog" aria-modal="true" aria-label="Checkout">
+      <div class="checkout-modal-head">
+        <div class="title">El método Claude · 297€</div>
+        <button class="checkout-close" id="checkout-close" aria-label="Cerrar checkout">
+          <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><line x1="18" y1="6" x2="6" y2="18"/><line x1="6" y1="6" x2="18" y2="18"/></svg>
+        </button>
+      </div>
+      <div class="checkout-body">
+        <div id="checkout"></div>
+      </div>
+    </div>
+  </div>
+
+  <script src="https://js.stripe.com/v3/"></script>
   <script src="app.js"></script>
   <script>
-    const GUMROAD_URL = 'https://rafaprompts.gumroad.com/l/poeoes';
-    if (GUMROAD_URL) {
-      document.querySelectorAll('a[href="#comprar"]').forEach((a) => {
-        a.setAttribute('href', GUMROAD_URL);
-        a.setAttribute('target', '_blank');
-        a.setAttribute('rel', 'noopener');
-      });
+    const API_URL = 'https://rafa-prompts-api.prxystudio.workers.dev';
+    const STRIPE_PUBLISHABLE_KEY = 'pk_live_51T50VyIYM3GXrMLHGGfo81iUzPdi6XJfSZW91UkNEISZ9U12a0mkPO8YnyaoZTyxTP1vwzKeXmCXfCRn9YyMaDjo000gDMaXZR';
+
+    let stripeInstance = null;
+    let checkoutInstance = null;
+
+    async function openCheckout() {
+      const overlay = document.getElementById('checkout-overlay');
+      overlay.classList.add('show');
+      overlay.setAttribute('aria-hidden', 'false');
+      document.body.style.overflow = 'hidden';
+
+      if (checkoutInstance) return;
+      try {
+        if (!stripeInstance) stripeInstance = Stripe(STRIPE_PUBLISHABLE_KEY);
+        const r = await fetch(`${API_URL}/checkout`, { method: 'POST' });
+        const data = await r.json();
+        if (!r.ok || !data.client_secret) throw new Error(data.error || 'No se pudo iniciar el checkout');
+        checkoutInstance = await stripeInstance.initEmbeddedCheckout({
+          clientSecret: data.client_secret,
+        });
+        checkoutInstance.mount('#checkout');
+      } catch (e) {
+        document.getElementById('checkout').innerHTML = `<div style="padding:40px 24px; text-align:center; color:#B55A3E;">No se pudo cargar el checkout.<br>${e.message}<br><br>Inténtalo en un minuto o escríbeme a <a href="mailto:hola@rafaprompts.com">hola@rafaprompts.com</a>.</div>`;
+      }
     }
+
+    function closeCheckout() {
+      const overlay = document.getElementById('checkout-overlay');
+      overlay.classList.remove('show');
+      overlay.setAttribute('aria-hidden', 'true');
+      document.body.style.overflow = '';
+      if (checkoutInstance) {
+        try { checkoutInstance.destroy(); } catch (_) {}
+        checkoutInstance = null;
+        document.getElementById('checkout').innerHTML = '';
+      }
+    }
+
+    document.querySelectorAll('a[href="#comprar"]').forEach((a) => {
+      a.addEventListener('click', (e) => {
+        e.preventDefault();
+        openCheckout();
+      });
+    });
+    document.getElementById('checkout-close').addEventListener('click', closeCheckout);
+    document.getElementById('checkout-overlay').addEventListener('click', (e) => {
+      if (e.target.id === 'checkout-overlay') closeCheckout();
+    });
+    document.addEventListener('keydown', (e) => { if (e.key === 'Escape') closeCheckout(); });
 
     // Sticky buy bar: show after scrolling past hero, hide near footer
     (function() {

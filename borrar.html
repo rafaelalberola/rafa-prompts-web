@@ -1,0 +1,232 @@
+<!doctype html>
+<html lang="es">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>borrar : qué automatizaciones mantener y cuáles borrar · rafa.prompts</title>
+  <meta name="description" content="La regla de los 3 criterios para auditar tus agentes y workflows. Cómo decidir cuáles mantener, cuáles arreglar y cuáles borrar sin miedo.">
+  <link rel="icon" type="image/svg+xml" href="/assets/img/favicon.svg">
+  <link rel="icon" href="/assets/img/favicon.ico">
+  <link rel="icon" type="image/png" sizes="32x32" href="/assets/img/favicon-32.png">
+  <link rel="icon" type="image/png" sizes="16x16" href="/assets/img/favicon-16.png">
+  <link rel="apple-touch-icon" href="/assets/img/apple-touch-icon.png">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Archivo:wght@400;500;700;800;900&family=IBM+Plex+Mono:wght@400;600&family=Newsreader:ital,wght@1,400;1,500&display=swap">
+  <link rel="stylesheet" href="styles.css">
+</head>
+<body>
+
+  <svg width="0" height="0" style="position:absolute">
+    <defs>
+      <filter id="sprayGrain" x="-10%" y="-10%" width="120%" height="120%">
+        <feTurbulence type="fractalNoise" baseFrequency="0.9" numOctaves="2" seed="7" result="noise"/>
+        <feDisplacementMap in="SourceGraphic" in2="noise" scale="1.6" xChannelSelector="R" yChannelSelector="G" result="wobbled"/>
+        <feGaussianBlur in="wobbled" stdDeviation="0.3" result="blurred"/>
+        <feComponentTransfer in="blurred">
+          <feFuncA type="linear" slope="1.8" intercept="-0.05"/>
+        </feComponentTransfer>
+      </filter>
+    </defs>
+  </svg>
+
+  <div class="progress" id="progress"></div>
+
+  <header class="site-header">
+    <a href="/" class="brand"><strong>rafa</strong>.prompts</a>
+    <nav class="nav">
+      <a href="/metodo.html">Método</a>
+      <a href="/#recursos">Recursos</a>
+      <a href="/#faq">FAQ</a>
+      <a href="/metodo.html" class="btn">Empezar · 297€</a>
+    </nav>
+    <button class="burger" id="burger" aria-label="Abrir menú" aria-expanded="false" aria-controls="mobile-drawer">
+      <span></span><span></span><span></span>
+    </button>
+  </header>
+
+  <div class="mobile-drawer" id="mobile-drawer" aria-hidden="true">
+    <button class="drawer-close" id="drawer-close" aria-label="Cerrar menú"><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><line x1="18" y1="6" x2="6" y2="18"/><line x1="6" y1="6" x2="18" y2="18"/></svg></button>
+    <nav class="drawer-nav">
+      <a href="/metodo.html">Método</a>
+      <a href="/#recursos">Recursos</a>
+      <a href="/#faq">FAQ</a>
+      <a href="/metodo.html" class="btn accent large">Empezar · 297€</a>
+    </nav>
+  </div>
+
+  <article class="resource">
+
+    <aside class="toc">
+      <div class="label">En esta guía</div>
+      <ol>
+        <li><a href="#catorce">Por qué tienes 14 agentes y no funcionan</a></li>
+        <li><a href="#regla">La regla de los 3 criterios</a></li>
+        <li><a href="#una-cosa">Hace una sola cosa</a></li>
+        <li><a href="#silencio">Falla en silencio</a></li>
+        <li><a href="#externo">Lo entiende un externo</a></li>
+        <li><a href="#auditoria">Cómo hacer la auditoría</a></li>
+        <li><a href="#mantiene">Lo que se mantiene</a></li>
+        <li><a href="#proximos">Próximos pasos</a></li>
+      </ol>
+    </aside>
+
+    <div class="resource-content">
+
+      <div class="reading-time">7 min de lectura · guía 08</div>
+      <h1>Qué automatizaciones mantener (y cuáles borrar)</h1>
+      <p class="lede">
+        Confesión rápida: monté 14 agentes en 6 meses, borré 11. Los 3 que quedaron viven sin tocarlos. El resto eran disfraces de productividad que generaban más trabajo del que ahorraban.
+      </p>
+
+      <div class="callout">
+        <span class="ico" aria-hidden="true"><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polyline points="3 6 5 6 21 6"/><path d="M19 6 17.5 20a2 2 0 0 1-2 1.83H8.5A2 2 0 0 1 6.5 20L5 6"/><line x1="10" y1="11" x2="10" y2="17"/><line x1="14" y1="11" x2="14" y2="17"/></svg></span>
+        <div>Borrar un agente que llevas semanas mejorando duele. Recuerda: cada agente que mantienes vivo te roba minutos cuando se rompe. Los muertos no se rompen.</div>
+      </div>
+
+      <h2 id="catorce"><span class="num">01</span>Por qué tienes 14 agentes y no funcionan</h2>
+      <p>El patrón es siempre el mismo. Empiezas con un agente que funciona. Le añades una funcionalidad. Le pides que también haga otra cosa. Le conectas con un tercero porque no quieres duplicar lógica. En 6 meses tienes una red enredada que solo entiendes tú, y solo los miércoles a las 11 cuando estás concentrado.</p>
+      <p>Las señales típicas de tu zoo de agentes:</p>
+      <ul>
+        <li>No te acuerdas de qué hace cada uno sin abrirlo</li>
+        <li>Cuando algo falla, tardas 20 minutos en saber qué agente fue</li>
+        <li>Hay agentes que llevan meses corriendo sin que nadie revise el output</li>
+        <li>Algún agente depende de otro que ya nadie sabe quién montó</li>
+        <li>El número de agentes crece, el tiempo que ahorras no</li>
+      </ul>
+      <p>El problema no es montarlos. El problema es no auditarlos. Los agentes son como las suscripciones de software: si no los revisas cada 3 meses, pagas por cosas que no usas.</p>
+
+      <h2 id="regla"><span class="num">02</span>La regla de los 3 criterios</h2>
+      <p>Para decidir si un agente se queda o se va, le aplicas tres preguntas. Tiene que pasar las tres. Si falla una sola, fuera.</p>
+      <ol>
+        <li>¿Hace una sola cosa?</li>
+        <li>¿Falla en silencio o te avisa?</li>
+        <li>¿Lo entendería alguien externo en 5 minutos?</li>
+      </ol>
+      <p>Las tres son contraintuitivas. Las tres son las que separan los agentes que llegan a un año de los que mueren en uno.</p>
+
+      <h2 id="una-cosa"><span class="num">03</span>Criterio 1: hace una sola cosa</h2>
+      <p>El instinto dice "ya que estoy, le añado esto". El resultado es un agente que hace tres cosas razonables y ninguna excelente. Cuando una se rompe, las otras dos paran también.</p>
+      <p>Un agente bien hecho responde a una sola pregunta. "¿Hay un nuevo lead?". "¿El cliente respondió al email?". "¿Esta factura está pagada?". Una pregunta, una respuesta, una acción.</p>
+      <p>Cómo aplicarlo a tu lista actual:</p>
+      <ul>
+        <li>Abre cada agente y escríbelo en una frase. Si necesitas dos frases, ya hace dos cosas.</li>
+        <li>Si ves un "y" o un "además" en la descripción, divídelo en dos agentes.</li>
+        <li>Si un agente tiene más de 5 ramas de decisión, está haciendo demasiado.</li>
+      </ul>
+
+      <h2 id="silencio"><span class="num">04</span>Criterio 2: falla en silencio</h2>
+      <p>Este es el más importante y el más ignorado. Un agente que falla sin avisar es peor que no tenerlo. Te crees que está funcionando, decides en base a su output, y un día descubres que lleva 3 semanas roto.</p>
+      <p>Un agente bien hecho avisa cuando algo no encaja. No solo cuando hay error. También cuando el resultado es raro: hoy 0 leads, el doble de respuestas que ayer, una respuesta del cliente que no se procesó.</p>
+      <p>Cómo se ve esto en práctica:</p>
+      <ul>
+        <li>Cada agente manda un mensaje a tu Telegram cuando termina, con el resultado en una línea.</li>
+        <li>Si la cifra del día se sale del rango habitual, manda un aviso aparte.</li>
+        <li>Si lleva más de X horas sin ejecutarse, se queja solo.</li>
+      </ul>
+      <p>Si un agente tuyo no cumple esto, no lo mejores. Bórralo y vuélvelo a montar de cero con avisos desde el primer día. Tarda menos que parchear el viejo.</p>
+
+      <h2 id="externo"><span class="num">05</span>Criterio 3: lo entiende un externo</h2>
+      <p>Coge a alguien que sepa de tecnología pero no haya visto tu sistema. Le enseñas el agente. Le dices "explícame qué hace". Si tarda más de 5 minutos en entenderlo, está mal montado.</p>
+      <p>Esto es más importante de lo que parece. El externo de hoy es tu yo de dentro de 3 meses. Cuando vuelvas a abrir un agente que no tocas en un trimestre, no te acuerdas. Si no se entiende en 5 minutos, no lo arreglas, lo dejas roto.</p>
+      <p>Tres cosas que hacen un agente legible:</p>
+      <ul>
+        <li>Nombres descriptivos en cada paso (no "nodo 7" sino "comprobar si el lead ya existe")</li>
+        <li>Una nota arriba que explica qué problema resuelve y para quién</li>
+        <li>Las decisiones complejas comentadas en una frase corta dentro del agente</li>
+      </ul>
+
+      <h2 id="auditoria"><span class="num">06</span>Cómo hacer la auditoría</h2>
+      <p>Bloquea 90 minutos un viernes. Una sola sesión. No fragmentes la auditoría en varios días, te quedas a medias y los agentes mediocres sobreviven por inercia.</p>
+      <p>Plantilla checklist para evaluar cada agente. Imprímela o cópiala en una nota:</p>
+      <div class="code-block"><pre>Agente: ___________________________
+
+¿Qué hace en una frase?
+___
+
+¿Cuándo se ejecuta y cuántas veces al mes?
+___
+
+¿Cuándo fue la última vez que lo abriste?
+___
+
+Criterio 1 (hace una sola cosa)
+[ ] Sí  [ ] No
+
+Criterio 2 (falla en silencio o avisa)
+[ ] Avisa  [ ] Falla en silencio
+
+Criterio 3 (un externo lo entiende en 5 min)
+[ ] Sí  [ ] No
+
+Decisión:
+[ ] Mantener (los 3 sí)
+[ ] Arreglar (1 no, recuperable en menos de 1 hora)
+[ ] Borrar (más de 1 no, o no lo abres hace 2 meses)
+
+Si borrar: ¿qué pierdes de verdad?
+___</pre></div>
+      <p>La última pregunta es la que más cuesta. La mayoría de las veces la respuesta es "nada que no pueda hacer a mano en 10 minutos cuando haga falta". Esa respuesta es luz verde para borrar.</p>
+
+      <h2 id="mantiene"><span class="num">07</span>Lo que se mantiene</h2>
+      <p>Los agentes que sobreviven a una auditoría honesta tienen tres cosas en común. Si los tuyos no las tienen, igual son los próximos en la lista negra.</p>
+      <ul>
+        <li><strong>Resuelven un dolor que sientes cada semana.</strong> No "podría servir algún día". Esta semana, esta y la siguiente.</li>
+        <li><strong>Te ahorran al menos 1 hora real al mes.</strong> Mide tiempo que ya no haces, no horas teóricas. Si no llega a 1 hora real, no compensa el coste de mantenerlo.</li>
+        <li><strong>No les has tocado nada en el último mes.</strong> Si un agente requiere mantenimiento constante, no es un agente, es un proyecto disfrazado.</li>
+      </ul>
+      <p>Ejemplo: de mis 14 originales, los 3 que quedaron son uno que clasifica los DMs entrantes, otro que extrae los datos de las facturas que recibo, y un tercero que monta el calendario editorial cada lunes. Los tres llevan meses sin tocar. Los tres me ahorran tiempo medible. Los tres responden a una sola pregunta cada uno.</p>
+
+      <a href="/metodo.html" class="cross-link">
+        <div class="label">Quieres ir más allá</div>
+        <h3>El método Claude</h3>
+        <p>El módulo de auditoría enseña a montar agentes con avisos desde el primer día, para no llegar nunca al punto de tener 14 que no usas.</p>
+        <span class="arrow">Ver el método →</span>
+      </a>
+
+      <h2 id="proximos"><span class="num">08</span>Próximos pasos</h2>
+      <p>Si acabas de hacer la primera auditoría y te quedaron 3 de 14, no te bloquees. Es lo normal. Lo siguiente es:</p>
+      <ol>
+        <li>Apunta el aprendizaje principal: ¿por qué montaste agentes que no aguantaban los 3 criterios? Casi siempre es por entusiasmo del momento, no por necesidad real.</li>
+        <li>Pon una alarma a 3 meses vista para repetir la auditoría. Lo que no se revisa, vuelve a crecer.</li>
+        <li>La próxima vez que vayas a montar un agente nuevo, antes de empezar, escríbete los 3 criterios en grande. Si no encaja en los tres, no lo montes.</li>
+      </ol>
+      <p>El objetivo no es tener 0 agentes. Es tener menos agentes y más confianza en cada uno. Esa es la diferencia entre tener un equipo virtual que trabaja para ti y tener un montón de scripts a medio terminar que te dan culpa cada vez que abres tu panel.</p>
+
+      <a href="/conectar.html" class="cross-link">
+        <div class="label">Guía siguiente</div>
+        <h3>Conecta dos herramientas sin integración nativa</h3>
+        <p>Cuando los agentes que mantienes te exigen pasar datos entre apps que no se hablan, montas un agente intermedio. Te enseño el patrón en 4 pasos.</p>
+        <span class="arrow">Abrir guía conectar →</span>
+      </a>
+
+    </div>
+
+  </article>
+
+  <footer class="site-footer">
+    <a href="https://instagram.com/rafa.prompts" target="_blank" rel="noopener" class="handle">@rafa.prompts</a>
+  </footer>
+
+  <script src="app.js"></script>
+  <script>
+    (function() {
+      const burger = document.getElementById('burger');
+      const drawer = document.getElementById('mobile-drawer');
+      if (!burger || !drawer) return;
+      const toggle = (force) => {
+        const open = force !== undefined ? force : !document.body.classList.contains('drawer-open');
+        document.body.classList.toggle('drawer-open', open);
+        burger.setAttribute('aria-expanded', open);
+        drawer.setAttribute('aria-hidden', !open);
+        document.body.style.overflow = open ? 'hidden' : '';
+      };
+      burger.addEventListener('click', () => toggle());
+      const close = document.getElementById('drawer-close');
+      if (close) close.addEventListener('click', () => toggle(false));
+      drawer.querySelectorAll('a').forEach(a => a.addEventListener('click', () => toggle(false)));
+      document.addEventListener('keydown', (e) => { if (e.key === 'Escape') toggle(false); });
+    })();
+  </script>
+</body>
+</html>

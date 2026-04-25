@@ -261,13 +261,7 @@ img { max-width: 100%; display: block; }
   position: relative;
 }
 .nav a:hover, .nav a.active { color: var(--ink); }
-.nav .btn {
-  padding: 10px 20px;
-  font-size: 14px;
-  color: var(--paper);
-  background: var(--ink);
-}
-.nav .btn:hover { color: var(--paper); background: var(--accent); }
+.nav .btn { padding: 10px 20px; font-size: 14px; }
 .nav .btn::after { width: 12px; height: 12px; }
 
 /* ============================================================
@@ -275,7 +269,7 @@ img { max-width: 100%; display: block; }
    ============================================================ */
 
 .hero {
-  padding: 8vw var(--col) 8vw;
+  padding: 4vw var(--col) 5vw;
   max-width: var(--content-max);
   margin: 0 auto;
 }
@@ -283,7 +277,7 @@ img { max-width: 100%; display: block; }
 .hero-personal {
   display: flex;
   flex-direction: column;
-  gap: 32px;
+  gap: 20px;
   align-items: flex-start;
 }
 .hero-personal .portrait { order: -1; }
@@ -302,7 +296,7 @@ img { max-width: 100%; display: block; }
 .hero h1 {
   font-family: var(--sans);
   font-weight: 900;
-  font-size: clamp(48px, 7.5vw, 108px);
+  font-size: clamp(40px, 5.4vw, 84px);
   line-height: 0.96;
   letter-spacing: -0.035em;
   margin: 0 0 24px;
@@ -327,11 +321,11 @@ img { max-width: 100%; display: block; }
 }
 
 .hero .intro {
-  font-size: 20px;
-  line-height: 1.55;
+  font-size: 17px;
+  line-height: 1.5;
   color: var(--ink-soft);
-  max-width: 44ch;
-  margin: 0 0 36px;
+  max-width: 56ch;
+  margin: 0 0 24px;
 }
 
 .hero .actions {
@@ -357,9 +351,9 @@ img { max-width: 100%; display: block; }
   overflow: hidden;
   aspect-ratio: 1/1;
   background: var(--bg-cream-soft);
-  width: 140px;
-  height: 140px;
-  border: 2px solid var(--border);
+  width: 110px;
+  height: 110px;
+  border: 1px solid var(--border);
   flex-shrink: 0;
 }
 .portrait img {
@@ -368,7 +362,7 @@ img { max-width: 100%; display: block; }
   object-position: center 35%;
 }
 @media (max-width: 900px) {
-  .portrait { width: 104px; height: 104px; }
+  .portrait { width: 96px; height: 96px; }
 }
 
 /* ============================================================
@@ -730,11 +724,11 @@ h3 {
   background: var(--ink);
   color: var(--bg-cream);
   border-radius: 0;
-  padding: 64px 48px;
+  padding: 96px var(--col);
   text-align: center;
-  margin: 6vw var(--col) 0;
-  max-width: calc(var(--content-max) - 2 * var(--col));
-  margin-left: auto; margin-right: auto;
+  margin: 6vw 0 0;
+  max-width: none;
+  width: 100%;
 }
 
 @media (max-width: 900px) { .final-cta { padding: 44px 24px; } }
@@ -1390,6 +1384,12 @@ details > *:not(summary) { margin-top: 12px; }
   color: var(--bg-cream);
   padding: 12vw 5vw;
   margin: 0;
+  max-width: none;
+  width: 100%;
+}
+.dark-section .pain-grid {
+  max-width: var(--content-max);
+  margin: 0 auto;
 }
 
 .dark-section .kicker,

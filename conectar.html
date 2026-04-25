@@ -1,0 +1,207 @@
+<!doctype html>
+<html lang="es">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>conectar : conecta dos herramientas sin integración nativa · rafa.prompts</title>
+  <meta name="description" content="El patrón del agente intermedio para que tus apps hablen entre ellas. Tres casos reales, el patrón en 4 pasos y cómo construirlo en una tarde.">
+  <link rel="icon" type="image/svg+xml" href="/assets/img/favicon.svg">
+  <link rel="icon" href="/assets/img/favicon.ico">
+  <link rel="icon" type="image/png" sizes="32x32" href="/assets/img/favicon-32.png">
+  <link rel="icon" type="image/png" sizes="16x16" href="/assets/img/favicon-16.png">
+  <link rel="apple-touch-icon" href="/assets/img/apple-touch-icon.png">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Archivo:wght@400;500;700;800;900&family=IBM+Plex+Mono:wght@400;600&family=Newsreader:ital,wght@1,400;1,500&display=swap">
+  <link rel="stylesheet" href="styles.css">
+</head>
+<body>
+
+  <svg width="0" height="0" style="position:absolute">
+    <defs>
+      <filter id="sprayGrain" x="-10%" y="-10%" width="120%" height="120%">
+        <feTurbulence type="fractalNoise" baseFrequency="0.9" numOctaves="2" seed="7" result="noise"/>
+        <feDisplacementMap in="SourceGraphic" in2="noise" scale="1.6" xChannelSelector="R" yChannelSelector="G" result="wobbled"/>
+        <feGaussianBlur in="wobbled" stdDeviation="0.3" result="blurred"/>
+        <feComponentTransfer in="blurred">
+          <feFuncA type="linear" slope="1.8" intercept="-0.05"/>
+        </feComponentTransfer>
+      </filter>
+    </defs>
+  </svg>
+
+  <div class="progress" id="progress"></div>
+
+  <header class="site-header">
+    <a href="/" class="brand"><strong>rafa</strong>.prompts</a>
+    <nav class="nav">
+      <a href="/metodo.html">Método</a>
+      <a href="/#recursos">Recursos</a>
+      <a href="/#faq">FAQ</a>
+      <a href="/metodo.html" class="btn">Empezar · 297€</a>
+    </nav>
+    <button class="burger" id="burger" aria-label="Abrir menú" aria-expanded="false" aria-controls="mobile-drawer">
+      <span></span><span></span><span></span>
+    </button>
+  </header>
+
+  <div class="mobile-drawer" id="mobile-drawer" aria-hidden="true">
+    <button class="drawer-close" id="drawer-close" aria-label="Cerrar menú"><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><line x1="18" y1="6" x2="6" y2="18"/><line x1="6" y1="6" x2="18" y2="18"/></svg></button>
+    <nav class="drawer-nav">
+      <a href="/metodo.html">Método</a>
+      <a href="/#recursos">Recursos</a>
+      <a href="/#faq">FAQ</a>
+      <a href="/metodo.html" class="btn accent large">Empezar · 297€</a>
+    </nav>
+  </div>
+
+  <article class="resource">
+
+    <aside class="toc">
+      <div class="label">En esta guía</div>
+      <ol>
+        <li><a href="#no-hablan">Por qué tu CRM y tu calendario no se hablan</a></li>
+        <li><a href="#solucion">La solución del agente intermedio</a></li>
+        <li><a href="#crm">Caso real CRM ↔ calendario</a></li>
+        <li><a href="#notion">Caso real Notion ↔ Slack</a></li>
+        <li><a href="#drive">Caso real Drive ↔ email</a></li>
+        <li><a href="#patron">El patrón en 4 pasos</a></li>
+        <li><a href="#tarde">Cómo construirlo en una tarde</a></li>
+        <li><a href="#errores">Errores comunes</a></li>
+      </ol>
+    </aside>
+
+    <div class="resource-content">
+
+      <div class="reading-time">7 min de lectura · guía 09</div>
+      <h1>Conecta dos herramientas sin integración nativa</h1>
+      <p class="lede">
+        Tu CRM no habla con tu calendario. Tu Notion no avisa a tu Slack. Tu Drive no manda emails. Las apps no se conectan porque a sus dueños no les conviene, no porque sea difícil. La solución cabe en una tarde de trabajo.
+      </p>
+
+      <div class="callout">
+        <span class="ico" aria-hidden="true"><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M10 13a5 5 0 0 0 7.54.54l3-3a5 5 0 0 0-7.07-7.07l-1.72 1.71"/><path d="M14 11a5 5 0 0 0-7.54-.54l-3 3a5 5 0 0 0 7.07 7.07l1.71-1.71"/></svg></span>
+        <div>El truco no es buscar una integración mágica. Es montar un agente que entiende los dos lados y traduce entre ellos.</div>
+      </div>
+
+      <h2 id="no-hablan"><span class="num">01</span>Por qué tu CRM y tu calendario no se hablan</h2>
+      <p>Las dos herramientas existen, las dos guardan información que tendría sentido compartir, y las dos están diseñadas para no abrirse del todo a la otra. No es por torpeza técnica. Es modelo de negocio.</p>
+      <p>Cuando una app no se conecta nativamente con otra, te ofrece dos caminos: o pagas por una capa de integración suya, o lo arreglas tú. La buena noticia es que arreglarlo tú ya no es un proyecto de semana. Es un proyecto de tarde, si conoces el patrón.</p>
+      <p>El patrón se llama <em>agente intermedio</em>. Una pieza pequeña que lee de la herramienta A, traduce los datos al idioma de B, y los escribe en B. Sin pedir permiso a ninguna de las dos.</p>
+
+      <h2 id="solucion"><span class="num">02</span>La solución del agente intermedio</h2>
+      <p>Un agente intermedio es código simple que se ejecuta cuando algo cambia en una app y reacciona escribiendo en otra. Lo importante no es el código, es la idea.</p>
+      <p>Funciona porque casi todas las apps modernas ofrecen dos cosas:</p>
+      <ul>
+        <li>Una <strong>API</strong>, que es la puerta de entrada para que un programa lea o escriba datos de la app sin pasar por la pantalla.</li>
+        <li>Un <strong>webhook</strong>, que es un aviso automático que la app manda a una dirección que tú indicas cuando pasa algo (un nuevo registro, un cambio de estado).</li>
+      </ul>
+      <p>El agente intermedio escucha por webhook, llama a la API de la otra, y escribe. Punto. Lo que cambia entre casos es qué entra y qué sale.</p>
+
+      <h2 id="crm"><span class="num">03</span>Caso real: CRM y calendario</h2>
+      <p>El problema clásico. Tu equipo cierra una llamada de ventas en el CRM. La fecha la apuntan ahí. Pero tu calendario no se entera. Resultado: doble apunte, agenda desincronizada, llamadas olvidadas.</p>
+      <p>Qué hace el agente, escena por escena:</p>
+      <ul>
+        <li><strong>Nuevo deal con fecha de llamada</strong> en el CRM, sale evento creado a esa hora en el calendario</li>
+        <li><strong>Nombre del cliente</strong> en el CRM, sale como título del evento</li>
+        <li><strong>Notas del comercial</strong> en el CRM, salen como descripción del evento</li>
+        <li><strong>Email del cliente</strong> en el CRM, sale como invitado del evento</li>
+        <li><strong>Cambio de fecha en el CRM</strong>, sale evento movido en el calendario</li>
+      </ul>
+      <p>El agente vive entre las dos. Si alguien borra el deal en el CRM, el evento desaparece del calendario. Si alguien mueve el evento en el calendario, el agente actualiza el CRM. Lo importante es decidir desde el principio cuál es la fuente de verdad: la herramienta que manda. Si las dos editan, te haces un lío en una semana.</p>
+
+      <h2 id="notion"><span class="num">04</span>Caso real: Notion y Slack</h2>
+      <p>Trabajas con un equipo en Notion, gestionas tareas ahí. Pero el equipo vive en Slack. Cada vez que alguien crea o cambia una tarea, hay que avisar. Avisar a mano se olvida. La integración nativa solo da el evento básico, no el contexto.</p>
+      <p>Qué hace el agente, escena por escena:</p>
+      <ul>
+        <li><strong>Tarea cambia a estado "en revisión"</strong> en Notion, sale mensaje al canal de revisiones de Slack con el enlace</li>
+        <li><strong>Tarea con fecha límite mañana</strong>, sale mensaje privado al asignado a las 18:00</li>
+        <li><strong>Tarea bloqueada con un comentario</strong>, sale hilo en el canal del proyecto avisando del bloqueo</li>
+        <li><strong>Tarea cerrada por alguien que no la abrió</strong>, sale mensaje privado al original con un resumen de qué cambió</li>
+      </ul>
+      <p>El agente filtra. No avisa de cualquier cambio (eso es ruido). Avisa solo de los eventos que requieren una decisión humana. Esta es la clave de los agentes que ahorran tiempo en lugar de añadir notificaciones inútiles.</p>
+
+      <h2 id="drive"><span class="num">05</span>Caso real: Drive y email</h2>
+      <p>Compartes documentos con clientes desde Drive. Cuando alguien comenta o sube una nueva versión, te llega un correo de Google que se pierde entre los demás. Quieres saberlo en tu bandeja, con contexto, agrupado por cliente.</p>
+      <p>Qué hace el agente, escena por escena:</p>
+      <ul>
+        <li><strong>Comentario en cualquier documento de la carpeta cliente X</strong>, sale email diario a las 19:00 con todos los comentarios del día agrupados</li>
+        <li><strong>Nueva versión subida por el cliente</strong>, sale email inmediato con el enlace a la versión y la diferencia respecto a la anterior</li>
+        <li><strong>Documento sin tocar en 7 días en estado "esperando cliente"</strong>, sale email a ti recordando que toca enviar seguimiento</li>
+      </ul>
+      <p>Aquí lo importante es agrupar. Sin agrupación, recibes 30 emails al día y dejas de leerlos. Con agrupación, recibes 1 email útil al final de la jornada. Esa es la diferencia entre una integración hecha por un humano y una hecha por la app por defecto.</p>
+
+      <h2 id="patron"><span class="num">06</span>El patrón en 4 pasos</h2>
+      <p>Cualquier agente intermedio se monta siguiendo estos 4 pasos. Sin saltarse ninguno.</p>
+      <h3>Paso 1: define el evento disparador</h3>
+      <p>¿Qué tiene que pasar en la herramienta A para que tu agente arranque? Sé concreto. No "cuando cambia algo", sino "cuando un deal pasa a estado X y tiene fecha rellena". Si el evento no está bien definido, el agente se ejecuta a deshora y mete ruido.</p>
+      <h3>Paso 2: mapea los campos</h3>
+      <p>Coge cada dato del lado A y dile a qué dato corresponde en B. Hazlo en una tabla, como las de los casos de arriba. Mapear sobre el papel ahorra horas de depurar después. Si un campo de A no encaja con ninguno de B, decide ahí mismo si lo descartas o si necesitas un campo nuevo en B.</p>
+      <h3>Paso 3: escribe el agente traductor</h3>
+      <p>Esta es la parte de código. Y es más corta de lo que parece. Recibes el evento de A, transformas los datos según el mapeo, llamas a la API de B con esos datos. La parte que más cuesta no es escribir, es probar con casos raros: ¿qué pasa si el campo viene vacío?, ¿qué pasa si el cliente borra el dato a mitad?, ¿qué pasa si la API de B está caída?</p>
+      <h3>Paso 4: conecta el cron o el webhook</h3>
+      <p>Decides cómo se dispara el agente. Si la herramienta A ofrece webhook, úsalo: te avisa al instante. Si no, montas un cron que revisa cada X minutos. Para casos urgentes (calendario, ventas) usa webhook. Para casos diarios (resúmenes, reportes) basta con cron una vez al día.</p>
+
+      <a href="/metodo.html" class="cross-link">
+        <div class="label">Quieres ir más allá</div>
+        <h3>El método Claude</h3>
+        <p>El módulo de integraciones enseña a montar agentes intermedios reutilizables, con plantillas para los 12 conectores más típicos y una librería de errores comunes ya resueltos.</p>
+        <span class="arrow">Ver el método →</span>
+      </a>
+
+      <h2 id="tarde"><span class="num">07</span>Cómo construirlo en una tarde</h2>
+      <p>Si nunca has montado uno, plantéatelo en bloques de tiempo. Una tarde de 4 horas:</p>
+      <ol>
+        <li><strong>Hora 1:</strong> escribe en una nota qué tiene que pasar exactamente y mapea los campos de A a B en una tabla. Sin abrir ninguna herramienta.</li>
+        <li><strong>Hora 2:</strong> abre las dos apps y verifica que ofrecen API y webhook. Si una no los ofrece, busca alternativa o cambia el caso. No fuerces.</li>
+        <li><strong>Hora 3:</strong> monta la primera versión que funciona con un caso ideal. Sin manejo de errores, sin avisos. Solo: entra esto, sale esto.</li>
+        <li><strong>Hora 4:</strong> añade los avisos para cuando algo falle, prueba con 3 casos raros, déjalo corriendo en producción.</li>
+      </ol>
+      <p>El error típico es saltarse la hora 1. La gente abre las apps directo y empieza a tocar. Acaba con un agente que casi funciona pero que nadie entiende, ni siquiera la persona que lo montó hace tres semanas.</p>
+
+      <h2 id="errores"><span class="num">08</span>Errores comunes</h2>
+      <ol>
+        <li><strong>No definir cuál es la fuente de verdad.</strong> Si las dos apps editan el mismo dato, en una semana tienes datos contradictorios y nadie sabe cuál es el bueno. Decide al principio: una manda, la otra obedece.</li>
+        <li><strong>Avisar de todo.</strong> Si tu agente manda 50 mensajes al día a Slack, el equipo lo silencia y deja de servir. Filtra solo lo que requiere acción humana.</li>
+        <li><strong>No probar con datos raros.</strong> Lo que falla siempre es el campo vacío, la fecha en formato inesperado o el cliente con caracteres raros en el nombre. Prueba esos antes de pasar a producción.</li>
+        <li><strong>No avisar cuando el agente se cae.</strong> Si la API de B deja de responder y tu agente se rompe en silencio, descubres el problema cuando un cliente se queja. Pon un aviso a tu Telegram cuando pasen 24 horas sin actividad.</li>
+        <li><strong>Saltar el paso 2 del mapeo.</strong> Improvisar el mapeo dentro del código mientras escribes te lleva a duplicar lógica y olvidar campos. La tabla en una nota cuesta 15 minutos y se ahorra 4 horas de depurar.</li>
+      </ol>
+
+      <a href="/yate.html" class="cross-link">
+        <div class="label">Volver al inicio de la serie</div>
+        <h3>Cómo hacer un reel como este</h3>
+        <p>Vuelta al primer recurso. Ahora con producto que vender, mensaje validado y agentes limpios, el reel es la pieza que mete a la gente en el funnel completo.</p>
+        <span class="arrow">Abrir guía yate →</span>
+      </a>
+
+    </div>
+
+  </article>
+
+  <footer class="site-footer">
+    <a href="https://instagram.com/rafa.prompts" target="_blank" rel="noopener" class="handle">@rafa.prompts</a>
+  </footer>
+
+  <script src="app.js"></script>
+  <script>
+    (function() {
+      const burger = document.getElementById('burger');
+      const drawer = document.getElementById('mobile-drawer');
+      if (!burger || !drawer) return;
+      const toggle = (force) => {
+        const open = force !== undefined ? force : !document.body.classList.contains('drawer-open');
+        document.body.classList.toggle('drawer-open', open);
+        burger.setAttribute('aria-expanded', open);
+        drawer.setAttribute('aria-hidden', !open);
+        document.body.style.overflow = open ? 'hidden' : '';
+      };
+      burger.addEventListener('click', () => toggle());
+      const close = document.getElementById('drawer-close');
+      if (close) close.addEventListener('click', () => toggle(false));
+      drawer.querySelectorAll('a').forEach(a => a.addEventListener('click', () => toggle(false)));
+      document.addEventListener('keydown', (e) => { if (e.key === 'Escape') toggle(false); });
+    })();
+  </script>
+</body>
+</html>

@@ -21,29 +21,12 @@
 </head>
 <body>
 
-  <svg width="0" height="0" style="position:absolute">
-    <defs>
-      <filter id="sprayGrain" x="-10%" y="-10%" width="120%" height="120%">
-        <feTurbulence type="fractalNoise" baseFrequency="0.9" numOctaves="2" seed="7" result="noise"/>
-        <feDisplacementMap in="SourceGraphic" in2="noise" scale="1.6" xChannelSelector="R" yChannelSelector="G" result="wobbled"/>
-        <feGaussianBlur in="wobbled" stdDeviation="0.3" result="blurred"/>
-        <feComponentTransfer in="blurred">
-          <feFuncA type="linear" slope="1.8" intercept="-0.05"/>
-        </feComponentTransfer>
-      </filter>
-    </defs>
-  </svg>
-
-  <div class="progress" id="progress"></div>
-
   <header class="site-header">
     <a href="/" class="brand"><strong>rafa</strong>.prompts</a>
     <nav class="nav">
-      <a href="#para-ti">Para quién</a>
-      <a href="#temario">Temario</a>
-      <a href="#precio">Precio</a>
-      <a href="#faq">FAQ</a>
-      <a href="#comprar" class="btn">Empezar · 297€</a>
+      <a href="#cursos">Cursos</a>
+      <a href="#recursos">Recursos</a>
+      <a href="/metodo.html" class="btn">Empezar el método · 297€</a>
     </nav>
     <button class="burger" id="burger" aria-label="Abrir menú" aria-expanded="false" aria-controls="mobile-drawer">
       <span></span><span></span><span></span>
@@ -53,23 +36,20 @@
   <div class="mobile-drawer" id="mobile-drawer" aria-hidden="true">
     <button class="drawer-close" id="drawer-close" aria-label="Cerrar menú"><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><line x1="18" y1="6" x2="6" y2="18"/><line x1="6" y1="6" x2="18" y2="18"/></svg></button>
     <nav class="drawer-nav">
-      <a href="#para-ti">Para quién</a>
-      <a href="#temario">Temario</a>
-      <a href="#precio">Precio</a>
-      <a href="#recursos">Recursos gratis</a>
-      <a href="#faq">FAQ</a>
-      <a href="#comprar" class="btn accent large">Empezar · 297€</a>
+      <a href="#cursos">Cursos</a>
+      <a href="#recursos">Recursos</a>
+      <a href="/metodo.html" class="btn accent large">Empezar el método · 297€</a>
     </nav>
   </div>
 
-  <main>
+  <main class="hub-main">
 
     <section class="hero hero-personal">
       <div class="portrait">
         <img src="/assets/img/rafa-portrait.webp" alt="Rafa, product designer que enseña Claude" loading="eager">
       </div>
       <div class="hero-copy">
-        <div class="kicker">El método Claude · por Rafa</div>
+        <div class="kicker">rafa.prompts</div>
         <h1>
           Te enseño Claude
           <span class="italic">para todo lo que necesites construir</span>
@@ -78,289 +58,54 @@
           Soy diseñador de producto desde hace siete años. Uso Claude en mi día a día para escribir, diseñar, automatizar e investigar procesos y sistemas. Te enseño a usar Claude nivel pro.
         </p>
         <div class="actions">
-          <a href="#comprar" class="btn accent large">Empezar ahora · 297€</a>
-        </div>
-        <div class="hero-proof">
-          <span>Acceso inmediato</span><span class="dot">·</span>
-          <span>De por vida</span><span class="dot">·</span>
-          <span>Actualizaciones gratis</span>
+          <a href="/metodo.html" class="btn accent large">Ver el método · 297€</a>
         </div>
       </div>
     </section>
 
-    <div class="marquee" aria-hidden="true">
-      <div class="marquee-track">
-        <span>Contenido viral</span><span class="dot">·</span>
-        <span>Newsletters</span><span class="dot">·</span>
-        <span>Agentes autónomos</span><span class="dot">·</span>
-        <span>Triaje de inbox</span><span class="dot">·</span>
-        <span>Pipelines reales</span><span class="dot">·</span>
-        <span>Análisis de datos</span><span class="dot">·</span>
-        <span>Investigación de mercado</span><span class="dot">·</span>
-        <span>CLAUDE.md</span><span class="dot">·</span>
-        <span>Skills reutilizables</span><span class="dot">·</span>
-        <span>Orquestación</span><span class="dot">·</span>
-        <span>Contenido viral</span><span class="dot">·</span>
-        <span>Newsletters</span><span class="dot">·</span>
-        <span>Agentes autónomos</span><span class="dot">·</span>
-        <span>Triaje de inbox</span><span class="dot">·</span>
-      </div>
-    </div>
+    <hr class="section-sep">
 
-    <section class="pain dark-section">
-      <div class="pain-grid">
-        <div class="pain-copy">
-          <div class="kicker">¿Te pasa esto?</div>
-          <h2>
-            Estás perdiendo horas
-            <span class="italic">intentando que la IA te entienda</span>
-          </h2>
-          <p>Probaste Claude. Te quedaste a medias. Sabes que puede hacer mucho más pero no sabes cómo, y ya empieza a darte ansiedad no estar aprovechándolo.</p>
+    <section class="courses" id="cursos">
+      <div class="kicker">El curso</div>
+      <h2 class="section-title">Aprende a usar Claude</h2>
+      <a href="/metodo.html" class="course-card-featured">
+        <div class="course-card-cover">
+          <img src="/assets/img/metodo-cover.png" alt="El método Claude">
         </div>
-        <div class="pain-list">
-          <div class="pain-item"><span class="x">✕</span><p>Pegas prompts que leíste en Twitter y te decepciona el resultado.</p></div>
-          <div class="pain-item"><span class="x">✕</span><p>Cada vez que usas Claude tienes que explicarle de cero quién eres y cómo escribes.</p></div>
-          <div class="pain-item"><span class="x">✕</span><p>Ves que otros construyen cosas impresionantes con IA y tú sigues copiando respuestas sueltas.</p></div>
-          <div class="pain-item"><span class="x">✕</span><p>Hay tantas herramientas y gurús que no sabes por dónde empezar en serio.</p></div>
-          <div class="pain-item"><span class="x">✕</span><p>Te da miedo que esto sea una moda y, a la vez, miedo de quedarte fuera si no aprendes ya.</p></div>
+        <div class="course-card-body">
+          <div class="kicker">Curso destacado</div>
+          <h3>El método Claude</h3>
+          <p>Seis módulos cortos. Plantillas listas. Pipelines probados. El sistema completo para dejar de improvisar con Claude y empezar a construir.</p>
+          <ul class="course-bullets">
+            <li>6 módulos · 3h de contenido</li>
+            <li>50 prompts listos para copiar</li>
+            <li>Acceso de por vida · 14 días de garantía</li>
+          </ul>
+          <span class="course-cta">Ver el curso · 297€ <span class="arrow">→</span></span>
         </div>
-      </div>
+      </a>
     </section>
 
-    <section class="solution">
-      <div class="kicker">Presentando el método</div>
-      <h2>
-        Un sistema claro
-        <span class="italic">para dejar de improvisar con Claude</span>
-      </h2>
-      <p class="solution-intro">Seis módulos cortos. Plantillas listas para copiar. Pipelines probados. Sin jerga técnica, sin vídeos de dos horas que nadie termina. Todo lo que necesitas para hacer en una tarde lo que ahora te lleva una semana.</p>
-      <div class="actions center-actions">
-        <a href="#comprar" class="btn accent large">Empezar ahora · 297€</a>
-      </div>
-    </section>
-
-    <section class="tiles">
-      <div class="tiles-grid">
-        <div class="tile tile-accent">
-          <div class="tile-label">Biblioteca de prompts</div>
-          <div class="tile-headline">50 prompts <em>listos para copiar</em></div>
-          <p>Organizados por categoría: escritura, investigación, ventas, operaciones, decisiones, técnico y más.</p>
-        </div>
-        <div class="tile tile-ink">
-          <div class="tile-label">Métodos avanzados</div>
-          <div class="tile-headline">Pipelines que convierten horas <em>en minutos</em></div>
-          <p>Cuatro casos reales paso a paso: artículos, investigación de mercado, inbox, análisis de datos.</p>
-        </div>
-        <div class="tile tile-cream">
-          <div class="tile-label">Salida estratégica</div>
-          <div class="tile-headline">Plantillas CLAUDE.md <em>por nicho</em></div>
-          <p>Cinco plantillas pensadas para creador, marketer, founder, freelance e investigador.</p>
-        </div>
-      </div>
-    </section>
-
-    <section class="stats">
-      <div class="stats-grid">
-        <div class="stat"><div class="stat-n">6</div><div class="stat-label">Módulos · 3h de contenido</div></div>
-        <div class="stat"><div class="stat-n">50</div><div class="stat-label">Prompts probados</div></div>
-        <div class="stat"><div class="stat-n">8</div><div class="stat-label">PDFs descargables</div></div>
-        <div class="stat"><div class="stat-n">∞</div><div class="stat-label">Acceso de por vida</div></div>
-      </div>
-    </section>
-
-    <section class="curriculum" id="temario">
-      <div class="kicker">Qué vas a aprender</div>
-      <h2 class="section-title">
-        El temario completo
-        <span class="italic">seis módulos, lineales y conectados</span>
-      </h2>
-
-      <div class="weeks">
-        <div class="week">
-          <div class="week-head"><h3>Pensar en Claude</h3><div class="week-n">Módulo 01</div></div>
-          <ul class="week-lessons">
-            <li>El modelo mental: cuándo Claude te ahorra horas y cuándo te hace perderlas.</li>
-            <li>Cómo darle contexto para que no tenga que adivinar.</li>
-            <li>Conversación puntual vs orquestación sistemática.</li>
-            <li>La regla del "¿vale la pena?" para decidir qué automatizar.</li>
-            <li>Las tres situaciones donde Claude no es la herramienta.</li>
-          </ul>
-        </div>
-
-        <div class="week">
-          <div class="week-head"><h3>El CLAUDE.md</h3><div class="week-n">Módulo 02</div></div>
-          <ul class="week-lessons">
-            <li>El artefacto más importante del sistema, y por qué funciona.</li>
-            <li>Estructura mínima: cinco secciones, dos folios máximo.</li>
-            <li>Cinco plantillas reales por nicho.</li>
-            <li>Cómo mantenerlo vivo con iteración semanal.</li>
-          </ul>
-        </div>
-
-        <div class="week">
-          <div class="week-head"><h3>Skills y agentes</h3><div class="week-n">Módulo 03</div></div>
-          <ul class="week-lessons">
-            <li>La diferencia entre una skill y un agente.</li>
-            <li>Cómo escribir tu primera skill reutilizable en 15 minutos.</li>
-            <li>Encadenar pasos sin perder el hilo.</li>
-            <li>Cuándo separar contextos y cuándo mantenerlos juntos.</li>
-          </ul>
-        </div>
-
-        <div class="week">
-          <div class="week-head"><h3>Pipelines reales</h3><div class="week-n">Módulo 04</div></div>
-          <ul class="week-lessons">
-            <li>Pipeline: un artículo de 1500 palabras en 30 minutos.</li>
-            <li>Pipeline: investigación de mercado en 45 minutos.</li>
-            <li>Pipeline: procesar el inbox en 15 minutos.</li>
-            <li>Pipeline: analizar un CSV en 20 minutos.</li>
-          </ul>
-        </div>
-
-        <div class="week">
-          <div class="week-head"><h3>Orquestación</h3><div class="week-n">Módulo 05</div></div>
-          <ul class="week-lessons">
-            <li>El patrón universal: trigger, proceso, destino.</li>
-            <li>Las tres herramientas visuales que cubren el 95% de casos.</li>
-            <li>Tres automatizaciones reales: inbox, newsletter, triaje de leads.</li>
-          </ul>
-        </div>
-
-        <div class="week">
-          <div class="week-head"><h3>Iteración y medida</h3><div class="week-n">Módulo 06</div></div>
-          <ul class="week-lessons">
-            <li>Las tres métricas que importan (y las veinte que son ruido).</li>
-            <li>El ritual semanal de 15 minutos para mantener el sistema vivo.</li>
-            <li>El error más común: romper lo que ya funcionaba.</li>
-            <li>Cómo llegar al mes tres con un sistema vivo.</li>
-          </ul>
-        </div>
-      </div>
-    </section>
-
-    <section class="for-who" id="para-ti">
-      <div class="for-who-grid">
-        <div class="for-who-col good">
-          <div class="kicker">Esto es para ti si</div>
-          <h2>Quieres pasar de <em>Probar IA</em> a construir con ella</h2>
-          <ul class="check-list">
-            <li>Quieres dominar una sola herramienta bien en vez de cambiar cada semana.</li>
-            <li>Prefieres sistemas prácticos a teoría académica sobre IA.</li>
-            <li>No programas (o solo un poco) y quieres resultados reales igualmente.</li>
-            <li>Buscas automatizar tareas concretas de tu día a día.</li>
-            <li>Ya has probado Claude y te quedaste con ganas de sacarle más.</li>
-          </ul>
-        </div>
-        <div class="for-who-col bad">
-          <div class="kicker">No es para ti si</div>
-          <h2>Buscas otra cosa</h2>
-          <ul class="cross-list">
-            <li>Esperas una varita mágica sin poner tiempo de tu parte.</li>
-            <li>Buscas un tutorial exhaustivo de cada herramienta IA que existe.</li>
-            <li>Te molesta leer PDFs y prefieres solo vídeos largos pasivos.</li>
-            <li>Quieres código avanzado en Python para devs expertos.</li>
-          </ul>
-        </div>
-      </div>
-    </section>
+    <hr class="section-sep">
 
     <section class="resources" id="recursos">
-      <div class="kicker">Antes de comprar</div>
-      <h2 class="section-title">Prueba con los recursos gratis</h2>
-      <p class="section-intro">Dos guías completas y gratuitas para que veas cómo enseño antes de pagar nada.</p>
+      <div class="kicker">Recursos gratis</div>
+      <h2 class="section-title">Aprende IA con dos guías paso a paso</h2>
+      <p class="section-intro">La primera enseña a producir un vídeo con IA. La segunda, a que ese proceso se ejecute solo mientras duermes. Las dos, gratis.</p>
       <div class="resource-grid">
         <a href="/yate.html" class="resource-card">
           <div class="tag">Guía 01 · Producción</div>
-          <h3>Cómo hacer un reel como este</h3>
-          <p>El sistema completo para producir un reel hiperrealista con IA. Guion, imagen, vídeo, voz, subtítulos, sonido y mezcla.</p>
+          <h3>Cómo producir un reel hiperrealista con IA, paso a paso</h3>
+          <p>Guion, imagen, vídeo, voz, subtítulos, sonido y mezcla. El sistema completo, abierto.</p>
           <span class="arrow">Abrir guía</span>
         </a>
         <a href="/madrugon.html" class="resource-card">
           <div class="tag">Guía 02 · Automatización</div>
-          <h3>Cómo automatizarlo para que se haga solo</h3>
-          <p>Tu agente se levanta de madrugada, escribe el guion, genera y monta. Tú solo revisas y publicas.</p>
+          <h3>Cómo montar un agente que produce reels mientras duermes</h3>
+          <p>El agente se levanta de madrugada, escribe el guion, genera el vídeo y lo monta. Tú solo revisas y publicas por la mañana.</p>
           <span class="arrow">Abrir guía</span>
         </a>
       </div>
-    </section>
-
-    <section class="pricing" id="precio">
-      <div class="kicker">El precio</div>
-      <h2 class="section-title">
-        Un pago
-        <span class="italic">acceso para siempre</span>
-      </h2>
-
-      <div class="pricing-card" id="comprar">
-        <div class="pricing-head">
-          <div class="pricing-badge">Lanzamiento</div>
-          <h3>El método Claude</h3>
-          <div class="pricing-tag">Todo incluido</div>
-        </div>
-        <div class="pricing-price">
-          <span class="num">297€</span>
-          <span class="note">Pago único · sin suscripción</span>
-        </div>
-        <ul class="pricing-includes">
-          <li>Los seis módulos en PDF descargables</li>
-          <li>50 prompts organizados por categoría</li>
-          <li>Cinco plantillas CLAUDE.md por nicho</li>
-          <li>Cuatro pipelines probados paso a paso</li>
-          <li>Acceso de por vida</li>
-          <li>Actualizaciones incluidas</li>
-          <li>DM directo conmigo si te atascas</li>
-          <li>14 días de garantía de reembolso</li>
-        </ul>
-        <a href="#comprar" class="btn accent large no-arrow">Empezar ahora</a>
-      </div>
-    </section>
-
-    <section class="faq" id="faq">
-      <div class="kicker">Preguntas</div>
-      <h2 class="section-title">Lo que me suelen preguntar</h2>
-      <div class="faq-list">
-        <details>
-          <summary>¿Necesito saber programar?</summary>
-          <p>No. El método está pensado para gente que no programa. Nunca vas a tocar código. Vas a escribir instrucciones claras y a usar plantillas que te doy hechas.</p>
-        </details>
-        <details>
-          <summary>¿Qué plan de Claude necesito?</summary>
-          <p>Con el plan gratuito puedes seguir los primeros módulos. Para aprovechar el curso al <em>100%</em> (sobre todo las automatizaciones) necesitas el plan de pago de Claude.</p>
-        </details>
-        <details>
-          <summary>¿Cuánto tiempo me va a llevar?</summary>
-          <p>Los seis módulos suman unas tres horas de contenido. Lo recomendable es hacer uno por día durante una semana, aplicando cada uno a tu caso real.</p>
-        </details>
-        <details>
-          <summary>¿Esto me sirve si soy creador de contenido?</summary>
-          <p>Sí. De hecho es uno de los perfiles que más rápido ve resultados. El módulo 01 y el 04 son especialmente útiles.</p>
-        </details>
-        <details>
-          <summary>¿Y si soy founder o llevo un equipo pequeño?</summary>
-          <p>También. El módulo 05 de orquestación está pensado justo para eso. Sistemas pequeños que automatizan tareas concretas.</p>
-        </details>
-        <details>
-          <summary>¿Qué me llevo exactamente cuando compre?</summary>
-          <p>Ocho PDFs: los seis módulos, una guía de "empezar aquí" y una biblioteca con 50 prompts listos para copiar.</p>
-        </details>
-        <details>
-          <summary>¿Hay actualizaciones?</summary>
-          <p>Sí. Cuando hay una actualización importante la recibes sin coste. El material cambia rápido, el método se mantiene.</p>
-        </details>
-        <details>
-          <summary>¿Qué pasa si no me sirve?</summary>
-          <p>Tienes 14 días para pedirme el reembolso. Me escribes por DM y te devuelvo el dinero sin preguntas.</p>
-        </details>
-      </div>
-    </section>
-
-    <section class="final-cta">
-      <h2>
-        Empieza hoy
-        <span class="italic">a usar Claude de verdad</span>
-      </h2>
-      <p>297€, acceso para siempre, 14 días de garantía. Si no te sirve, te devuelvo el dinero.</p>
-      <a href="#comprar" class="btn accent large">Empezar ahora</a>
     </section>
 
   </main>
@@ -369,82 +114,7 @@
     <a href="https://instagram.com/rafa.prompts" target="_blank" rel="noopener" class="handle">@rafa.prompts</a>
   </footer>
 
-  <div class="sticky-buy" id="sticky-buy" aria-hidden="true">
-    <div class="label"><strong>El método Claude</strong> · 297€</div>
-    <a href="#comprar" class="btn">Empezar</a>
-  </div>
-
-  <div class="checkout-overlay" id="checkout-overlay" aria-hidden="true">
-    <div class="checkout-modal" role="dialog" aria-modal="true" aria-label="Checkout">
-      <div class="checkout-modal-head">
-        <div class="title">El método Claude · 297€</div>
-        <button class="checkout-close" id="checkout-close" aria-label="Cerrar checkout">
-          <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><line x1="18" y1="6" x2="6" y2="18"/><line x1="6" y1="6" x2="18" y2="18"/></svg>
-        </button>
-      </div>
-      <div class="checkout-body"><div id="checkout"></div></div>
-    </div>
-  </div>
-
-  <script src="https://js.stripe.com/v3/"></script>
-  <script src="app.js"></script>
   <script>
-    const API_URL = 'https://rafa-prompts-api.prxystudio.workers.dev';
-    const STRIPE_PUBLISHABLE_KEY = 'pk_live_51T50VyIYM3GXrMLHGGfo81iUzPdi6XJfSZW91UkNEISZ9U12a0mkPO8YnyaoZTyxTP1vwzKeXmCXfCRn9YyMaDjo000gDMaXZR';
-    let stripeInstance = null;
-    let checkoutInstance = null;
-    async function openCheckout() {
-      const overlay = document.getElementById('checkout-overlay');
-      overlay.classList.add('show');
-      overlay.setAttribute('aria-hidden', 'false');
-      document.body.style.overflow = 'hidden';
-      if (checkoutInstance) return;
-      try {
-        if (!stripeInstance) stripeInstance = Stripe(STRIPE_PUBLISHABLE_KEY);
-        const r = await fetch(`${API_URL}/checkout`, { method: 'POST' });
-        const data = await r.json();
-        if (!r.ok || !data.client_secret) throw new Error(data.error || 'No se pudo iniciar el checkout');
-        checkoutInstance = await stripeInstance.initEmbeddedCheckout({ clientSecret: data.client_secret });
-        checkoutInstance.mount('#checkout');
-      } catch (e) {
-        document.getElementById('checkout').innerHTML = `<div style="padding:40px 24px; text-align:center; color:#B55A3E;">No se pudo cargar el checkout.<br>${e.message}<br><br>Inténtalo en un minuto o escríbeme a <a href="mailto:hola@rafaprompts.com">hola@rafaprompts.com</a>.</div>`;
-      }
-    }
-    function closeCheckout() {
-      const overlay = document.getElementById('checkout-overlay');
-      overlay.classList.remove('show');
-      overlay.setAttribute('aria-hidden', 'true');
-      document.body.style.overflow = '';
-      if (checkoutInstance) {
-        try { checkoutInstance.destroy(); } catch (_) {}
-        checkoutInstance = null;
-        document.getElementById('checkout').innerHTML = '';
-      }
-    }
-    document.querySelectorAll('a[href="#comprar"]').forEach((a) => {
-      a.addEventListener('click', (e) => { e.preventDefault(); openCheckout(); });
-    });
-    document.getElementById('checkout-close').addEventListener('click', closeCheckout);
-    document.getElementById('checkout-overlay').addEventListener('click', (e) => {
-      if (e.target.id === 'checkout-overlay') closeCheckout();
-    });
-    document.addEventListener('keydown', (e) => { if (e.key === 'Escape') closeCheckout(); });
-    (function() {
-      const bar = document.getElementById('sticky-buy');
-      const hero = document.querySelector('.hero');
-      const footer = document.querySelector('.site-footer');
-      if (!bar || !hero) return;
-      const onScroll = () => {
-        const heroBottom = hero.getBoundingClientRect().bottom;
-        const footerTop = footer ? footer.getBoundingClientRect().top : Infinity;
-        const show = heroBottom < -80 && footerTop > window.innerHeight;
-        bar.classList.toggle('show', show);
-        bar.setAttribute('aria-hidden', !show);
-      };
-      window.addEventListener('scroll', onScroll, { passive: true });
-      onScroll();
-    })();
-
     // Burger menu toggle
     (function() {
       const burger = document.getElementById('burger');

@@ -1353,25 +1353,253 @@ details > *:not(summary) { margin-top: 12px; }
 .thanks {
   min-height: 70vh;
   display: grid;
-  place-items: center;
-  padding: 8vw var(--col);
-  text-align: center;
+  place-items: start center;
+  padding: 6vw var(--col) 8vw;
 }
+.thanks-card {
+  max-width: 640px;
+  width: 100%;
+  background: var(--paper);
+  border: 1px solid var(--border);
+  border-radius: var(--r-xl);
+  padding: 48px 44px;
+  text-align: left;
+}
+@media (max-width: 600px) { .thanks-card { padding: 32px 24px; } }
+.thanks-mark {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  width: 56px; height: 56px;
+  border-radius: 50%;
+  background: rgba(46,125,79,0.12);
+  color: #2E7D4F;
+  margin-bottom: 20px;
+}
+.thanks-mark svg { width: 30px; height: 30px; }
 .thanks h1 {
   font-family: var(--sans);
   font-weight: 900;
-  font-size: clamp(36px, 6vw, 96px);
-  line-height: 1;
+  font-size: clamp(34px, 4.4vw, 56px);
+  line-height: 0.96;
   letter-spacing: -0.03em;
-  margin: 0 0 20px;
+  margin: 0 0 18px;
   filter: url(#sprayGrain);
 }
-.thanks p {
-  font-size: 18px;
-  max-width: 42ch;
-  margin: 0 auto 28px;
-  color: var(--ink-soft);
+.thanks h1 .italic {
+  display: block;
+  font-family: var(--serif);
+  font-style: italic;
+  font-weight: 600;
+  font-size: 0.6em;
+  color: var(--accent);
+  margin-top: 6px;
+  filter: none;
 }
+.thanks .lede {
+  font-size: 17px;
+  line-height: 1.55;
+  color: var(--ink-soft);
+  margin: 0 0 28px;
+}
+.thanks-steps {
+  list-style: none;
+  padding: 0;
+  margin: 0 0 32px;
+  counter-reset: thanks;
+  display: grid;
+  gap: 18px;
+}
+.thanks-steps li {
+  position: relative;
+  padding: 18px 22px 18px 56px;
+  background: var(--bg-cream);
+  border-radius: var(--r-md);
+  font-size: 15px;
+  line-height: 1.55;
+  counter-increment: thanks;
+}
+.thanks-steps li::before {
+  content: counter(thanks, decimal-leading-zero);
+  position: absolute;
+  left: 22px;
+  top: 18px;
+  font-family: var(--mono);
+  font-size: 12px;
+  font-weight: 700;
+  color: var(--accent);
+  letter-spacing: 0.1em;
+}
+.thanks-steps code {
+  font-family: var(--mono);
+  font-size: 13px;
+  background: rgba(218,119,86,0.10);
+  color: var(--accent-dim);
+  padding: 1px 6px;
+  border-radius: 4px;
+}
+.thanks-help { font-size: 14px; color: var(--ink-soft); margin: 0 0 24px; }
+.thanks-help a { color: var(--accent); }
+.thanks-cta { display: flex; gap: 12px; }
+
+/* ============================================================
+   Downloads page
+   ============================================================ */
+
+.downloads {
+  max-width: 760px;
+  margin: 0 auto;
+  padding: 6vw var(--col) 8vw;
+}
+.downloads-head { margin-bottom: 32px; }
+.downloads h1 {
+  font-family: var(--sans);
+  font-weight: 900;
+  font-size: clamp(36px, 5vw, 64px);
+  line-height: 0.95;
+  letter-spacing: -0.03em;
+  margin: 8px 0 12px;
+  filter: url(#sprayGrain);
+}
+.downloads h1 .italic {
+  display: block;
+  font-family: var(--serif);
+  font-style: italic;
+  font-weight: 600;
+  font-size: 0.5em;
+  color: var(--accent);
+  margin-top: 8px;
+  filter: none;
+}
+.downloads-meta { font-size: 14px; color: var(--ink-soft); margin: 0; }
+.downloads-meta strong { color: var(--ink); font-weight: 700; }
+.downloads-state { padding: 40px 0; color: var(--ink-mute); font-size: 15px; }
+.downloads-state .error { color: #B55A3E; }
+.downloads-list {
+  display: grid;
+  gap: 12px;
+  margin-bottom: 40px;
+}
+.download-card {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  gap: 16px;
+  padding: 18px 22px;
+  background: var(--paper);
+  border: 1px solid var(--border);
+  border-radius: var(--r-lg);
+  text-decoration: none;
+  color: var(--ink);
+  transition: transform 0.18s, border-color 0.18s, box-shadow 0.18s;
+}
+.download-card:hover {
+  transform: translateY(-2px);
+  border-color: var(--accent);
+  color: var(--ink);
+  box-shadow: var(--shadow-sm);
+}
+.download-meta { display: flex; align-items: center; gap: 16px; min-width: 0; }
+.download-num {
+  font-family: var(--mono);
+  font-size: 11px;
+  font-weight: 700;
+  letter-spacing: 0.16em;
+  color: var(--accent);
+  width: 28px;
+}
+.download-title {
+  font-family: var(--sans);
+  font-weight: 800;
+  font-size: 16px;
+  letter-spacing: -0.01em;
+}
+.download-sub {
+  font-family: var(--mono);
+  font-size: 11px;
+  color: var(--ink-mute);
+  letter-spacing: 0.06em;
+  text-transform: uppercase;
+  font-weight: 600;
+  margin-top: 2px;
+}
+.download-arrow {
+  display: inline-flex;
+  width: 36px; height: 36px;
+  align-items: center;
+  justify-content: center;
+  border-radius: 50%;
+  background: rgba(218,119,86,0.10);
+  color: var(--accent);
+  flex-shrink: 0;
+}
+.download-arrow svg { width: 18px; height: 18px; }
+.downloads-footer {
+  font-size: 13px;
+  color: var(--ink-mute);
+  line-height: 1.6;
+  border-top: 1px solid var(--border);
+  padding-top: 24px;
+}
+.downloads-footer p { margin: 0 0 8px; }
+.downloads-footer a { color: var(--accent); }
+
+/* ============================================================
+   Stripe embedded checkout modal (used on /metodo)
+   ============================================================ */
+
+.checkout-overlay {
+  position: fixed;
+  inset: 0;
+  background: rgba(17,17,17,0.6);
+  z-index: 80;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: 16px;
+  opacity: 0;
+  pointer-events: none;
+  transition: opacity 0.25s;
+}
+.checkout-overlay.show { opacity: 1; pointer-events: auto; }
+.checkout-modal {
+  width: 100%;
+  max-width: 520px;
+  background: var(--paper);
+  border-radius: var(--r-xl);
+  overflow: hidden;
+  position: relative;
+  max-height: 92vh;
+  display: flex;
+  flex-direction: column;
+}
+.checkout-modal-head {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 16px 20px;
+  border-bottom: 1px solid var(--border);
+}
+.checkout-modal-head .title {
+  font-family: var(--sans);
+  font-weight: 800;
+  font-size: 14px;
+}
+.checkout-close {
+  width: 36px; height: 36px;
+  background: transparent;
+  border: 0;
+  color: var(--ink);
+  cursor: pointer;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  border-radius: 50%;
+  transition: background 0.2s;
+}
+.checkout-close:hover { background: rgba(0,0,0,0.06); color: var(--accent); }
+.checkout-body { flex: 1; overflow-y: auto; }
+.checkout-body #checkout { min-height: 600px; }
 
 /* ============================================================
    Utilities

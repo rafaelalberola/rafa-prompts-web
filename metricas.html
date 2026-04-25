@@ -1,0 +1,233 @@
+<!doctype html>
+<html lang="es">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>métricas : 3 que importan, 5 que mienten · rafa.prompts</title>
+  <meta name="description" content="Las 3 métricas reales que mueven la aguja en Instagram y TikTok, y las 5 que solo te hacen sentir bien. Ritual semanal de 15 minutos y plantilla de informe.">
+  <link rel="icon" type="image/svg+xml" href="/assets/img/favicon.svg">
+  <link rel="icon" href="/assets/img/favicon.ico">
+  <link rel="icon" type="image/png" sizes="32x32" href="/assets/img/favicon-32.png">
+  <link rel="icon" type="image/png" sizes="16x16" href="/assets/img/favicon-16.png">
+  <link rel="apple-touch-icon" href="/assets/img/apple-touch-icon.png">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Archivo:wght@400;500;700;800;900&family=IBM+Plex+Mono:wght@400;600&family=Newsreader:ital,wght@1,400;1,500&display=swap">
+  <link rel="stylesheet" href="styles.css">
+</head>
+<body>
+
+  <svg width="0" height="0" style="position:absolute">
+    <defs>
+      <filter id="sprayGrain" x="-10%" y="-10%" width="120%" height="120%">
+        <feTurbulence type="fractalNoise" baseFrequency="0.9" numOctaves="2" seed="7" result="noise"/>
+        <feDisplacementMap in="SourceGraphic" in2="noise" scale="1.6" xChannelSelector="R" yChannelSelector="G" result="wobbled"/>
+        <feGaussianBlur in="wobbled" stdDeviation="0.3" result="blurred"/>
+        <feComponentTransfer in="blurred">
+          <feFuncA type="linear" slope="1.8" intercept="-0.05"/>
+        </feComponentTransfer>
+      </filter>
+    </defs>
+  </svg>
+
+  <div class="progress" id="progress"></div>
+
+  <header class="site-header">
+    <a href="/" class="brand"><strong>rafa</strong>.prompts</a>
+    <nav class="nav">
+      <a href="/metodo.html">Método</a>
+      <a href="/#recursos">Recursos</a>
+      <a href="/#faq">FAQ</a>
+      <a href="/metodo.html" class="btn">Empezar · 297€</a>
+    </nav>
+    <button class="burger" id="burger" aria-label="Abrir menú" aria-expanded="false" aria-controls="mobile-drawer">
+      <span></span><span></span><span></span>
+    </button>
+  </header>
+
+  <div class="mobile-drawer" id="mobile-drawer" aria-hidden="true">
+    <button class="drawer-close" id="drawer-close" aria-label="Cerrar menú"><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><line x1="18" y1="6" x2="6" y2="18"/><line x1="6" y1="6" x2="18" y2="18"/></svg></button>
+    <nav class="drawer-nav">
+      <a href="/metodo.html">Método</a>
+      <a href="/#recursos">Recursos</a>
+      <a href="/#faq">FAQ</a>
+      <a href="/metodo.html" class="btn accent large">Empezar · 297€</a>
+    </nav>
+  </div>
+
+  <article class="resource">
+
+    <aside class="toc">
+      <div class="label">En esta guía</div>
+      <ol>
+        <li><a href="#vanidad">Las 5 que son vanidad</a></li>
+        <li><a href="#importan">Las 3 que sí importan</a></li>
+        <li><a href="#donde">Dónde mirarlas</a></li>
+        <li><a href="#ritual">Ritual semanal de 15 min</a></li>
+        <li><a href="#decisiones">Cómo convertirlo en decisiones</a></li>
+        <li><a href="#errores">Errores comunes</a></li>
+        <li><a href="#plantilla">Plantilla informe semanal</a></li>
+      </ol>
+    </aside>
+
+    <div class="resource-content">
+
+      <div class="reading-time">6 min de lectura · guía 04</div>
+      <h1>3 métricas que importan, 5 que mienten</h1>
+      <p class="lede">
+        La mayoría de creadores miden lo que les hace sentir bien, no lo que les ayuda a decidir. Aquí tienes las únicas 3 métricas que importan y cómo usarlas cada lunes.
+      </p>
+
+      <div class="callout">
+        <span class="ico" aria-hidden="true"><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="10"/><polyline points="12 6 12 12 16 14"/></svg></span>
+        <div>15 minutos cada lunes durante 4 semanas. Vas a empezar a ver patrones que ahora no ves.</div>
+      </div>
+
+      <h2 id="vanidad"><span class="num">01</span>Las 5 métricas que son vanidad</h2>
+      <p>Estas las mira casi todo el mundo y casi a nadie le ayudan a decidir nada. Identifícalas para no perder tiempo con ellas.</p>
+
+      <details>
+        <summary>Likes</summary>
+        <p>Mide cuánta gente tocó dos veces la pantalla. No te dice si entendieron el mensaje, si lo recordaron, si pensaron en compartir. Hay reels con 5.000 likes y cero leads.</p>
+      </details>
+
+      <details>
+        <summary>Reproducciones totales</summary>
+        <p>Suben siempre, incluso cuando tu cuenta empeora. Una persona que ve medio segundo y sigue scrolleando cuenta como reproducción.</p>
+      </details>
+
+      <details>
+        <summary>Seguidores nuevos por día</summary>
+        <p>Útil como termómetro de fondo, pero no te dice qué reel los trajo ni si vinieron por interés real o por accidente.</p>
+      </details>
+
+      <details>
+        <summary>Comentarios totales</summary>
+        <p>Si la mayoría son emojis o "🔥🔥🔥", no son señal de nada. Mira solo los que hacen una pregunta o cuentan su caso real.</p>
+      </details>
+
+      <details>
+        <summary>Impresiones</summary>
+        <p>Es lo que el algoritmo decide enseñarte. Pero si una impresión dura medio segundo, no significa absolutamente nada.</p>
+      </details>
+
+      <h2 id="importan"><span class="num">02</span>Las 3 que sí importan</h2>
+
+      <h3>1. Retención los primeros 3 segundos</h3>
+      <p>El porcentaje de personas que sigue viendo el reel después del segundo 3. Si está por debajo del 60%, tu hook falla y el algoritmo deja de enseñárselo a más gente.</p>
+      <p>Dónde mirarla: en las analíticas de cada reel busca la curva de retención. La caída más fuerte siempre ocurre en los 3 primeros segundos. Lo que pase ahí decide casi todo.</p>
+
+      <h3>2. Tasa de visitas al perfil</h3>
+      <p>De cada 100 personas que ven tu reel, cuántas hacen clic en tu nombre para visitar tu perfil. Si supera el 2%, tu reel funciona como puerta de entrada. Si está por debajo del 0,5%, entretiene pero no convierte.</p>
+      <p>Esta es la métrica más importante para crecer en seguidores cualificados, no en seguidores que pasaban por allí.</p>
+
+      <h3>3. Leads o palabras clave activadas</h3>
+      <p>Cuántas personas comentaron la palabra clave de tu reel y entraron en tu funnel. Es la única métrica que conecta directamente con dinero futuro.</p>
+      <p>Umbral mínimo razonable: 5 leads por reel. Si publicas reels sin palabra clave, te falta la métrica más importante de todas. Vuelve atrás y diseña uno.</p>
+
+      <h2 id="donde"><span class="num">03</span>Dónde mirarlas</h2>
+      <p>No necesitas herramientas de pago para empezar. Las nativas funcionan bien.</p>
+      <ul>
+        <li><strong>Instagram Insights:</strong> dentro de cada reel, abajo a la izquierda hay un icono de gráfica. Ahí está la curva de retención y las visitas al perfil.</li>
+        <li><strong>TikTok Analytics:</strong> en cada vídeo, desde el menú "..." en la página del vídeo. La métrica clave es "tiempo medio visto".</li>
+        <li><strong>Manychat:</strong> en el panel principal ves cuántas veces se activó cada palabra clave. Esa es tu cifra de leads por reel.</li>
+      </ul>
+
+      <a href="/metodo.html" class="cross-link">
+        <div class="label">Quieres ir más allá</div>
+        <h3>El método Claude</h3>
+        <p>El módulo final enseña iteración y medida con Claude: cómo automatizar la lectura semanal de métricas y convertirlas en próximas acciones sin pensarlo dos veces.</p>
+        <span class="arrow">Ver el método →</span>
+      </a>
+
+      <h2 id="ritual"><span class="num">04</span>Ritual semanal de 15 min</h2>
+      <p>Cada lunes, 15 minutos. Bloquéalo en el calendario. Sin esto, no aprendes nada de tu cuenta por mucho que publiques.</p>
+      <ol>
+        <li>Abre los 3 últimos reels publicados</li>
+        <li>Apunta en una nota: retención a 3 segundos, visitas al perfil, leads activados</li>
+        <li>Marca el reel ganador y el reel perdedor</li>
+        <li>Pregúntate: ¿qué tenía el ganador que el perdedor no? (hook, escena, palabra clave, hora de publicación)</li>
+        <li>Apunta UNA cosa que vas a probar la semana siguiente</li>
+      </ol>
+
+      <div class="callout warn">
+        <span class="ico" aria-hidden="true"><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M10.29 3.86 1.82 18a2 2 0 0 0 1.71 3h16.94a2 2 0 0 0 1.71-3L13.71 3.86a2 2 0 0 0-3.42 0z"/><line x1="12" y1="9" x2="12" y2="13"/><line x1="12" y1="17" x2="12.01" y2="17"/></svg></span>
+        <div>Solo cambia UNA cosa por semana. Si cambias tres a la vez, no sabrás cuál movió la aguja. Avanzas más despacio pero aprendes de verdad.</div>
+      </div>
+
+      <h2 id="decisiones"><span class="num">05</span>Cómo convertir números en decisiones</h2>
+      <p>Mirar métricas sin decidir nada es perder el lunes. Estos son los disparadores que te tienen que llevar a actuar:</p>
+      <ul>
+        <li><strong>Retención por debajo del 50%:</strong> reescribe los primeros 3 segundos. No produzcas más reels hasta arreglar esto.</li>
+        <li><strong>Visitas al perfil por debajo del 1%:</strong> tu mensaje no es claro. Trabaja la promesa central del reel.</li>
+        <li><strong>Leads por debajo de 5 por reel:</strong> tu palabra clave es difícil de recordar o tu llamada a la acción es débil. Cambia las dos cosas.</li>
+        <li><strong>Un reel con buenos números pero pocas ventas:</strong> el problema no es el reel. Es la landing o el email que envías después.</li>
+      </ul>
+
+      <h2 id="errores"><span class="num">06</span>Errores comunes</h2>
+      <ol>
+        <li><strong>Compararte con cuentas grandes.</strong> Sus números no te sirven. Sus reels llevan meses de optimización. Compárate solo contigo de hace un mes.</li>
+        <li><strong>Mirar métricas todos los días.</strong> Genera ansiedad y no añade información. Una vez por semana basta.</li>
+        <li><strong>Ignorar los reels que pierden.</strong> Tus peores reels enseñan más que los mejores. Estúdialos antes de borrarlos.</li>
+        <li><strong>Tener métricas sin objetivo.</strong> Si no sabes qué quieres conseguir este mes, las métricas no te dicen nada.</li>
+        <li><strong>Mezclar formatos en el mismo informe.</strong> Reels, carruseles y stories juegan a juegos distintos. Mide cada uno por separado.</li>
+      </ol>
+
+      <h2 id="plantilla"><span class="num">07</span>Plantilla informe semanal</h2>
+      <p>Copia esto en una nota y rellénalo cada lunes. En 4 semanas verás patrones reales sobre tu cuenta.</p>
+      <div class="code-block"><pre>Semana del [fecha]
+
+Reels publicados esta semana:
+1. [título] - retención: __% - perfil: __% - leads: __
+2. [título] - retención: __% - perfil: __% - leads: __
+3. [título] - retención: __% - perfil: __% - leads: __
+
+Ganador de la semana:
+___
+
+Por qué ganó (hipótesis en una frase):
+___
+
+Una cosa que voy a probar la próxima semana:
+___
+
+Pregunta sin respuesta esta semana:
+___</pre></div>
+
+      <a href="/agentes.html" class="cross-link">
+        <div class="label">Guía siguiente</div>
+        <h3>Tu prompt no funciona: divídelo en 3 agentes</h3>
+        <p>Si tu prompt gigante a Claude da resultados mediocres, no es culpa del modelo. Es culpa del reparto. Aprende a dividirlo bien.</p>
+        <span class="arrow">Abrir guía agentes →</span>
+      </a>
+
+    </div>
+
+  </article>
+
+  <footer class="site-footer">
+    <a href="https://instagram.com/rafa.prompts" target="_blank" rel="noopener" class="handle">@rafa.prompts</a>
+  </footer>
+
+  <script src="app.js"></script>
+  <script>
+    (function() {
+      const burger = document.getElementById('burger');
+      const drawer = document.getElementById('mobile-drawer');
+      if (!burger || !drawer) return;
+      const toggle = (force) => {
+        const open = force !== undefined ? force : !document.body.classList.contains('drawer-open');
+        document.body.classList.toggle('drawer-open', open);
+        burger.setAttribute('aria-expanded', open);
+        drawer.setAttribute('aria-hidden', !open);
+        document.body.style.overflow = open ? 'hidden' : '';
+      };
+      burger.addEventListener('click', () => toggle());
+      const close = document.getElementById('drawer-close');
+      if (close) close.addEventListener('click', () => toggle(false));
+      drawer.querySelectorAll('a').forEach(a => a.addEventListener('click', () => toggle(false)));
+      document.addEventListener('keydown', (e) => { if (e.key === 'Escape') toggle(false); });
+    })();
+  </script>
+</body>
+</html>

@@ -1016,6 +1016,9 @@ h3 {
   border-top: 1px solid var(--border);
   text-align: center;
 }
+@media (min-width: 901px) {
+  .site-footer { padding: 4vw var(--col) 5vw 4vw; }
+}
 
 .site-footer .handle {
   font-family: var(--sans);

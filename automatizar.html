@@ -1,0 +1,254 @@
+<!doctype html>
+<html lang="es">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>automatizar : qué automatizar primero, auditoría 20 min · rafa.prompts</title>
+  <meta name="description" content="La regla de las 2 columnas para decidir qué proceso automatizar primero en tu equipo. Plantilla con caso real y método paso a paso.">
+  <link rel="icon" type="image/svg+xml" href="/assets/img/favicon.svg">
+  <link rel="icon" href="/assets/img/favicon.ico">
+  <link rel="icon" type="image/png" sizes="32x32" href="/assets/img/favicon-32.png">
+  <link rel="icon" type="image/png" sizes="16x16" href="/assets/img/favicon-16.png">
+  <link rel="apple-touch-icon" href="/assets/img/apple-touch-icon.png">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Archivo:wght@400;500;700;800;900&family=IBM+Plex+Mono:wght@400;600&family=Newsreader:ital,wght@1,400;1,500&display=swap">
+  <link rel="stylesheet" href="styles.css">
+</head>
+<body>
+
+  <svg width="0" height="0" style="position:absolute">
+    <defs>
+      <filter id="sprayGrain" x="-10%" y="-10%" width="120%" height="120%">
+        <feTurbulence type="fractalNoise" baseFrequency="0.9" numOctaves="2" seed="7" result="noise"/>
+        <feDisplacementMap in="SourceGraphic" in2="noise" scale="1.6" xChannelSelector="R" yChannelSelector="G" result="wobbled"/>
+        <feGaussianBlur in="wobbled" stdDeviation="0.3" result="blurred"/>
+        <feComponentTransfer in="blurred">
+          <feFuncA type="linear" slope="1.8" intercept="-0.05"/>
+        </feComponentTransfer>
+      </filter>
+    </defs>
+  </svg>
+
+  <div class="progress" id="progress"></div>
+
+  <header class="site-header">
+    <a href="/" class="brand"><strong>rafa</strong>.prompts</a>
+    <nav class="nav">
+      <a href="/metodo.html">Método</a>
+      <a href="/#recursos">Recursos</a>
+      <a href="/#faq">FAQ</a>
+      <a href="/metodo.html" class="btn">Empezar · 297€</a>
+    </nav>
+    <button class="burger" id="burger" aria-label="Abrir menú" aria-expanded="false" aria-controls="mobile-drawer">
+      <span></span><span></span><span></span>
+    </button>
+  </header>
+
+  <div class="mobile-drawer" id="mobile-drawer" aria-hidden="true">
+    <button class="drawer-close" id="drawer-close" aria-label="Cerrar menú"><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><line x1="18" y1="6" x2="6" y2="18"/><line x1="6" y1="6" x2="18" y2="18"/></svg></button>
+    <nav class="drawer-nav">
+      <a href="/metodo.html">Método</a>
+      <a href="/#recursos">Recursos</a>
+      <a href="/#faq">FAQ</a>
+      <a href="/metodo.html" class="btn accent large">Empezar · 297€</a>
+    </nav>
+  </div>
+
+  <article class="resource">
+
+    <aside class="toc">
+      <div class="label">En esta guía</div>
+      <ol>
+        <li><a href="#por-que-mal">Por qué automatizas mal</a></li>
+        <li><a href="#regla">La regla de las 2 columnas</a></li>
+        <li><a href="#paso-1">Paso 1: lista de la semana</a></li>
+        <li><a href="#paso-2">Paso 2: ordenar por tiempo y criterio</a></li>
+        <li><a href="#mucho-poco">Mucho tiempo, poco criterio</a></li>
+        <li><a href="#mucho-mucho">Mucho tiempo, mucho criterio</a></li>
+        <li><a href="#poco-todo">Poco tiempo, todo</a></li>
+        <li><a href="#plantilla">Plantilla con caso real</a></li>
+        <li><a href="#errores">Errores comunes</a></li>
+      </ol>
+    </aside>
+
+    <div class="resource-content">
+
+      <div class="reading-time">7 min de lectura · guía 07</div>
+      <h1>Qué automatizar primero: auditoría de 20 minutos</h1>
+      <p class="lede">
+        El error más caro de un equipo pequeño no es automatizar mal. Es automatizar lo que no toca. Aquí tienes la regla que decide en 20 minutos por dónde empezar.
+      </p>
+
+      <div class="callout">
+        <span class="ico" aria-hidden="true"><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="10"/><polyline points="12 6 12 12 16 14"/></svg></span>
+        <div>20 minutos. Una hoja. Un boli. Cuando termines, sabes qué automatizar primero, qué automatizar después y qué no automatizar nunca.</div>
+      </div>
+
+      <h2 id="por-que-mal"><span class="num">01</span>Por qué casi todo el mundo automatiza mal</h2>
+      <p>Cuando un equipo pequeño descubre que puede automatizar, la tentación es empezar por lo más vistoso: el flujo nuevo de marketing, el bot que responde, la integración con el CRM.</p>
+      <p>El problema: lo más vistoso casi nunca es lo más rentable. Los procesos que más tiempo te roban son aburridos, repetitivos y nadie los enseña en LinkedIn.</p>
+      <p>El segundo problema: hay procesos que no se deben automatizar. Si tu agente toma una decisión que requiere criterio (un descuento, una respuesta a un cliente caliente, un pago), te puede costar más caro de lo que ahorras.</p>
+      <p>La regla de esta guía resuelve los dos problemas a la vez.</p>
+
+      <h2 id="regla"><span class="num">02</span>La regla de las 2 columnas</h2>
+      <p>Cada tarea de tu equipo se puede medir con dos preguntas. Eso es todo.</p>
+      <ul>
+        <li><strong>¿Cuánto tiempo se le va a la semana?</strong> En horas, contadas honestamente.</li>
+        <li><strong>¿Cuánto criterio humano hace falta?</strong> En una escala de 1 (cualquiera lo haría igual) a 5 (solo tú o un experto puede decidir).</li>
+      </ul>
+      <p>Con esas dos columnas, cada tarea cae en uno de cuatro cuadrantes. Y cada cuadrante tiene una regla distinta:</p>
+      <ul>
+        <li><strong>Mucho tiempo + poco criterio:</strong> automatízalo el lunes que viene</li>
+        <li><strong>Mucho tiempo + mucho criterio:</strong> automatiza el 80% que no requiere criterio, deja el 20% para ti</li>
+        <li><strong>Poco tiempo + poco criterio:</strong> automatízalo si te molesta, si no, déjalo</li>
+        <li><strong>Poco tiempo + mucho criterio:</strong> nunca lo automatices, es el corazón de tu negocio</li>
+      </ul>
+
+      <h2 id="paso-1"><span class="num">03</span>Paso 1: lista de la semana</h2>
+      <p>Coge una semana cualquiera y haz una lista de todas las tareas en las que tu equipo gasta tiempo. No 5 tareas. No 10. Las que sean. Si te salen 30, mejor.</p>
+      <p>Reglas para la lista:</p>
+      <ul>
+        <li>Una línea por tarea, en lenguaje normal</li>
+        <li>No agrupes (en vez de <em>"gestión de clientes"</em>, escribe <em>"contestar emails de clientes"</em>, <em>"facturar a clientes"</em>, <em>"actualizar estado en CRM"</em>)</li>
+        <li>Incluye todas las tareas, hasta las pequeñas (<em>"cambiar de moneda los recibos"</em>, <em>"copiar enlaces de Notion a Slack"</em>)</li>
+        <li>Mejor pasarte que quedarte corto</li>
+      </ul>
+      <p>Esto solo, antes incluso de medir nada, ya te abre los ojos. La mayoría de los equipos descubre tareas que nadie sabía que existían.</p>
+
+      <h2 id="paso-2"><span class="num">04</span>Paso 2: ordenar por tiempo y criterio</h2>
+      <p>Pasa cada tarea por las dos preguntas. No te lo pienses mucho. Confía en tu primera intuición.</p>
+      <p>Para tiempo, suma horas de toda la semana entre todas las personas. Si dos personas pasan 1 hora cada una, son 2 horas, no 1.</p>
+      <p>Para criterio, pregúntate: <em>si esta tarea la hiciera un becario que entró ayer, ¿el resultado sería igual de bueno?</em></p>
+      <ul>
+        <li>Sí, exactamente igual: criterio 1</li>
+        <li>Casi igual, con guía mínima: criterio 2</li>
+        <li>Necesitaría una semana de formación: criterio 3</li>
+        <li>Necesitaría un mes y supervisión: criterio 4</li>
+        <li>No lo puede hacer nadie más que tú o un experto del equipo: criterio 5</li>
+      </ul>
+      <p>Una vez tengas las dos columnas, ordena la tabla por tiempo descendente. Las tareas que más tiempo gastan, arriba. Es ahí donde pone el foco la auditoría.</p>
+
+      <a href="/metodo.html" class="cross-link">
+        <div class="label">Quieres ir más allá</div>
+        <h3>El método Claude</h3>
+        <p>El módulo 03 enseña a llevar la auditoría de cero hasta el primer agente automatizado en una semana. Plantilla descargable y casos reales de equipos de 3 a 30 personas.</p>
+        <span class="arrow">Ver el método →</span>
+      </a>
+
+      <h2 id="mucho-poco"><span class="num">05</span>Mucho tiempo, poco criterio: empieza por aquí</h2>
+      <p>Este cuadrante es el oro. Las tareas que están aquí son las que más vas a notar cuando se hagan solas.</p>
+      <p>Características típicas:</p>
+      <ul>
+        <li>Copiar datos de un sitio a otro</li>
+        <li>Generar el mismo informe cada semana</li>
+        <li>Responder preguntas que ya están respondidas en algún sitio</li>
+        <li>Mover información entre dos herramientas que no se hablan entre sí</li>
+        <li>Subir o etiquetar archivos siguiendo siempre la misma regla</li>
+      </ul>
+      <p>Estas son las primeras 3 tareas que tu agente debería hacer. No las tareas vistosas. Estas.</p>
+
+      <h2 id="mucho-mucho"><span class="num">06</span>Mucho tiempo, mucho criterio: automatiza la base, no la cima</h2>
+      <p>Aquí están las tareas peligrosas. Quitan mucho tiempo, sí, pero requieren criterio. Si las automatizas enteras, te va a salir mal.</p>
+      <p>El truco: divide la tarea en pasos. Casi siempre el 80% son pasos rutinarios (preparar datos, ordenar, formatear, mandar). Solo el 20% es la decisión que requiere criterio.</p>
+      <p>Ejemplo: contestar a un cliente caliente.</p>
+      <ul>
+        <li>Recoger el mensaje, identificar al cliente, sacar su histórico, formatear el contexto: el agente</li>
+        <li>Decidir qué le respondes y con qué tono: tú</li>
+        <li>Mandar la respuesta y archivarla en el CRM: el agente</li>
+      </ul>
+      <p>Tu trabajo se reduce de 20 minutos por cliente a 3 minutos. Pero la parte que importa, la sigues haciendo tú.</p>
+
+      <h2 id="poco-todo"><span class="num">07</span>Poco tiempo: olvídate, salvo que te queme</h2>
+      <p>Las tareas de poco tiempo (menos de 1 hora a la semana) no merecen la inversión de automatizar, salvo dos excepciones:</p>
+      <ul>
+        <li><strong>Si te molesta hacerla:</strong> a veces el coste no es el tiempo, es la fricción mental. Si tienes que parar lo que estás haciendo cada vez, automatízala aunque tarde poco</li>
+        <li><strong>Si bloquea a otra persona:</strong> si tu tarea de 10 minutos hace que un compañero espere medio día, vale la pena</li>
+      </ul>
+      <p>El resto de las tareas pequeñas, déjalas como están. Es contraintuitivo, pero automatizarlas te quita más tiempo del que te ahorra.</p>
+
+      <h2 id="plantilla"><span class="num">08</span>Plantilla con caso real</h2>
+      <p>Esta es una auditoría real de una agencia de diseño de 6 personas. La hicieron en 18 minutos. La columna de la derecha indica la decisión.</p>
+      <div class="code-block"><pre>Tarea                                  Tiempo   Criterio   Decisión
+─────────────────────────────────────  ───────  ─────────  ──────────────────────
+Copiar briefs de email a Notion         8 h/sem    1        AUTOMATIZAR YA
+Mandar facturas mensuales a clientes    6 h/sem    2        AUTOMATIZAR YA
+Generar informe semanal para clientes   5 h/sem    3        AUTOMATIZAR base, tú decides
+Contestar a leads nuevos por web        4 h/sem    4        AUTOMATIZAR clasificación, tú respondes
+Subir entregables a Drive y avisar      3 h/sem    1        AUTOMATIZAR YA
+Decidir presupuesto de proyectos        3 h/sem    5        NUNCA AUTOMATIZAR
+Reuniones internas semanales            2 h/sem    4        Sin cambio
+Resúmenes de reuniones para el equipo   2 h/sem    2        AUTOMATIZAR (transcripción + resumen)
+Onboarding de cliente nuevo             1 h/sem    4        Plantilla, no agente
+Cambiar estado de proyectos en CRM      1 h/sem    1        AUTOMATIZAR si conecta con otra cosa</pre></div>
+      <p>Lectura rápida del caso:</p>
+      <ul>
+        <li>Las 3 primeras tareas (briefs, facturas, entregables) suman 17 horas a la semana de trabajo eliminable. Empieza por ahí, no por el bot del CRM ni por la web.</li>
+        <li>El informe semanal y los leads de la web son medio tuyos, medio del agente. Diseña el reparto antes de tocar nada.</li>
+        <li>Decidir presupuesto es donde está tu margen. Eso jamás lo toca un agente.</li>
+      </ul>
+
+      <h2 id="errores"><span class="num">09</span>Errores comunes</h2>
+
+      <details>
+        <summary>Empezar por la tarea más vistosa</summary>
+        <p>El bot de la web, el agente del CRM, el chatbot del Discord. Suena bien, queda bien en redes y casi nunca está arriba en tu lista de horas. Olvídate de la vistosidad y mira la tabla.</p>
+      </details>
+
+      <details>
+        <summary>Subestimar el criterio</summary>
+        <p>"Esto lo puede hacer cualquiera" es la frase que te lleva a un agente que la lía gorda con un cliente. Si dudas, sube el criterio en uno. Mejor pasarte de prudente.</p>
+      </details>
+
+      <details>
+        <summary>Automatizar tareas de poco tiempo por orgullo</summary>
+        <p>Sale en una hora, se siente productivo, pero no mueve la aguja. Si tu lista solo tiene tareas de poco tiempo, el problema no es la automatización: es que no estás midiendo bien las horas reales.</p>
+      </details>
+
+      <details>
+        <summary>No actualizar la auditoría</summary>
+        <p>La lista cambia. Procesos que costaban 8 horas ahora cuestan 1, otros nuevos aparecen. Repite la auditoría cada 3 meses, máximo. Tarda 20 minutos y reordena prioridades.</p>
+      </details>
+
+      <details>
+        <summary>Hacer la auditoría tú solo</summary>
+        <p>Si tienes equipo, hazla con ellos en una sala. Las tareas que tú no ves, las ven ellos. Y al revés.</p>
+      </details>
+
+      <a href="/mensaje.html" class="cross-link">
+        <div class="label">Guía siguiente</div>
+        <h3>Cómo escribir el primer mensaje a un cliente</h3>
+        <p>Ya sabes qué automatizar y qué no. Ahora toca la parte que sigue siendo solo tuya: la primera frase que le mandas a un cliente nuevo.</p>
+        <span class="arrow">Abrir guía mensaje →</span>
+      </a>
+
+    </div>
+
+  </article>
+
+  <footer class="site-footer">
+    <a href="https://instagram.com/rafa.prompts" target="_blank" rel="noopener" class="handle">@rafa.prompts</a>
+  </footer>
+
+  <script src="app.js"></script>
+  <script>
+    (function() {
+      const burger = document.getElementById('burger');
+      const drawer = document.getElementById('mobile-drawer');
+      if (!burger || !drawer) return;
+      const toggle = (force) => {
+        const open = force !== undefined ? force : !document.body.classList.contains('drawer-open');
+        document.body.classList.toggle('drawer-open', open);
+        burger.setAttribute('aria-expanded', open);
+        drawer.setAttribute('aria-hidden', !open);
+        document.body.style.overflow = open ? 'hidden' : '';
+      };
+      burger.addEventListener('click', () => toggle());
+      const close = document.getElementById('drawer-close');
+      if (close) close.addEventListener('click', () => toggle(false));
+      drawer.querySelectorAll('a').forEach(a => a.addEventListener('click', () => toggle(false)));
+      document.addEventListener('keydown', (e) => { if (e.key === 'Escape') toggle(false); });
+    })();
+  </script>
+</body>
+</html>

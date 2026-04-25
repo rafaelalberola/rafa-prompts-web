@@ -261,8 +261,9 @@ img { max-width: 100%; display: block; }
   position: relative;
 }
 .nav a:hover, .nav a.active { color: var(--ink); }
-.nav .btn { padding: 10px 20px; font-size: 14px; }
-.nav .btn::after { width: 12px; height: 12px; }
+.nav .btn { padding: 10px 20px; font-size: 14px; color: #fff; }
+.nav .btn:hover { color: #fff; }
+.nav .btn::after { width: 12px; height: 12px; background: #fff; }
 
 /* ============================================================
    Hero

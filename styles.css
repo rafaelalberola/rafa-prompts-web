@@ -1075,10 +1075,11 @@ h3 {
 }
 .toc .label {
   text-transform: uppercase;
-  letter-spacing: 0.2em;
+  letter-spacing: 0.1em;
   font-size: 11px;
   color: var(--ink-mute);
   margin-bottom: 16px;
+  font-weight: 700;
 }
 .toc ol {
   list-style: none;

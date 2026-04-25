@@ -1,0 +1,233 @@
+<!doctype html>
+<html lang="es">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>vender : vende producto propio sin sponsors ni anuncios · rafa.prompts</title>
+  <meta name="description" content="El funnel mínimo de 3 piezas para vender producto propio. Reel, landing, email automático. Cómo poner precio y errores caros que evitar.">
+  <link rel="icon" type="image/svg+xml" href="/assets/img/favicon.svg">
+  <link rel="icon" href="/assets/img/favicon.ico">
+  <link rel="icon" type="image/png" sizes="32x32" href="/assets/img/favicon-32.png">
+  <link rel="icon" type="image/png" sizes="16x16" href="/assets/img/favicon-16.png">
+  <link rel="apple-touch-icon" href="/assets/img/apple-touch-icon.png">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Archivo:wght@400;500;700;800;900&family=IBM+Plex+Mono:wght@400;600&family=Newsreader:ital,wght@1,400;1,500&display=swap">
+  <link rel="stylesheet" href="styles.css">
+</head>
+<body>
+
+  <svg width="0" height="0" style="position:absolute">
+    <defs>
+      <filter id="sprayGrain" x="-10%" y="-10%" width="120%" height="120%">
+        <feTurbulence type="fractalNoise" baseFrequency="0.9" numOctaves="2" seed="7" result="noise"/>
+        <feDisplacementMap in="SourceGraphic" in2="noise" scale="1.6" xChannelSelector="R" yChannelSelector="G" result="wobbled"/>
+        <feGaussianBlur in="wobbled" stdDeviation="0.3" result="blurred"/>
+        <feComponentTransfer in="blurred">
+          <feFuncA type="linear" slope="1.8" intercept="-0.05"/>
+        </feComponentTransfer>
+      </filter>
+    </defs>
+  </svg>
+
+  <div class="progress" id="progress"></div>
+
+  <header class="site-header">
+    <a href="/" class="brand"><strong>rafa</strong>.prompts</a>
+    <nav class="nav">
+      <a href="/metodo.html">Método</a>
+      <a href="/#recursos">Recursos</a>
+      <a href="/#faq">FAQ</a>
+      <a href="/metodo.html" class="btn">Empezar · 297€</a>
+    </nav>
+    <button class="burger" id="burger" aria-label="Abrir menú" aria-expanded="false" aria-controls="mobile-drawer">
+      <span></span><span></span><span></span>
+    </button>
+  </header>
+
+  <div class="mobile-drawer" id="mobile-drawer" aria-hidden="true">
+    <button class="drawer-close" id="drawer-close" aria-label="Cerrar menú"><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><line x1="18" y1="6" x2="6" y2="18"/><line x1="6" y1="6" x2="18" y2="18"/></svg></button>
+    <nav class="drawer-nav">
+      <a href="/metodo.html">Método</a>
+      <a href="/#recursos">Recursos</a>
+      <a href="/#faq">FAQ</a>
+      <a href="/metodo.html" class="btn accent large">Empezar · 297€</a>
+    </nav>
+  </div>
+
+  <article class="resource">
+
+    <aside class="toc">
+      <div class="label">En esta guía</div>
+      <ol>
+        <li><a href="#sponsors">Por qué dejar los sponsors</a></li>
+        <li><a href="#siete-dias">Tu primer producto en 7 días</a></li>
+        <li><a href="#funnel">El funnel mínimo de 3 piezas</a></li>
+        <li><a href="#landing">La landing que convierte</a></li>
+        <li><a href="#email">El email de bienvenida</a></li>
+        <li><a href="#precio">Cómo poner precio</a></li>
+        <li><a href="#errores">Errores caros</a></li>
+        <li><a href="#checklist">Checklist de lanzamiento</a></li>
+      </ol>
+    </aside>
+
+    <div class="resource-content">
+
+      <div class="reading-time">8 min de lectura · guía 07</div>
+      <h1>Vende producto propio sin sponsors ni anuncios</h1>
+      <p class="lede">
+        Cobrar por enseñar tu marca a otra gente paga las facturas, pero te ata a la agenda de quien te paga. Vender producto propio es lento al principio y luego te da control sobre todo: el calendario, el precio, los clientes.
+      </p>
+
+      <div class="callout">
+        <span class="ico" aria-hidden="true"><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M20.59 13.41 13.42 20.58a2 2 0 0 1-2.83 0L2 12V2h10l8.59 8.59a2 2 0 0 1 0 2.82z"/><line x1="7" y1="7" x2="7.01" y2="7"/></svg></span>
+        <div>El primer producto no tiene que ser bueno. Tiene que ser real. Saca algo pequeño y útil esta semana, mejóralo con feedback la siguiente.</div>
+      </div>
+
+      <h2 id="sponsors"><span class="num">01</span>Por qué dejar los sponsors</h2>
+      <p>Los sponsors parecen el camino fácil. Cobras por publicar, no asumes el riesgo de un producto, no tienes que hacer atención al cliente. La trampa es lo que pierdes a cambio.</p>
+      <p>Pierdes calendario: publicas cuando paga la marca, no cuando tu audiencia lo necesita. Pierdes voz: cada pieza pasa por revisión y se va limando hasta no decir nada. Pierdes audiencia: cada anuncio te quita confianza, aunque no se note hasta seis meses después.</p>
+      <p>Producto propio invierte la dinámica. Tu calendario, tu voz, tu margen. La curva es más lenta los tres primeros meses y mucho más empinada después.</p>
+
+      <h2 id="siete-dias"><span class="num">02</span>Tu primer producto en 7 días</h2>
+      <p>El bloqueo más común es esperar a tener algo grande. No esperes. Saca algo en una semana y aprende con clientes reales.</p>
+      <p>Tres formatos que funcionan, ordenados de menos a más esfuerzo:</p>
+      <h3>Plantilla</h3>
+      <p>Un documento, un prompt, una hoja de cálculo o un workflow listo para usar. Precio entre 19 y 49 según lo específico que sea. Lo montas en 1 a 2 días. Es el mejor primer producto: enseña a tu audiencia que vendes algo y te da material para iterar.</p>
+      <h3>Curso corto</h3>
+      <p>3 a 6 vídeos de menos de 10 minutos cada uno, con un PDF y los enlaces a las herramientas. Precio entre 97 y 297. Lo grabas en una tarde con guion. Resuelve un problema concreto, no enseña un campo entero.</p>
+      <h3>Servicio cerrado</h3>
+      <p>Un trabajo con principio, final y entregable claro. Auditoría, montaje de un agente, configuración de un workflow. Precio entre 500 y 2500. Te da los testimonios y los casos reales que luego usas en todo lo demás.</p>
+      <p>Empieza por la plantilla. Aunque tu objetivo final sea servicio, la plantilla te enseña a vender en pequeño antes de vender en grande.</p>
+
+      <h2 id="funnel"><span class="num">03</span>El funnel mínimo de 3 piezas</h2>
+      <p>Un funnel es el camino que recorre alguien desde que te ve por primera vez hasta que paga. La versión completa tiene 15 piezas. La versión que te hace falta para empezar tiene 3.</p>
+      <ul>
+        <li><strong>Reel:</strong> el contenido público que demuestra que sabes hacer lo que vendes. Termina con una palabra clave concreta.</li>
+        <li><strong>Landing:</strong> una sola página que explica qué hay, para quién es y cuánto cuesta. Un solo botón.</li>
+        <li><strong>Email automático:</strong> el correo que recibe cualquiera que comenta la palabra clave. Lleva al producto y se manda solo.</li>
+      </ul>
+      <p>Con esas tres piezas ya cierras la venta. Todo lo demás (drip de 7 emails, upsells, tripwires) llega después. Si empiezas por lo grande, no llegas nunca.</p>
+
+      <h2 id="landing"><span class="num">04</span>La landing que convierte</h2>
+      <p>Una landing no es una web de empresa. Es una sola página que responde 4 preguntas en este orden:</p>
+      <ol>
+        <li>¿Qué hay aquí? (en una frase, sin jerga)</li>
+        <li>¿Para quién es? (un perfil concreto, no "todo el mundo")</li>
+        <li>¿Por qué confiar? (1 testimonio, 1 captura, 1 cifra)</li>
+        <li>¿Cuánto y cómo? (precio claro, un solo botón)</li>
+      </ol>
+      <p>Tres reglas de diseño que casi nadie respeta:</p>
+      <ul>
+        <li>Un solo botón. Si das opciones, la gente se va a pensar y no vuelve.</li>
+        <li>El precio se ve sin hacer scroll en móvil. Si esconder el precio fuera estrategia, todo el mundo lo haría.</li>
+        <li>Sin pop-ups, sin chat, sin contadores. Cada distracción te quita conversión.</li>
+      </ul>
+
+      <h2 id="email"><span class="num">05</span>El email de bienvenida</h2>
+      <p>Cuando alguien comenta la palabra clave de tu reel, tu agente le responde con un mensaje en el chat de Instagram. Ese mensaje lleva al email. El email es el que cierra.</p>
+      <p>Plantilla del email de bienvenida que funciona:</p>
+      <div class="code-block"><pre>Asunto: aquí tienes lo que pediste
+
+Hola [nombre],
+
+Gracias por escribir. Te dejo abajo el enlace al [producto]
+y dos cosas para que lo aproveches.
+
+Lo primero: úsalo hoy mismo, aunque sea 10 minutos. Si lo
+guardas para mañana, ya no vuelve.
+
+Lo segundo: si te atascas, responde a este correo. Lee yo.
+No es un autorespondedor.
+
+Aquí lo tienes:
+[enlace al producto, sin trackers raros]
+
+Un abrazo,
+Rafa
+
+P.D. Si te ha servido, cuéntamelo. Me ayuda a saber qué
+hacer la semana que viene.</pre></div>
+      <p>Detalles importantes:</p>
+      <ul>
+        <li>El asunto es plano. "Aquí tienes lo que pediste" abre más que "Tu regalo gratuito".</li>
+        <li>La firma es tu nombre, no tu marca. Un humano vende, una marca informa.</li>
+        <li>La P.D. abre conversación. La mitad de tus clientes salen de respuestas a esa línea.</li>
+      </ul>
+
+      <h2 id="precio"><span class="num">06</span>Cómo poner precio</h2>
+      <p>El precio no se calcula con una fórmula. Se elige con cabeza y se valida con el primer mes.</p>
+      <p>Tres reglas que te ahorran reescribirlo tres veces:</p>
+      <h3>1. Termina en 7</h3>
+      <p>Los precios impares acabados en 7 venden más que los redondos. 47 en lugar de 50, 297 en lugar de 300, 1.497 en lugar de 1.500. No es magia, es percepción. Lo demuestra cualquier prueba A/B que haya pasado por una landing.</p>
+      <h3>2. Empieza alto, baja si hace falta</h3>
+      <p>Es mucho más fácil bajar el precio que subirlo. Si lanzas a 47 y luego subes a 97, los primeros se enfadan. Si lanzas a 97 y bajas a 67, no se queja nadie. Empieza arriba.</p>
+      <h3>3. Compara contra el coste de no comprarlo</h3>
+      <p>El precio no se compara con productos de otros. Se compara con lo que le cuesta al cliente seguir como está. Si tu plantilla le ahorra 4 horas al mes de trabajo manual y su hora vale 50, el ROI a un mes paga el producto. Eso lo escribes en la landing.</p>
+
+      <a href="/metodo.html" class="cross-link">
+        <div class="label">Quieres ir más allá</div>
+        <h3>El método Claude</h3>
+        <p>El módulo de producto enseña a montar la primera plantilla de cero a venta en 7 días, con plantillas de landing, email y agente de DM ya conectados.</p>
+        <span class="arrow">Ver el método →</span>
+      </a>
+
+      <h2 id="errores"><span class="num">07</span>Errores caros</h2>
+      <ol>
+        <li><strong>Lanzar sin precio publicado.</strong> "Pídeme info" mata el 90% del tráfico. Pon el precio en grande.</li>
+        <li><strong>Producto demasiado ambicioso para empezar.</strong> Curso de 8 horas con 12 módulos. No lo terminas, no lo vendes. Empieza por una plantilla de 19.</li>
+        <li><strong>Imitar la landing de un competidor grande.</strong> Lo que funciona con 100.000 seguidores no funciona con 1.000. Tu landing tiene que ser más directa, más cercana, con menos ruido.</li>
+        <li><strong>Esperar a tener "todo listo".</strong> El producto que sacas en marzo y mejoras en mayo te da más feedback que el producto perfecto que sigues retocando en julio.</li>
+        <li><strong>No mandar el email tú mismo el primer mes.</strong> El primer mes contesta cada respuesta a mano, aunque tarde. Ahí descubres lo que tu landing no explica.</li>
+      </ol>
+
+      <h2 id="checklist"><span class="num">08</span>Checklist de lanzamiento</h2>
+      <p>Antes de pulsar el botón de publicar, repasa esta lista. Te lleva 3 minutos y te ahorra una semana de arreglar incendios.</p>
+      <ol>
+        <li>El precio se ve sin scroll en móvil</li>
+        <li>El botón de pago lleva a una pasarela que probaste con tu tarjeta</li>
+        <li>El producto se entrega solo en menos de 1 minuto tras pagar</li>
+        <li>El email de bienvenida lo recibe el comprador y no se va a spam</li>
+        <li>El reel que lleva a la landing tiene una palabra clave clara</li>
+        <li>El agente de DM responde con el enlace correcto</li>
+        <li>Tienes una persona dispuesta a responder DMs reales el día del lanzamiento</li>
+        <li>Has avisado a 5 personas cercanas de que sale, para que comenten</li>
+      </ol>
+
+      <a href="/borrar.html" class="cross-link">
+        <div class="label">Guía siguiente</div>
+        <h3>Qué automatizaciones mantener (y cuáles borrar)</h3>
+        <p>Cuando tu producto vende, montas agentes para todo. La mitad estorban. Aprende a borrar sin miedo lo que parecía útil y no lo es.</p>
+        <span class="arrow">Abrir guía borrar →</span>
+      </a>
+
+    </div>
+
+  </article>
+
+  <footer class="site-footer">
+    <a href="https://instagram.com/rafa.prompts" target="_blank" rel="noopener" class="handle">@rafa.prompts</a>
+  </footer>
+
+  <script src="app.js"></script>
+  <script>
+    (function() {
+      const burger = document.getElementById('burger');
+      const drawer = document.getElementById('mobile-drawer');
+      if (!burger || !drawer) return;
+      const toggle = (force) => {
+        const open = force !== undefined ? force : !document.body.classList.contains('drawer-open');
+        document.body.classList.toggle('drawer-open', open);
+        burger.setAttribute('aria-expanded', open);
+        drawer.setAttribute('aria-hidden', !open);
+        document.body.style.overflow = open ? 'hidden' : '';
+      };
+      burger.addEventListener('click', () => toggle());
+      const close = document.getElementById('drawer-close');
+      if (close) close.addEventListener('click', () => toggle(false));
+      drawer.querySelectorAll('a').forEach(a => a.addEventListener('click', () => toggle(false)));
+      document.addEventListener('keydown', (e) => { if (e.key === 'Escape') toggle(false); });
+    })();
+  </script>
+</body>
+</html>

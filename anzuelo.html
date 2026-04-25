@@ -1,0 +1,263 @@
+<!doctype html>
+<html lang="es">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>anzuelo : cómo escribir hooks que paren el scroll · rafa.prompts</title>
+  <meta name="description" content="El sistema completo para escribir los primeros 3 segundos de cada reel. 8 patrones probados, ejemplos reales y plantilla copia-y-pega.">
+  <link rel="icon" type="image/svg+xml" href="/assets/img/favicon.svg">
+  <link rel="icon" href="/assets/img/favicon.ico">
+  <link rel="icon" type="image/png" sizes="32x32" href="/assets/img/favicon-32.png">
+  <link rel="icon" type="image/png" sizes="16x16" href="/assets/img/favicon-16.png">
+  <link rel="apple-touch-icon" href="/assets/img/apple-touch-icon.png">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Archivo:wght@400;500;700;800;900&family=IBM+Plex+Mono:wght@400;600&family=Newsreader:ital,wght@1,400;1,500&display=swap">
+  <link rel="stylesheet" href="styles.css">
+</head>
+<body>
+
+  <svg width="0" height="0" style="position:absolute">
+    <defs>
+      <filter id="sprayGrain" x="-10%" y="-10%" width="120%" height="120%">
+        <feTurbulence type="fractalNoise" baseFrequency="0.9" numOctaves="2" seed="7" result="noise"/>
+        <feDisplacementMap in="SourceGraphic" in2="noise" scale="1.6" xChannelSelector="R" yChannelSelector="G" result="wobbled"/>
+        <feGaussianBlur in="wobbled" stdDeviation="0.3" result="blurred"/>
+        <feComponentTransfer in="blurred">
+          <feFuncA type="linear" slope="1.8" intercept="-0.05"/>
+        </feComponentTransfer>
+      </filter>
+    </defs>
+  </svg>
+
+  <div class="progress" id="progress"></div>
+
+  <header class="site-header">
+    <a href="/" class="brand"><strong>rafa</strong>.prompts</a>
+    <nav class="nav">
+      <a href="/metodo.html">Método</a>
+      <a href="/#recursos">Recursos</a>
+      <a href="/#faq">FAQ</a>
+      <a href="/metodo.html" class="btn">Empezar · 297€</a>
+    </nav>
+    <button class="burger" id="burger" aria-label="Abrir menú" aria-expanded="false" aria-controls="mobile-drawer">
+      <span></span><span></span><span></span>
+    </button>
+  </header>
+
+  <div class="mobile-drawer" id="mobile-drawer" aria-hidden="true">
+    <button class="drawer-close" id="drawer-close" aria-label="Cerrar menú"><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><line x1="18" y1="6" x2="6" y2="18"/><line x1="6" y1="6" x2="18" y2="18"/></svg></button>
+    <nav class="drawer-nav">
+      <a href="/metodo.html">Método</a>
+      <a href="/#recursos">Recursos</a>
+      <a href="/#faq">FAQ</a>
+      <a href="/metodo.html" class="btn accent large">Empezar · 297€</a>
+    </nav>
+  </div>
+
+  <article class="resource">
+
+    <aside class="toc">
+      <div class="label">En esta guía</div>
+      <ol>
+        <li><a href="#por-que-importa">Por qué los 3 segundos</a></li>
+        <li><a href="#patrones">Los 8 patrones de hook</a></li>
+        <li><a href="#voz">Encontrar tu voz</a></li>
+        <li><a href="#imagen">El hook visual</a></li>
+        <li><a href="#test">Cómo probar antes de publicar</a></li>
+        <li><a href="#errores">Los 5 errores que matan tu hook</a></li>
+        <li><a href="#plantilla">Plantilla para tu próximo reel</a></li>
+      </ol>
+    </aside>
+
+    <div class="resource-content">
+
+      <div class="reading-time">7 min de lectura · guía 03</div>
+      <h1>Cómo escribir hooks que paren el scroll</h1>
+      <p class="lede">
+        El 90% de los reels que fallan, fallan en los primeros 3 segundos. No es el contenido, no son las herramientas: es la apertura. Aquí tienes el sistema completo.
+      </p>
+
+      <div class="callout">
+        <span class="ico" aria-hidden="true"><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="10"/><circle cx="12" cy="12" r="4"/></svg></span>
+        <div>Guarda esta guía y léela cada vez que vayas a grabar un reel. Los hooks no se improvisan, se diseñan.</div>
+      </div>
+
+      <h2 id="por-que-importa"><span class="num">01</span>Por qué los 3 segundos lo deciden todo</h2>
+      <p>Cuando alguien hace scroll, su cerebro decide quedarse o seguir antes de oír la cuarta palabra. Esto no es opinión, es lo que mide cualquier plataforma de vídeo.</p>
+      <p>El motor de Instagram y TikTok funciona así: si la mayoría se queda más de 3 segundos, te enseña a más gente. Si la mayoría sigue, te entierra. Tu mejor reel con el mejor mensaje no llega a nadie si los primeros 3 segundos no enganchan.</p>
+      <p>La buena noticia: hay patrones que funcionan casi siempre. Y se pueden aprender en una tarde.</p>
+
+      <h2 id="patrones"><span class="num">02</span>Los 8 patrones de hook</h2>
+      <p>Estos 8 patrones están detrás de casi todos los reels virales del último año. Léelos, prueba cuáles te salen naturales y empieza por dos.</p>
+
+      <details>
+        <summary>P1: Dato + dolor</summary>
+        <p>Una cifra fuerte que conecta con un dolor concreto del espectador.</p>
+        <p>Ejemplo: <em>"Tu equipo pega datos a mano 9 horas por semana. Eso es un sueldo al mes."</em></p>
+        <p>Cuándo usarlo: cuando puedes traducir un proceso ineficiente a tiempo o dinero. Funciona muy bien con founders y heads of ops.</p>
+      </details>
+
+      <details>
+        <summary>P2: Antes y después</summary>
+        <p>Una transformación clara entre dos estados, con cifra concreta.</p>
+        <p>Ejemplo: <em>"De 12 horas a 40 minutos. Y solo cuesta 18 euros al mes."</em></p>
+        <p>Cuándo usarlo: cuando tienes un caso real con métricas. Es uno de los más fáciles de creer y compartir.</p>
+      </details>
+
+      <details>
+        <summary>P3: Pregunta incómoda</summary>
+        <p>Una pregunta que el espectador no quiere escuchar pero ya se ha hecho a sí mismo.</p>
+        <p>Ejemplo: <em>"¿Por qué le sigues pagando a alguien por copiar y pegar?"</em></p>
+        <p>Cuándo usarlo: para mover a quien ya sabe que tiene un problema pero no actúa. Cuidado: si suena moralista, repele.</p>
+      </details>
+
+      <details>
+        <summary>P4: Declaración fuerte</summary>
+        <p>Una afirmación contraintuitiva o tajante. La promesa es que vas a explicarla.</p>
+        <p>Ejemplo: <em>"No necesitas un chatbot. Necesitas un workflow."</em></p>
+        <p>Cuándo usarlo: cuando tienes una opinión clara que va contra la corriente del momento. Si suenas a guru, falla.</p>
+      </details>
+
+      <details>
+        <summary>P5: Confesión operativa</summary>
+        <p>Algo que hiciste mal, costó dinero o casi se rompe. La gente para a ver dramas reales.</p>
+        <p>Ejemplo: <em>"Me costó tres intentos. Al cuarto, lo dejé vivo."</em></p>
+        <p>Cuándo usarlo: cuando estás contando un caso propio. Da humanidad y credibilidad. Mejor no inventar fallos que no pasaron.</p>
+      </details>
+
+      <details>
+        <summary>P6: Listicle implícito</summary>
+        <p>Anuncias una lista con un detalle picante para enganchar al final.</p>
+        <p>Ejemplo: <em>"Hago tres cosas cada mañana. La tercera me ahorra 4 horas a la semana."</em></p>
+        <p>Cuándo usarlo: cuando tu contenido tiene 3 a 5 puntos claros. Es el más predecible, úsalo con moderación.</p>
+      </details>
+
+      <details>
+        <summary>P7: Auditoría directa</summary>
+        <p>Tomas algo público (un proceso, una landing, un funnel) y prometes mejorarlo en X minutos.</p>
+        <p>Ejemplo: <em>"Audité el onboarding de Stripe. Se puede arreglar en 3 minutos."</em></p>
+        <p>Cuándo usarlo: cuando quieres mostrar autoridad técnica. Genera mucho ahorro y comparte.</p>
+      </details>
+
+      <details>
+        <summary>P8: Personaje o escena</summary>
+        <p>Presentas a alguien (real o imaginario) que resuelve un problema mientras hablas.</p>
+        <p>Ejemplo: <em>"Mientras tú duermes, Mr. Madrugón te monta el reel."</em></p>
+        <p>Cuándo usarlo: cuando tu solución se entiende mejor como un agente o sistema con personalidad. Es el más visual.</p>
+      </details>
+
+      <a href="/metodo.html" class="cross-link">
+        <div class="label">Quieres ir más allá</div>
+        <h3>El método Claude</h3>
+        <p>Seis módulos para dominar Claude. Plantillas listas, pipelines probados y la biblioteca de 50 prompts. El sistema completo paso a paso.</p>
+        <span class="arrow">Ver el método →</span>
+      </a>
+
+      <h2 id="voz"><span class="num">03</span>Encontrar tu voz dentro del patrón</h2>
+      <p>Los patrones son la estructura. Tu voz es lo que hace que el espectador siga. Dos personas con el mismo patrón suenan distintas porque eligen palabras distintas.</p>
+      <p>Tres pruebas para saber si tu hook suena tuyo:</p>
+      <ul>
+        <li>Léelo en voz alta. Si tropiezas o suena postizo, no lo digas en cámara.</li>
+        <li>Tradúcelo a una conversación de café. Si tu mejor amigo se reiría de cómo lo dices, reescríbelo.</li>
+        <li>Quítale los adjetivos. Si tu hook necesita "increíble", "brutal" o "alucinante" para funcionar, el problema es la idea, no el hook.</li>
+      </ul>
+
+      <h2 id="imagen"><span class="num">04</span>El hook visual: lo que se ve los primeros 3 segundos</h2>
+      <p>Tu hook hablado solo funciona si lo que se ve también engancha. La regla: el primer plano tiene que tener movimiento, una sorpresa visual o una persona mirándote a los ojos.</p>
+      <p>Funcionan:</p>
+      <ul>
+        <li>Una cara mirando directo a cámara, primer plano cerrado</li>
+        <li>Una pantalla con texto que aparece o cambia rápido</li>
+        <li>Una acción rara o desproporcionada (algo que no encaja con el contexto)</li>
+        <li>Un objeto que aparece de la nada y arranca la escena</li>
+      </ul>
+      <p>No funcionan:</p>
+      <ul>
+        <li>Un plano fijo de un escritorio</li>
+        <li>Una transición lenta o un fade</li>
+        <li>Texto demasiado pequeño para leer en móvil</li>
+        <li>Un fotograma negro o cualquier transición sin contenido</li>
+      </ul>
+
+      <h2 id="test"><span class="num">05</span>Cómo probar tu hook antes de publicar</h2>
+      <p>Antes de invertir 14 euros en producir el reel completo, gasta 5 minutos en este test:</p>
+      <ol>
+        <li>Escribe 3 versiones del hook con patrones distintos</li>
+        <li>Léelas en voz alta a un amigo o pareja sin contexto</li>
+        <li>Pregunta cuál le hace querer saber qué viene después</li>
+        <li>Si dudan o ninguno les engancha, vuelve a la pizarra. No produzcas el reel.</li>
+      </ol>
+      <div class="callout warn">
+        <span class="ico" aria-hidden="true"><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M10.29 3.86 1.82 18a2 2 0 0 0 1.71 3h16.94a2 2 0 0 0 1.71-3L13.71 3.86a2 2 0 0 0-3.42 0z"/><line x1="12" y1="9" x2="12" y2="13"/><line x1="12" y1="17" x2="12.01" y2="17"/></svg></span>
+        <div>Regla de oro: si tu hook necesita explicación para funcionar, no es un hook. Es una intro. Borra todo lo que va antes y empieza por la frase que duele.</div>
+      </div>
+
+      <h2 id="errores"><span class="num">06</span>Los 5 errores que matan tu hook</h2>
+      <ol>
+        <li><strong>Empezar con "Hola, soy Rafa".</strong> Nadie te conoce, a nadie le importa. Empieza por el dolor del espectador.</li>
+        <li><strong>Saludar o agradecer.</strong> "Hoy os traigo..." es scroll garantizado. Vete directo al grano.</li>
+        <li><strong>Hablar de ti antes que de ellos.</strong> "Llevo 10 años haciendo X" no engancha. "Tu equipo pierde X horas a la semana" sí.</li>
+        <li><strong>Adjetivos en lugar de cifras.</strong> "Una herramienta brutal" no enseña nada. "Una herramienta de 18 euros" sí.</li>
+        <li><strong>Hook largo.</strong> Si tu hook tiene más de 12 palabras o tarda más de 3 segundos, no es un hook. Es un párrafo.</li>
+      </ol>
+
+      <h2 id="plantilla"><span class="num">07</span>Plantilla para tu próximo reel</h2>
+      <p>Copia esta plantilla en una nota y rellena cada bloque antes de grabar. Si te cuesta más de 15 minutos, el problema no es el hook, es que aún no sabes qué quieres contar.</p>
+      <div class="code-block"><pre>1. ¿Qué dolor real del espectador toca este reel?
+   ___
+
+2. ¿Qué patrón le encaja mejor? (P1 a P8)
+   ___
+
+3. Escribe 3 versiones del hook (máx 12 palabras cada una)
+   a) ___
+   b) ___
+   c) ___
+
+4. ¿Cuál suena tú al leerlo en voz alta?
+   ___
+
+5. ¿Qué se ve los primeros 3 segundos?
+   ___
+
+6. Test del amigo: ¿qué versión engancha más?
+   ___</pre></div>
+
+      <a href="/brujula.html" class="cross-link">
+        <div class="label">Guía siguiente</div>
+        <h3>Cómo saber qué funciona y qué es vanidad</h3>
+        <p>Ya tienes el hook. Ahora toca medir. Aprende qué métricas decidir y cuáles ignorar.</p>
+        <span class="arrow">Abrir guía brújula →</span>
+      </a>
+
+    </div>
+
+  </article>
+
+  <footer class="site-footer">
+    <a href="https://instagram.com/rafa.prompts" target="_blank" rel="noopener" class="handle">@rafa.prompts</a>
+  </footer>
+
+  <script src="app.js"></script>
+  <script>
+    (function() {
+      const burger = document.getElementById('burger');
+      const drawer = document.getElementById('mobile-drawer');
+      if (!burger || !drawer) return;
+      const toggle = (force) => {
+        const open = force !== undefined ? force : !document.body.classList.contains('drawer-open');
+        document.body.classList.toggle('drawer-open', open);
+        burger.setAttribute('aria-expanded', open);
+        drawer.setAttribute('aria-hidden', !open);
+        document.body.style.overflow = open ? 'hidden' : '';
+      };
+      burger.addEventListener('click', () => toggle());
+      const close = document.getElementById('drawer-close');
+      if (close) close.addEventListener('click', () => toggle(false));
+      drawer.querySelectorAll('a').forEach(a => a.addEventListener('click', () => toggle(false)));
+      document.addEventListener('keydown', (e) => { if (e.key === 'Escape') toggle(false); });
+    })();
+  </script>
+</body>
+</html>

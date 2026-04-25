@@ -1,0 +1,319 @@
+<!doctype html>
+<html lang="es">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>voz : enseña a Claude a hablar como tú · rafa.prompts</title>
+  <meta name="description" content="Cómo escribir el archivo de instrucciones que hace que Claude suene como tú: las 5 secciones obligatorias, ejemplos reales y plantilla base.">
+  <link rel="icon" type="image/svg+xml" href="/assets/img/favicon.svg">
+  <link rel="icon" href="/assets/img/favicon.ico">
+  <link rel="icon" type="image/png" sizes="32x32" href="/assets/img/favicon-32.png">
+  <link rel="icon" type="image/png" sizes="16x16" href="/assets/img/favicon-16.png">
+  <link rel="apple-touch-icon" href="/assets/img/apple-touch-icon.png">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Archivo:wght@400;500;700;800;900&family=IBM+Plex+Mono:wght@400;600&family=Newsreader:ital,wght@1,400;1,500&display=swap">
+  <link rel="stylesheet" href="styles.css">
+</head>
+<body>
+
+  <svg width="0" height="0" style="position:absolute">
+    <defs>
+      <filter id="sprayGrain" x="-10%" y="-10%" width="120%" height="120%">
+        <feTurbulence type="fractalNoise" baseFrequency="0.9" numOctaves="2" seed="7" result="noise"/>
+        <feDisplacementMap in="SourceGraphic" in2="noise" scale="1.6" xChannelSelector="R" yChannelSelector="G" result="wobbled"/>
+        <feGaussianBlur in="wobbled" stdDeviation="0.3" result="blurred"/>
+        <feComponentTransfer in="blurred">
+          <feFuncA type="linear" slope="1.8" intercept="-0.05"/>
+        </feComponentTransfer>
+      </filter>
+    </defs>
+  </svg>
+
+  <div class="progress" id="progress"></div>
+
+  <header class="site-header">
+    <a href="/" class="brand"><strong>rafa</strong>.prompts</a>
+    <nav class="nav">
+      <a href="/metodo.html">Método</a>
+      <a href="/#recursos">Recursos</a>
+      <a href="/#faq">FAQ</a>
+      <a href="/metodo.html" class="btn">Empezar · 297€</a>
+    </nav>
+    <button class="burger" id="burger" aria-label="Abrir menú" aria-expanded="false" aria-controls="mobile-drawer">
+      <span></span><span></span><span></span>
+    </button>
+  </header>
+
+  <div class="mobile-drawer" id="mobile-drawer" aria-hidden="true">
+    <button class="drawer-close" id="drawer-close" aria-label="Cerrar menú"><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><line x1="18" y1="6" x2="6" y2="18"/><line x1="6" y1="6" x2="18" y2="18"/></svg></button>
+    <nav class="drawer-nav">
+      <a href="/metodo.html">Método</a>
+      <a href="/#recursos">Recursos</a>
+      <a href="/#faq">FAQ</a>
+      <a href="/metodo.html" class="btn accent large">Empezar · 297€</a>
+    </nav>
+  </div>
+
+  <article class="resource">
+
+    <aside class="toc">
+      <div class="label">En esta guía</div>
+      <ol>
+        <li><a href="#por-que">Por qué Claude no te entiende</a></li>
+        <li><a href="#archivo">El archivo de instrucciones</a></li>
+        <li><a href="#secciones">Las 5 secciones obligatorias</a></li>
+        <li><a href="#tono">Tu tono en 3 adjetivos</a></li>
+        <li><a href="#muletillas">Tus muletillas</a></li>
+        <li><a href="#nunca">Lo que nunca dirías</a></li>
+        <li><a href="#ejemplos">5 ejemplos reales</a></li>
+        <li><a href="#limites">Tus límites</a></li>
+        <li><a href="#iterar">Cómo iterarlo</a></li>
+        <li><a href="#plantilla">Plantilla base</a></li>
+      </ol>
+    </aside>
+
+    <div class="resource-content">
+
+      <div class="reading-time">7 min de lectura · guía 05</div>
+      <h1>Enseña a Claude a hablar como tú</h1>
+      <p class="lede">
+        Si Claude te suena genérico, no es Claude: es que no le has dicho cómo hablas tú. Aquí tienes el archivo que lo arregla, con las secciones que sí mueven la aguja y ejemplos copiados del mío.
+      </p>
+
+      <div class="callout">
+        <span class="ico" aria-hidden="true"><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M21 15a2 2 0 0 1-2 2H7l-4 4V5a2 2 0 0 1 2-2h14a2 2 0 0 1 2 2z"/></svg></span>
+        <div>Esta guía no es de prompts. Es de un archivo único que Claude lee al empezar cada conversación. Una vez bien escrito, ya no tienes que repetir tu tono en cada chat.</div>
+      </div>
+
+      <h2 id="por-que"><span class="num">01</span>Por qué Claude no te entiende</h2>
+      <p>Cuando abres un chat con Claude sin más contexto, te responde en su voz por defecto: educada, equilibrada y un poco plana. No es culpa suya. Es que no sabe quién eres.</p>
+      <p>El problema no se arregla con un prompt más largo. Cada vez que abres un chat nuevo, vuelves al punto cero. Necesitas un sitio fijo donde Claude lea, sin que tú se lo recuerdes, cómo hablas, qué evitas y qué te importa.</p>
+      <p>Ese sitio existe: es un archivo de texto que pones en la raíz de tu proyecto. Claude lo lee al empezar y aplica todo lo que dice sin que se lo tengas que pedir.</p>
+
+      <h2 id="archivo"><span class="num">02</span>El archivo de instrucciones</h2>
+      <p>El archivo se llama <code>CLAUDE.md</code>. Es un documento de texto plano, escrito como si fuera una nota para alguien que acaba de empezar a trabajar contigo.</p>
+      <p>Características:</p>
+      <ul>
+        <li>Vive en la carpeta del proyecto, junto al resto de tus archivos</li>
+        <li>Claude lo lee automáticamente cada vez que abre la conversación</li>
+        <li>Lo puedes editar tantas veces como quieras: el cambio entra en la siguiente respuesta</li>
+        <li>Puedes tener uno por proyecto: el de tu marca personal no es el mismo que el de tu cliente</li>
+      </ul>
+      <p>La mala noticia: si lo escribes mal, no pasa nada. Claude sigue respondiendo como si nada. Por eso esta guía existe: la diferencia entre un archivo que sí cambia el tono y uno que se ignora son las 5 secciones de abajo.</p>
+
+      <h2 id="secciones"><span class="num">03</span>Las 5 secciones obligatorias</h2>
+      <p>Si solo escribes esto, ya tienes un Claude que suena tuyo. Cualquier cosa más es ornamento.</p>
+
+      <h3>Sección 1: Quién soy y qué construyo</h3>
+      <p>Una frase de quién eres, una frase de qué haces y una frase de para quién. Sin biografía, sin currículum, sin titulares. La forma más directa funciona mejor.</p>
+      <p>Ejemplo del mío:</p>
+      <div class="code-block"><pre>## Quién soy y qué construyo
+
+Soy Rafa, operador de marca personal sobre IA y Claude.
+Enseño a equipos pequeños a automatizar procesos manuales.
+Mi audiencia son founders y heads of ops de empresas
+de 10 a 200 empleados.</pre></div>
+      <p>Esto solo ya cambia el contexto: a partir de aquí, Claude deja de hablarte como a un estudiante curioso y te habla como a alguien que sabe lo que está haciendo.</p>
+
+      <h3>Sección 2: Tono en 3 adjetivos</h3>
+      <p>Tres adjetivos. Ni dos ni cuatro. Concretos, no genéricos. <em>profesional</em> no sirve. <em>cálido pero sobrio</em>, sí.</p>
+
+      <h3>Sección 3: Tus muletillas</h3>
+      <p>Las palabras que tú sí usas, en tu lenguaje natural. Es lo que da sello propio al output.</p>
+
+      <h3>Sección 4: Lo que nunca dirías</h3>
+      <p>La lista negra. Palabras y construcciones que detestas y que te avergonzaría que aparezcan en tu nombre.</p>
+
+      <h3>Sección 5: Tus límites</h3>
+      <p>Qué cosas no quieres que Claude haga aunque se las pidas en caliente: publicar sin tu visto bueno, prometer resultados, hablar mal de competencia, lo que sea.</p>
+
+      <h2 id="tono"><span class="num">04</span>Tu tono en 3 adjetivos</h2>
+      <p>El error típico: poner adjetivos vacíos como <em>profesional</em>, <em>cercano</em> o <em>moderno</em>. Esos significan todo y nada. Claude los ignora.</p>
+      <p>Lo que funciona: pares de tensión que aclaran de qué lado caes.</p>
+      <ul>
+        <li><em>directo, no agresivo</em></li>
+        <li><em>cálido, no efusivo</em></li>
+        <li><em>técnico, no jergoso</em></li>
+        <li><em>seco, no antipático</em></li>
+        <li><em>cómplice, no colega</em></li>
+      </ul>
+      <p>Si te cuesta elegir, mira tus tres últimos audios o emails. Pídele a Claude que te describa el tono en 3 palabras. Toma esas 3 si te suenan, ajústalas si no.</p>
+
+      <h2 id="muletillas"><span class="num">05</span>Tus muletillas</h2>
+      <p>Estas son las palabras y giros que repites de forma natural. La diferencia entre un texto IA-genérico y uno que suena a ti la marcan estas pequeñas señales.</p>
+      <p>Cómo cazarlas: lee tres mensajes largos tuyos en WhatsApp, tres captions tuyos viejos y un email reciente. Subraya las palabras que aparecen 2 o más veces. Esas son.</p>
+      <p>Ejemplo de lista del mío:</p>
+      <div class="code-block"><pre>## Mis muletillas
+
+- "directamente"
+- "lo curioso es que"
+- "te ahorras X horas/euros"
+- "no tiene mucho misterio"
+- "un equipo de 3 personas"
+- "operador" en vez de "experto" o "guru"
+- "proceso" en vez de "workflow" cuando hablo en público</pre></div>
+
+      <h2 id="nunca"><span class="num">06</span>Lo que nunca dirías</h2>
+      <p>Esta sección sola te ahorra el 70% de los textos que rebotas. Sé extremadamente específico.</p>
+      <p>Ejemplo:</p>
+      <div class="code-block"><pre>## Nunca uso
+
+Palabras: brutal, increíble, alucinante, hack, secreto,
+crucial, clave, tapestry, leverage, delve, showcase,
+revolucionario, game-changer, viral.
+
+Construcciones:
+- "no solo X, sino Y"
+- "en un mundo donde..."
+- "imagina que..."
+- listas con bold + dos puntos
+- emojis decorativos en cuerpo de texto
+
+Puntuación:
+- nunca em-dash, uso dos puntos
+- nunca exclamaciones múltiples
+- minúscula al empezar es ok</pre></div>
+      <div class="callout warn">
+        <span class="ico" aria-hidden="true"><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polygon points="13 2 3 14 12 14 11 22 21 10 12 10 13 2"/></svg></span>
+        <div>Cuando veas un texto que te chirría, abre el archivo y añade lo que has detectado a la sección de prohibidos. El archivo crece con el tiempo: ese es el sentido.</div>
+      </div>
+
+      <a href="/metodo.html" class="cross-link">
+        <div class="label">Quieres ir más allá</div>
+        <h3>El método Claude</h3>
+        <p>El módulo 02 enseña a construir el archivo de instrucciones de cero, con plantillas para marca personal, agencia y producto. Plus la biblioteca de archivos reales que uso yo.</p>
+        <span class="arrow">Ver el método →</span>
+      </a>
+
+      <h2 id="ejemplos"><span class="num">07</span>5 ejemplos reales del mío</h2>
+      <p>Estos son fragmentos exactos del archivo que uso para mi marca personal. Los pongo crudos para que veas el formato y el nivel de detalle.</p>
+
+      <details>
+        <summary>Ejemplo 1: misión en una frase</summary>
+        <div class="code-block"><pre>**Misión:** mostrar, con ejemplos reales y ejecutables,
+cómo un equipo pequeño puede automatizar un proceso que
+antes consumía 20h/semana, en menos de una hora de setup.</pre></div>
+      </details>
+
+      <details>
+        <summary>Ejemplo 2: lo que NO soy</summary>
+        <div class="code-block"><pre>**No soy:** un guru de IA, un influencer de prompts, ni
+un vendedor de cursos. Soy un operador que muestra su
+trabajo.</pre></div>
+        <p>Esto es oro. Es la frase que más cambia el tono de los textos que me devuelve Claude.</p>
+      </details>
+
+      <details>
+        <summary>Ejemplo 3: regla de oro de claridad</summary>
+        <div class="code-block"><pre>Todo el contenido público lo tiene que entender alguien
+que no sabe qué es un workflow ni una API. Si una pieza
+habla de un proceso automatizado, la pieza explica el
+por qué y qué gana la empresa. Las herramientas concretas
+se nombran solo cuando aportan, no para demostrar que
+existen.</pre></div>
+      </details>
+
+      <details>
+        <summary>Ejemplo 4: cadencia de frases</summary>
+        <div class="code-block"><pre>Frases cortas. Un verbo por oración cuando se pueda.
+Empezar por el problema real del lector, no por yo.
+Dar el porqué antes que el qué.</pre></div>
+      </details>
+
+      <details>
+        <summary>Ejemplo 5: gate humano obligatorio</summary>
+        <div class="code-block"><pre>Si vas a publicar en redes: nunca sin aprobación
+explícita en la conversación. El gate humano es
+obligatorio mientras no haya 100 posts validados.</pre></div>
+      </details>
+
+      <h2 id="limites"><span class="num">08</span>Tus límites</h2>
+      <p>Esta sección es la red de seguridad. Le dice a Claude qué cosas, aunque las pidas en caliente, no debe hacer sin doble confirmación.</p>
+      <p>Lo típico que pongo:</p>
+      <ul>
+        <li>No publicar nada en mis redes sin que yo lo haya dicho expresamente en la conversación</li>
+        <li>No tocar archivos de configuración de servicios sin avisarme primero</li>
+        <li>No prometer resultados concretos en piezas comerciales (porcentajes, plazos, garantías)</li>
+        <li>No usar testimonios o datos de clientes sin pedirme permiso explícito</li>
+      </ul>
+      <p>Suena rígido. Es justo lo que necesita un agente que va a escribir y a actuar en tu nombre todos los días.</p>
+
+      <h2 id="iterar"><span class="num">09</span>Cómo iterarlo</h2>
+      <p>El archivo no se escribe una vez y se acaba. Se mejora a la vez que tú aprendes lo que te molesta.</p>
+      <p>Ritual sencillo:</p>
+      <ol>
+        <li>Cada vez que un texto de Claude no te suena tuyo, copia la frase que te chirría</li>
+        <li>Pregúntate: ¿qué la hace sonar a IA o a otra persona?</li>
+        <li>Convierte esa observación en una regla nueva, en negativo (<em>nunca uso X</em>) o en positivo (<em>siempre digo X</em>)</li>
+        <li>Añádela a la sección que toque del archivo</li>
+        <li>Vuelve a pedir el texto: la siguiente respuesta ya no comete ese fallo</li>
+      </ol>
+      <p>En 4 semanas, el archivo tiene unos 50 a 80 puntos. A partir de ahí, deja de crecer y empieza a podar.</p>
+
+      <h2 id="plantilla"><span class="num">10</span>Plantilla base para empezar hoy</h2>
+      <p>Copia esta plantilla en un archivo nuevo llamado <code>CLAUDE.md</code> en la raíz de tu proyecto. Rellena cada bloque con tus respuestas. Tarda 25 minutos. Es tiempo bien gastado.</p>
+      <div class="code-block"><pre># Mis instrucciones
+
+## Quién soy y qué construyo
+[3 frases: quién, qué haces, para quién]
+
+## Tono en 3 adjetivos
+- [adjetivo 1, no X]
+- [adjetivo 2, no X]
+- [adjetivo 3, no X]
+
+## Mis muletillas
+- [palabra o giro 1]
+- [palabra o giro 2]
+- [palabra o giro 3]
+- [palabra o giro 4]
+- [palabra o giro 5]
+
+## Nunca uso
+Palabras: [lista]
+Construcciones: [lista]
+Puntuación: [lista]
+
+## Mis límites
+- [cosa que Claude no hace sin avisarme]
+- [cosa que Claude no firma en mi nombre]
+- [cosa que Claude no promete por mí]</pre></div>
+
+      <a href="/dms.html" class="cross-link">
+        <div class="label">Guía siguiente</div>
+        <h3>Automatiza tus DMs sin perder clientes</h3>
+        <p>Ya tienes a Claude hablando como tú. Ahora ponlo a contestar tus mensajes privados sin enfriar los que sí importan.</p>
+        <span class="arrow">Abrir guía dms →</span>
+      </a>
+
+    </div>
+
+  </article>
+
+  <footer class="site-footer">
+    <a href="https://instagram.com/rafa.prompts" target="_blank" rel="noopener" class="handle">@rafa.prompts</a>
+  </footer>
+
+  <script src="app.js"></script>
+  <script>
+    (function() {
+      const burger = document.getElementById('burger');
+      const drawer = document.getElementById('mobile-drawer');
+      if (!burger || !drawer) return;
+      const toggle = (force) => {
+        const open = force !== undefined ? force : !document.body.classList.contains('drawer-open');
+        document.body.classList.toggle('drawer-open', open);
+        burger.setAttribute('aria-expanded', open);
+        drawer.setAttribute('aria-hidden', !open);
+        document.body.style.overflow = open ? 'hidden' : '';
+      };
+      burger.addEventListener('click', () => toggle());
+      const close = document.getElementById('drawer-close');
+      if (close) close.addEventListener('click', () => toggle(false));
+      drawer.querySelectorAll('a').forEach(a => a.addEventListener('click', () => toggle(false)));
+      document.addEventListener('keydown', (e) => { if (e.key === 'Escape') toggle(false); });
+    })();
+  </script>
+</body>
+</html>

@@ -1261,7 +1261,7 @@ h3 {
   font-style: italic;
   font-weight: 700;
   font-size: clamp(26px, 2vw, 24px);
-  line-height: 1.15em;
+  line-height: 1.05em;
   color: var(--accent);
   margin: 36px 0 36px;
   padding-bottom: 36px;

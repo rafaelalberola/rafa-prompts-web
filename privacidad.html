@@ -1,0 +1,202 @@
+<!doctype html>
+<html lang="es">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Política de privacidad · rafa.prompts</title>
+  <meta name="description" content="Cómo recogemos, usamos y protegemos tus datos en rafaprompts.com. Cumple RGPD y LOPDGDD.">
+  <meta name="robots" content="index, follow">
+  <link rel="icon" type="image/svg+xml" href="/assets/img/favicon.svg">
+  <link rel="icon" href="/assets/img/favicon.ico">
+  <link rel="icon" type="image/png" sizes="32x32" href="/assets/img/favicon-32.png">
+  <link rel="icon" type="image/png" sizes="16x16" href="/assets/img/favicon-16.png">
+  <link rel="apple-touch-icon" href="/assets/img/apple-touch-icon.png">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Archivo:wght@400;500;700;800;900&family=IBM+Plex+Mono:wght@400;600&family=Newsreader:ital,wght@1,400;1,500&display=swap">
+  <link rel="stylesheet" href="styles.css">
+</head>
+<body>
+
+  <svg width="0" height="0" style="position:absolute">
+    <defs>
+      <filter id="sprayGrain" x="-10%" y="-10%" width="120%" height="120%">
+        <feTurbulence type="fractalNoise" baseFrequency="0.9" numOctaves="2" seed="7" result="noise"/>
+        <feDisplacementMap in="SourceGraphic" in2="noise" scale="1.6" xChannelSelector="R" yChannelSelector="G" result="wobbled"/>
+        <feGaussianBlur in="wobbled" stdDeviation="0.3" result="blurred"/>
+        <feComponentTransfer in="blurred">
+          <feFuncA type="linear" slope="1.8" intercept="-0.05"/>
+        </feComponentTransfer>
+      </filter>
+    </defs>
+  </svg>
+
+  <div class="progress" id="progress"></div>
+
+  <header class="site-header">
+    <a href="/" class="brand"><strong>rafa</strong>.prompts</a>
+    <nav class="nav">
+      <a href="/metodo.html">Método</a>
+      <a href="/#recursos">Recursos</a>
+      <a href="/metodo.html" class="btn">Empezar · 149 € <s>297 €</s></a>
+    </nav>
+    <button class="burger" id="burger" aria-label="Abrir menú" aria-expanded="false" aria-controls="mobile-drawer">
+      <span></span><span></span><span></span>
+    </button>
+  </header>
+
+  <div class="mobile-drawer" id="mobile-drawer" aria-hidden="true">
+    <button class="drawer-close" id="drawer-close" aria-label="Cerrar menú"><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><line x1="18" y1="6" x2="6" y2="18"/><line x1="6" y1="6" x2="18" y2="18"/></svg></button>
+    <nav class="drawer-nav">
+      <a href="/metodo.html">Método</a>
+      <a href="/#recursos">Recursos</a>
+      <a href="/metodo.html" class="btn accent large">Empezar · 149 € <s>297 €</s></a>
+    </nav>
+  </div>
+
+  <article class="resource">
+
+    <aside class="toc">
+      <div class="label">En esta política</div>
+      <ol>
+        <li><a href="#responsable">Quién es el responsable</a></li>
+        <li><a href="#datos">Qué datos recogemos</a></li>
+        <li><a href="#fines">Para qué los usamos</a></li>
+        <li><a href="#base-legal">Base legal</a></li>
+        <li><a href="#proveedores">Con quién los compartimos</a></li>
+        <li><a href="#conservacion">Cuánto los conservamos</a></li>
+        <li><a href="#derechos">Tus derechos</a></li>
+        <li><a href="#cookies">Cookies y píxeles</a></li>
+        <li><a href="#internacional">Transferencias internacionales</a></li>
+        <li><a href="#cambios">Cambios en esta política</a></li>
+      </ol>
+    </aside>
+
+    <div class="resource-content">
+
+      <div class="reading-time">Última actualización · 26 de abril de 2026</div>
+      <h1>Política de privacidad</h1>
+      <p class="lede">
+        Esta política explica cómo recogemos, usamos y protegemos tus datos personales cuando visitas rafaprompts.com o compras El método Claude. Cumple el RGPD (UE 2016/679) y la LOPDGDD española.
+      </p>
+
+      <div class="callout">
+        <span class="ico" aria-hidden="true"><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="10"/><line x1="12" y1="8" x2="12" y2="12"/><line x1="12" y1="16" x2="12.01" y2="16"/></svg></span>
+        <div>Resumen rápido: recogemos tu email cuando compras el curso para enviarte los PDFs. Usamos Stripe para cobrar y Meta Pixel para medir si los anuncios funcionan. Puedes ejercer tus derechos en cualquier momento escribiendo a hola@rafaprompts.com.</div>
+      </div>
+
+      <h2 id="responsable"><span class="num">01</span>Quién es el responsable del tratamiento</h2>
+      <p>El responsable de tus datos personales es:</p>
+      <ul>
+        <li><strong>Titular</strong>: Rafael Alberola</li>
+        <li><strong>Actividad</strong>: rafa.prompts (cursos online y contenido educativo sobre IA)</li>
+        <li><strong>Contacto</strong>: <a href="mailto:hola@rafaprompts.com">hola@rafaprompts.com</a></li>
+        <li><strong>Web</strong>: rafaprompts.com</li>
+      </ul>
+      <p>No tenemos un Delegado de Protección de Datos designado porque no estamos obligados por el RGPD, pero atendemos cualquier consulta en el email de contacto.</p>
+
+      <h2 id="datos"><span class="num">02</span>Qué datos recogemos</h2>
+      <p>Recogemos solo los datos necesarios para prestar el servicio. Concretamente:</p>
+      <h3>Cuando compras el curso</h3>
+      <ul>
+        <li><strong>Email</strong>, nombre y dirección de facturación (vía Stripe Checkout)</li>
+        <li><strong>Datos de pago</strong> (tarjeta): los gestiona y custodia íntegramente Stripe. Nosotros nunca vemos ni almacenamos tu número de tarjeta.</li>
+        <li><strong>NIF / CIF</strong> si lo introduces para la factura</li>
+        <li><strong>Fecha y referencia de compra</strong> (session ID de Stripe)</li>
+      </ul>
+      <h3>Cuando navegas la web</h3>
+      <ul>
+        <li><strong>Dirección IP</strong> (anónima, vía Cloudflare)</li>
+        <li><strong>Navegador, dispositivo, idioma</strong></li>
+        <li><strong>Páginas visitadas y eventos</strong> (PageView, ViewContent, InitiateCheckout, Purchase) vía Meta Pixel</li>
+      </ul>
+      <h3>Cuando interactúas en Instagram</h3>
+      <ul>
+        <li>Si comentas en una publicación o nos escribes por DM, Manychat puede leer tu nombre de usuario y el mensaje para enviarte una respuesta automática.</li>
+      </ul>
+
+      <h2 id="fines"><span class="num">03</span>Para qué usamos los datos</h2>
+      <ol>
+        <li><strong>Entregar el curso</strong>: enviarte por email los PDFs personalizados con tu nombre y email impresos como marca de licencia.</li>
+        <li><strong>Cumplir obligaciones fiscales</strong>: emitir factura, declarar IVA cuando corresponda.</li>
+        <li><strong>Soporte</strong>: contestar a tus dudas si nos escribes.</li>
+        <li><strong>Mejorar el producto</strong>: medir qué páginas funcionan, qué anuncios convierten, dónde la gente abandona.</li>
+        <li><strong>Marketing</strong>: enviarte anuncios relevantes en Meta y, si te suscribes voluntariamente, novedades por email.</li>
+      </ol>
+      <p>No usamos tus datos para perfilarte ni los vendemos a terceros.</p>
+
+      <h2 id="base-legal"><span class="num">04</span>Base legal del tratamiento</h2>
+      <ul>
+        <li><strong>Ejecución de contrato</strong> (art. 6.1.b RGPD): para entregarte el curso que compraste.</li>
+        <li><strong>Obligación legal</strong> (art. 6.1.c RGPD): facturación, IVA, conservación contable.</li>
+        <li><strong>Consentimiento</strong> (art. 6.1.a RGPD): cookies analíticas, píxeles publicitarios, suscripción a newsletter.</li>
+        <li><strong>Interés legítimo</strong> (art. 6.1.f RGPD): seguridad de la web, prevención de fraude, métricas básicas anónimas.</li>
+      </ul>
+
+      <h2 id="proveedores"><span class="num">05</span>Con quién compartimos los datos</h2>
+      <p>Trabajamos con encargados del tratamiento que cumplen RGPD. Cada uno trata únicamente los datos imprescindibles para su función:</p>
+      <ul>
+        <li><strong>Stripe Payments Europe Ltd.</strong> (Irlanda) — procesar pagos.</li>
+        <li><strong>Cloudflare Inc.</strong> (EE. UU.) — hosting de la web y la API. Cláusulas Contractuales Tipo aprobadas.</li>
+        <li><strong>Brevo (Sendinblue SAS)</strong> (Francia) — envío del email con los PDFs.</li>
+        <li><strong>Meta Platforms Ireland Ltd.</strong> (Irlanda) — Meta Pixel para medir anuncios; Manychat para responder DMs.</li>
+        <li><strong>Manychat Inc.</strong> (EE. UU.) — automatización de mensajes en Instagram. Cláusulas Contractuales Tipo.</li>
+        <li><strong>Google LLC</strong> (EE. UU.) — Google Fonts (servir tipografías). No envía datos personales identificables.</li>
+      </ul>
+      <p>Solo cedemos datos a las autoridades públicas si nos lo exige la ley.</p>
+
+      <h2 id="conservacion"><span class="num">06</span>Cuánto conservamos los datos</h2>
+      <ul>
+        <li><strong>Datos de compra y factura</strong>: 6 años (obligación fiscal).</li>
+        <li><strong>Token de descarga del curso</strong>: 365 días desde la compra; renovable a petición.</li>
+        <li><strong>Datos de marketing y analítica</strong>: hasta 13 meses o hasta que retires tu consentimiento.</li>
+        <li><strong>Email de soporte</strong>: 2 años desde la última interacción.</li>
+      </ul>
+
+      <h2 id="derechos"><span class="num">07</span>Tus derechos</h2>
+      <p>Puedes ejercer en cualquier momento los siguientes derechos escribiendo a <a href="mailto:hola@rafaprompts.com">hola@rafaprompts.com</a>:</p>
+      <ul>
+        <li><strong>Acceso</strong>: saber qué datos tuyos tenemos.</li>
+        <li><strong>Rectificación</strong>: corregir datos inexactos.</li>
+        <li><strong>Supresión</strong> (derecho al olvido): borrar tus datos cuando ya no sean necesarios.</li>
+        <li><strong>Oposición</strong>: oponerte al tratamiento basado en interés legítimo.</li>
+        <li><strong>Limitación</strong>: pedir que paralicemos el tratamiento mientras revisamos una reclamación.</li>
+        <li><strong>Portabilidad</strong>: recibir tus datos en formato estructurado (JSON o CSV).</li>
+        <li><strong>Retirada del consentimiento</strong>: en cualquier momento, sin justificación.</li>
+      </ul>
+      <p>Te responderemos en un plazo máximo de 30 días. Si consideras que no hemos atendido tu solicitud correctamente, puedes presentar una reclamación ante la <strong>Agencia Española de Protección de Datos</strong> (<a href="https://www.aepd.es" target="_blank" rel="noopener">aepd.es</a>).</p>
+
+      <h2 id="cookies"><span class="num">08</span>Cookies y píxeles</h2>
+      <p>Usamos las cookies y píxeles imprescindibles para que la web funcione y, con tu consentimiento, otras para medir y anunciar:</p>
+      <ul>
+        <li><strong>Esenciales</strong>: sesión de checkout (Stripe), tokens de descarga. No requieren consentimiento.</li>
+        <li><strong>Analíticas y publicitarias</strong>: Meta Pixel (eventos PageView, ViewContent, InitiateCheckout, Purchase). Requieren tu consentimiento explícito.</li>
+        <li><strong>De terceros</strong>: Google Fonts carga las tipografías; no instala cookies persistentes.</li>
+      </ul>
+      <p>Puedes gestionar tu consentimiento desde el banner de cookies o desactivar el Pixel directamente en la configuración de privacidad de Meta.</p>
+
+      <h2 id="internacional"><span class="num">09</span>Transferencias internacionales</h2>
+      <p>Algunos proveedores (Cloudflare, Manychat, Meta, Google) pueden tratar datos en EE. UU. En todos los casos hemos firmado las <strong>Cláusulas Contractuales Tipo</strong> aprobadas por la Comisión Europea, que aseguran un nivel de protección equivalente al RGPD.</p>
+
+      <h2 id="cambios"><span class="num">10</span>Cambios en esta política</h2>
+      <p>Si modificamos esta política, actualizaremos la fecha de "Última actualización" en la cabecera. Si los cambios afectan sustancialmente a tus derechos, te avisaremos por email a quienes hayáis comprado el curso o estéis suscritos.</p>
+
+      <hr class="section-sep">
+
+      <p>¿Dudas? Escríbeme a <a href="mailto:hola@rafaprompts.com">hola@rafaprompts.com</a> y te respondo personalmente.</p>
+
+    </div>
+
+  </article>
+
+  <footer class="site-footer">
+    <a href="https://instagram.com/rafa.prompts" target="_blank" rel="noopener" class="handle">@rafa.prompts</a>
+    <nav class="footer-legal">
+      <a href="/privacidad.html">Privacidad</a>
+      <a href="/terminos.html">Condiciones</a>
+    </nav>
+  </footer>
+
+  <script src="app.js"></script>
+</body>
+</html>

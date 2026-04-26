@@ -1189,6 +1189,28 @@ h3 {
   letter-spacing: -0.01em;
   color: var(--ink);
 }
+.site-footer .footer-legal {
+  display: flex;
+  gap: 20px;
+  font-family: var(--mono);
+  font-size: 12px;
+  font-weight: 400;
+  letter-spacing: 0.04em;
+  text-transform: uppercase;
+}
+.site-footer .footer-legal a {
+  color: var(--ink-mute);
+  border-bottom: 1px solid transparent;
+  transition: color 0.2s, border-color 0.2s;
+}
+.site-footer .footer-legal a:hover {
+  color: var(--accent);
+  border-bottom-color: var(--accent);
+}
+@media (max-width: 600px) {
+  .site-footer { gap: 16px; }
+  .site-footer .footer-legal { gap: 14px; }
+}
 
 /* ============================================================
    Resource pages interior (yate, madrugon)

@@ -79,5 +79,28 @@
     <a href="https://instagram.com/rafa.prompts" target="_blank" rel="noopener" class="handle">@rafa.prompts</a>
   </footer>
 
+  <script src="app.js"></script>
+  <script>
+    // Meta Pixel: Purchase event (deduplicated by session_id)
+    (function() {
+      const params = new URLSearchParams(window.location.search);
+      const sessionId = params.get('session_id') || '';
+      const dedupKey = sessionId ? `purchase_tracked_${sessionId}` : '';
+      if (dedupKey && sessionStorage.getItem(dedupKey)) return;
+
+      const fire = () => {
+        if (!window.fbq) { setTimeout(fire, 200); return; }
+        fbq('track', 'Purchase', {
+          content_name: 'El método Claude',
+          content_ids: ['metodo-claude'],
+          content_type: 'product',
+          value: 149.00,
+          currency: 'EUR'
+        }, sessionId ? { eventID: sessionId } : undefined);
+        if (dedupKey) sessionStorage.setItem(dedupKey, '1');
+      };
+      fire();
+    })();
+  </script>
 </body>
 </html>

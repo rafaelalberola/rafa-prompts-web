@@ -33,5 +33,5 @@ Si el thumbnail tampoco subió por API:
 Abrir la URL pública del producto (la tienes en `scripts/create_gumroad_product.output.json`). Debe mostrar:
 - El cover con el diseño del método
 - Los 6 módulos en la descripción
-- Precio 297€
+- Precio 149€
 - Botón de compra activo

@@ -5,6 +5,9 @@ course_content/
 # build helpers (not needed at runtime on Pages)
 scripts/
 
+# meta ads creative artifacts (HTML/PNG/script for paid campaigns, not for the public site)
+ads/
+
 # local env / secrets
 .env
 .env.local

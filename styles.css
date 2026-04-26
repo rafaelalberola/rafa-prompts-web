@@ -156,6 +156,35 @@ img { max-width: 100%; display: block; }
 /* .accent is redundant with base (kept for backward compat) */
 .btn.accent, .btn.accent:hover { color: #fff; }
 
+/* Strikethrough old price next to current price (CTAs, hero, sticky, modal, body copy) */
+.btn s,
+.metodo-hero .price s,
+.sticky-buy .label s,
+.checkout-modal-head .title s,
+.final-cta p s,
+.course-card-featured s {
+  font-weight: 700;
+  font-style: normal;
+  opacity: 0.55;
+  text-decoration-line: line-through;
+  text-decoration-thickness: 2px;
+  text-decoration-color: currentColor;
+  margin-left: 6px;
+  letter-spacing: -0.005em;
+}
+.btn.accent s, .nav .btn s {
+  text-decoration-color: rgba(255, 255, 255, 0.85);
+  opacity: 0.65;
+}
+.metodo-hero .price s {
+  display: inline-block;
+  margin-left: 10px;
+  font-size: 0.55em;
+  vertical-align: 0.25em;
+  color: var(--accent);
+  text-decoration-color: var(--accent);
+}
+
 /* Secondary (outlined orange glass) */
 .btn.ghost {
   color: var(--accent);

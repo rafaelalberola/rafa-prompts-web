@@ -1748,7 +1748,7 @@ details > *:not(summary) { margin-top: 12px; }
   transition: opacity 0.25s;
 }
 @media (max-width: 600px) {
-  .checkout-overlay { padding: 4vh 4vw; }
+  .checkout-overlay { padding: 16px; }
 }
 .checkout-overlay.show { opacity: 1; pointer-events: auto; }
 .checkout-modal {
@@ -1762,6 +1762,9 @@ details > *:not(summary) { margin-top: 12px; }
   display: flex;
   flex-direction: column;
   box-shadow: var(--shadow-lg);
+}
+@media (max-width: 600px) {
+  .checkout-modal { max-height: calc(100vh - 32px); }
 }
 .checkout-modal-head {
   display: flex;

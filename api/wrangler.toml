@@ -1,0 +1,32 @@
+name = "rafa-prompts-api"
+main = "src/index.js"
+compatibility_date = "2025-04-01"
+compatibility_flags = ["nodejs_compat"]
+account_id = "0b0eb47282b5cbf125e6d60269e54145"
+
+workers_dev = true
+
+[vars]
+ALLOWED_ORIGIN = "https://rafaprompts.com"
+STRIPE_PRICE_ID = "price_1TQPLuIYM3GXrMLHqFxUdIrT"
+STRIPE_PUBLISHABLE_KEY = "pk_live_51T50VyIYM3GXrMLHGGfo81iUzPdi6XJfSZW91UkNEISZ9U12a0mkPO8YnyaoZTyxTP1vwzKeXmCXfCRn9YyMaDjo000gDMaXZR"
+EMAIL_FROM = "El método Claude <hola@rafaprompts.com>"
+EMAIL_REPLY_TO = "hola@rafaprompts.com"
+SUCCESS_URL = "https://rafaprompts.com/gracias.html?session_id={CHECKOUT_SESSION_ID}"
+DOWNLOAD_PAGE = "https://rafaprompts.com/descargas.html"
+DOWNLOADS_PER_TOKEN = "20"
+TOKEN_TTL_DAYS = "365"
+META_PIXEL_ID = "952321057516846"
+
+[[kv_namespaces]]
+binding = "STORE"
+id = "b6dd7fed4d23474bbca1a23f101a80b4"
+
+# custom domain api.rafaprompts.com requires moving DNS to Cloudflare;
+# for now expose via *.workers.dev and call it from the static site.
+# routes = [
+#   { pattern = "api.rafaprompts.com/*", custom_domain = true }
+# ]
+
+[observability]
+enabled = true

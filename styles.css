@@ -1734,7 +1734,13 @@ details > *:not(summary) { margin-top: 12px; }
 
 .checkout-overlay {
   position: fixed;
-  inset: 0;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  width: 100%;
+  height: 100vh;
+  height: 100dvh;
   background: rgba(17,17,17,0.55);
   backdrop-filter: blur(4px);
   -webkit-backdrop-filter: blur(4px);
@@ -1746,6 +1752,7 @@ details > *:not(summary) { margin-top: 12px; }
   opacity: 0;
   pointer-events: none;
   transition: opacity 0.25s;
+  overscroll-behavior: contain;
 }
 @media (max-width: 600px) {
   .checkout-overlay { padding: 16px; }
@@ -1759,12 +1766,16 @@ details > *:not(summary) { margin-top: 12px; }
   overflow: hidden;
   position: relative;
   max-height: 90vh;
+  max-height: 90dvh;
   display: flex;
   flex-direction: column;
   box-shadow: var(--shadow-lg);
 }
 @media (max-width: 600px) {
-  .checkout-modal { max-height: calc(100vh - 32px); }
+  .checkout-modal {
+    max-height: calc(100vh - 32px);
+    max-height: calc(100dvh - 32px);
+  }
 }
 .checkout-modal-head {
   display: flex;
@@ -1795,8 +1806,11 @@ details > *:not(summary) { margin-top: 12px; }
 }
 .checkout-close:hover { background: var(--ink); color: var(--paper); transform: scale(1.05); }
 .checkout-close svg { width: 20px; height: 20px; }
-.checkout-body { flex: 1; overflow-y: auto; -webkit-overflow-scrolling: touch; }
+.checkout-body { flex: 1; overflow-y: auto; -webkit-overflow-scrolling: touch; overscroll-behavior: contain; }
 .checkout-body #checkout { min-height: 540px; }
+@media (max-width: 600px) {
+  .checkout-body #checkout { min-height: 0; }
+}
 
 /* ============================================================
    Utilities

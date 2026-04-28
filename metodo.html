@@ -18,6 +18,14 @@
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
   <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Archivo:wght@400;500;700;800;900&family=IBM+Plex+Mono:wght@400;600&family=Newsreader:ital,wght@1,400;1,500&display=swap">
   <link rel="stylesheet" href="styles.css">
+  <!-- Meta Pixel Code -->
+  <script>
+  !function(f,b,e,v,n,t,s){if(f.fbq)return;n=f.fbq=function(){n.callMethod?n.callMethod.apply(n,arguments):n.queue.push(arguments)};if(!f._fbq)f._fbq=n;n.push=n;n.loaded=!0;n.version='2.0';n.queue=[];t=b.createElement(e);t.async=!0;t.src=v;s=b.getElementsByTagName(e)[0];s.parentNode.insertBefore(t,s)}(window,document,'script','https://connect.facebook.net/en_US/fbevents.js');
+  fbq('init', '952321057516846');
+  fbq('track', 'PageView');
+  </script>
+  <noscript><img height="1" width="1" style="display:none" src="https://www.facebook.com/tr?id=952321057516846&ev=PageView&noscript=1"/></noscript>
+  <!-- End Meta Pixel Code -->
 </head>
 <body>
 
@@ -343,7 +351,19 @@
       if (checkoutInstance) return;
       try {
         if (!stripeInstance) stripeInstance = Stripe(STRIPE_PUBLISHABLE_KEY);
-        const r = await fetch(`${API_URL}/checkout`, { method: 'POST' });
+        const cookie = (k) => (document.cookie.match(new RegExp('(?:^|; )' + k + '=([^;]*)')) || [])[1] || '';
+        const fbclid = new URLSearchParams(window.location.search).get('fbclid') || '';
+        const fbcFromUrl = fbclid ? `fb.1.${Date.now()}.${fbclid}` : '';
+        const trackingPayload = {
+          fbp: cookie('_fbp'),
+          fbc: cookie('_fbc') || fbcFromUrl,
+          page_url: window.location.href,
+        };
+        const r = await fetch(`${API_URL}/checkout`, {
+          method: 'POST',
+          headers: { 'Content-Type': 'application/json' },
+          body: JSON.stringify(trackingPayload),
+        });
         const data = await r.json();
         if (!r.ok || !data.client_secret) throw new Error(data.error || 'No se pudo iniciar el checkout');
         checkoutInstance = await stripeInstance.initEmbeddedCheckout({

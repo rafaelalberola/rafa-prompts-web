@@ -3,7 +3,11 @@ course/pdfs/
 course_content/
 
 # build helpers (not needed at runtime on Pages)
-scripts/
+scripts/*
+# excepción: scripts ejecutados por GH Actions (rotación de Meta Ads)
+!scripts/meta_ads
+scripts/meta_ads/*
+!scripts/meta_ads/*.py
 
 # meta ads creative artifacts (HTML/PNG/script for paid campaigns, not for the public site)
 ads/

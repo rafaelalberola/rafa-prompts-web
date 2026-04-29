@@ -168,8 +168,33 @@ jobs:
 
           - Worker STRIPE_PRICE_ID: ${OLD_PRICE_ID} → ${NEW_PRICE_ID}
           - HTML CTAs, hero, sticky, OG meta y Pixel events.
+          - Meta Ads: rotación automática a copy post-switch (paso siguiente).
           - Triggered by: ${{ github.event_name }} (run #${{ github.run_number }})"
           git push origin main
+
+      - name: Setup Python (for Meta Ads rotation)
+        if: steps.idempotency.outputs.skip != 'true' && env.DRY_RUN != 'true'
+        uses: actions/setup-python@v5
+        with:
+          python-version: '3.12'
+
+      - name: Rotate Meta Ads to post-switch copy
+        if: steps.idempotency.outputs.skip != 'true' && env.DRY_RUN != 'true'
+        env:
+          META_ACCESS_TOKEN: ${{ secrets.META_ACCESS_TOKEN }}
+          META_AD_ACCOUNT_ID: ${{ secrets.META_AD_ACCOUNT_ID }}
+          META_PAGE_ID: ${{ secrets.META_PAGE_ID }}
+        run: |
+          set -e
+          if [ -z "$META_ACCESS_TOKEN" ]; then
+            echo "::warning::META_ACCESS_TOKEN no configurado, saltando rotación de ads"
+            exit 0
+          fi
+          pip install --quiet requests
+          python scripts/meta_ads/rotate_metodo_copy.py --mode post-switch || {
+            echo "::warning::rotación de ads falló (no bloqueante)"
+            exit 0
+          }
 
       - name: Summary
         if: always()

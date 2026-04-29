@@ -1,10 +1,10 @@
-# Manual : subir los 8 PDFs a Gumroad
+# Manual: subir los 8 PDFs a Gumroad
 
 Si el script `scripts/create_gumroad_product.mjs` no consigue subir los archivos por API (el endpoint de carga de contenido de Gumroad no es estable), sube los 8 PDFs a mano. Tarda 2 minutos.
 
 ## Pasos
 
-1. Abrir el dashboard de Gumroad (sesión como "Rafa : Product Designer & Photographer")
+1. Abrir el dashboard de Gumroad (sesión como "Rafa: Product Designer & Photographer")
 2. Entrar en el producto "El Método Claude"
 3. Ir a la pestaña **Content**
 4. Arrastrar y soltar estos 8 ficheros en el orden siguiente:

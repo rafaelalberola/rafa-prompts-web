@@ -6,7 +6,7 @@ Cada reel publicado tiene una palabra clave única. Cuando alguien la comenta, M
 
 | Keyword | Reel | Landing | Status |
 |---|---|---|---|
-| `YATE` | E01 yate (publicado 2026-04-23) | https://rafaprompts.com/yate.html | Activo |
+| `LUNA` | E01 yate-lunar (publicado 2026-04-29) | https://rafaprompts.com/luna.html | Activo |
 | `MADRUGON` / `MADRUGÓN` | E02 madrugón (publicado 2026-04-23) | https://rafaprompts.com/madrugon.html | Activo |
 | `ANZUELO` | E03 anzuelo (publicado scheduled 2026-04-27) | https://rafaprompts.com/anzuelo.html | **Pendiente crear flow** |
 | `BRUJULA` / `BRÚJULA` | E04 brújula (publicado scheduled 2026-05-04) | https://rafaprompts.com/brujula.html | **Pendiente crear flow** |
@@ -41,7 +41,7 @@ Manychat considera coincidencia exacta a menos que añadas alternates. Para que 
 
 | Keyword principal | Alternates a añadir |
 |---|---|
-| `YATE` | yate |
+| `LUNA` | luna, Luna |
 | `MADRUGON` | MADRUGÓN, madrugon, madrugón |
 | `ANZUELO` | anzuelo |
 | `BRUJULA` | BRÚJULA, brújula, brujula |

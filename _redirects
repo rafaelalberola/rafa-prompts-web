@@ -1,4 +1,3 @@
 # Cloudflare Pages redirects
-# Legacy: por si alguien recibió un link de Notion antiguo
-/notion/yate     /yate.html       301
-/notion/madrugon /madrugon.html   301
+# Legacy: yate landing renombrada a luna (keyword cambió 2026-04-29)
+/yate.html       /luna.html       301

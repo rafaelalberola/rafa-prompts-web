@@ -1,6 +1,6 @@
 # rafa.prompts · sistema de diseño
 
-Tokens de marca. Aplican a : landing, cursos, PDFs, lead magnets, cover images de reels, subtítulos, cualquier pieza pública.
+Tokens de marca. Aplican a: landing, cursos, PDFs, lead magnets, cover images de reels, subtítulos, cualquier pieza pública.
 
 ## Paleta
 
@@ -14,9 +14,9 @@ Cuatro colores, solo cuatro.
 | `--accent` | `#DA7756` | Único acento. Destacar palabras, botones CTA, logo `.prompts`, rules |
 
 Tres tonos de ink para jerarquía (derivados de `--ink`) :
-- `--ink` `#111111` : body principal
-- `--ink-soft` `#5a5a5a` : subtítulos y texto secundario
-- `--ink-mute` `#999999` : mono labels, meta info
+- `--ink` `#111111`: body principal
+- `--ink-soft` `#5a5a5a`: subtítulos y texto secundario
+- `--ink-mute` `#999999`: mono labels, meta info
 
 ## Tipografía
 
@@ -46,13 +46,13 @@ Ratio 1.333 (major third). Clamps responsive.
 
 ## Assets visuales
 
-Ubicación : `/assets/img/`
+Ubicación: `/assets/img/`
 
 | Archivo | Uso |
 |---|---|
-| `logo.svg` | Wordmark principal : "rafa" ink + ".prompts" accent `#DA7756` |
+| `logo.svg` | Wordmark principal: "rafa" ink + ".prompts" accent `#DA7756` |
 | `logo-dark.svg` | Wordmark para fondos dark (cream + accent) |
-| `logo-mark.svg` | Símbolo compacto (`./` accent sobre negro) : app icon, favicon scaling |
+| `logo-mark.svg` | Símbolo compacto (`./` accent sobre negro): app icon, favicon scaling |
 | `favicon.ico` | Multi-size (16/32/48) |
 | `favicon-16.png`, `favicon-32.png` | Referencias específicas |
 | `apple-touch-icon.png` | 180×180 iOS home screen |
@@ -65,13 +65,13 @@ Ubicación : `/assets/img/`
 
 Clases CSS definidas en `styles.css` :
 
-- `.btn` : botón primary (ink bg, cream text) · variante `.btn.accent` (accent bg + ink text), `.btn.ghost`
-- `.card` : cartera base · variantes `.card-paper`, `.card-ink`, `.card-accent`
-- `.callout` : caja de aviso · variantes `.callout.warn`, `.callout.info`
-- `.code-block` : pre con botón copiar · auto-instrumentado por `app.js`
-- `.eyebrow` : kicker mono encima de titulares (accent color)
-- `.progress` : barra accent arriba (scroll indicator, global)
-- `.brand` : wordmark inline (logo en header)
+- `.btn`: botón primary (ink bg, cream text) · variante `.btn.accent` (accent bg + ink text), `.btn.ghost`
+- `.card`: cartera base · variantes `.card-paper`, `.card-ink`, `.card-accent`
+- `.callout`: caja de aviso · variantes `.callout.warn`, `.callout.info`
+- `.code-block`: pre con botón copiar · auto-instrumentado por `app.js`
+- `.eyebrow`: kicker mono encima de titulares (accent color)
+- `.progress`: barra accent arriba (scroll indicator, global)
+- `.brand`: wordmark inline (logo en header)
 
 ## Tono y voz
 
@@ -79,21 +79,21 @@ Ver `/Users/helloimrafa/.claude/projects/-Users-helloimrafa-Projects-social-cont
 
 Resumen :
 
-- **Nunca** : competidores, em-dash, costes €, jerga técnica, contenido denso
-- **Siempre** : primera persona para bio, directo, pasos numerados, analogías cotidianas, feedback positivo
+- **Nunca**: competidores, em-dash, costes €, jerga técnica, contenido denso
+- **Siempre**: primera persona para bio, directo, pasos numerados, analogías cotidianas, feedback positivo
 
 ## Uso en plataformas externas
 
-- **Gumroad** : thumbnail = `metodo-cover.png` · descripción usa tipografía Archivo (via CSS fallback system-ui si no cargan fonts) · acento `#DA7756` consistente
-- **PDFs del curso** : header con logo SVG + footer con `rafa.prompts · el método claude · {n} de {total}`
-- **Reels** : subtítulos Archivo 800, spray filter SVG, highlight accent sweep left→right
-- **Carruseles** : 3 templates disponibles en `briefs/reel_hyperrealistic/carousel_templates/` (del proyecto social content), usan el mismo sistema
+- **Gumroad**: thumbnail = `metodo-cover.png` · descripción usa tipografía Archivo (via CSS fallback system-ui si no cargan fonts) · acento `#DA7756` consistente
+- **PDFs del curso**: header con logo SVG + footer con `rafa.prompts · el método claude · {n} de {total}`
+- **Reels**: subtítulos Archivo 800, spray filter SVG, highlight accent sweep left→right
+- **Carruseles**: 3 templates disponibles en `briefs/reel_hyperrealistic/carousel_templates/` (del proyecto social content), usan el mismo sistema
 
 ## Principios no negociables
 
 1. Máximo 4 colores en pantalla a la vez
 2. Un solo acento (`#DA7756`) por pieza
-3. Jerarquía tipográfica clara : una sola Archivo 900 por bloque
+3. Jerarquía tipográfica clara: una sola Archivo 900 por bloque
 4. Mono para labels, nunca para párrafos
 5. Newsreader italic solo para énfasis editorial, nunca para copy funcional
 6. Spray filter SVG en todos los titulares (h1, h2, h3), nunca en body

@@ -3,7 +3,7 @@
 <head>
   <meta charset="utf-8">
   <meta name="viewport" content="width=device-width, initial-scale=1">
-  <title>conectar : conecta dos herramientas sin integración nativa · rafa.prompts</title>
+  <title>conectar: conecta dos herramientas sin integración nativa · rafa.prompts</title>
   <meta name="description" content="El patrón del agente intermedio para que tus apps hablen entre ellas. Tres casos reales, el patrón en 4 pasos y cómo construirlo en una tarde.">
   <link rel="icon" type="image/svg+xml" href="/assets/img/favicon.svg">
   <link rel="icon" href="/assets/img/favicon.ico">
@@ -71,7 +71,7 @@
         <li><a href="#no-hablan">Por qué tu CRM y tu calendario no se hablan</a></li>
         <li><a href="#solucion">La solución del agente intermedio</a></li>
         <li><a href="#crm">Caso real CRM ↔ calendario</a></li>
-        <li><a href="#notion">Caso real Notion ↔ Slack</a></li>
+        <li><a href="#airtable">Caso real Airtable ↔ Slack</a></li>
         <li><a href="#drive">Caso real Drive ↔ email</a></li>
         <li><a href="#patron">El patrón en 4 pasos</a></li>
         <li><a href="#tarde">Cómo construirlo en una tarde</a></li>
@@ -84,7 +84,7 @@
       <div class="reading-time">7 min de lectura · guía 09</div>
       <h1>Conecta dos herramientas sin integración nativa</h1>
       <p class="lede">
-        Tu CRM no habla con tu calendario. Tu Notion no avisa a tu Slack. Tu Drive no manda emails. Las apps no se conectan porque a sus dueños no les conviene, no porque sea difícil. La solución cabe en una tarde de trabajo.
+        Tu CRM no habla con tu calendario. Tu Airtable no avisa a tu Slack. Tu Drive no manda emails. Las apps no se conectan porque a sus dueños no les conviene, no porque sea difícil. La solución cabe en una tarde de trabajo.
       </p>
 
       <div class="callout">
@@ -118,11 +118,11 @@
       </ul>
       <p>El agente vive entre las dos. Si alguien borra el deal en el CRM, el evento desaparece del calendario. Si alguien mueve el evento en el calendario, el agente actualiza el CRM. Lo importante es decidir desde el principio cuál es la fuente de verdad: la herramienta que manda. Si las dos editan, te haces un lío en una semana.</p>
 
-      <h2 id="notion"><span class="num">04</span>Caso real: Notion y Slack</h2>
-      <p>Trabajas con un equipo en Notion, gestionas tareas ahí. Pero el equipo vive en Slack. Cada vez que alguien crea o cambia una tarea, hay que avisar. Avisar a mano se olvida. La integración nativa solo da el evento básico, no el contexto.</p>
+      <h2 id="airtable"><span class="num">04</span>Caso real: Airtable y Slack</h2>
+      <p>Trabajas con un equipo en Airtable, gestionas tareas ahí. Pero el equipo vive en Slack. Cada vez que alguien crea o cambia una tarea, hay que avisar. Avisar a mano se olvida. La integración nativa solo da el evento básico, no el contexto.</p>
       <p>Qué hace el agente, escena por escena:</p>
       <ul>
-        <li><strong>Tarea cambia a estado "en revisión"</strong> en Notion, sale mensaje al canal de revisiones de Slack con el enlace</li>
+        <li><strong>Tarea cambia a estado "en revisión"</strong> en Airtable, sale mensaje al canal de revisiones de Slack con el enlace</li>
         <li><strong>Tarea con fecha límite mañana</strong>, sale mensaje privado al asignado a las 18:00</li>
         <li><strong>Tarea bloqueada con un comentario</strong>, sale hilo en el canal del proyecto avisando del bloqueo</li>
         <li><strong>Tarea cerrada por alguien que no la abrió</strong>, sale mensaje privado al original con un resumen de qué cambió</li>
@@ -176,11 +176,11 @@
         <li><strong>Saltar el paso 2 del mapeo.</strong> Improvisar el mapeo dentro del código mientras escribes te lleva a duplicar lógica y olvidar campos. La tabla en una nota cuesta 15 minutos y se ahorra 4 horas de depurar.</li>
       </ol>
 
-      <a href="/yate.html" class="cross-link">
+      <a href="/luna.html" class="cross-link">
         <div class="label">Volver al inicio de la serie</div>
         <h3>Cómo hacer un reel como este</h3>
         <p>Vuelta al primer recurso. Ahora con producto que vender, mensaje validado y agentes limpios, el reel es la pieza que mete a la gente en el funnel completo.</p>
-        <span class="arrow">Abrir guía yate →</span>
+        <span class="arrow">Abrir guía luna →</span>
       </a>
 
     </div>

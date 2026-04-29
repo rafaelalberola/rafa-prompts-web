@@ -7,8 +7,8 @@ Sitio estático con form que manda el email a un Telegram bot vía Cloudflare Wo
 ```
 rafa-prompts-web/
 ├── index.html           ← landing principal
-├── yate.html            ← guía 01 (contenido ex-Notion YATE)
-├── madrugon.html        ← guía 02 (contenido ex-Notion MADRUGÓN)
+├── luna.html            ← guía 01 (keyword `luna`, antes `yate`)
+├── madrugon.html        ← guía 02 (keyword `madrugón`)
 ├── styles.css           ← sistema de diseño editorial
 ├── app.js               ← scroll progress, signup form, copy-code, TOC
 ├── _redirects           ← rewrites para URLs legacy
@@ -19,19 +19,19 @@ rafa-prompts-web/
     └── package.json
 ```
 
-## Deploy : 5 pasos
+## Deploy: 5 pasos
 
 ### 1 · Crear el bot de Telegram
 
 1. En Telegram busca **@BotFather** → `/newbot`
 2. Elige nombre público, ej. `Rafa Prompts`
 3. Elige username, ej. `@rafa_prompts_bot` (tiene que acabar en `_bot`)
-4. BotFather te da el token : copia algo como `123456:ABCdef...`
+4. BotFather te da el token: copia algo como `123456:ABCdef...`
 
 ### 2 · Obtener tu Chat ID
 
 1. En Telegram busca **@userinfobot** → `/start`
-2. Te responde con tu ID (ej. `987654321`) : cópialo
+2. Te responde con tu ID (ej. `987654321`): cópialo
 3. Abre tu bot (el que creaste) y pulsa `/start` para habilitarlo
 
 ### 3 · Desplegar el Worker
@@ -63,25 +63,25 @@ Por la URL del Worker del paso anterior.
 
 ### 5 · Desplegar la landing (Cloudflare Pages)
 
-Opción A, drag-drop rápido :
+Opción A, drag-drop rápido:
 
 1. Ve a [dash.cloudflare.com](https://dash.cloudflare.com) → **Workers & Pages** → **Create application** → **Pages** → **Upload assets**
 2. Nombra el proyecto `rafa-prompts-web`
-3. Arrastra la carpeta (solo la raíz, sin `worker/`, o con ella, da igual : Pages solo sirve los HTML)
+3. Arrastra la carpeta (solo la raíz, sin `worker/`, o con ella, da igual: Pages solo sirve los HTML)
 4. Deploy → te da URL `https://rafa-prompts-web.pages.dev`
 
-Opción B, git :
+Opción B, git:
 
 1. `git init && git add . && git commit -m "initial"`
 2. Crea repo Github vacío
 3. `git remote add origin ... && git push -u origin main`
-4. En Cloudflare Pages : **Connect to Git** → repo → deploy
+4. En Cloudflare Pages: **Connect to Git** → repo → deploy
 
 ### 6 · Probar
 
 1. Abre `https://rafa-prompts-web.pages.dev`
 2. Mete tu email en el form → envía
-3. Te llega mensaje en Telegram. Si no llega : revisa logs del Worker (`wrangler tail`)
+3. Te llega mensaje en Telegram. Si no llega: revisa logs del Worker (`wrangler tail`)
 
 ### 7 · Conectar dominio propio (opcional, luego)
 
@@ -91,24 +91,24 @@ Opción B, git :
 
 ### 8 · Actualizar Manychat
 
-En los 2 flows (YATE y MADRUGÓN) cambia la URL del enlace final por:
+En los 2 flows (LUNA y MADRUGÓN) cambia la URL del enlace final por:
 
-- YATE : `https://rafa-prompts-web.pages.dev/yate.html` (o `https://rafaprompts.com/yate.html` si ya tienes dominio)
-- MADRUGÓN : `https://rafa-prompts-web.pages.dev/madrugon.html`
+- LUNA: `https://rafa-prompts-web.pages.dev/luna.html` (o `https://rafaprompts.com/luna.html` si ya tienes dominio)
+- MADRUGÓN: `https://rafa-prompts-web.pages.dev/madrugon.html`
 
 ## Cambios frecuentes
 
-- **Editar contenido de una guía** : edita `yate.html` o `madrugon.html` directamente → push → auto-deploy
-- **Añadir nueva guía** : copia `yate.html` como base, renombra, edita, añade card en `index.html`
-- **Cambiar estilos globales** : `styles.css` → push
+- **Editar contenido de una guía**: edita `luna.html` o `madrugon.html` directamente → push → auto-deploy
+- **Añadir nueva guía**: copia `luna.html` como base, renombra, edita, añade card en `index.html`
+- **Cambiar estilos globales**: `styles.css` → push
 
 ## Troubleshooting
 
 ### El form no envía nada
 
 - Abre DevTools → Network → busca el POST → mira el error
-- Si "CORS" : añade el dominio en el Worker (`env.ALLOWED_ORIGIN`) o deja `*`
-- Si 401 : el token Telegram es inválido, regenera con BotFather y `wrangler secret put`
+- Si "CORS": añade el dominio en el Worker (`env.ALLOWED_ORIGIN`) o deja `*`
+- Si 401: el token Telegram es inválido, regenera con BotFather y `wrangler secret put`
 
 ### No recibo mensajes Telegram aunque Worker devuelve 200
 

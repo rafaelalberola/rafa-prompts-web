@@ -17,6 +17,9 @@ DOWNLOAD_PAGE = "https://rafaprompts.com/descargas.html"
 DOWNLOADS_PER_TOKEN = "20"
 TOKEN_TTL_DAYS = "365"
 META_PIXEL_ID = "952321057516846"
+BREVO_LEADS_LIST_ID = "3"
+ADMIN_EMAIL = "helloimrafa@gmail.com"
+EMAIL_FROM_NEWSLETTER = "rafa.prompts <hola@rafaprompts.com>"
 
 [[kv_namespaces]]
 binding = "STORE"

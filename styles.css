@@ -2562,3 +2562,106 @@ body.drawer-open .mobile-drawer {
   color: #DA7756;
   font-weight: 600;
 }
+
+/* ───────── Subscribe form (lead magnets → Brevo) ───────── */
+.subscribe-block {
+  margin: 60px 0 40px;
+  padding: 40px 36px;
+  background: #0F0F0F;
+  border-radius: 18px;
+  border: 1px solid rgba(218, 119, 86, 0.18);
+}
+.subscribe-block .kicker {
+  font-family: 'IBM Plex Mono', monospace;
+  font-size: 11px;
+  letter-spacing: 0.18em;
+  text-transform: uppercase;
+  color: #DA7756;
+  font-weight: 700;
+  margin: 0 0 12px;
+}
+.subscribe-block h3 {
+  font-family: 'Archivo', sans-serif;
+  font-weight: 800;
+  font-size: 26px;
+  letter-spacing: -0.02em;
+  line-height: 1.15;
+  margin: 0 0 10px;
+  color: #F2EFE7;
+  text-wrap: balance;
+}
+.subscribe-block p {
+  font-size: 15px;
+  line-height: 1.55;
+  color: rgba(242, 239, 231, 0.78);
+  margin: 0 0 20px;
+  text-wrap: balance;
+}
+.subscribe-form {
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+}
+.subscribe-form .row {
+  display: flex;
+  gap: 8px;
+  flex-wrap: wrap;
+}
+.subscribe-form input[type="email"] {
+  flex: 1 1 240px;
+  min-width: 0;
+  padding: 14px 16px;
+  font: 15px/1 'Archivo', sans-serif;
+  color: #0A0A0A;
+  background: #F2EFE7;
+  border: 1px solid transparent;
+  border-radius: 10px;
+  outline: none;
+}
+.subscribe-form input[type="email"]:focus {
+  border-color: #DA7756;
+}
+.subscribe-form button {
+  padding: 14px 22px;
+  font: 700 15px/1 'Archivo', sans-serif;
+  color: #fff;
+  background: #DA7756;
+  border: 0;
+  border-radius: 999px;
+  cursor: pointer;
+  transition: filter 0.15s;
+}
+.subscribe-form button:hover { filter: brightness(1.08); }
+.subscribe-form button[disabled] { opacity: 0.6; cursor: not-allowed; }
+.subscribe-form .consent {
+  display: flex;
+  align-items: flex-start;
+  gap: 10px;
+  font: 13px/1.45 'Archivo', sans-serif;
+  color: rgba(242, 239, 231, 0.7);
+}
+.subscribe-form .consent input[type="checkbox"] {
+  margin-top: 3px;
+  flex-shrink: 0;
+  accent-color: #DA7756;
+}
+.subscribe-form .hp { position: absolute; left: -9999px; }
+.subscribe-status {
+  font-family: 'IBM Plex Mono', monospace;
+  font-size: 13px;
+  margin-top: 10px;
+  min-height: 1.4em;
+  letter-spacing: 0.04em;
+}
+.subscribe-status.ok { color: #DA7756; }
+.subscribe-status.err { color: #B55A3E; }
+.subscribe-block.sent .subscribe-form { display: none; }
+
+/* light variant para landings con fondo hueso */
+.subscribe-block.light {
+  background: #F2EFE7;
+  border-color: rgba(218, 119, 86, 0.28);
+}
+.subscribe-block.light h3 { color: #0A0A0A; }
+.subscribe-block.light p { color: rgba(10,10,10,0.7); }
+.subscribe-block.light .subscribe-form .consent { color: rgba(10,10,10,0.65); }

@@ -30,48 +30,64 @@ fbq('track', 'PageView');
   window.addEventListener('resize', update);
 })();
 
-// ======== Signup forms ========
-const SUBSCRIBE_URL = 'REPLACE_WITH_WORKER_URL'; // set after Worker deploy
+// ======== Subscribe forms (lead magnets → Brevo) ========
+const SUBSCRIBE_URL = 'https://rafa-prompts-api.prxystudio.workers.dev/subscribe';
 
-document.querySelectorAll('.signup-form').forEach((form) => {
+document.querySelectorAll('.subscribe-form').forEach((form) => {
   form.addEventListener('submit', async (e) => {
     e.preventDefault();
+    const block = form.closest('.subscribe-block') || form.parentElement;
     const emailInput = form.querySelector('input[name=email]');
+    const consentInput = form.querySelector('input[name=consent]');
+    const hpInput = form.querySelector('input[name=hp]');
     const btn = form.querySelector('button[type=submit]');
-    const status = form.parentElement.querySelector('.signup-status')
-                   || form.nextElementSibling;
-    const email = (emailInput.value || '').trim();
+    const status = block.querySelector('.subscribe-status');
+    const source = (form.dataset.source || 'other').toLowerCase();
 
+    const email = (emailInput.value || '').trim();
     if (!email || !email.match(/^[^\s@]+@[^\s@]+\.[^\s@]+$/)) {
-      if (status) { status.textContent = 'email no válido'; status.className = 'signup-status err'; }
+      if (status) { status.textContent = 'email no válido'; status.className = 'subscribe-status err'; }
+      return;
+    }
+    if (consentInput && !consentInput.checked) {
+      if (status) { status.textContent = 'tienes que aceptar para que pueda escribirte'; status.className = 'subscribe-status err'; }
       return;
     }
 
     btn.disabled = true;
-    btn.dataset.original = btn.textContent;
+    const orig = btn.textContent;
     btn.textContent = 'enviando…';
-    if (status) { status.textContent = ''; status.className = 'signup-status'; }
+    if (status) { status.textContent = ''; status.className = 'subscribe-status'; }
 
     try {
       const res = await fetch(SUBSCRIBE_URL, {
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
-        body: JSON.stringify({ email, source: window.location.pathname }),
+        body: JSON.stringify({
+          email,
+          source,
+          consent: true,
+          hp: (hpInput && hpInput.value) || '',
+        }),
       });
-      if (!res.ok) throw new Error('server ' + res.status);
+      const data = await res.json().catch(() => ({}));
+      if (!res.ok) throw new Error(data.error || ('server ' + res.status));
       emailInput.value = '';
       if (status) {
-        status.textContent = '¡hecho! te escribo pronto.';
-        status.className = 'signup-status ok';
+        status.textContent = data.existed
+          ? 'ya estabas en la lista. te he reenviado la guía.'
+          : 'hecho. te he mandado la guía al email.';
+        status.className = 'subscribe-status ok';
       }
+      block.classList.add('sent');
     } catch (err) {
       if (status) {
-        status.textContent = 'no pudo mandarse. intenta otra vez en un minuto.';
-        status.className = 'signup-status err';
+        status.textContent = 'no pudo mandarse. inténtalo en un minuto.';
+        status.className = 'subscribe-status err';
       }
     } finally {
       btn.disabled = false;
-      btn.textContent = btn.dataset.original || 'suscríbete';
+      btn.textContent = orig;
     }
   });
 });

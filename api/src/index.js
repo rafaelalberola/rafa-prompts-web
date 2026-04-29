@@ -432,6 +432,164 @@ async function handleDownload(req, env) {
   });
 }
 
+// ---------- Lead magnet subscriptions (Brevo) ----------
+
+const SUBSCRIBE_SOURCES = new Set([
+  'yate', 'madrugon', 'anzuelo', 'brujula',
+  'portero', 'tienda', 'hooks', 'voz', 'mensaje',
+  'conectar', 'vender', 'dms', 'agentes', 'automatizar',
+  'metricas', 'borrar',
+  'reel-hiperrealista', 'agente-creador-reels',
+  'index', 'metodo', 'other',
+]);
+
+const SOURCE_META = {
+  yate: { name: 'reel hiperrealista con Claude', url: 'https://rafaprompts.com/reel-hiperrealista-con-claude.html' },
+  madrugon: { name: 'agente que produce reels mientras duermes', url: 'https://rafaprompts.com/agente-creador-reels-claude.html' },
+  anzuelo: { name: 'hooks que paran el scroll', url: 'https://rafaprompts.com/anzuelo.html' },
+  brujula: { name: 'brújula editorial', url: 'https://rafaprompts.com/brujula.html' },
+  'reel-hiperrealista': { name: 'reel hiperrealista con Claude', url: 'https://rafaprompts.com/reel-hiperrealista-con-claude.html' },
+  'agente-creador-reels': { name: 'agente que produce reels', url: 'https://rafaprompts.com/agente-creador-reels-claude.html' },
+};
+
+const isValidEmail = (s) => /^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(s) && s.length <= 200;
+
+async function brevoGetContact(env, email) {
+  const r = await fetch(`https://api.brevo.com/v3/contacts/${encodeURIComponent(email)}`, {
+    headers: { 'api-key': env.BREVO_API_KEY, accept: 'application/json' },
+  });
+  if (r.status === 404) return null;
+  if (!r.ok) throw new Error(`brevo getContact ${r.status}`);
+  return r.json();
+}
+
+async function brevoUpsertContact(env, { email, source }) {
+  const listId = parseInt(env.BREVO_LEADS_LIST_ID || '3', 10);
+  const r = await fetch('https://api.brevo.com/v3/contacts', {
+    method: 'POST',
+    headers: { 'api-key': env.BREVO_API_KEY, 'Content-Type': 'application/json', accept: 'application/json' },
+    body: JSON.stringify({
+      email,
+      attributes: {
+        SOURCE: source,
+        SIGNUP_DATE: new Date().toISOString().slice(0, 10),
+      },
+      listIds: [listId],
+      updateEnabled: true,
+    }),
+  });
+  const body = await r.text();
+  return { ok: r.ok || r.status === 204, status: r.status, body };
+}
+
+function senderFromEnv(env) {
+  const m = (env.EMAIL_FROM || '').match(/^(.*?)\s*<([^>]+)>\s*$/);
+  return {
+    name: m ? m[1].trim() : 'rafa.prompts',
+    email: m ? m[2].trim() : (env.EMAIL_REPLY_TO || 'hola@rafaprompts.com'),
+  };
+}
+
+async function brevoSendEmail(env, { to, subject, html, replyTo }) {
+  const sender = senderFromEnv(env);
+  return fetch('https://api.brevo.com/v3/smtp/email', {
+    method: 'POST',
+    headers: { 'api-key': env.BREVO_API_KEY, 'Content-Type': 'application/json', accept: 'application/json' },
+    body: JSON.stringify({
+      sender,
+      to: [{ email: to }],
+      replyTo: replyTo || { email: env.EMAIL_REPLY_TO || sender.email, name: sender.name },
+      subject,
+      htmlContent: html,
+    }),
+  }).then(r => r.json()).catch(e => ({ error: e.message }));
+}
+
+async function sendWelcomeEmail(env, { to, source }) {
+  const meta = SOURCE_META[source];
+  const guideName = meta?.name || 'la guía que pediste';
+  const guideUrl = meta?.url || 'https://rafaprompts.com';
+  const html = `<!doctype html><html><body style="font-family: -apple-system, system-ui, sans-serif; background:#F2EFE7; color:#111; padding:40px 20px;">
+  <div style="max-width:560px; margin:0 auto; background:#fff; padding:40px 36px; border-radius:20px;">
+    <div style="font-family: 'IBM Plex Mono', monospace; font-size:11px; letter-spacing:0.18em; text-transform:uppercase; color:#DA7756; font-weight:700; margin-bottom:16px;">rafa.prompts</div>
+    <h1 style="font-size:26px; font-weight:900; line-height:1.15; margin:0 0 16px; letter-spacing:-0.02em;">Aquí está la guía</h1>
+    <p style="font-size:16px; line-height:1.6; color:#333; margin:0 0 20px;">Te apuntaste para recibir la guía de <strong>${guideName}</strong>. La tienes completa en este enlace, abierta, sin más pasos:</p>
+    <p style="margin:28px 0;">
+      <a href="${guideUrl}" style="display:inline-block; background:#DA7756; color:#fff; padding:16px 28px; border-radius:999px; text-decoration:none; font-weight:700; font-size:15px;">Abrir la guía</a>
+    </p>
+    <p style="font-size:14px; line-height:1.6; color:#5a5a5a; margin:24px 0 0;">Cuando publique la siguiente, te aviso por aquí. Si tienes dudas mientras la lees, responde a este email — lo leo yo.</p>
+    <hr style="border:0; border-top:1px solid rgba(0,0,0,0.08); margin:32px 0;">
+    <p style="font-size:13px; color:#8a8a8a; margin:0;">Si alguna vez quieres dejar de recibir estos emails, responde con "baja" y te saco de la lista.</p>
+  </div>
+  <p style="text-align:center; font-size:12px; color:#8a8a8a; margin-top:24px;">— Rafa · rafaprompts.com</p>
+</body></html>`;
+  return brevoSendEmail(env, { to, subject: `Tu guía de ${guideName}`, html });
+}
+
+async function sendNewSubscriberNotification(env, { email, source, ip, userAgent }) {
+  if (!env.ADMIN_EMAIL) return { skipped: true };
+  const meta = SOURCE_META[source];
+  const guideName = meta?.name || source;
+  const html = `<!doctype html><html><body style="font-family: -apple-system, system-ui, sans-serif; background:#F2EFE7; color:#111; padding:24px;">
+  <div style="max-width:520px; margin:0 auto; background:#fff; padding:28px; border-radius:14px;">
+    <div style="font-family: 'IBM Plex Mono', monospace; font-size:11px; letter-spacing:0.18em; text-transform:uppercase; color:#DA7756; font-weight:700; margin-bottom:8px;">Nuevo suscriptor</div>
+    <h1 style="font-size:20px; font-weight:900; line-height:1.2; margin:0 0 14px;">${email}</h1>
+    <table style="width:100%; font-size:14px; line-height:1.6; color:#333; border-collapse:collapse;">
+      <tr><td style="padding:6px 0; color:#8a8a8a; width:120px;">Source:</td><td><strong>${source}</strong> · ${guideName}</td></tr>
+      <tr><td style="padding:6px 0; color:#8a8a8a;">Cuándo:</td><td>${new Date().toISOString()}</td></tr>
+      <tr><td style="padding:6px 0; color:#8a8a8a;">IP:</td><td>${ip || '—'}</td></tr>
+      <tr><td style="padding:6px 0; color:#8a8a8a;">User agent:</td><td style="word-break:break-all;">${(userAgent || '').slice(0, 200)}</td></tr>
+    </table>
+  </div>
+</body></html>`;
+  return brevoSendEmail(env, {
+    to: env.ADMIN_EMAIL,
+    subject: `Nuevo suscriptor · ${email} · ${source}`,
+    html,
+  });
+}
+
+async function handleSubscribe(req, env) {
+  let body = {};
+  try { body = await req.json(); } catch (_) { /* */ }
+  const email = ((body.email || '') + '').trim().toLowerCase();
+  const source = ((body.source || '') + '').trim().toLowerCase();
+  const consent = body.consent === true || body.consent === 'true';
+  const hp = ((body.hp || '') + '').trim();
+
+  // honeypot
+  if (hp) return json({ ok: true });
+
+  if (!isValidEmail(email)) return json({ error: 'invalid_email' }, 400);
+  if (!SUBSCRIBE_SOURCES.has(source)) return json({ error: 'invalid_source' }, 400);
+  if (!consent) return json({ error: 'consent_required' }, 400);
+
+  // ¿es nuevo? (afecta si mandamos notif al admin)
+  let existed = false;
+  try {
+    const existing = await brevoGetContact(env, email);
+    existed = existing != null;
+  } catch (e) {
+    console.warn('brevoGetContact failed:', e.message);
+  }
+
+  const up = await brevoUpsertContact(env, { email, source });
+  if (!up.ok) {
+    console.error('brevo upsert failed:', up.status, up.body);
+    return json({ error: 'brevo_failed' }, 502);
+  }
+
+  const ip = req.headers.get('cf-connecting-ip') || '';
+  const userAgent = req.headers.get('user-agent') || '';
+
+  // welcome siempre; notif solo si es nuevo
+  const tasks = [sendWelcomeEmail(env, { to: email, source })];
+  if (!existed) tasks.push(sendNewSubscriberNotification(env, { email, source, ip, userAgent }));
+  await Promise.allSettled(tasks);
+
+  return json({ ok: true, existed });
+}
+
 // ---------- Main entry ----------
 
 export default {
@@ -448,6 +606,9 @@ export default {
       switch (`${req.method} ${url.pathname}`) {
         case 'POST /checkout':
           res = await handleCheckout(req, env);
+          break;
+        case 'POST /subscribe':
+          res = await handleSubscribe(req, env);
           break;
         case 'POST /webhook':
           res = await handleWebhook(req, env);

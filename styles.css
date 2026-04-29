@@ -2542,5 +2542,7 @@ body.drawer-open .mobile-drawer {
 
 @media (max-width: 900px) {
   .site-header .nav { display: none; }
-  .burger { display: inline-flex; }
+  .burger { display: none; }
+  .mobile-drawer { display: none; }
+  .site-header { justify-content: center; }
 }

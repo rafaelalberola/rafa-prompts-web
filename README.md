@@ -7,8 +7,8 @@ Sitio estático con form que manda el email a un Telegram bot vía Cloudflare Wo
 ```
 rafa-prompts-web/
 ├── index.html           ← landing principal
-├── luna.html            ← guía 01 (keyword `luna`, antes `yate`)
-├── madrugon.html        ← guía 02 (keyword `madrugón`)
+├── reel-hiperrealista-con-claude.html            ← guía 01 (keyword `luna`, antes `yate`)
+├── agente-creador-reels-claude.html        ← guía 02 (keyword `madrugón`)
 ├── styles.css           ← sistema de diseño editorial
 ├── app.js               ← scroll progress, signup form, copy-code, TOC
 ├── _redirects           ← rewrites para URLs legacy
@@ -93,13 +93,13 @@ Opción B, git:
 
 En los 2 flows (LUNA y MADRUGÓN) cambia la URL del enlace final por:
 
-- LUNA: `https://rafa-prompts-web.pages.dev/luna.html` (o `https://rafaprompts.com/luna.html` si ya tienes dominio)
-- MADRUGÓN: `https://rafa-prompts-web.pages.dev/madrugon.html`
+- LUNA: `https://rafa-prompts-web.pages.dev/reel-hiperrealista-con-claude.html` (o `https://rafaprompts.com/reel-hiperrealista-con-claude.html` si ya tienes dominio)
+- MADRUGÓN: `https://rafa-prompts-web.pages.dev/agente-creador-reels-claude.html`
 
 ## Cambios frecuentes
 
-- **Editar contenido de una guía**: edita `luna.html` o `madrugon.html` directamente → push → auto-deploy
-- **Añadir nueva guía**: copia `luna.html` como base, renombra, edita, añade card en `index.html`
+- **Editar contenido de una guía**: edita `reel-hiperrealista-con-claude.html` o `agente-creador-reels-claude.html` directamente → push → auto-deploy
+- **Añadir nueva guía**: copia `reel-hiperrealista-con-claude.html` como base, renombra, edita, añade card en `index.html`
 - **Cambiar estilos globales**: `styles.css` → push
 
 ## Troubleshooting

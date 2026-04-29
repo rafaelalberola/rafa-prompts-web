@@ -2552,3 +2552,13 @@ body.drawer-open .mobile-drawer {
   .mobile-drawer { display: none; }
   .site-header { justify-content: center; }
 }
+
+/* Deadline note bajo CTAs (urgencia honesta del switch de precio) */
+.deadline-note {
+  margin: 18px 0 0;
+  font-family: 'IBM Plex Mono', monospace;
+  font-size: 12px;
+  letter-spacing: 0.04em;
+  color: #DA7756;
+  font-weight: 600;
+}

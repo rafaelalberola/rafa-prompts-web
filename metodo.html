@@ -393,6 +393,11 @@
         openCheckout();
       });
     });
+    // Auto-open checkout if URL contains #comprar (e.g. arriving from index CTA buttons)
+    if (window.location.hash === '#comprar') {
+      // Wait a tick for DOM/Stripe to be ready
+      setTimeout(() => openCheckout(), 100);
+    }
     document.getElementById('checkout-close').addEventListener('click', closeCheckout);
     document.getElementById('checkout-overlay').addEventListener('click', (e) => {
       if (e.target.id === 'checkout-overlay') closeCheckout();

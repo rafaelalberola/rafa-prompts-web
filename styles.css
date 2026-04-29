@@ -1156,6 +1156,7 @@ h3 {
 }
 .course-cta .arrow { transition: transform 0.2s; display: inline-block; }
 .course-card-featured:hover .course-cta .arrow { transform: translateX(4px); }
+.course-card-body .btn { margin-top: 24px; align-self: flex-start; }
 
 @media (max-width: 800px) {
   .course-card-featured { grid-template-columns: 1fr; }

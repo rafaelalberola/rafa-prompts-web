@@ -344,14 +344,6 @@
       overlay.setAttribute('aria-hidden', 'false');
       document.body.style.overflow = 'hidden';
 
-      // Meta Pixel: InitiateCheckout
-      if (window.fbq) fbq('track', 'InitiateCheckout', {
-        content_name: 'El método Claude',
-        content_ids: ['metodo-claude'],
-        value: 149.00,
-        currency: 'EUR'
-      });
-
       if (checkoutInstance) return;
       try {
         if (!stripeInstance) stripeInstance = Stripe(STRIPE_PUBLISHABLE_KEY);
@@ -373,7 +365,19 @@
         checkoutInstance = await stripeInstance.initEmbeddedCheckout({
           clientSecret: data.client_secret,
         });
-        checkoutInstance.mount('#checkout');
+        await checkoutInstance.mount('#checkout');
+
+        // Meta Pixel: InitiateCheckout — fires AFTER Stripe modal mounts
+        // (only counts users who actually saw the checkout, not curious clicks)
+        if (window.fbq) {
+          const icEventId = `ic_${data.session_id || Date.now()}`;
+          fbq('track', 'InitiateCheckout', {
+            content_name: 'El método Claude',
+            content_ids: ['metodo-claude'],
+            value: 149.00,
+            currency: 'EUR',
+          }, { eventID: icEventId });
+        }
       } catch (e) {
         document.getElementById('checkout').innerHTML = `<div style="padding:40px 24px; text-align:center; color:#B55A3E;">No se pudo cargar el checkout.<br>${e.message}<br><br>Inténtalo en un minuto o escríbeme a <a href="mailto:hola@rafaprompts.com">hola@rafaprompts.com</a>.</div>`;
       }

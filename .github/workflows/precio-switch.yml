@@ -13,7 +13,7 @@ on:
     # Domingo 21:50 UTC = 23:50 CEST (Madrid en mayo, UTC+2).
     # GitHub puede retrasar el cron hasta ~15 min en horas pico.
     # Margen elegido para que ejecute antes de medianoche Madrid.
-    - cron: '50 21 * * 0'
+    - cron: '50 21 4 5 *'
   workflow_dispatch:
     inputs:
       from_price:

@@ -2665,3 +2665,17 @@ body.drawer-open .mobile-drawer {
 .subscribe-block.light h3 { color: #0A0A0A; }
 .subscribe-block.light p { color: rgba(10,10,10,0.7); }
 .subscribe-block.light .subscribe-form .consent { color: rgba(10,10,10,0.65); }
+
+/* CTA microcopy - reinforces trust below the buy button */
+.cta-microcopy {
+  margin: 12px 0 0;
+  font-family: 'IBM Plex Mono', monospace;
+  font-size: 12px;
+  letter-spacing: 0.04em;
+  color: rgba(0, 0, 0, 0.5);
+  font-weight: 500;
+}
+.hub-main.bg-dark .cta-microcopy,
+section.final-cta .cta-microcopy {
+  color: rgba(255, 255, 255, 0.55);
+}

@@ -1008,11 +1008,20 @@ h3 {
   text-wrap: balance;
 }
 .final-cta h2 .italic {
+  display: block;
   white-space: nowrap;
+  margin-top: 0.1em;
+}
+.final-cta .cta-microcopy {
+  font-size: 11px;
+  letter-spacing: 0.06em;
+  margin-top: 10px;
+  opacity: 0.7;
 }
 @media (max-width: 600px) {
   .final-cta h2 { font-size: clamp(26px, 7vw, 36px); }
   .final-cta h2 .italic { white-space: normal; }
+  .final-cta .cta-microcopy { font-size: 10.5px; margin-top: 8px; }
 }
 
 .final-cta p {

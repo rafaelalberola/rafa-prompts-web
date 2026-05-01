@@ -419,7 +419,7 @@ img { max-width: 100%; display: block; }
   flex-direction: row;
   align-items: center;
   justify-content: center;
-  gap: 28px;
+  gap: 60px;
 }
 .hero.hero-personal .hero-card .price {
   align-items: flex-start;

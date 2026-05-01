@@ -434,6 +434,7 @@ img { max-width: 100%; display: block; }
   text-align: center;
   font-size: 10px;
   letter-spacing: 0.16em;
+  color: var(--accent);
 }
 .hero.hero-personal .hero-card .actions {
   margin: 0;

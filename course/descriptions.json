@@ -7,14 +7,16 @@
       "El contexto largo: su superpoder real",
       "Cuándo NO usar Claude",
       "Conversación versus orquestación",
+      "Claude.ai versus Claude Code: dos herramientas, mismo modelo",
       "La regla del '¿vale la pena?'"
     ],
-    "duration_minutes": 25,
+    "duration_minutes": 30,
     "what_you_learn": [
-      "Entender qué tipo de problemas Claude resuelve bien, y cuáles no",
-      "Saber cómo estructurar lo que le pides para obtener respuestas útiles",
-      "Distinguir entre una conversación (algo puntual) y una orquestación (un sistema que se repite)",
-      "Tener un modelo mental para decidir si vale la pena automatizar algo"
+      "Entender qué tipo de problemas Claude resuelve bien y cuáles no",
+      "Saber cómo estructurar lo que le pides para que las respuestas sean útiles desde la primera",
+      "Distinguir conversación (algo puntual) de orquestación (un sistema que se repite)",
+      "Saber cuándo te basta claude.ai y cuándo merece la pena instalar Claude Code",
+      "Tener un criterio claro para decidir si una tarea vale la pena automatizar"
     ],
     "cover_image": "modulo-01-cover.png"
   },
@@ -24,16 +26,19 @@
     "lessons": [
       "Qué es un CLAUDE.md y por qué importa",
       "La estructura mínima que funciona",
+      "Dónde vive el CLAUDE.md según cómo uses Claude",
       "Plantilla 1: Creador de contenido",
       "Plantilla 2 y 3: Marketer y Founder",
-      "Plantilla 4 y 5: Freelance diseño y Investigador"
+      "Plantilla 4 y 5: Freelance diseño y Investigador",
+      "El error más común: reglas abstractas"
     ],
-    "duration_minutes": 30,
+    "duration_minutes": 35,
     "what_you_learn": [
       "Entender qué es un CLAUDE.md y por qué funciona tan bien",
-      "Saber cuándo vale la pena crearlo y cuándo es exceso",
-      "Tener 5 plantillas listas que puedes adaptar a tu nicho",
-      "Escribir tu primer CLAUDE.md propio en menos de 20 minutos"
+      "Saber cuándo vale la pena escribirlo y cuándo es exceso",
+      "Tener 5 plantillas listas que puedes adaptar a tu nicho en minutos",
+      "Saber dónde vive el CLAUDE.md en claude.ai y dónde vive en Claude Code (jerarquía global / proyecto / local)",
+      "Escribir tu primer CLAUDE.md propio antes de cerrar este módulo"
     ],
     "cover_image": "modulo-02-cover.png"
   },
@@ -43,34 +48,40 @@
     "lessons": [
       "Qué es una skill",
       "Qué es un agente (y qué no)",
+      "Skills en claude.ai versus skills nativas en Claude Code",
       "Encadenar pasos sin romper el contexto",
       "Cuándo separar contextos (conversaciones)",
-      "Tu primera skill documentada"
+      "Tu primera skill documentada",
+      "Cómo medir si una skill vale la pena"
     ],
-    "duration_minutes": 30,
+    "duration_minutes": 35,
     "what_you_learn": [
-      "Distinguir entre una skill y un agente",
+      "Distinguir entre una skill (mini-instrucción) y un agente (proceso encadenado)",
       "Saber cuándo usar cada uno",
       "Construir tu primera skill reutilizable en 15 minutos",
+      "Entender cómo funcionan las skills nativas de Claude Code (con SKILL.md y frontmatter) y cuándo darán el salto",
       "Diseñar un agente simple que haga una tarea repetitiva por ti"
     ],
     "cover_image": "modulo-03-cover.png"
   },
   "modulo_04": {
     "title": "Pipelines reales",
-    "subtitle": "4 casos completos, paso a paso. Artículos, investigación de mercado, inbox y datos. Copia, adapta y pon en marcha.",
+    "subtitle": "5 casos completos, paso a paso. Artículos, investigación de mercado, inbox, datos y documentación. Copia, adapta y pon en marcha.",
     "lessons": [
       "Pipeline 01: Un artículo de 1500 palabras en 30 minutos",
       "Pipeline 02: Investigación de mercado en 45 minutos",
       "Pipeline 03: Procesar el inbox en 15 minutos",
-      "Pipeline 04: Analizar un CSV en 20 minutos"
+      "Pipeline 04: Analizar un CSV en 20 minutos",
+      "Pipeline 05: Documentación interna desde cero (nuevo)",
+      "El patrón que comparten los 5 pipelines"
     ],
-    "duration_minutes": 35,
+    "duration_minutes": 40,
     "what_you_learn": [
-      "Tener 4 pipelines probados listos para adaptar",
+      "Tener 5 pipelines probados listos para adaptar",
       "Saber el patrón general para construir tu propio pipeline nuevo",
       "Entender qué partes son plantilla fija y cuáles cambian siempre",
-      "Reducir tareas de 2 horas a 15 minutos en tu semana"
+      "Saber cómo cada pipeline se transforma cuando lo migras a Claude Code (slash command)",
+      "Reducir tareas de 2-3 horas a 15-30 minutos en tu semana"
     ],
     "cover_image": "modulo-04-cover.png"
   },
@@ -79,16 +90,19 @@
     "subtitle": "Cómo conectar Claude con otras herramientas. El salto de hacer tareas manuales a sistemas que funcionan solos mientras tú vives tu vida.",
     "lessons": [
       "El patrón universal: trigger, proceso, destino",
-      "Las 3 herramientas visuales que te cubren el 95% de casos",
-      "Automatización real 1: resumen diario del inbox",
-      "Automatización real 2: newsletter semanal desde tus notas",
-      "Automatización real 3: triaje de leads de un formulario"
+      "Las 4 herramientas que cubren el 95% de los casos",
+      "Automatización 1: Resumen diario del inbox",
+      "Automatización 2: Newsletter semanal desde tus notas",
+      "Automatización 3: Triaje de leads de un formulario",
+      "Automatización 4: Hooks de Claude Code para tu código y proyectos",
+      "Cuándo Make/n8n y cuándo Claude Code"
     ],
-    "duration_minutes": 30,
+    "duration_minutes": 35,
     "what_you_learn": [
       "Saber qué herramientas se conectan bien con Claude",
-      "Entender el patrón universal de automatización (3 piezas)",
-      "Tener 3 ejemplos de automatizaciones reales funcionando",
+      "Entender el patrón universal de automatización: trigger, proceso, destino",
+      "Tener 4 ejemplos de automatizaciones reales funcionando",
+      "Saber cuándo te conviene Make / n8n / Zapier y cuándo es mejor un slash command de Claude Code con hooks",
       "Escoger tu primera automatización propia y saber cómo empezar"
     ],
     "cover_image": "modulo-05-cover.png"
@@ -101,15 +115,106 @@
       "Qué métricas son vanidad",
       "El ritual semanal de 15 minutos",
       "El error más común: romper lo que funciona",
+      "Memoria persistente: lo que Claude Code recuerda por ti",
       "Cómo llegar al mes 3 con el sistema vivo"
     ],
-    "duration_minutes": 25,
+    "duration_minutes": 30,
     "what_you_learn": [
       "Saber qué métricas importan (y cuáles son vanidad)",
       "Tener un sistema semanal de iteración de 15 minutos",
       "Evitar el error más común: romper algo que funcionaba al querer mejorarlo",
-      "Llegar al mes 3 con un sistema que sigue funcionando (no abandonado)"
+      "Saber cómo aprovechar la memoria persistente de Claude Code para no repetir aprendizajes",
+      "Llegar al mes 3 con un sistema que sigue funcionando, no abandonado"
     ],
     "cover_image": "modulo-06-cover.png"
+  },
+  "modulo_07": {
+    "title": "Claude Code: el agente que vive en tu editor",
+    "subtitle": "Instalación, primer CLAUDE.md real, slash commands, modo plan y permisos. El salto del navegador al disco.",
+    "lessons": [
+      "Por qué dar el salto a Claude Code",
+      "Instalación en 5 minutos",
+      "La jerarquía de archivos: global, proyecto, local",
+      "Tu primer slash command",
+      "El modo plan: piensa antes de actuar",
+      "Permisos: cuánto le dejas hacer al agente sin preguntar",
+      "Atajos de teclado y modos que te ahorran tiempo"
+    ],
+    "duration_minutes": 35,
+    "what_you_learn": [
+      "Tener Claude Code instalado y autenticado en tu máquina",
+      "Entender la arquitectura: ~/.claude global vs proyecto vs CLAUDE.local.md",
+      "Saber lanzar el agente desde la terminal y desde tu editor (VS Code, Cursor)",
+      "Crear tu primer slash command y ejecutarlo",
+      "Entender el modo plan (cuando le pides al agente que piense antes de hacer)",
+      "Saber configurar permisos para que el agente actúe sin pedirte autorización en cada paso, sin sorpresas"
+    ],
+    "cover_image": "modulo-07-cover.png"
+  },
+  "modulo_08": {
+    "title": "Skills nativas, subagentes y MCP",
+    "subtitle": "Las tres capacidades que convierten Claude Code en un equipo. Cuándo usar cada una y cómo combinarlas sin que se peleen.",
+    "lessons": [
+      "Anatomía de una skill nativa SKILL.md",
+      "Skill versus slash command: cuándo cada uno",
+      "Qué es un subagente y por qué cambia todo",
+      "Crear tus propios subagentes especializados",
+      "MCP: el protocolo que conecta Claude Code con todo lo demás",
+      "Patrones combinados: skill + subagente + MCP",
+      "Cómo no perder el control con todo esto"
+    ],
+    "duration_minutes": 40,
+    "what_you_learn": [
+      "Escribir una skill nativa SKILL.md con frontmatter que el agente invoca solo",
+      "Saber cuándo lanzar un subagente y cuándo hacerlo en la conversación principal",
+      "Lanzar varios subagentes en paralelo para tareas independientes",
+      "Conectar Claude Code con MCP servers (Notion, Gmail, Drive, Slack) sin programar",
+      "Decidir qué tarea va a skill, qué a subagente y qué a MCP"
+    ],
+    "cover_image": "modulo-08-cover.png"
+  },
+  "modulo_09": {
+    "title": "Construir tu primer sistema autónomo",
+    "subtitle": "Un caso real end-to-end. De pipeline manual a sistema que se ejecuta solo. Con código, archivos y resultados al final.",
+    "lessons": [
+      "El caso: un pipeline de contenido autónomo",
+      "Pieza 1: el slash command /research con subagentes",
+      "Pieza 2: el slash command /calendario",
+      "Pieza 3: el slash command /producir-pieza",
+      "Pieza 4: el hook que valida cada cambio",
+      "Pieza 5: ejecución temporal con cron",
+      "La línea de control humano"
+    ],
+    "duration_minutes": 40,
+    "what_you_learn": [
+      "Tener un sistema autónomo funcionando en tu propio repo, no en un slide",
+      "Saber montar el árbol de skills, slash commands, subagentes y hooks que componen un sistema",
+      "Versionar y mantener el sistema con git",
+      "Programar ejecuciones recurrentes (cron) para que corra sin que tú lo pidas",
+      "Saber qué dejar manual y qué automatizar (la línea de control humano)"
+    ],
+    "cover_image": "modulo-09-cover.png"
+  },
+  "modulo_10": {
+    "title": "Vivir con un sistema de IA",
+    "subtitle": "Mantenimiento, troubleshooting, ética y cuándo abandonar. La parte que separa a quien construye sistemas de quien acumula prototipos rotos.",
+    "lessons": [
+      "El protocolo mensual de 30 minutos",
+      "Diagnóstico de fallos comunes",
+      "Versionado: cuándo actualizar y cuándo congelar",
+      "El CLAUDE.md como código vivo",
+      "Ética: qué delegar y qué no",
+      "Cuándo abandonar un sistema",
+      "Los 5 principios para los próximos 12 meses"
+    ],
+    "duration_minutes": 30,
+    "what_you_learn": [
+      "Tener un protocolo de mantenimiento mensual de 30 minutos",
+      "Saber diagnosticar fallos comunes (skill no se invoca, hook que rompe, MCP caído)",
+      "Saber cuándo actualizar versiones y cuándo congelar",
+      "Tener una postura clara sobre la ética de delegar trabajo a un agente",
+      "Saber abandonar un sistema cuando deja de servir, sin culpa"
+    ],
+    "cover_image": "modulo-10-cover.png"
   }
 }

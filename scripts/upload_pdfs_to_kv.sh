@@ -14,9 +14,12 @@ set -euo pipefail
 NS_ID="b6dd7fed4d23474bbca1a23f101a80b4"   # STORE namespace (wrangler.toml)
 PDF_DIR="$(cd "$(dirname "$0")/.." && pwd)/course/pdfs"
 
+# Auth: usa CLOUDFLARE_API_TOKEN si está, si no usa la sesión OAuth de wrangler login
 if [ -z "${CLOUDFLARE_API_TOKEN:-}" ]; then
-  echo "✘ falta CLOUDFLARE_API_TOKEN" >&2
-  exit 1
+  if ! npx wrangler whoami >/dev/null 2>&1; then
+    echo "✘ no auth: exporta CLOUDFLARE_API_TOKEN o ejecuta 'npx wrangler login'" >&2
+    exit 1
+  fi
 fi
 
 # Map slug -> filename (slug coincide con el nombre del PDF sin .pdf)

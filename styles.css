@@ -513,8 +513,15 @@ img { max-width: 100%; display: block; }
   .hero.hero-personal .hero-card .price small { text-align: center; }
   .hero.hero-personal .hero-card .price .deadline,
   .hero.hero-personal .hero-card .price .next-price { text-align: center; }
-  .hero.hero-personal .hero-card .actions { width: 100%; align-items: center; }
-  .hero.hero-personal .hero-card .btn { width: 100%; justify-content: center; padding: 14px 20px; }
+  .hero.hero-personal .hero-card .actions { width: 100%; align-items: stretch; }
+  .hero.hero-personal .hero-card .btn {
+    display: flex;
+    width: 100%;
+    justify-content: center;
+    align-items: center;
+    padding: 16px 20px;
+    box-sizing: border-box;
+  }
 }
 @media (max-width: 600px) {
   .hero.hero-personal {

@@ -17,14 +17,18 @@
 import { PDFDocument, StandardFonts, rgb } from 'pdf-lib';
 
 const PDF_CATALOG = [
-  { slug: '00-empezar-aqui',           title: 'Empezar aquí',                  order: 0 },
-  { slug: 'modulo-01-pensar-en-claude',title: 'Módulo 01 · Pensar en Claude',  order: 1 },
-  { slug: 'modulo-02-claude-md',       title: 'Módulo 02 · El CLAUDE.md',      order: 2 },
-  { slug: 'modulo-03-skills-agentes',  title: 'Módulo 03 · Skills y agentes',  order: 3 },
-  { slug: 'modulo-04-pipelines-reales',title: 'Módulo 04 · Pipelines reales',  order: 4 },
-  { slug: 'modulo-05-orquestacion',    title: 'Módulo 05 · Orquestación',      order: 5 },
-  { slug: 'modulo-06-iteracion-medida',title: 'Módulo 06 · Iteración y medida',order: 6 },
-  { slug: 'prompt-library-50',         title: 'Biblioteca · 50 prompts',       order: 7 },
+  { slug: '00-empezar-aqui',                title: 'Empezar aquí',                                          order: 0 },
+  { slug: 'modulo-01-pensar-en-claude',     title: 'Módulo 01 · Pensar en Claude',                          order: 1 },
+  { slug: 'modulo-02-claude-md',            title: 'Módulo 02 · El CLAUDE.md',                              order: 2 },
+  { slug: 'modulo-03-skills-agentes',       title: 'Módulo 03 · Skills y agentes',                          order: 3 },
+  { slug: 'modulo-04-pipelines-reales',     title: 'Módulo 04 · Pipelines reales',                          order: 4 },
+  { slug: 'modulo-05-orquestacion',         title: 'Módulo 05 · Orquestación',                              order: 5 },
+  { slug: 'modulo-06-iteracion-medida',     title: 'Módulo 06 · Iteración y medida',                        order: 6 },
+  { slug: 'modulo-07-claude-code-arranque', title: 'Módulo 07 · Claude Code: el agente que vive en tu editor', order: 7 },
+  { slug: 'modulo-08-skills-subagentes-mcp',title: 'Módulo 08 · Skills nativas, subagentes y MCP',           order: 8 },
+  { slug: 'modulo-09-sistema-autonomo',     title: 'Módulo 09 · Construir tu primer sistema autónomo',       order: 9 },
+  { slug: 'modulo-10-vivir-con-sistema-ia', title: 'Módulo 10 · Vivir con un sistema de IA',                 order: 10 },
+  { slug: 'prompt-library-100',             title: 'Biblioteca · 100 prompts',                              order: 11 },
 ];
 
 const json = (data, status = 200, extraHeaders = {}) =>
@@ -165,7 +169,7 @@ async function sendDeliveryEmail(env, { to, name, token }) {
   <div style="max-width:560px; margin:0 auto; background:#fff; padding:40px 36px; border-radius:20px;">
     <div style="font-family: 'IBM Plex Mono', monospace; font-size:11px; letter-spacing:0.18em; text-transform:uppercase; color:#DA7756; font-weight:700; margin-bottom:16px;">El método Claude</div>
     <h1 style="font-size:28px; font-weight:900; line-height:1.1; margin:0 0 16px; letter-spacing:-0.02em;">${greeting}, gracias por tu compra</h1>
-    <p style="font-size:16px; line-height:1.6; color:#333; margin:0 0 20px;">Tu acceso al curso ya está listo. Puedes descargar los 8 PDFs (los 6 módulos, la guía "empezar aquí" y la biblioteca de 50 prompts) desde tu página personal:</p>
+    <p style="font-size:16px; line-height:1.6; color:#333; margin:0 0 20px;">Tu acceso al curso ya está listo. Puedes descargar los 12 PDFs (los 10 módulos, la guía "empezar aquí" y la biblioteca de 100 prompts) desde tu página personal:</p>
     <p style="margin:28px 0;">
       <a href="${downloadUrl}" style="display:inline-block; background:#DA7756; color:#fff; padding:16px 28px; border-radius:999px; text-decoration:none; font-weight:700; font-size:15px;">Acceder a las descargas</a>
     </p>

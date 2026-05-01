@@ -351,10 +351,11 @@ img { max-width: 100%; display: block; }
   width: 112px;
   height: 112px;
   max-width: 112px;
-  margin: 0 0 32px;
+  margin: 0 auto 32px;
+  align-self: center;
   background: #FFFFFF;
-  border: 2px solid var(--ink);
-  box-shadow: 0 8px 24px rgba(17, 17, 17, 0.06);
+  border: 1px solid var(--border);
+  box-shadow: 0 4px 16px rgba(17, 17, 17, 0.04);
   order: -1;
 }
 .hero.hero-personal .portrait img {
@@ -373,7 +374,9 @@ img { max-width: 100%; display: block; }
   width: 100%;
 }
 .hero.hero-personal .kicker {
-  margin-bottom: 16px;
+  margin: 0 auto 16px;
+  text-align: center;
+  align-self: center;
 }
 .hero.hero-personal h1 {
   font-size: clamp(36px, 4.4vw, 60px);
@@ -399,12 +402,12 @@ img { max-width: 100%; display: block; }
   text-align: center;
 }
 .hero.hero-personal .hero-card {
-  margin-top: 4px;
-  background: var(--bg-cream-soft);
+  margin: 4px auto 0;
+  background: #FFFFFF;
   border: 1px solid var(--border);
   border-radius: 18px;
   padding: 22px 28px 24px;
-  box-shadow: 0 12px 32px rgba(17, 17, 17, 0.05);
+  box-shadow: 0 8px 28px rgba(17, 17, 17, 0.05);
   display: inline-flex;
   align-self: center;
 }
@@ -412,23 +415,26 @@ img { max-width: 100%; display: block; }
   margin-top: 0;
   flex-direction: row;
   align-items: center;
+  justify-content: center;
   gap: 28px;
 }
 .hero.hero-personal .hero-card .price {
-  align-items: flex-start;
+  align-items: center;
   gap: 4px;
 }
 .hero.hero-personal .hero-card .price .amounts {
   font-size: 32px;
   line-height: 1;
+  justify-content: center;
 }
 .hero.hero-personal .hero-card .price small {
-  text-align: left;
+  text-align: center;
   font-size: 10px;
   letter-spacing: 0.16em;
 }
 .hero.hero-personal .hero-card .actions {
   margin: 0;
+  align-items: center;
 }
 .hero.hero-personal .hero-card .btn {
   padding: 14px 24px;
@@ -454,11 +460,54 @@ img { max-width: 100%; display: block; }
   align-items: center;
   justify-content: center;
 }
-@media (max-width: 600px) {
+@media (max-width: 900px) {
   .hero.hero-personal {
     align-items: center;
     text-align: center;
     min-height: 0;
+    padding-top: 40px;
+    padding-bottom: 40px;
+  }
+  .hero.hero-personal .portrait {
+    width: 96px;
+    height: 96px;
+    max-width: 96px;
+    margin: 0 auto 24px;
+    align-self: center;
+  }
+  .hero.hero-personal .hero-copy {
+    align-items: center;
+  }
+  .hero.hero-personal .kicker {
+    margin: 0 auto 14px;
+    text-align: center;
+    align-self: center;
+  }
+  .hero.hero-personal h1,
+  .hero.hero-personal h1 .italic,
+  .hero.hero-personal .intro { text-align: center; margin-left: auto; margin-right: auto; }
+  .hero.hero-personal .hero-card {
+    width: 100%;
+    max-width: 420px;
+    margin: 4px auto 0;
+    padding: 22px 24px 24px;
+    border-radius: 16px;
+    background: #FFFFFF;
+  }
+  .hero.hero-personal .hero-card .meta-row {
+    flex-direction: column;
+    gap: 16px;
+    align-items: center;
+    justify-content: center;
+  }
+  .hero.hero-personal .hero-card .price { align-items: center; }
+  .hero.hero-personal .hero-card .price .amounts { justify-content: center; }
+  .hero.hero-personal .hero-card .price small { text-align: center; }
+  .hero.hero-personal .hero-card .actions { width: 100%; align-items: center; }
+  .hero.hero-personal .hero-card .btn { width: 100%; justify-content: center; padding: 14px 20px; }
+}
+@media (max-width: 600px) {
+  .hero.hero-personal {
     padding-top: 32px;
     padding-bottom: 32px;
   }
@@ -466,28 +515,7 @@ img { max-width: 100%; display: block; }
     width: 88px;
     height: 88px;
     max-width: 88px;
-    margin-bottom: 22px;
   }
-  .hero.hero-personal .hero-copy {
-    align-items: center;
-  }
-  .hero.hero-personal h1,
-  .hero.hero-personal h1 .italic,
-  .hero.hero-personal .intro { text-align: center; margin-left: auto; margin-right: auto; }
-  .hero.hero-personal .hero-card {
-    width: 100%;
-    padding: 20px 22px 22px;
-    border-radius: 16px;
-  }
-  .hero.hero-personal .hero-card .meta-row {
-    flex-direction: column;
-    gap: 16px;
-    align-items: center;
-  }
-  .hero.hero-personal .hero-card .price { align-items: center; }
-  .hero.hero-personal .hero-card .price small { text-align: center; }
-  .hero.hero-personal .hero-card .actions { width: 100%; }
-  .hero.hero-personal .hero-card .btn { width: 100%; justify-content: center; padding: 14px 20px; }
 }
 
 .kicker, .eyebrow {

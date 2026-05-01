@@ -513,10 +513,16 @@ img { max-width: 100%; display: block; }
   .hero.hero-personal .hero-card .price small { text-align: center; }
   .hero.hero-personal .hero-card .price .deadline,
   .hero.hero-personal .hero-card .price .next-price { text-align: center; }
-  .hero.hero-personal .hero-card .actions { width: 100%; align-items: stretch; }
-  .hero.hero-personal .hero-card .btn {
+  .hero.hero-personal .hero-card .actions {
+    display: flex;
+    flex-direction: column;
+    width: 100%;
+    align-items: stretch;
+  }
+  .hero.hero-personal .hero-card .actions .btn {
     display: flex;
     width: 100%;
+    align-self: stretch;
     justify-content: center;
     align-items: center;
     padding: 16px 20px;
@@ -592,8 +598,8 @@ img { max-width: 100%; display: block; }
   .hero.hero-personal h1 { margin-left: 0; margin-right: 0; }
   .hero.hero-personal h1 .italic { margin-left: 0; margin-right: 0; }
   .hero.hero-personal .intro { margin-left: 0; margin-right: 0; }
-  .hero.hero-personal .actions { width: 100%; flex-direction: column; align-items: flex-start; }
-  .hero.hero-personal .actions .btn { width: auto; justify-content: flex-start; }
+  .hero.hero-personal .actions { width: 100%; flex-direction: column; align-items: stretch; }
+  .hero.hero-personal .actions .btn { width: 100%; justify-content: center; }
   .hero.hero-personal .hero-proof { width: 100%; justify-content: flex-start; }
   .hero.hero-personal .meta-row { align-items: flex-start; }
   .hero.hero-personal .price { align-items: flex-start; }

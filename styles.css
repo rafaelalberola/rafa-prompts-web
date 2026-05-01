@@ -348,12 +348,13 @@ img { max-width: 100%; display: block; }
   justify-content: center;
 }
 .hero.hero-personal .portrait {
-  width: 96px;
-  height: 96px;
-  max-width: 96px;
-  margin: 0 0 28px;
+  width: 112px;
+  height: 112px;
+  max-width: 112px;
+  margin: 0 0 32px;
   background: #FFFFFF;
-  border: 1px solid var(--border);
+  border: 2px solid var(--ink);
+  box-shadow: 0 8px 24px rgba(17, 17, 17, 0.06);
   order: -1;
 }
 .hero.hero-personal .portrait img {
@@ -361,7 +362,7 @@ img { max-width: 100%; display: block; }
   width: 100%;
   height: 100%;
   object-fit: cover;
-  object-position: center 30%;
+  object-position: center center;
   transform: none;
 }
 .hero.hero-personal .hero-copy {
@@ -375,7 +376,7 @@ img { max-width: 100%; display: block; }
   margin-bottom: 16px;
 }
 .hero.hero-personal h1 {
-  font-size: clamp(40px, 5.2vw, 72px);
+  font-size: clamp(36px, 4.4vw, 60px);
   line-height: 0.98;
   letter-spacing: -0.03em;
   margin: 0 auto 18px;
@@ -383,19 +384,55 @@ img { max-width: 100%; display: block; }
   text-align: center;
 }
 .hero.hero-personal h1 .italic {
-  font-size: 0.86em;
+  font-size: 0.84em;
   line-height: 1.05;
-  letter-spacing: -0.01em;
+  letter-spacing: -0.008em;
   margin: 0.1em auto 0;
   max-width: 22ch;
   text-align: center;
 }
 .hero.hero-personal .intro {
-  font-size: 16px;
+  font-size: 15.5px;
   line-height: 1.6;
-  margin: 0 auto 32px;
-  max-width: 52ch;
+  margin: 0 auto 28px;
+  max-width: 50ch;
   text-align: center;
+}
+.hero.hero-personal .hero-card {
+  margin-top: 4px;
+  background: var(--bg-cream-soft);
+  border: 1px solid var(--border);
+  border-radius: 18px;
+  padding: 22px 28px 24px;
+  box-shadow: 0 12px 32px rgba(17, 17, 17, 0.05);
+  display: inline-flex;
+  align-self: center;
+}
+.hero.hero-personal .hero-card .meta-row {
+  margin-top: 0;
+  flex-direction: row;
+  align-items: center;
+  gap: 28px;
+}
+.hero.hero-personal .hero-card .price {
+  align-items: flex-start;
+  gap: 4px;
+}
+.hero.hero-personal .hero-card .price .amounts {
+  font-size: 32px;
+  line-height: 1;
+}
+.hero.hero-personal .hero-card .price small {
+  text-align: left;
+  font-size: 10px;
+  letter-spacing: 0.16em;
+}
+.hero.hero-personal .hero-card .actions {
+  margin: 0;
+}
+.hero.hero-personal .hero-card .btn {
+  padding: 14px 24px;
+  font-size: 14.5px;
 }
 .hero.hero-personal .meta-row {
   width: auto;
@@ -426,10 +463,10 @@ img { max-width: 100%; display: block; }
     padding-bottom: 32px;
   }
   .hero.hero-personal .portrait {
-    width: 80px;
-    height: 80px;
-    max-width: 80px;
-    margin-bottom: 20px;
+    width: 88px;
+    height: 88px;
+    max-width: 88px;
+    margin-bottom: 22px;
   }
   .hero.hero-personal .hero-copy {
     align-items: center;
@@ -437,13 +474,20 @@ img { max-width: 100%; display: block; }
   .hero.hero-personal h1,
   .hero.hero-personal h1 .italic,
   .hero.hero-personal .intro { text-align: center; margin-left: auto; margin-right: auto; }
-  .hero.hero-personal .meta-row,
-  .hero.hero-personal .price,
-  .hero.hero-personal .price .amounts,
-  .hero.hero-personal .meta-row .actions { align-items: center; justify-content: center; }
-  .hero.hero-personal .price small { text-align: center; }
-  .hero.hero-personal .actions { flex-direction: column; align-items: center; }
-  .hero.hero-personal .actions .btn { width: auto; justify-content: center; }
+  .hero.hero-personal .hero-card {
+    width: 100%;
+    padding: 20px 22px 22px;
+    border-radius: 16px;
+  }
+  .hero.hero-personal .hero-card .meta-row {
+    flex-direction: column;
+    gap: 16px;
+    align-items: center;
+  }
+  .hero.hero-personal .hero-card .price { align-items: center; }
+  .hero.hero-personal .hero-card .price small { text-align: center; }
+  .hero.hero-personal .hero-card .actions { width: 100%; }
+  .hero.hero-personal .hero-card .btn { width: 100%; justify-content: center; padding: 14px 20px; }
 }
 
 .kicker, .eyebrow {

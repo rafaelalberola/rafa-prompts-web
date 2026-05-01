@@ -338,7 +338,7 @@ img { max-width: 100%; display: block; }
 
 .hero.hero-personal {
   display: grid;
-  grid-template-columns: minmax(0, 5fr) minmax(0, 7fr);
+  grid-template-columns: minmax(0, 1fr) minmax(0, 1fr);
   gap: clamp(40px, 6vw, 88px);
   align-items: center;
   min-height: min(78vh, 760px);
@@ -346,14 +346,13 @@ img { max-width: 100%; display: block; }
   padding-bottom: clamp(40px, 6vw, 80px);
 }
 .hero.hero-personal .portrait {
-  width: clamp(240px, 28vw, 360px);
-  height: clamp(240px, 28vw, 360px);
+  width: clamp(320px, 38vw, 480px);
+  height: clamp(320px, 38vw, 480px);
   max-width: none;
   justify-self: end;
   margin: 0;
-}
-.hero.hero-personal .portrait {
   background: #FFFFFF;
+  border: 1px solid var(--border);
 }
 .hero.hero-personal .portrait img {
   display: block;

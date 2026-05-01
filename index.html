@@ -17,7 +17,7 @@
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
   <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Archivo:wght@400;500;700;800;900&family=IBM+Plex+Mono:wght@400;600&family=Newsreader:ital,wght@1,400;1,500&display=swap">
-  <link rel="stylesheet" href="styles.css?v=20260501-7">
+  <link rel="stylesheet" href="styles.css?v=20260501-8">
   <!-- Meta Pixel Code -->
   <script>
   !function(f,b,e,v,n,t,s){if(f.fbq)return;n=f.fbq=function(){n.callMethod?n.callMethod.apply(n,arguments):n.queue.push(arguments)};if(!f._fbq)f._fbq=n;n.push=n;n.loaded=!0;n.version='2.0';n.queue=[];t=b.createElement(e);t.async=!0;t.src=v;s=b.getElementsByTagName(e)[0];s.parentNode.insertBefore(t,s)}(window,document,'script','https://connect.facebook.net/en_US/fbevents.js');
@@ -42,22 +42,9 @@
     </defs>
   </svg>
 
-  <header class="site-header">
+  <header class="site-header site-header--centered">
     <a href="/" class="brand"><strong>rafa</strong>.prompts</a>
-    <nav class="nav">
-      <a href="#recursos">Recursos</a>
-    </nav>
-    <button class="burger" id="burger" aria-label="Abrir menú" aria-expanded="false" aria-controls="mobile-drawer">
-      <span></span><span></span><span></span>
-    </button>
   </header>
-
-  <div class="mobile-drawer" id="mobile-drawer" aria-hidden="true">
-    <button class="drawer-close" id="drawer-close" aria-label="Cerrar menú"><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><line x1="18" y1="6" x2="6" y2="18"/><line x1="6" y1="6" x2="18" y2="18"/></svg></button>
-    <nav class="drawer-nav">
-      <a href="#recursos">Recursos</a>
-    </nav>
-  </div>
 
   <main class="hub-main">
 
@@ -121,27 +108,5 @@
   </footer>
 
   <script src="app.js"></script>
-  <script>
-    // Burger menu toggle
-    (function() {
-      const burger = document.getElementById('burger');
-      const drawer = document.getElementById('mobile-drawer');
-      if (!burger || !drawer) return;
-      const toggle = (force) => {
-        const open = force !== undefined ? force : !document.body.classList.contains('drawer-open');
-        document.body.classList.toggle('drawer-open', open);
-        burger.setAttribute('aria-expanded', open);
-        drawer.setAttribute('aria-hidden', !open);
-        document.body.style.overflow = open ? 'hidden' : '';
-      };
-      burger.addEventListener('click', () => toggle());
-      const close = document.getElementById('drawer-close');
-      if (close) close.addEventListener('click', () => toggle(false));
-      drawer.querySelectorAll('a').forEach(a => a.addEventListener('click', () => toggle(false)));
-      document.addEventListener('keydown', (e) => {
-        if (e.key === 'Escape') toggle(false);
-      });
-    })();
-  </script>
 </body>
 </html>

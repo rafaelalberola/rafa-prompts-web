@@ -1085,6 +1085,17 @@ h3 {
   margin: 0 auto;
 }
 
+.metodo-hero .mark-flower {
+  display: block;
+  width: 72px;
+  height: 72px;
+  margin: 0 auto 24px;
+  opacity: 0.95;
+}
+@media (max-width: 720px) {
+  .metodo-hero .mark-flower { width: 56px; height: 56px; margin-bottom: 18px; }
+}
+
 .metodo-hero h1 {
   font-family: var(--sans);
   font-weight: 900;

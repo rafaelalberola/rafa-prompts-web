@@ -39,6 +39,31 @@
           <feFuncA type="linear" slope="1.8" intercept="-0.05"/>
         </feComponentTransfer>
       </filter>
+      <filter id="grainSoft" x="-30%" y="-30%" width="160%" height="160%">
+        <feTurbulence type="fractalNoise" baseFrequency="1.2" numOctaves="1" seed="3" result="n"/>
+        <feDisplacementMap in="SourceGraphic" in2="n" scale="0.8" xChannelSelector="R" yChannelSelector="G"/>
+      </filter>
+      <symbol id="flower" viewBox="-10 -10 120 120" overflow="visible">
+        <g transform="translate(50 50)">
+          <g fill="#DA7756" filter="url(#grainSoft)">
+            <g><ellipse cx="0" cy="-32" rx="6" ry="22"/></g>
+            <g transform="rotate(25.7)"><ellipse cx="0" cy="-32" rx="6" ry="22"/></g>
+            <g transform="rotate(51.4)"><ellipse cx="0" cy="-32" rx="6" ry="22"/></g>
+            <g transform="rotate(77.1)"><ellipse cx="0" cy="-32" rx="6" ry="22"/></g>
+            <g transform="rotate(102.8)"><ellipse cx="0" cy="-32" rx="6" ry="22"/></g>
+            <g transform="rotate(128.5)"><ellipse cx="0" cy="-32" rx="6" ry="22"/></g>
+            <g transform="rotate(154.2)"><ellipse cx="0" cy="-32" rx="6" ry="22"/></g>
+            <g transform="rotate(180)"><ellipse cx="0" cy="-32" rx="6" ry="22"/></g>
+            <g transform="rotate(205.7)"><ellipse cx="0" cy="-32" rx="6" ry="22"/></g>
+            <g transform="rotate(231.4)"><ellipse cx="0" cy="-32" rx="6" ry="22"/></g>
+            <g transform="rotate(257.1)"><ellipse cx="0" cy="-32" rx="6" ry="22"/></g>
+            <g transform="rotate(282.8)"><ellipse cx="0" cy="-32" rx="6" ry="22"/></g>
+            <g transform="rotate(308.5)"><ellipse cx="0" cy="-32" rx="6" ry="22"/></g>
+            <g transform="rotate(334.2)"><ellipse cx="0" cy="-32" rx="6" ry="22"/></g>
+            <circle r="11" fill="#B55A3E"/>
+          </g>
+        </g>
+      </symbol>
     </defs>
   </svg>
 
@@ -71,6 +96,7 @@
   <main class="hub-main">
 
     <section class="metodo-hero">
+      <svg class="mark-flower" viewBox="0 0 100 100" aria-hidden="true"><use href="#flower"/></svg>
       <div class="kicker">El curso</div>
       <h1>
         El método Claude
@@ -373,7 +399,7 @@
   </footer>
 
   <div class="sticky-buy" id="sticky-buy" aria-hidden="true">
-    <div class="label"><strong>129 € hasta domingo</strong> · luego 197 €</div>
+    <div class="label"><strong>129 € hasta lunes 4 mayo</strong> · luego 197 €</div>
     <a href="#comprar" class="btn">Empezar</a>
   </div>
 

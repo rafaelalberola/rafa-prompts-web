@@ -352,14 +352,16 @@ img { max-width: 100%; display: block; }
   justify-self: end;
   margin: 0;
 }
+.hero.hero-personal .portrait {
+  background: #FFFFFF;
+}
 .hero.hero-personal .portrait img {
   display: block;
   width: 100%;
   height: 100%;
   object-fit: cover;
-  object-position: center 22%;
-  transform: scale(0.82);
-  transform-origin: center center;
+  object-position: center top;
+  transform: none;
 }
 .hero.hero-personal .hero-copy {
   display: flex;

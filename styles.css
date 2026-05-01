@@ -336,54 +336,78 @@ img { max-width: 100%; display: block; }
   margin: 0 auto;
 }
 
-.hero-personal {
+.hero.hero-personal {
   display: grid;
-  grid-template-columns: minmax(280px, 380px) 1fr;
-  gap: clamp(32px, 5vw, 72px);
+  grid-template-columns: minmax(0, 5fr) minmax(0, 7fr);
+  gap: clamp(40px, 6vw, 88px);
   align-items: center;
-  min-height: calc(100vh - 200px);
-  padding: 24px 0;
+  min-height: min(78vh, 760px);
+  padding-top: clamp(40px, 6vw, 80px);
+  padding-bottom: clamp(40px, 6vw, 80px);
 }
-.hero-personal .portrait {
+.hero.hero-personal .portrait {
+  width: clamp(240px, 28vw, 360px);
+  height: clamp(240px, 28vw, 360px);
+  max-width: none;
+  justify-self: end;
+  margin: 0;
+}
+.hero.hero-personal .portrait img {
+  display: block;
   width: 100%;
-  height: auto;
-  max-width: 380px;
-  aspect-ratio: 1/1;
+  height: 100%;
+  object-fit: cover;
+  object-position: center 32%;
 }
-.hero-personal .hero-copy {
+.hero.hero-personal .hero-copy {
   display: flex;
   flex-direction: column;
-  gap: 0;
+  align-items: flex-start;
+  max-width: 560px;
+}
+.hero.hero-personal .kicker {
+  margin-bottom: 12px;
 }
 .hero.hero-personal h1 {
-  font-size: clamp(36px, 4.4vw, 60px);
-  margin-bottom: 18px;
-  max-width: 18ch;
+  font-size: clamp(36px, 4.2vw, 58px);
   line-height: 0.98;
+  letter-spacing: -0.03em;
+  margin: 0 0 16px;
+  max-width: 14ch;
 }
 .hero.hero-personal h1 .italic {
-  font-size: 0.9em;
-  max-width: 24ch;
+  font-size: 0.88em;
   line-height: 1.02;
-  margin-top: 0.12em;
+  letter-spacing: -0.005em;
+  margin-top: 0.1em;
+  max-width: 20ch;
 }
 .hero.hero-personal .intro {
   font-size: 16px;
-  margin-bottom: 28px;
-  max-width: 50ch;
+  line-height: 1.55;
+  margin: 0 0 28px;
+  max-width: 48ch;
+}
+.hero.hero-personal .meta-row {
+  width: 100%;
 }
 @media (max-width: 900px) {
-  .hero-personal {
+  .hero.hero-personal {
     grid-template-columns: 1fr;
     gap: 24px;
     min-height: 0;
+    padding-top: 24px;
+    padding-bottom: 24px;
     align-items: flex-start;
   }
-  .hero-personal .portrait {
+  .hero.hero-personal .portrait {
     width: 110px;
     height: 110px;
-    max-width: 110px;
+    justify-self: start;
     order: -1;
+  }
+  .hero.hero-personal .hero-copy {
+    max-width: none;
   }
 }
 

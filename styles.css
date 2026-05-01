@@ -389,7 +389,24 @@ img { max-width: 100%; display: block; }
   max-width: 48ch;
 }
 .hero.hero-personal .meta-row {
-  width: 100%;
+  width: auto;
+  align-items: flex-start;
+  flex-direction: column;
+  gap: 18px;
+  margin-top: 4px;
+}
+.hero.hero-personal .price {
+  align-items: flex-start;
+}
+.hero.hero-personal .price .amounts {
+  justify-content: flex-start;
+}
+.hero.hero-personal .price small {
+  text-align: left;
+}
+.hero.hero-personal .meta-row .actions {
+  align-items: flex-start;
+  justify-content: flex-start;
 }
 @media (max-width: 900px) {
   .hero.hero-personal {

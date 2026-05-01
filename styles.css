@@ -346,7 +346,7 @@ img { max-width: 100%; display: block; }
   text-align: center;
   gap: 0;
   min-height: min(72vh, 700px);
-  padding-top: clamp(48px, 7vw, 96px);
+  padding-top: clamp(48px, 7vw, 56px);
   padding-bottom: clamp(48px, 6vw, 80px);
   justify-content: center;
 }
@@ -422,16 +422,16 @@ img { max-width: 100%; display: block; }
   gap: 28px;
 }
 .hero.hero-personal .hero-card .price {
-  align-items: center;
+  align-items: flex-start;
   gap: 4px;
 }
 .hero.hero-personal .hero-card .price .amounts {
   font-size: 32px;
   line-height: 1;
-  justify-content: center;
+  justify-content: flex-start;
 }
 .hero.hero-personal .hero-card .price small {
-  text-align: center;
+  text-align: left;
   font-size: 10px;
   letter-spacing: 0.16em;
   color: var(--accent);

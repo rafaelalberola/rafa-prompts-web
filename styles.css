@@ -493,6 +493,7 @@ img { max-width: 100%; display: block; }
     padding: 22px 24px 24px;
     border-radius: 16px;
     background: #FFFFFF;
+    justify-content: center;
   }
   .hero.hero-personal .hero-card .meta-row {
     flex-direction: column;

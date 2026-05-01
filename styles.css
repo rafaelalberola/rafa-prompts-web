@@ -357,7 +357,9 @@ img { max-width: 100%; display: block; }
   width: 100%;
   height: 100%;
   object-fit: cover;
-  object-position: center 32%;
+  object-position: center 22%;
+  transform: scale(0.82);
+  transform-origin: center center;
 }
 .hero.hero-personal .hero-copy {
   display: flex;

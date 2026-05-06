@@ -17,7 +17,7 @@
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
   <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Archivo:wght@400;500;700;800;900&family=IBM+Plex+Mono:wght@400;600&family=Newsreader:ital,wght@1,400;1,500&display=swap">
-  <link rel="stylesheet" href="styles.css?v=20260501-16">
+  <link rel="stylesheet" href="styles.css?v=20260506-05">
   <!-- Meta Pixel Code -->
   <script>
   !function(f,b,e,v,n,t,s){if(f.fbq)return;n=f.fbq=function(){n.callMethod?n.callMethod.apply(n,arguments):n.queue.push(arguments)};if(!f._fbq)f._fbq=n;n.push=n;n.loaded=!0;n.version='2.0';n.queue=[];t=b.createElement(e);t.async=!0;t.src=v;s=b.getElementsByTagName(e)[0];s.parentNode.insertBefore(t,s)}(window,document,'script','https://connect.facebook.net/en_US/fbevents.js');
@@ -64,9 +64,8 @@
         <div class="hero-card">
           <div class="meta-row">
             <div class="price">
-              <div class="amounts">129 €</div>
-              <small class="deadline">hasta lunes 4 mayo</small>
-              <small class="next-price">luego 197 €</small>
+              <div class="amounts">149 € <s class="strike-old">199&nbsp;€</s></div>
+              <small class="next-price">pago único · acceso de por vida</small>
             </div>
             <div class="actions">
               <a href="/metodo.html" class="btn accent large">Ver curso</a>
@@ -80,8 +79,8 @@
 
     <section class="resources" id="recursos">
       <div class="kicker">Recursos gratis</div>
-      <h2 class="section-title">Aprende IA con dos guías paso a paso</h2>
-      <p class="section-intro">La primera enseña a producir un vídeo con IA. La segunda, a que ese proceso se ejecute solo mientras duermes. Las dos, gratis.</p>
+      <h2 class="section-title">Aprende IA con<br>tres guías paso a paso</h2>
+      <p class="section-intro">La primera enseña a producir un vídeo con IA. La segunda, a que ese proceso se ejecute solo mientras duermes. La tercera, a escribir hooks que paren el scroll. Las tres, gratis.</p>
       <div class="resource-grid">
         <a href="/reel-hiperrealista-con-claude.html" class="resource-card">
           <div class="tag">Guía 01 · Producción</div>
@@ -95,6 +94,29 @@
           <p>El agente se levanta de madrugada, escribe el guion, genera el vídeo y lo monta. Tú solo revisas y publicas por la mañana.</p>
           <span class="arrow">Aprende gratis</span>
         </a>
+        <a href="/hooks.html" class="resource-card">
+          <div class="tag">Guía 03 · Hooks</div>
+          <h3>8 fórmulas para escribir hooks que paren el scroll</h3>
+          <p>Las plantillas que han funcionado en mis reels este año. Una fórmula por slide, ejemplos reales, copia y pega.</p>
+          <span class="arrow">Aprende gratis</span>
+        </a>
+        <section class="resource-card resource-card--subscribe" id="suscribete">
+          <div class="tag">Newsletter</div>
+          <h3>¿Te aviso cuando publique la siguiente?</h3>
+          <p>Una guía nueva al mes. Sin spam.</p>
+          <form class="subscribe-form" data-source="index-card" novalidate>
+            <input class="hp" type="text" name="hp" tabindex="-1" autocomplete="off" aria-hidden="true">
+            <div class="row">
+              <input type="email" name="email" placeholder="tu email" required autocomplete="email">
+              <button type="submit">Avísame</button>
+            </div>
+            <label class="consent">
+              <input type="checkbox" name="consent" required>
+              <span>Acepto recibir emails. Baja respondiendo "baja".</span>
+            </label>
+          </form>
+          <div class="subscribe-status" aria-live="polite"></div>
+        </section>
       </div>
     </section>
 

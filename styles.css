@@ -878,7 +878,8 @@ h3 {
 @media (max-width: 900px) { .resource-grid { grid-template-columns: 1fr; } }
 
 .resource-card {
-  display: block;
+  display: flex;
+  flex-direction: column;
   padding: 40px 36px;
   background: var(--paper);
   border: 1px solid var(--border);
@@ -888,6 +889,7 @@ h3 {
   cursor: pointer;
   text-decoration: none;
 }
+.resource-card .arrow { margin-top: auto; }
 .resource-card:hover {
   transform: translateY(-4px);
   box-shadow: var(--shadow-md);
@@ -899,7 +901,7 @@ h3 {
   font-family: var(--mono);
   font-size: 12px;
   font-weight: 600;
-  letter-spacing: 0.18em;
+  letter-spacing: 0.10em;
   text-transform: uppercase;
   color: var(--accent);
   margin-bottom: 16px;
@@ -912,6 +914,7 @@ h3 {
   line-height: 1.15;
   letter-spacing: -0.02em;
   margin: 0 0 10px;
+  text-wrap: balance;
 }
 
 .resource-card p {
@@ -919,6 +922,7 @@ h3 {
   line-height: 1.55;
   color: var(--ink-soft);
   margin: 0 0 20px;
+  text-wrap: balance;
 }
 
 .resource-card .arrow {
@@ -930,6 +934,65 @@ h3 {
   align-items: center;
   gap: 6px;
   transition: gap 0.2s;
+}
+
+.resource-card--soon {
+  cursor: default;
+  border-style: dashed;
+  background: #FBFAF5;
+  opacity: 0.78;
+}
+.resource-card--soon:hover {
+  transform: none;
+  box-shadow: none;
+  border-color: var(--border);
+  opacity: 0.92;
+}
+.resource-card--soon .tag,
+.resource-card--soon .arrow {
+  color: var(--ink-mute);
+}
+.resource-card--soon .arrow::after {
+  content: "";
+}
+
+.resource-card--subscribe {
+  cursor: default;
+  background: #0F0F0F;
+  border-color: rgba(218, 119, 86, 0.18);
+  color: #F2EFE7;
+}
+.resource-card--subscribe:hover {
+  transform: none;
+  box-shadow: none;
+  border-color: rgba(218, 119, 86, 0.18);
+}
+.resource-card--subscribe h3 { color: #F2EFE7; }
+.resource-card--subscribe p { color: rgba(242, 239, 231, 0.78); }
+.resource-card--subscribe .subscribe-form {
+  margin-top: auto;
+  gap: 10px;
+}
+.resource-card--subscribe .subscribe-form .row {
+  flex-direction: column;
+  gap: 8px;
+}
+.resource-card--subscribe .subscribe-form input[type="email"] {
+  flex: none;
+  width: 100%;
+}
+.resource-card--subscribe .subscribe-form button {
+  width: 100%;
+  padding: 14px 16px;
+}
+.resource-card--subscribe .subscribe-form .consent {
+  font-size: 12px;
+  line-height: 1.4;
+  color: rgba(242, 239, 231, 0.7);
+}
+.resource-card--subscribe .subscribe-status {
+  margin-top: 8px;
+  font-size: 12px;
 }
 .resource-card .arrow::after { content: " →"; transition: transform 0.2s; }
 .resource-card:hover .arrow::after { transform: translateX(4px); }
@@ -1131,7 +1194,7 @@ h3 {
   border-radius: 20px;
   padding: 28px 32px 30px;
   box-shadow: 0 12px 36px rgba(17, 17, 17, 0.05);
-  margin: 16px auto 0;
+  margin: 32px auto 0;
   max-width: 520px;
   width: 100%;
 }
@@ -1160,6 +1223,20 @@ h3 {
 }
 .metodo-hero-card .price .deadline { color: var(--accent); }
 .metodo-hero-card .price .next-price { color: var(--ink-mute); }
+
+/* Strike-through reference price next to current price */
+.strike-old {
+  font-size: 0.55em;
+  color: var(--ink-mute);
+  font-weight: 600;
+  letter-spacing: -0.01em;
+  margin-left: 0.25em;
+  vertical-align: 0.1em;
+  text-decoration: line-through;
+  text-decoration-thickness: 2px;
+}
+.sticky-buy .strike-old { font-size: 0.85em; }
+.final-cta p .strike-old { font-size: 0.85em; }
 .metodo-hero-card .actions {
   width: 100%;
   display: flex;
@@ -1568,6 +1645,11 @@ h3 {
   margin: 0 auto;
 }
 .resource > * { min-width: 0; }
+.resource > .subscribe-block {
+  grid-column: 1 / -1;
+  order: -1;
+  margin-top: 0;
+}
 .resource-content img,
 .resource-content video,
 .resource-content iframe,

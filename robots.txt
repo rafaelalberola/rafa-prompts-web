@@ -1,0 +1,11 @@
+User-agent: *
+Allow: /
+
+# No tiene sentido indexar páginas transaccionales
+Disallow: /gracias.html
+Disallow: /descargas.html
+
+# API local del Worker (si alguien la enlaza)
+Disallow: /api/
+
+Sitemap: https://rafaprompts.com/sitemap.xml

@@ -510,6 +510,24 @@ async function brevoSendEmail(env, { to, subject, html, replyTo }) {
 }
 
 async function sendWelcomeEmail(env, { to, source }) {
+  // La newsletter de la home no pide una guía concreta: confirma el alta y enlaza las tres guías abiertas.
+  if (source === 'index') {
+    const html = `<!doctype html><html><body style="font-family: -apple-system, system-ui, sans-serif; background:#F2EFE7; color:#111; padding:40px 20px;">
+  <div style="max-width:560px; margin:0 auto; background:#fff; padding:40px 36px; border-radius:20px;">
+    <h1 style="font-size:26px; font-weight:900; line-height:1.15; margin:0 0 16px; letter-spacing:-0.02em;">Hecho: te aviso con la siguiente guía</h1>
+    <p style="font-size:16px; line-height:1.6; color:#333; margin:0 0 20px;">Publico una al mes. Mientras tanto, estas tres están abiertas:</p>
+    <p style="font-size:16px; line-height:1.9; margin:0 0 20px;">
+      <a href="https://rafaprompts.com/reel-hiperrealista-con-claude.html" style="color:#B55A3E; font-weight:700;">Cómo producir un reel hiperrealista con Claude</a><br>
+      <a href="https://rafaprompts.com/agente-creador-reels-claude.html" style="color:#B55A3E; font-weight:700;">Cómo montar un sistema que produce reels mientras duermes</a><br>
+      <a href="https://rafaprompts.com/hooks.html" style="color:#B55A3E; font-weight:700;">8 fórmulas para escribir hooks que paren el scroll</a>
+    </p>
+    <hr style="border:0; border-top:1px solid rgba(0,0,0,0.08); margin:32px 0;">
+    <p style="font-size:13px; color:#8a8a8a; margin:0;">Si alguna vez quieres dejar de recibir estos emails, responde con "baja" y te saco de la lista.</p>
+  </div>
+  <p style="text-align:center; font-size:12px; color:#8a8a8a; margin-top:24px;">Rafa · rafaprompts.com</p>
+</body></html>`;
+    return brevoSendEmail(env, { to, subject: 'Te aviso con la siguiente guía', html });
+  }
   const meta = SOURCE_META[source];
   const guideName = meta?.name || 'la guía que pediste';
   const guideUrl = meta?.url || 'https://rafaprompts.com';

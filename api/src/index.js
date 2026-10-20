@@ -253,6 +253,8 @@ async function handleCheckout(req, env) {
     automatic_tax: { enabled: true },
     billing_address_collection: 'auto',
     invoice_creation: { enabled: true },
+    // la factura sale a nombre de la empresa con su NIF (la web promete «Factura para tu empresa»)
+    tax_id_collection: { enabled: true },
     allow_promotion_codes: true,
     return_url: env.SUCCESS_URL,
     locale: 'es',

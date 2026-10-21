@@ -112,6 +112,9 @@ h3 { margin: 0; font-size: 20px; line-height: 1.2; font-weight: 800; letter-spac
 .stage-txt { display: flex; flex-direction: column; gap: var(--s2); min-width: 0; padding-top: 10px; }
 .stage h3 { font-size: 17px; }
 .stage p { margin: 0; font-size: 15px; line-height: 1.45; color: var(--ink-soft); text-wrap: pretty; }
+/* lo que cobraría una agencia por esa etapa: ancla de valor, sin tachar (no es un descuento) */
+.stage .stage-valor { font-size: 14px; line-height: 1.35; font-weight: 700; color: var(--ink); }
+.stage .stage-valor span { font-weight: 500; color: var(--ink-mute); }
 .card.journey-auto > .card-ico { flex: 0 0 44px; }
 .card-ico.ok { background: var(--ok-tint); color: var(--ok-icon); }
 /* tarjetas de módulo: icono sin caja ni relleno, pegado al borde del contenido y alineado con el título */
@@ -770,6 +773,9 @@ body::before { content: ""; position: fixed; inset: 0 0 auto; height: env(safe-a
 .plans .btn, .plans .btn:hover, .plans .btn:focus, .plans .btn:focus-visible, .plans .btn:active,
 .plans .btn.ghost, .plans .btn.ghost:hover { box-shadow: none; }
 .plans .btn.ghost { border: 1.5px solid var(--ink); }
+/* «Ver los planes» de la línea de tiempo: plano como los de los planes, sin la sombra del cristal */
+.btn.ghost.journey-go, .btn.ghost.journey-go:hover { box-shadow: none; }
+.btn.ghost.journey-go { border: 1.5px solid var(--ink); }
 .plans .btn:focus-visible { outline: 2px solid var(--accent); outline-offset: 3px; }
 
 /* muro de las guías gratis */
@@ -943,8 +949,8 @@ body::before { content: ""; position: fixed; inset: 0 0 auto; height: env(safe-a
         <div class="act" style="--n:2">
           <p class="act-name">Empieza</p>
           <ol class="stages" start="2">
-            <li class="stage" style="--i:1"><span class="node" aria-hidden="true"><svg viewBox="0 0 24 24"><circle cx="12" cy="12" r="10" /><path d="M12 2a14.5 14.5 0 0 0 0 20 14.5 14.5 0 0 0 0-20" /><path d="M2 12h20" /></svg></span><div class="stage-txt"><span class="label">Módulo 05</span><h3>Tu&nbsp;web</h3><p>Reservas el&nbsp;dominio y&nbsp;Claude te&nbsp;diseña y&nbsp;escribe la&nbsp;web.</p></div></li>
-            <li class="stage" style="--i:2"><span class="node" aria-hidden="true"><svg viewBox="0 0 24 24"><circle cx="8" cy="21" r="1" /><circle cx="19" cy="21" r="1" /><path d="M2.05 2.05h2l2.66 12.42a2 2 0 0 0 2 1.58h9.78a2 2 0 0 0 1.95-1.57l1.65-7.43H5.12" /></svg></span><div class="stage-txt"><span class="label">Módulo 06</span><h3>Tu&nbsp;tienda online</h3><p>Productos, pedidos y&nbsp;un&nbsp;aviso cuando baja el&nbsp;stock.</p></div></li>
+            <li class="stage" style="--i:1"><span class="node" aria-hidden="true"><svg viewBox="0 0 24 24"><circle cx="12" cy="12" r="10" /><path d="M12 2a14.5 14.5 0 0 0 0 20 14.5 14.5 0 0 0 0-20" /><path d="M2 12h20" /></svg></span><div class="stage-txt"><span class="label">Módulo 05</span><h3>Tu&nbsp;web</h3><p>Reservas el&nbsp;dominio y&nbsp;Claude te&nbsp;diseña y&nbsp;escribe la&nbsp;web.</p><p class="stage-valor"><span>Con&nbsp;una&nbsp;agencia:</span> de&nbsp;500&nbsp;a&nbsp;1.200&nbsp;€</p></div></li>
+            <li class="stage" style="--i:2"><span class="node" aria-hidden="true"><svg viewBox="0 0 24 24"><circle cx="8" cy="21" r="1" /><circle cx="19" cy="21" r="1" /><path d="M2.05 2.05h2l2.66 12.42a2 2 0 0 0 2 1.58h9.78a2 2 0 0 0 1.95-1.57l1.65-7.43H5.12" /></svg></span><div class="stage-txt"><span class="label">Módulo 06</span><h3>Tu&nbsp;tienda online</h3><p>Productos, pedidos y&nbsp;un&nbsp;aviso cuando baja el&nbsp;stock.</p><p class="stage-valor"><span>Con&nbsp;una&nbsp;agencia:</span> de&nbsp;1.500&nbsp;a&nbsp;3.500&nbsp;€</p></div></li>
           </ol>
         </div>
         <div class="act fin-fila" style="--n:3">

@@ -179,14 +179,18 @@
           "icono": "globe",
           "modulos": [
             "tu-web-con-claude"
-          ]
+          ],
+          "valor": "de 500 a 1.200 €",
+          "valor_fuente": "cronoshare.com/cuanto-cuesta/pagina-web (guía del 5-1-2026, consultada el 21-10-2026): landing básica de 1 a 3 páginas"
         },
         {
           "texto": "Productos, pedidos y un aviso cuando baja el stock.",
           "icono": "shopping-cart",
           "modulos": [
             "tu-tienda-online"
-          ]
+          ],
+          "valor": "de 1.500 a 3.500 €",
+          "valor_fuente": "cronoshare.com/cuanto-cuesta/pagina-web (guía del 5-1-2026, consultada el 21-10-2026): tienda online básica, hasta 50 productos"
         }
       ]
     },

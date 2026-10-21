@@ -202,6 +202,8 @@ async function handleEvento(req, env, ctx) {
     }
     return ev;
   });
+  // con la cabecera x-ops (OPS_TOKEN) responde con lo que dice Meta, para comprobar el envío
+  if (env.OPS_TOKEN && req.headers.get('x-ops') === env.OPS_TOKEN) return json(await metaCapiEnviar(env, data));
   ctx.waitUntil(metaCapiEnviar(env, data).catch(e => console.error('CAPI evento:', e)));
   return json({ ok: true });
 }

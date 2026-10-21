@@ -125,16 +125,25 @@
       // Plan Negocio (enlace de pago de 249 €): aviso de los proyectos y valor real de la compra
       const isNegocio = params.get('plan') === 'negocio';
       if (isNegocio) { const n = document.getElementById('negocio-note'); if (n) n.hidden = false; }
+      // Diagnóstico de implantación (50 €): no hay PDFs, se fija una llamada
+      const isDiag = params.get('plan') === 'diagnostico';
+      if (isDiag) {
+        const k = document.querySelector('.thanks .kicker'); if (k) k.textContent = 'Reserva confirmada';
+        const h = document.querySelector('.thanks h1'); if (h) h.innerHTML = 'Diagnóstico reservado <span class="italic">hablamos pronto.</span>';
+        const l = document.querySelector('.thanks .lede'); if (l) l.textContent = 'Te escribo en menos de 24 horas desde hola@rafaprompts.com para fijar el día de la llamada. Son 45 minutos. Si después contratas la implantación, estos 50 € se descuentan del precio.';
+        document.querySelectorAll('.thanks-steps, #negocio-note').forEach(function (e) { e.hidden = true; });
+        const help = document.querySelector('.thanks-help p'); if (help) help.textContent = '¿No te llega mi correo en 24 horas? Escríbeme a hola@rafaprompts.com y lo vemos.';
+      }
       const dedupKey = sessionId ? `purchase_tracked_${sessionId}` : '';
       if (dedupKey && sessionStorage.getItem(dedupKey)) return;
 
       const fire = () => {
         if (!window.fbq) { setTimeout(fire, 200); return; }
         fbq('track', 'Purchase', {
-          content_name: isNegocio ? 'El método Claude · Negocio' : 'El método Claude',
-          content_ids: [isNegocio ? 'metodo-claude-negocio' : 'metodo-claude'],
+          content_name: isDiag ? 'Diagnóstico de implantación' : (isNegocio ? 'El método Claude · Negocio' : 'El método Claude'),
+          content_ids: [isDiag ? 'diagnostico-implantacion' : (isNegocio ? 'metodo-claude-negocio' : 'metodo-claude')],
           content_type: 'product',
-          value: isNegocio ? 249.00 : 149.00,
+          value: isDiag ? 50.00 : (isNegocio ? 249.00 : 149.00),
           currency: 'EUR'
         }, sessionId ? { eventID: sessionId } : undefined);
         if (dedupKey) sessionStorage.setItem(dedupKey, '1');

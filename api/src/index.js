@@ -291,8 +291,33 @@ async function handleWebhook(req, env) {
   const name = (cs.customer_details && cs.customer_details.name) || '';
   if (!email) return new Response('no email', { status: 400 });
 
+  // Qué se ha comprado. La cuenta de Stripe es compartida con UGC Pack, así que el curso
+  // solo se entrega en compras de rafa.prompts: el pago integrado de la web (lleva page_url)
+  // o el enlace del plan Negocio (plan=negocio). El diagnóstico (plan=diagnostico) no lleva curso.
+  const md = cs.metadata || {};
+  const plan = String(md.plan || '').toLowerCase();
+  const ttl = parseInt(env.TOKEN_TTL_DAYS, 10) * 24 * 60 * 60;
+  const capi = () => metaCapiPurchase(env, {
+    eventId: csid, eventTime: cs.created || Math.floor(Date.now() / 1000),
+    value: (cs.amount_total || 0) / 100, currency: (cs.currency || 'eur').toUpperCase(),
+    email, name, fbp: md.fbp || '', fbc: md.fbc || '', ip: md.ip || '', userAgent: md.user_agent || '',
+    sourceUrl: md.page_url || 'https://rafaprompts.com/gracias.html',
+  }).catch(e => console.error('CAPI error:', e));
+
+  if (plan === 'diagnostico') {
+    await env.STORE.put(`session:${csid}`, 'diagnostico', { expirationTtl: ttl });
+    await Promise.all([
+      sendDiagnosticoEmail(env, { to: email, name }),
+      sendSaleNotification(env, { plan, email, name, amount: cs.amount_total }),
+    ]).catch(e => console.error('email error:', e));
+    await capi();
+    return new Response('ok', { status: 200 });
+  }
+  const isCourse = plan === 'negocio' || (!plan && String(md.page_url || '').includes('rafaprompts.com'));
+  if (!isCourse) return new Response('ignored: not a rafa.prompts course purchase', { status: 200 });
+
   const token = newToken();
-  const ttlSeconds = parseInt(env.TOKEN_TTL_DAYS, 10) * 24 * 60 * 60;
+  const ttlSeconds = ttl;
   const record = {
     email,
     name,
@@ -308,24 +333,11 @@ async function handleWebhook(req, env) {
   await sendDeliveryEmail(env, { to: email, name, token }).catch(e => {
     console.error('email error:', e);
   });
+  // Plan Negocio: aviso a Rafa para enviar los 12 proyectos (se entregan a mano en menos de 24 h)
+  if (plan === 'negocio') await sendSaleNotification(env, { plan, email, name, amount: cs.amount_total }).catch(e => console.error('email error:', e));
 
   // Meta Conversions API: Purchase event (event_id = stripe session id, dedups with browser pixel)
-  const md = cs.metadata || {};
-  const value = (cs.amount_total || 0) / 100;
-  const currency = (cs.currency || 'eur').toUpperCase();
-  await metaCapiPurchase(env, {
-    eventId: csid,
-    eventTime: cs.created || Math.floor(Date.now() / 1000),
-    value,
-    currency,
-    email,
-    name,
-    fbp: md.fbp || '',
-    fbc: md.fbc || '',
-    ip: md.ip || '',
-    userAgent: md.user_agent || '',
-    sourceUrl: md.page_url || 'https://rafaprompts.com/gracias.html',
-  }).catch(e => console.error('CAPI error:', e));
+  await capi();
 
   return new Response('ok', { status: 200 });
 }
@@ -507,6 +519,40 @@ async function brevoSendEmail(env, { to, subject, html, replyTo }) {
       htmlContent: html,
     }),
   }).then(r => r.json()).catch(e => ({ error: e.message }));
+}
+
+async function sendDiagnosticoEmail(env, { to, name }) {
+  const greeting = name ? `Hola, ${name.split(' ')[0]}` : 'Hola';
+  const html = `<!doctype html><html><body style="font-family: -apple-system, system-ui, sans-serif; background:#F2EFE7; color:#111; padding:40px 20px;">
+  <div style="max-width:560px; margin:0 auto; background:#fff; padding:40px 36px; border-radius:20px;">
+    <div style="font-family: 'IBM Plex Mono', monospace; font-size:11px; letter-spacing:0.18em; text-transform:uppercase; color:#DA7756; font-weight:700; margin-bottom:16px;">Diagnóstico de implantación</div>
+    <h1 style="font-size:26px; font-weight:900; line-height:1.15; margin:0 0 16px; letter-spacing:-0.02em;">${greeting}, tu diagnóstico está reservado</h1>
+    <p style="font-size:16px; line-height:1.6; color:#333; margin:0 0 16px;">Te escribo en menos de 24 horas desde este correo para fijar el día de la llamada. Son 45 minutos.</p>
+    <p style="font-size:16px; line-height:1.6; color:#333; margin:0 0 16px;">Para aprovecharla, piensa antes en las tareas que más horas te quitan cada semana. Después de la llamada te mando por escrito las tres más importantes y cuánto costaría automatizarlas.</p>
+    <p style="font-size:16px; line-height:1.6; color:#333; margin:0;">Si contratas la implantación, estos 50 € se descuentan del precio.</p>
+    <hr style="border:0; border-top:1px solid rgba(0,0,0,0.08); margin:32px 0;">
+    <p style="font-size:13px; color:#8a8a8a; margin:0;">Si necesitas algo antes, responde a este correo.</p>
+  </div>
+  <p style="text-align:center; font-size:12px; color:#8a8a8a; margin-top:24px;">Rafa · rafaprompts.com</p>
+</body></html>`;
+  return brevoSendEmail(env, { to, subject: 'Tu diagnóstico está reservado', html });
+}
+
+// Aviso a Rafa de las ventas que piden trabajo a mano (Negocio y diagnóstico)
+async function sendSaleNotification(env, { plan, email, name, amount }) {
+  if (!env.ADMIN_EMAIL) return { skipped: true };
+  const todo = plan === 'negocio'
+    ? 'Envíale el PDF de los 12 proyectos en menos de 24 horas.'
+    : 'Escríbele en menos de 24 horas para fijar la llamada de diagnóstico.';
+  const html = `<!doctype html><html><body style="font-family: -apple-system, system-ui, sans-serif; background:#F2EFE7; color:#111; padding:24px;">
+  <div style="max-width:520px; margin:0 auto; background:#fff; padding:28px; border-radius:14px;">
+    <div style="font-family: 'IBM Plex Mono', monospace; font-size:11px; letter-spacing:0.18em; text-transform:uppercase; color:#DA7756; font-weight:700; margin-bottom:8px;">Venta · ${plan}</div>
+    <h1 style="font-size:20px; font-weight:900; line-height:1.2; margin:0 0 14px;">${name || email}</h1>
+    <p style="font-size:15px; line-height:1.6; color:#333; margin:0 0 8px;"><strong>${todo}</strong></p>
+    <p style="font-size:14px; line-height:1.6; color:#555; margin:0;">Email: ${email}<br>Importe: ${((amount || 0) / 100).toFixed(2)} €<br>Cuándo: ${new Date().toISOString()}</p>
+  </div>
+</body></html>`;
+  return brevoSendEmail(env, { to: env.ADMIN_EMAIL, subject: `Venta ${plan} · ${email}`, html });
 }
 
 async function sendWelcomeEmail(env, { to, source }) {

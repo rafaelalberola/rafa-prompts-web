@@ -83,30 +83,30 @@
           <span class="italic">empezamos.</span>
         </h1>
         <p class="lede">
-          Tu acceso a los PDF ya está aquí abajo. También te lo mando por email.
+          Empieza ya con «Empezar aquí» y el módulo 01: en una tarde verás todo lo que Claude puede hacer por tu negocio. Tu acceso también te llega por email.
         </p>
 
         <div class="thanks-acceso" id="acceso">
           <a class="btn accent" id="acceso-btn" href="#" aria-disabled="true"><span class="acceso-spin" aria-hidden="true"></span><span id="acceso-txt">Preparando tu acceso…</span></a>
-          <p class="acceso-nota" id="acceso-nota">Guarda este botón: es tu acceso a los PDF.</p>
+          <p class="acceso-nota" id="acceso-nota">Guarda este botón: es tu acceso al curso.</p>
         </div>
 
         <p class="lede" id="negocio-note" hidden>
-          <strong>Plan Negocio:</strong> los 12 proyectos listos para copiar te llegan por correo en menos de 24 horas, en un email aparte.
+          <strong>Plan Negocio:</strong> los 12 proyectos listos para copiar te llegan por correo en menos de 24 horas desde que abras el curso completo.
         </p>
 
         <ol class="thanks-steps">
           <li>
-            <strong>Revisa tu correo.</strong> El email llega desde <code>hola@rafaprompts.com</code> con el asunto <em>«Ya tienes El método Claude: aquí está tu acceso»</em>.
+            <strong>Revisa tu correo.</strong> El email llega desde <code>hola@rafaprompts.com</code> con el asunto <em>«Ya tienes El método Claude: empieza hoy»</em>.
           </li>
           <li>
-            <strong>Si no lo ves en 5 minutos, mira en spam o promociones.</strong> Marca el remitente como "no spam" para futuras actualizaciones.
+            <strong>Si no lo ves en 5 minutos, mira en spam o promociones.</strong> Marca el remitente como «no es spam» para recibir las actualizaciones.
           </li>
           <li>
-            <strong>Cada PDF lleva tu nombre y email impresos</strong> en el pie de página. Son tuyos para siempre.
+            <strong>Tienes 14 días de garantía.</strong> Cuando decidas quedarte el curso, abres el resto desde tu página. Mientras no lo abras, si me lo pides te devuelvo el dinero entero.
           </li>
           <li>
-            <strong>El acceso es de por vida</strong> con actualizaciones gratuitas. Cuando saque una nueva versión, llega al mismo email.
+            <strong>Cada PDF lleva tu nombre</strong> y es tuyo para siempre, con las actualizaciones gratis.
           </li>
         </ol>
 
@@ -179,7 +179,7 @@
         fetch('https://rafa-prompts-api.prxystudio.workers.dev/acceso?session_id=' + encodeURIComponent(sid))
           .then(function (r) { return r.json(); })
           .then(function (d) {
-            if (d.url) { btn.href = d.url; btn.removeAttribute('aria-disabled'); btn.classList.add('listo'); txt.textContent = 'Descargar el curso'; return; }
+            if (d.url) { btn.href = d.url; btn.removeAttribute('aria-disabled'); btn.classList.add('listo'); txt.textContent = 'Empezar el curso'; return; }
             throw new Error('pendiente');
           })
           .catch(function () {

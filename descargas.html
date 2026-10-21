@@ -40,6 +40,23 @@
   <meta name="twitter:image" content="https://rafaprompts.com/assets/img/og-image.png">
   <meta name="twitter:site" content="@rafa.prompts">
   <!-- SEO:auto:end -->
+  <style>
+    /* Dos partes: «Empieza aquí» (se queda aunque pida la devolución) y el curso completo (termina la garantía) */
+    .dl-part { margin: 0 0 40px; }
+    .dl-part .downloads-list { margin-bottom: 0; }
+    .dl-part-title { font: 900 24px/1.15 var(--sans); letter-spacing: -0.02em; margin: 0 0 8px; }
+    .dl-part-intro { margin: 0 0 16px; font-size: 15.5px; line-height: 1.55; color: var(--ink-soft); text-wrap: pretty; }
+    .dl-unlock { display: flex; flex-direction: column; gap: 10px; margin: 0 0 20px; }
+    .dl-unlock[hidden], .dl-part[hidden] { display: none; }
+    .dl-unlock .btn { width: 100%; justify-content: center; }
+    .dl-unlock .btn svg { width: 20px; height: 20px; flex: none; }
+    .dl-unlock .btn[disabled] { opacity: .6; pointer-events: none; }
+    .dl-unlock-note { margin: 0; text-align: center; font-size: 14px; line-height: 1.5; color: var(--ink-soft); }
+    .download-card.is-locked { background: transparent; border-style: dashed; pointer-events: none; }
+    .download-card.is-locked .download-title { color: var(--ink-soft); }
+    .download-card.is-locked .download-num { color: var(--ink-mute); }
+    .download-card.is-locked .download-arrow { background: rgba(17, 17, 17, 0.06); color: var(--ink-mute); }
+  </style>
 </head>
 <body>
 
@@ -72,7 +89,23 @@
         <p>Verificando tu enlace…</p>
       </div>
 
-      <div id="downloads-list" class="downloads-list" hidden></div>
+      <!-- Parte 1: se queda aunque pida la devolución -->
+      <div id="parte-1" class="dl-part" hidden>
+        <h2 class="dl-part-title">Empieza aquí</h2>
+        <p class="dl-part-intro">En una tarde verás todo lo que Claude puede hacer por tu negocio. Estos dos son tuyos para siempre.</p>
+        <div id="list-1" class="downloads-list"></div>
+      </div>
+
+      <!-- Parte 2: se abre cuando decide quedarse el curso; entonces termina la garantía (condiciones, punto 06) -->
+      <div id="parte-2" class="dl-part" hidden>
+        <h2 class="dl-part-title">El curso completo</h2>
+        <p class="dl-part-intro" id="parte-2-intro"></p>
+        <div id="unlock" class="dl-unlock" hidden>
+          <button type="button" class="btn" id="unlock-btn" aria-describedby="unlock-note"><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><rect x="3" y="11" width="18" height="11" rx="2"/><path d="M7 11V7a5 5 0 0 1 9.9-1"/></svg><span>Abrir el curso completo</span></button>
+          <p class="dl-unlock-note" id="unlock-note">Cuando lo abras, ya no podrás pedir la devolución.</p>
+        </div>
+        <div id="list-2" class="downloads-list"></div>
+      </div>
 
       <div class="downloads-footer">
         <p>
@@ -96,54 +129,67 @@
     const API = 'https://rafa-prompts-api.prxystudio.workers.dev';
     const params = new URLSearchParams(location.search);
     const token = params.get('t') || params.get('token');
-    const meta = document.getElementById('downloads-meta');
-    const state = document.getElementById('downloads-state');
-    const list = document.getElementById('downloads-list');
+    const $ = (id) => document.getElementById(id);
+    const meta = $('downloads-meta'), state = $('downloads-state');
+    const esc = (s) => String(s).replace(/[&<>"']/g, c => ({ '&': '&amp;', '<': '&lt;', '>': '&gt;', '"': '&quot;', "'": '&#39;' }[c]));
+    const DOWN = '<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"/><polyline points="7 10 12 15 17 10"/><line x1="12" y1="15" x2="12" y2="3"/></svg>';
+    const LOCK = '<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="3" y="11" width="18" height="11" rx="2"/><path d="M7 11V7a5 5 0 0 1 10 0v4"/></svg>';
+    const num = (f) => String(f.order).padStart(2, '0');
+    let D = null, PASE = '';
+    // Cada PDF: con enlace si se puede descargar; atenuado, sin enlace y con candado si espera al curso completo
+    function card(f) {
+      const dentro = `<div class="download-meta"><div class="download-num">${num(f)}</div><div><div class="download-title">${esc(f.title)}</div><div class="download-sub">${f.bloqueado ? 'Se abre con el curso completo' : 'PDF · marcado con tu nombre'}</div></div></div>`;
+      if (f.bloqueado) return `<div class="download-card is-locked" aria-disabled="true">${dentro}<span class="download-arrow" aria-hidden="true">${LOCK}</span></div>`;
+      return `<a class="download-card" href="${API}/download?t=${encodeURIComponent(token)}&file=${encodeURIComponent(f.slug)}${PASE ? `&pase=${PASE}` : ''}" download>${dentro}<span class="download-arrow" aria-hidden="true">${DOWN}</span></a>`;
+    }
+    function error(html) { state.hidden = false; state.innerHTML = `<p class="error">${html}</p>`; meta.textContent = ''; }
 
-    function escapeHtml(s) { return String(s).replace(/[&<>"']/g, c => ({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[c])); }
-
-    async function init() {
-      if (!token) {
-        state.innerHTML = '<p class="error">No has indicado un código de acceso. Revisa el enlace que te llegó por email.</p>';
-        meta.textContent = '';
-        return;
-      }
+    async function cargar() {
+      if (!token) return error('No has indicado un código de acceso. Revisa el enlace que te llegó por email.');
       try {
         const r = await fetch(`${API}/session?t=${encodeURIComponent(token)}`);
         if (!r.ok) {
           const err = await r.json().catch(() => ({}));
-          if (err.error === 'invalid_or_expired') {
-            state.innerHTML = '<p class="error">Tu enlace ha caducado o no es válido. Escríbeme a <a href="mailto:hola@rafaprompts.com">hola@rafaprompts.com</a> y te lo regenero.</p>';
-          } else {
-            state.innerHTML = `<p class="error">Algo no va bien (${err.error || r.status}). Escríbeme y lo arreglamos.</p>`;
-          }
-          meta.textContent = '';
-          return;
+          return error(err.error === 'invalid_or_expired'
+            ? 'Tu enlace ha caducado o no es válido. Escríbeme a <a href="mailto:hola@rafaprompts.com">hola@rafaprompts.com</a> y te lo regenero.'
+            : `Algo no va bien (${esc(err.error || r.status)}). Escríbeme a <a href="mailto:hola@rafaprompts.com">hola@rafaprompts.com</a> y lo arreglamos.`);
         }
-        const data = await r.json();
-        meta.innerHTML = `Acceso para <strong>${escapeHtml(data.email)}</strong> · Te quedan ${data.downloads_left} descargas`;
-        state.hidden = true;
-        list.hidden = false;
-        list.innerHTML = data.files.map((f) => `
-          <a class="download-card" href="${API}/download?t=${encodeURIComponent(token)}&file=${encodeURIComponent(f.slug)}" download>
-            <div class="download-meta">
-              <div class="download-num">${String(f.order).padStart(2,'0')}</div>
-              <div>
-                <div class="download-title">${escapeHtml(f.title)}</div>
-                <div class="download-sub">PDF · marcado con tu nombre</div>
-              </div>
-            </div>
-            <span class="download-arrow" aria-hidden="true">
-              <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"/><polyline points="7 10 12 15 17 10"/><line x1="12" y1="15" x2="12" y2="3"/></svg>
-            </span>
-          </a>
-        `).join('');
+        D = await r.json();
+        pintar();
       } catch (e) {
-        state.innerHTML = `<p class="error">No se pudo conectar con el servidor. Inténtalo en un minuto o escríbeme a <a href="mailto:hola@rafaprompts.com">hola@rafaprompts.com</a>.</p>`;
-        meta.textContent = '';
+        error('No se pudo conectar con el servidor. Inténtalo en un minuto o escríbeme a <a href="mailto:hola@rafaprompts.com">hola@rafaprompts.com</a>.');
       }
     }
-    init();
+
+    function pintar() {
+        const d = D;
+        meta.innerHTML = `Acceso para <strong>${esc(d.email)}</strong> · Te quedan ${d.downloads_left} descargas`;
+        state.hidden = true;
+        const p1 = d.files.filter((f) => f.parte === 1), p2 = d.files.filter((f) => f.parte !== 1);
+        $('list-1').innerHTML = p1.map(card).join('');
+        $('list-2').innerHTML = p2.map(card).join('');
+        const faltan = p2.filter((f) => f.slug !== 'prompt-library-100').length;
+        $('parte-2-intro').textContent = d.completo
+          ? 'Todo el curso es tuyo. Sigue con el módulo 02: al terminar el 04, Claude estará conectado a tu correo y tus documentos y sabrá cómo trabaja tu negocio.'
+          : `Los ${faltan} módulos que faltan y la biblioteca de 100 prompts: tu web, tus clientes, tus presupuestos, tus facturas. Ábrelo cuando decidas quedarte el curso. Tu garantía sigue abierta hasta el ${d.garantia_hasta_txt}.`;
+        $('unlock').hidden = d.completo;
+        $('parte-1').hidden = false; $('parte-2').hidden = false;
+    }
+
+    // Abrir el curso completo: se registra la decisión, se confirma por correo y se activan los módulos
+    $('unlock-btn').addEventListener('click', async () => {
+      const b = $('unlock-btn'); b.disabled = true;
+      const r = await fetch(`${API}/acceso-completo`, { method: 'POST', headers: { 'Content-Type': 'text/plain' }, body: JSON.stringify({ t: token, confirmo: true }) }).catch(() => null);
+      b.disabled = false;
+      const res = r && r.ok ? await r.json().catch(() => null) : null;
+      if (!res || !res.ok) { $('unlock-note').textContent = 'No se pudo abrir el curso. Inténtalo otra vez en un momento.'; return; }
+      // se pinta aquí mismo: el servidor tarda hasta un minuto en devolver el estado nuevo
+      PASE = res.pase || '';
+      D.completo = true; D.garantia = false; D.files.forEach((f) => { f.bloqueado = false; });
+      pintar();
+      $('parte-2').scrollIntoView({ behavior: 'smooth', block: 'start' });
+    });
+    cargar();
   </script>
 <script src="/js/consent.js"></script>
 </body>

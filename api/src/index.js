@@ -11,6 +11,7 @@
  *   POST /evento              → copia en servidor (API de conversiones) de PageView, ViewContent e InitiateCheckout
  *   GET  /oferta              → precio de lanzamiento vigente y su fecha de fin
  *   GET  /acceso?session_id=  → enlace de descarga para la página de gracias (sin esperar al email)
+ *   POST /acceso-completo     → abre la parte 2 del curso (termina la garantía de 14 días)
  *   POST /admin/pruebas | GET /admin/brevo | POST /admin/capi | POST /admin/tareas → operaciones con OPS_TOKEN
  *   cron cada 5 min           → bienvenida del día después y recordatorios de la llamada (24 h y 1 h)
  *
@@ -27,14 +28,48 @@ import { checkoutParams, lanzamiento, IMPORTE } from './checkout.js';
 import * as correo from './emails.js';
 
 // El orden y los títulos de los módulos salen de course/modulos.json (fuente única del curso)
+// parte 1: «Empezar aquí» y el módulo 01, que se quedan aunque pida la devolución.
+// parte 2: el resto, que se abre cuando decide quedarse el curso (y entonces termina la garantía).
 const PDF_CATALOG = [
-  { slug: '00-empezar-aqui', title: 'Empezar aquí', order: 0 },
+  { slug: '00-empezar-aqui', title: 'Empezar aquí', order: 0, parte: 1 },
   ...ORDEN_CURSO.modulos.map((m, i) => {
     const n = String(i + 1).padStart(2, '0');
-    return { slug: `modulo-${n}-${m.slug}`, title: `Módulo ${n} · ${m.titulo_pdf}`, order: i + 1 };
+    return { slug: `modulo-${n}-${m.slug}`, title: `Módulo ${n} · ${m.titulo_pdf}`, order: i + 1, parte: i === 0 ? 1 : 2 };
   }),
-  { slug: 'prompt-library-100', title: 'Biblioteca · 100 prompts', order: ORDEN_CURSO.modulos.length + 1 },
+  { slug: 'prompt-library-100', title: 'Biblioteca · 100 prompts', order: ORDEN_CURSO.modulos.length + 1, parte: 2 },
 ];
+
+// ---------- Garantía de 14 días ----------
+// Hasta las 23:59:59 (Madrid) del día 14 después de la compra, mientras no abra el curso completo.
+// Las compras anteriores a este sistema (sin garantia_hasta) tienen el curso completo abierto.
+const GARANTIA_DIAS = 14;
+function finDiaMadrid(ms, dias) {
+  const partes = Object.fromEntries(new Intl.DateTimeFormat('en-CA', { timeZone: 'Europe/Madrid', year: 'numeric', month: '2-digit', day: '2-digit' }).formatToParts(new Date(ms)).map(x => [x.type, x.value]));
+  const objetivo = Date.UTC(+partes.year, +partes.month - 1, +partes.day + dias, 23, 59, 59);
+  // desfase de Madrid ese día (CET +1 / CEST +2)
+  const enMadrid = new Date(new Date(objetivo).toLocaleString('en-US', { timeZone: 'Europe/Madrid' }));
+  const enUtc = new Date(new Date(objetivo).toLocaleString('en-US', { timeZone: 'UTC' }));
+  return new Date(objetivo - (enMadrid - enUtc));
+}
+const fechaLarga = d => {
+  const p = Object.fromEntries(new Intl.DateTimeFormat('es-ES', { timeZone: 'Europe/Madrid', weekday: 'long', day: 'numeric', month: 'long' }).formatToParts(d).map(x => [x.type, x.value]));
+  return `${p.weekday} ${p.day} de ${p.month}`;
+};
+// KV guarda en caché cada lectura hasta 60 s: justo después de abrir el curso completo la descarga aún vería el registro
+// anterior. Por eso /acceso-completo da un pase firmado (HMAC del token) que /download acepta mientras tanto.
+async function pase(env, token) {
+  const key = await crypto.subtle.importKey('raw', new TextEncoder().encode(env.OPS_TOKEN || env.STRIPE_WEBHOOK_SECRET_RP || 'rp'), { name: 'HMAC', hash: 'SHA-256' }, false, ['sign']);
+  const mac = await crypto.subtle.sign('HMAC', key, new TextEncoder().encode(`${token}:curso-completo`));
+  return [...new Uint8Array(mac)].slice(0, 16).map(b => b.toString(16).padStart(2, '0')).join('');
+}
+
+// estado de la compra: ¿tiene el curso completo? ¿sigue abierta la garantía?
+function estadoGarantia(rec, ahora = Date.now()) {
+  if (!rec.garantia_hasta) return { completo: true, garantia: false, hasta: null };
+  const hasta = Date.parse(rec.garantia_hasta);
+  const abierta = !rec.acceso_completo_at && ahora <= hasta;
+  return { completo: !abierta, garantia: abierta, hasta: rec.garantia_hasta, hastaTxt: `${fechaLarga(new Date(hasta))} a las 23:59`, abiertoEl: rec.acceso_completo_at || null };
+}
 
 const json = (data, status = 200, extraHeaders = {}) =>
   new Response(JSON.stringify(data), {
@@ -210,16 +245,17 @@ async function handleEvento(req, env, ctx) {
 
 // ---------- Email (Brevo) ----------
 
-async function sendDeliveryEmail(env, { to, name, token, plan, importe }) {
+async function sendDeliveryEmail(env, { to, name, token, plan, importe, garantiaHasta }) {
   const m = correo.compra({
     nombre: name, plan, importe, url: `${env.DOWNLOAD_PAGE}?t=${token}`,
-    nPdfs: PDF_CATALOG.length, nModulos: ORDEN_CURSO.modulos.length,
+    nModulos: ORDEN_CURSO.modulos.length, garantiaHasta: garantiaHasta ? `${fechaLarga(new Date(garantiaHasta))} a las 23:59` : null,
   });
   return brevoSendEmail(env, { to, name, subject: m.asunto, html: m.html });
 }
 
 async function sendBienvenidaEmail(env, { to, name, token }) {
-  const m = correo.bienvenida({ nombre: name, url: `${env.DOWNLOAD_PAGE}?t=${token}`, modulos: ORDEN_CURSO.modulos.slice(0, 4).map(x => x.titulo) });
+  const rec = JSON.parse(await env.STORE.get(`token:${token}`) || '{}');
+  const m = correo.bienvenida({ nombre: name, url: `${env.DOWNLOAD_PAGE}?t=${token}`, modulos: ORDEN_CURSO.modulos.slice(0, 4).map(x => x.titulo), completo: estadoGarantia(rec).completo });
   return brevoSendEmail(env, { to, name, subject: m.asunto, html: m.html });
 }
 
@@ -388,13 +424,16 @@ async function handleWebhook(req, env) {
     created_at: new Date().toISOString(),
     purchased_at: new Date(cs.created * 1000).toISOString().slice(0, 10),
     session_id: csid,
+    plan: plan || 'esencial',
+    garantia_hasta: finDiaMadrid(Date.now(), GARANTIA_DIAS).toISOString(),
+    acceso_completo_at: null,
   };
   await env.STORE.put(`token:${token}`, JSON.stringify(record), { expirationTtl: ttlSeconds });
   await env.STORE.put(`session:${csid}`, token, { expirationTtl: ttlSeconds });
 
   // Send email (Brevo)
-  const entrega = { tipo: 'entrega', email, name, token, plan: plan || 'esencial', importe: (cs.amount_total || 0) / 100 };
-  const envio = await sendDeliveryEmail(env, { to: email, name, token, plan: entrega.plan, importe: entrega.importe }).catch(e => ({ error: e.message }));
+  const entrega = { tipo: 'entrega', email, name, token, plan: plan || 'esencial', importe: (cs.amount_total || 0) / 100, garantiaHasta: record.garantia_hasta };
+  const envio = await sendDeliveryEmail(env, { to: email, name, token, plan: entrega.plan, importe: entrega.importe, garantiaHasta: entrega.garantiaHasta }).catch(e => ({ error: e.message }));
   // si Brevo falla, el email queda en cola y el cron lo reintenta cada 5 minutos (el acceso ya está en la página de gracias)
   if (!brevoOk(envio)) {
     console.error('email de compra no enviado, en cola:', JSON.stringify(envio));
@@ -403,8 +442,8 @@ async function handleWebhook(req, env) {
   // Bienvenida con el orden para empezar: a las 9:00 (Madrid) del primer día que esté al menos a 8 horas
   await programar(env, `prog:bienv:${token}`, { tipo: 'bienvenida', email, name, token, cuando: proximasNueve(Date.now() + 8 * 3600e3) }, 30 * 86400)
     .catch(e => console.error('programar bienvenida:', e));
-  // Plan Negocio: aviso a Rafa para enviar los 12 proyectos (se entregan a mano en menos de 24 h)
-  if (plan === 'negocio') await sendSaleNotification(env, { plan, email, name, amount: cs.amount_total }).catch(e => console.error('email error:', e));
+  // Aviso a Rafa de la venta (en Negocio, con el recordatorio de mandar los 12 proyectos en menos de 24 h)
+  await sendSaleNotification(env, { plan: entrega.plan, email, name, amount: cs.amount_total, garantiaHasta: `${fechaLarga(new Date(record.garantia_hasta))} a las 23:59` }).catch(e => console.error('email error:', e));
 
   // Meta Conversions API: Purchase event (event_id = stripe session id, dedups with browser pixel)
   await capi();
@@ -477,6 +516,31 @@ async function handleAcceso(req, env) {
   return json({ url: `${env.DOWNLOAD_PAGE}?t=${v}` });
 }
 
+// POST /acceso-completo { t, confirmo: true }: abre el curso completo. El botón avisa antes de que desde ese momento
+// ya no hay devolución (art. 103.m LGDCU). Se guarda cuándo, desde qué IP y navegador, y se confirma por correo.
+async function handleAccesoCompleto(req, env) {
+  const body = await req.json().catch(() => ({}));
+  const token = String(body.t || '');
+  if (body.confirmo !== true) return json({ error: 'falta_confirmacion' }, 400);
+  const raw = token && await env.STORE.get(`token:${token}`);
+  if (!raw) return json({ error: 'invalid_or_expired' }, 404);
+  const data = JSON.parse(raw);
+  if (!data.garantia_hasta || data.acceso_completo_at) return json({ ok: true, abierto_el: data.acceso_completo_at || null, pase: await pase(env, token) });
+  const at = new Date().toISOString();
+  data.acceso_completo_at = at;
+  data.acceso_completo_ip = req.headers.get('cf-connecting-ip') || '';
+  data.acceso_completo_ua = (req.headers.get('user-agent') || '').slice(0, 300);
+  await env.STORE.put(`token:${token}`, JSON.stringify(data), { expirationTtl: parseInt(env.TOKEN_TTL_DAYS, 10) * 24 * 60 * 60 });
+  const m = correo.cursoCompleto({ nombre: data.name, plan: data.plan, url: `${env.DOWNLOAD_PAGE}?t=${token}`, cuando: at, nModulos: ORDEN_CURSO.modulos.length, siguiente: ORDEN_CURSO.modulos[1].titulo });
+  const r = await brevoSendEmail(env, { to: data.email, name: data.name, subject: m.asunto, html: m.html }).catch(e => ({ error: e.message }));
+  if (!brevoOk(r)) await programar(env, `prog:completo:${token}`, { tipo: 'completo', token, email: data.email, name: data.name, plan: data.plan, cuando: at }, 30 * 86400).catch(() => {});
+  if (env.ADMIN_EMAIL) {
+    const a = correo.avisoCompleto({ plan: data.plan, email: data.email, nombre: data.name });
+    await brevoSendEmail(env, { to: env.ADMIN_EMAIL, subject: a.asunto, html: a.html }).catch(() => {});
+  }
+  return json({ ok: true, abierto_el: at, pase: await pase(env, token) });
+}
+
 async function handleSession(req, env) {
   const url = new URL(req.url);
   const token = url.searchParams.get('t') || url.searchParams.get('token');
@@ -484,12 +548,19 @@ async function handleSession(req, env) {
   const raw = await env.STORE.get(`token:${token}`);
   if (!raw) return json({ error: 'invalid_or_expired' }, 404);
   const data = JSON.parse(raw);
+  const g = estadoGarantia(data);
   return json({
     email: data.email,
     name: data.name,
+    plan: data.plan || 'esencial',
     downloads_left: data.downloads_left,
     purchased_at: data.purchased_at,
-    files: PDF_CATALOG,
+    files: PDF_CATALOG.map(f => ({ ...f, bloqueado: f.parte === 2 && !g.completo })),
+    completo: g.completo,
+    garantia: g.garantia,
+    garantia_hasta: g.hasta,
+    garantia_hasta_txt: g.hastaTxt || null,
+    abierto_el: g.abiertoEl,
   });
 }
 
@@ -504,6 +575,8 @@ async function handleDownload(req, env) {
   if (!raw) return json({ error: 'invalid_or_expired' }, 404);
   const data = JSON.parse(raw);
   if (data.downloads_left <= 0) return json({ error: 'no_downloads_left' }, 429);
+  const archivo = PDF_CATALOG.find(p => p.slug === slug);
+  if (archivo.parte === 2 && !estadoGarantia(data).completo && url.searchParams.get('pase') !== await pase(env, token)) return json({ error: 'curso_completo_cerrado' }, 403);
 
   const masterBytes = await env.STORE.get(`file:${slug}`, { type: 'arrayBuffer' });
   if (!masterBytes) return json({ error: 'file_not_in_store' }, 500);
@@ -540,28 +613,6 @@ const SUBSCRIBE_SOURCES = new Set([
   'index', 'metodo', 'other',
 ]);
 
-// Nombre y enlace de cada guía, para el correo de bienvenida («Tu guía de …») y el aviso a Rafa
-const G = 'https://rafaprompts.com/';
-const SOURCE_META = {
-  'reel-hiperrealista': { name: 'reel hiperrealista con Claude', url: G + 'reel-hiperrealista-con-claude.html' },
-  'agente-creador-reels': { name: 'agente que produce reels', url: G + 'agente-creador-reels-claude.html' },
-  hooks: { name: 'hooks que paran el scroll', url: G + 'hooks.html' },
-  anzuelo: { name: 'hooks que paran el scroll', url: G + 'anzuelo.html' },
-  brujula: { name: 'métricas de los creadores que crecen', url: G + 'brujula.html' },
-  yate: { name: 'reel hiperrealista con Claude', url: G + 'reel-hiperrealista-con-claude.html' },
-  madrugon: { name: 'agente que produce reels mientras duermes', url: G + 'agente-creador-reels-claude.html' },
-  portero: { name: 'agente que filtra tus DMs', url: G + 'portero.html' },
-  tienda: { name: 'cómo monetizar sin sponsors', url: G + 'tienda.html' },
-  voz: { name: 'cómo enseñar a Claude a hablar como tú', url: G + 'voz.html' },
-  mensaje: { name: 'cómo validar un mensaje sin gastar en anuncios', url: G + 'mensaje.html' },
-  conectar: { name: 'cómo conectar dos herramientas sin integración', url: G + 'conectar.html' },
-  vender: { name: 'cómo vender tu producto sin sponsors', url: G + 'vender.html' },
-  dms: { name: 'cómo automatizar tus DMs', url: G + 'dms.html' },
-  agentes: { name: 'cómo dividir un prompt en tres', url: G + 'agentes.html' },
-  automatizar: { name: 'qué automatizar primero', url: G + 'automatizar.html' },
-  metricas: { name: 'las métricas que importan', url: G + 'metricas.html' },
-  borrar: { name: 'qué automatizaciones mantener y cuáles borrar', url: G + 'borrar.html' },
-};
 
 const isValidEmail = (s) => /^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(s) && s.length <= 200;
 
@@ -619,99 +670,26 @@ async function brevoSendEmail(env, { to, name, subject, html, replyTo }) {
 }
 
 async function sendDiagnosticoEmail(env, { to, name }) {
-  const greeting = name ? `Hola, ${name.split(' ')[0]}` : 'Hola';
-  const html = `<!doctype html><html><body style="font-family: -apple-system, system-ui, sans-serif; background:#F2EFE7; color:#111; padding:40px 20px;">
-  <div style="max-width:560px; margin:0 auto; background:#fff; padding:40px 36px; border-radius:20px;">
-    <div style="font-family: 'IBM Plex Mono', monospace; font-size:11px; letter-spacing:0.18em; text-transform:uppercase; color:#DA7756; font-weight:700; margin-bottom:16px;">Diagnóstico de implantación</div>
-    <h1 style="font-size:26px; font-weight:900; line-height:1.15; margin:0 0 16px; letter-spacing:-0.02em;">${greeting}, tu diagnóstico está reservado</h1>
-    <p style="font-size:16px; line-height:1.6; color:#333; margin:0 0 16px;">Te escribo en menos de 24 horas desde este correo para fijar el día de la llamada. Son 45 minutos.</p>
-    <p style="font-size:16px; line-height:1.6; color:#333; margin:0 0 16px;">Para aprovecharla, piensa antes en las tareas que más horas te quitan cada semana. Después de la llamada te mando por escrito las tres más importantes y cuánto costaría automatizarlas.</p>
-    <p style="font-size:16px; line-height:1.6; color:#333; margin:0;">Si contratas la implantación, estos 50 € se descuentan del precio.</p>
-    <hr style="border:0; border-top:1px solid rgba(0,0,0,0.08); margin:32px 0;">
-    <p style="font-size:13px; color:#8a8a8a; margin:0;">Si necesitas algo antes, responde a este correo.</p>
-  </div>
-  <p style="text-align:center; font-size:12px; color:#8a8a8a; margin-top:24px;">Rafa · rafaprompts.com</p>
-</body></html>`;
-  return brevoSendEmail(env, { to, subject: 'Tu diagnóstico está reservado', html });
+  const m = correo.llamadaPagada({ nombre: name });
+  return brevoSendEmail(env, { to, name, subject: m.asunto, html: m.html });
 }
 
-// Aviso a Rafa de las ventas que piden trabajo a mano (Negocio y diagnóstico)
-async function sendSaleNotification(env, { plan, email, name, amount }) {
+// Aviso a Rafa de cada venta (en Negocio y en la llamada, con lo que tiene que hacer)
+async function sendSaleNotification(env, { plan, email, name, amount, garantiaHasta }) {
   if (!env.ADMIN_EMAIL) return { skipped: true };
-  const todo = plan === 'negocio'
-    ? 'Envíale el PDF de los 12 proyectos en menos de 24 horas.'
-    : 'Escríbele en menos de 24 horas para fijar la llamada de diagnóstico.';
-  const html = `<!doctype html><html><body style="font-family: -apple-system, system-ui, sans-serif; background:#F2EFE7; color:#111; padding:24px;">
-  <div style="max-width:520px; margin:0 auto; background:#fff; padding:28px; border-radius:14px;">
-    <div style="font-family: 'IBM Plex Mono', monospace; font-size:11px; letter-spacing:0.18em; text-transform:uppercase; color:#DA7756; font-weight:700; margin-bottom:8px;">Venta · ${plan}</div>
-    <h1 style="font-size:20px; font-weight:900; line-height:1.2; margin:0 0 14px;">${name || email}</h1>
-    <p style="font-size:15px; line-height:1.6; color:#333; margin:0 0 8px;"><strong>${todo}</strong></p>
-    <p style="font-size:14px; line-height:1.6; color:#555; margin:0;">Email: ${email}<br>Importe: ${((amount || 0) / 100).toFixed(2)} €<br>Cuándo: ${new Date().toISOString()}</p>
-  </div>
-</body></html>`;
-  return brevoSendEmail(env, { to: env.ADMIN_EMAIL, subject: `Venta ${plan} · ${email}`, html });
+  const m = correo.avisoVenta({ plan, email, nombre: name, importe: (amount || 0) / 100, garantiaHasta });
+  return brevoSendEmail(env, { to: env.ADMIN_EMAIL, subject: m.asunto, html: m.html });
 }
 
 async function sendWelcomeEmail(env, { to, source }) {
-  // La newsletter de la home no pide una guía concreta: confirma el alta y enlaza las tres guías abiertas.
-  if (source === 'index') {
-    const html = `<!doctype html><html><body style="font-family: -apple-system, system-ui, sans-serif; background:#F2EFE7; color:#111; padding:40px 20px;">
-  <div style="max-width:560px; margin:0 auto; background:#fff; padding:40px 36px; border-radius:20px;">
-    <h1 style="font-size:26px; font-weight:900; line-height:1.15; margin:0 0 16px; letter-spacing:-0.02em;">Hecho: te aviso con la siguiente guía</h1>
-    <p style="font-size:16px; line-height:1.6; color:#333; margin:0 0 20px;">Publico una al mes. Mientras tanto, estas tres están abiertas:</p>
-    <p style="font-size:16px; line-height:1.9; margin:0 0 20px;">
-      <a href="https://rafaprompts.com/reel-hiperrealista-con-claude.html" style="color:#B55A3E; font-weight:700;">Cómo producir un reel hiperrealista con Claude</a><br>
-      <a href="https://rafaprompts.com/agente-creador-reels-claude.html" style="color:#B55A3E; font-weight:700;">Cómo montar un sistema que produce reels mientras duermes</a><br>
-      <a href="https://rafaprompts.com/hooks.html" style="color:#B55A3E; font-weight:700;">8 fórmulas para escribir hooks que paren el scroll</a>
-    </p>
-    <hr style="border:0; border-top:1px solid rgba(0,0,0,0.08); margin:32px 0;">
-    <p style="font-size:13px; color:#8a8a8a; margin:0;">Si alguna vez quieres dejar de recibir estos emails, responde con "baja" y te saco de la lista.</p>
-  </div>
-  <p style="text-align:center; font-size:12px; color:#8a8a8a; margin-top:24px;">Rafa · rafaprompts.com</p>
-</body></html>`;
-    return brevoSendEmail(env, { to, subject: 'Te aviso con la siguiente guía', html });
-  }
-  const meta = SOURCE_META[source];
-  const guideName = meta?.name || 'la guía que pediste';
-  const guideUrl = meta?.url || 'https://rafaprompts.com';
-  const html = `<!doctype html><html><body style="font-family: -apple-system, system-ui, sans-serif; background:#F2EFE7; color:#111; padding:40px 20px;">
-  <div style="max-width:560px; margin:0 auto; background:#fff; padding:40px 36px; border-radius:20px;">
-    <div style="font-family: 'IBM Plex Mono', monospace; font-size:11px; letter-spacing:0.18em; text-transform:uppercase; color:#DA7756; font-weight:700; margin-bottom:16px;">rafa.prompts</div>
-    <h1 style="font-size:26px; font-weight:900; line-height:1.15; margin:0 0 16px; letter-spacing:-0.02em;">Aquí está la guía</h1>
-    <p style="font-size:16px; line-height:1.6; color:#333; margin:0 0 20px;">Te apuntaste para recibir la guía de <strong>${guideName}</strong>. La tienes completa en este enlace, abierta, sin más pasos:</p>
-    <p style="margin:28px 0;">
-      <a href="${guideUrl}" style="display:inline-block; background:#DA7756; color:#fff; padding:16px 28px; border-radius:999px; text-decoration:none; font-weight:700; font-size:15px;">Abrir la guía</a>
-    </p>
-    <p style="font-size:14px; line-height:1.6; color:#5a5a5a; margin:24px 0 0;">Cuando publique la siguiente, te aviso por aquí. Si tienes dudas mientras la lees, responde a este email. Lo leo yo.</p>
-    <hr style="border:0; border-top:1px solid rgba(0,0,0,0.08); margin:32px 0;">
-    <p style="font-size:13px; color:#8a8a8a; margin:0;">Si alguna vez quieres dejar de recibir estos emails, responde con "baja" y te saco de la lista.</p>
-  </div>
-  <p style="text-align:center; font-size:12px; color:#8a8a8a; margin-top:24px;">Rafa · rafaprompts.com</p>
-</body></html>`;
-  return brevoSendEmail(env, { to, subject: `Tu guía de ${guideName}`, html });
+  const m = source === 'index' ? correo.boletin() : correo.guia(source);
+  return brevoSendEmail(env, { to, subject: m.asunto, html: m.html });
 }
 
 async function sendNewSubscriberNotification(env, { email, source, ip, userAgent }) {
   if (!env.ADMIN_EMAIL) return { skipped: true };
-  const meta = SOURCE_META[source];
-  const guideName = meta?.name || source;
-  const html = `<!doctype html><html><body style="font-family: -apple-system, system-ui, sans-serif; background:#F2EFE7; color:#111; padding:24px;">
-  <div style="max-width:520px; margin:0 auto; background:#fff; padding:28px; border-radius:14px;">
-    <div style="font-family: 'IBM Plex Mono', monospace; font-size:11px; letter-spacing:0.18em; text-transform:uppercase; color:#DA7756; font-weight:700; margin-bottom:8px;">Nuevo suscriptor</div>
-    <h1 style="font-size:20px; font-weight:900; line-height:1.2; margin:0 0 14px;">${email}</h1>
-    <table style="width:100%; font-size:14px; line-height:1.6; color:#333; border-collapse:collapse;">
-      <tr><td style="padding:6px 0; color:#8a8a8a; width:120px;">Source:</td><td><strong>${source}</strong> · ${guideName}</td></tr>
-      <tr><td style="padding:6px 0; color:#8a8a8a;">Cuándo:</td><td>${new Date().toISOString()}</td></tr>
-      <tr><td style="padding:6px 0; color:#8a8a8a;">IP:</td><td>${ip || '—'}</td></tr>
-      <tr><td style="padding:6px 0; color:#8a8a8a;">User agent:</td><td style="word-break:break-all;">${(userAgent || '').slice(0, 200)}</td></tr>
-    </table>
-  </div>
-</body></html>`;
-  return brevoSendEmail(env, {
-    to: env.ADMIN_EMAIL,
-    subject: `Nuevo suscriptor · ${email} · ${source}`,
-    html,
-  });
+  const m = correo.avisoContacto({ email, source, ip, userAgent });
+  return brevoSendEmail(env, { to: env.ADMIN_EMAIL, subject: m.asunto, html: m.html });
 }
 
 async function handleSubscribe(req, env) {
@@ -788,7 +766,7 @@ async function tareasProgramadas(env, ahora = Date.now()) {
     const d = JSON.parse(raw);
     try {
       if (d.tipo === 'entrega') {
-        const r = await sendDeliveryEmail(env, { to: d.email, name: d.name, token: d.token, plan: d.plan, importe: d.importe });
+        const r = await sendDeliveryEmail(env, { to: d.email, name: d.name, token: d.token, plan: d.plan, importe: d.importe, garantiaHasta: d.garantiaHasta });
         if (!brevoOk(r)) { hecho.push(`entrega pendiente ${d.email}: ${r && r.message}`); continue; }
         await env.STORE.delete(k.name);
         hecho.push(`entrega ${d.email}`);
@@ -798,6 +776,12 @@ async function tareasProgramadas(env, ahora = Date.now()) {
         if (!brevoOk(r)) { hecho.push(`bienvenida pendiente ${d.email}: ${r && r.message}`); continue; }
         await env.STORE.delete(k.name);
         hecho.push(`bienvenida ${d.email}`);
+      } else if (d.tipo === 'completo') {
+        const m = correo.cursoCompleto({ nombre: d.name, plan: d.plan, url: `${env.DOWNLOAD_PAGE}?t=${d.token}`, cuando: d.cuando, nModulos: ORDEN_CURSO.modulos.length, siguiente: ORDEN_CURSO.modulos[1].titulo });
+        const r = await brevoSendEmail(env, { to: d.email, name: d.name, subject: m.asunto, html: m.html });
+        if (!brevoOk(r)) { hecho.push(`curso completo pendiente ${d.email}`); continue; }
+        await env.STORE.delete(k.name);
+        hecho.push(`curso completo ${d.email}`);
       } else if (d.tipo === 'citaok') {
         if (Date.parse(d.inicio) < ahora) { await env.STORE.delete(k.name); continue; }
         const m = correo.citaConfirmada({ nombre: d.name, inicio: d.inicio, tz: d.tz, joinUrl: d.joinUrl, cancelUrl: d.cancelUrl, rescheduleUrl: d.rescheduleUrl });
@@ -848,11 +832,18 @@ async function handlePruebas(req, env) {
   const inicio = new Date(Date.now() + 26 * 3600e3).toISOString().replace(/:\d\d\.\d+Z$/, ':00.000Z');
   const cita = { nombre: 'Rafa Alberola', inicio, tz: 'Europe/Madrid', joinUrl: 'https://meet.google.com/', cancelUrl: 'https://calendly.com/', rescheduleUrl: 'https://calendly.com/' };
   const tipos = {
-    compra: correo.compra({ nombre: 'Rafa Alberola', plan: 'esencial', importe: 99, url: urlDesc, nPdfs: PDF_CATALOG.length, nModulos: ORDEN_CURSO.modulos.length }),
-    bienvenida: correo.bienvenida({ nombre: 'Rafa Alberola', url: urlDesc, modulos: ORDEN_CURSO.modulos.slice(0, 4).map(x => x.titulo) }),
+    compra: correo.compra({ nombre: 'Rafa Alberola', plan: 'esencial', importe: 99, url: urlDesc, nModulos: ORDEN_CURSO.modulos.length, garantiaHasta: `${fechaLarga(finDiaMadrid(Date.now(), GARANTIA_DIAS))} a las 23:59` }),
+    completo: correo.cursoCompleto({ nombre: 'Rafa Alberola', plan: 'esencial', url: urlDesc, cuando: new Date().toISOString(), nModulos: ORDEN_CURSO.modulos.length, siguiente: ORDEN_CURSO.modulos[1].titulo }),
+    avisoCompleto: correo.avisoCompleto({ plan: 'negocio', email: to, nombre: 'Rafa Alberola' }),
+    bienvenida: correo.bienvenida({ nombre: 'Rafa Alberola', url: urlDesc, modulos: ORDEN_CURSO.modulos.slice(0, 4).map(x => x.titulo), completo: false }),
     cita: correo.citaConfirmada(cita),
     recordatorio24: correo.citaRecordatorio({ tipo: '24h', ...cita }),
     recordatorio1h: correo.citaRecordatorio({ tipo: '1h', ...cita }),
+    guia: correo.guia(body.source || 'hooks'),
+    boletin: correo.boletin(),
+    llamada: correo.llamadaPagada({ nombre: 'Rafa Alberola' }),
+    avisoVenta: correo.avisoVenta({ plan: 'esencial', email: to, nombre: 'Rafa Alberola', importe: 99, garantiaHasta: `${fechaLarga(finDiaMadrid(Date.now(), GARANTIA_DIAS))} a las 23:59` }),
+    avisoContacto: correo.avisoContacto({ email: to, source: 'hooks', ip: req.headers.get('cf-connecting-ip') || '', userAgent: req.headers.get('user-agent') || '' }),
   };
   const pedidos = Array.isArray(body.tipos) && body.tipos.length ? body.tipos : Object.keys(tipos);
   const out = {};
@@ -860,7 +851,6 @@ async function handlePruebas(req, env) {
     if (!tipos[t]) continue;
     out[t] = await brevoSendEmail(env, { to, name: 'Rafa', subject: prueba(tipos[t].asunto), html: tipos[t].html });
   }
-  if (pedidos.includes('guia')) out.guia = await sendWelcomeEmail(env, { to, source: 'yate' });
   return json({ to, enviados: out });
 }
 
@@ -941,6 +931,9 @@ export default {
           break;
         case 'GET /acceso':
           res = await handleAcceso(req, env);
+          break;
+        case 'POST /acceso-completo':
+          res = await handleAccesoCompleto(req, env);
           break;
         case 'GET /session':
           res = await handleSession(req, env);

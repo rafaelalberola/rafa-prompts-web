@@ -125,16 +125,17 @@ h3 { margin: 0; font-size: 20px; line-height: 1.2; font-weight: 800; letter-spac
 @media (min-width: 1080px) {
   .journey { flex-direction: row; gap: 0; align-self: center; width: min(1440px, calc(100vw - 64px)); }
   .journey { flex-wrap: wrap; row-gap: var(--s7); }
-  .act { flex: 0 0 calc(var(--n) * 100% / 7); min-width: 0; gap: var(--s5); }
+  .act { flex: 0 0 calc(var(--n) * 100% / 6); min-width: 0; gap: var(--s5); }
   .act-name { margin-right: var(--s4); padding-bottom: var(--s2); border-bottom: 2px solid rgba(218, 119, 86, 0.35); }
   .stages { flex-direction: row; }
   .stage { flex: 1 1 0; min-width: 0; flex-direction: column; gap: var(--s4); padding: 0 var(--s3) 0 0; }
   .stage .label { letter-spacing: 0.06em; }
   .stage::before, .stage:first-child::before, .stage:last-child::before, .stage:only-child::before { display: block; top: 21px; bottom: auto; left: 0; right: 0; width: auto; height: 2px; transform-origin: left center; }
   .act:first-child .stage:first-child::before { left: 22px; }
-  .act:last-child .stage:last-child::before { right: auto; width: 22px; }
+  .act:last-child .stage:last-child::before, .act.fin-fila .stage:last-child::before { right: auto; width: 22px; }
+  .act.ini-fila .stage:first-child::before { left: 22px; }
   .stage-txt { padding-top: 0; }
-  .stage h3 { font-size: 17px; min-height: 2.4em; }  /* títulos de una o dos líneas: las descripciones quedan alineadas */
+  .stage h3 { font-size: 17px; }
   .stage p { font-size: 15px; }
   .journey-auto { align-self: center; }
 }
@@ -298,6 +299,7 @@ h3 { margin: 0; font-size: 20px; line-height: 1.2; font-weight: 800; letter-spac
 
 /* ahorro estimado: en verde, con la cuenta debajo para que se pueda comprobar */
 .save { margin: 0; display: flex; flex-direction: column; gap: 2px; padding-top: var(--s3); border-top: 1px solid var(--line); }
+.task .card-txt h3 { min-height: 2.4em; }
 .save .save-h { font-size: 17px; font-weight: 700; line-height: 1.35; color: var(--ink); }
 .save strong { font-size: 14px; font-weight: 600; line-height: 1.4; color: var(--ok); }
 .task .card-txt { flex: 1; }
@@ -929,25 +931,25 @@ body::before { content: ""; position: fixed; inset: 0 0 auto; height: env(safe-a
             <li class="stage" style="--i:0"><span class="node" aria-hidden="true"><svg viewBox="0 0 24 24"><path d="M20 7h-9" /><path d="M14 17H5" /><circle cx="17" cy="17" r="3" /><circle cx="7" cy="7" r="3" /></svg></span><div class="stage-txt"><span class="label">Módulos 01 a&nbsp;04</span><h3>Primeros pasos con&nbsp;Claude</h3><p>Tu&nbsp;cuenta, tus&nbsp;herramientas conectadas y&nbsp;tu&nbsp;negocio explicado.</p></div></li>
           </ol>
         </div>
-        <div class="act" style="--n:3">
+        <div class="act" style="--n:2">
           <p class="act-name">Empieza</p>
           <ol class="stages" start="2">
             <li class="stage" style="--i:1"><span class="node" aria-hidden="true"><svg viewBox="0 0 24 24"><circle cx="12" cy="12" r="10" /><path d="M12 2a14.5 14.5 0 0 0 0 20 14.5 14.5 0 0 0 0-20" /><path d="M2 12h20" /></svg></span><div class="stage-txt"><span class="label">Módulo 05</span><h3>Tu&nbsp;web</h3><p>Reservas el&nbsp;dominio y&nbsp;Claude te&nbsp;diseña y&nbsp;escribe la&nbsp;web.</p></div></li>
             <li class="stage" style="--i:2"><span class="node" aria-hidden="true"><svg viewBox="0 0 24 24"><circle cx="8" cy="21" r="1" /><circle cx="19" cy="21" r="1" /><path d="M2.05 2.05h2l2.66 12.42a2 2 0 0 0 2 1.58h9.78a2 2 0 0 0 1.95-1.57l1.65-7.43H5.12" /></svg></span><div class="stage-txt"><span class="label">Módulo 06</span><h3>Tu&nbsp;tienda online</h3><p>Productos, pedidos y&nbsp;un&nbsp;aviso cuando baja el&nbsp;stock.</p></div></li>
-            <li class="stage" style="--i:3"><span class="node" aria-hidden="true"><svg viewBox="0 0 24 24"><ellipse cx="12" cy="5" rx="9" ry="3" /><path d="M3 5V19A9 3 0 0 0 21 19V5" /><path d="M3 12A9 3 0 0 0 21 12" /></svg></span><div class="stage-txt"><span class="label">Módulo 07</span><h3>Tu&nbsp;CRM</h3><p>Cada&nbsp;contacto de&nbsp;la&nbsp;web entra solo en&nbsp;tu&nbsp;Excel o&nbsp;tu&nbsp;CRM.</p></div></li>
           </ol>
         </div>
-        <div class="act" style="--n:3">
+        <div class="act fin-fila" style="--n:3">
           <p class="act-name">Vende</p>
-          <ol class="stages" start="5">
+          <ol class="stages" start="4">
+            <li class="stage" style="--i:3"><span class="node" aria-hidden="true"><svg viewBox="0 0 24 24"><ellipse cx="12" cy="5" rx="9" ry="3" /><path d="M3 5V19A9 3 0 0 0 21 19V5" /><path d="M3 12A9 3 0 0 0 21 12" /></svg></span><div class="stage-txt"><span class="label">Módulo 07</span><h3>Tu&nbsp;CRM</h3><p>Cada&nbsp;contacto de&nbsp;la&nbsp;web entra solo en&nbsp;tu&nbsp;Excel o&nbsp;tu&nbsp;CRM.</p></div></li>
             <li class="stage" style="--i:4"><span class="node" aria-hidden="true"><svg viewBox="0 0 24 24"><circle cx="11" cy="11" r="8" /><path d="m21 21-4.3-4.3" /></svg></span><div class="stage-txt"><span class="label">Módulo 08</span><h3>Clientes potenciales</h3><p>Claude busca empresas que&nbsp;encajan contigo y&nbsp;las&nbsp;guarda.</p></div></li>
             <li class="stage" style="--i:5"><span class="node" aria-hidden="true"><svg viewBox="0 0 24 24"><path d="M8 2v4" /><path d="M16 2v4" /><rect width="18" height="18" x="3" y="4" rx="2" /><path d="M3 10h18" /><path d="m9 16 2 2 4-4" /></svg></span><div class="stage-txt"><span class="label">Módulo 09</span><h3>Contacto y&nbsp;agenda</h3><p>El&nbsp;primer mensaje, la&nbsp;llamada en&nbsp;tu&nbsp;agenda y&nbsp;el&nbsp;CRM al&nbsp;día.</p></div></li>
-            <li class="stage" style="--i:6"><span class="node" aria-hidden="true"><svg viewBox="0 0 24 24"><path d="M15 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V7Z" /><path d="M14 2v4a2 2 0 0 0 2 2h4" /><path d="M10 9H8" /><path d="M16 13H8" /><path d="M16 17H8" /></svg></span><div class="stage-txt"><span class="label">Módulo 10</span><h3>Presupuestos</h3><p>Presupuestos e&nbsp;informes con&nbsp;tu&nbsp;formato, en&nbsp;un&nbsp;clic.</p></div></li>
           </ol>
         </div>
-        <div class="act" style="--n:2">
+        <div class="act ini-fila" style="--n:3">
           <p class="act-name">Gestiona</p>
-          <ol class="stages" start="8">
+          <ol class="stages" start="7">
+            <li class="stage" style="--i:6"><span class="node" aria-hidden="true"><svg viewBox="0 0 24 24"><path d="M15 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V7Z" /><path d="M14 2v4a2 2 0 0 0 2 2h4" /><path d="M10 9H8" /><path d="M16 13H8" /><path d="M16 17H8" /></svg></span><div class="stage-txt"><span class="label">Módulo 10</span><h3>Presupuestos</h3><p>Presupuestos e&nbsp;informes con&nbsp;tu&nbsp;formato, en&nbsp;un&nbsp;clic.</p></div></li>
             <li class="stage" style="--i:7"><span class="node" aria-hidden="true"><svg viewBox="0 0 24 24"><polyline points="22 12 16 12 14 15 10 15 8 12 2 12" /><path d="M5.45 5.11 2 12v6a2 2 0 0 0 2 2h16a2 2 0 0 0 2-2v-6l-3.45-6.89A2 2 0 0 0 16.76 4H7.24a2 2 0 0 0-1.79 1.11z" /></svg></span><div class="stage-txt"><span class="label">Módulos 11 y&nbsp;12</span><h3>Atención al&nbsp;cliente</h3><p>El&nbsp;correo ordenado y&nbsp;cada&nbsp;solicitud clasificada al&nbsp;llegar.</p></div></li>
             <li class="stage" style="--i:8"><span class="node" aria-hidden="true"><svg viewBox="0 0 24 24"><path d="M4 2v20l2-1 2 1 2-1 2 1 2-1 2 1 2-1 2 1V2l-2 1-2-1-2 1-2-1-2 1-2-1-2 1Z" /><path d="M16 8h-6a2 2 0 1 0 0 4h4a2 2 0 1 1 0 4H8" /><path d="M12 17.5v-11" /></svg></span><div class="stage-txt"><span class="label">Módulo 13</span><h3>Facturas y&nbsp;cobros</h3><p>Facturas para&nbsp;la&nbsp;gestoría y&nbsp;aviso de&nbsp;cada&nbsp;cobro pendiente.</p></div></li>
           </ol>
@@ -959,7 +961,7 @@ body::before { content: ""; position: fixed; inset: 0 0 auto; height: env(safe-a
             <li class="stage" style="--i:10"><span class="node" aria-hidden="true"><svg viewBox="0 0 24 24"><line x1="10" x2="14" y1="2" y2="2" /><line x1="12" x2="15" y1="14" y2="11" /><circle cx="12" cy="14" r="8" /></svg></span><div class="stage-txt"><span class="label">Módulo 15</span><h3>Mide el&nbsp;ahorro</h3><p>Cuántas horas recuperas cada&nbsp;semana y&nbsp;cómo arreglar lo&nbsp;que&nbsp;falla.</p></div></li>
           </ol>
         </div>
-        <div class="act" style="--n:1">
+        <div class="act fin-fila" style="--n:1">
           <p class="act-name">Automatiza</p>
           <ol class="stages" start="12">
             <li class="stage" style="--i:11"><span class="node" aria-hidden="true"><svg viewBox="0 0 24 24"><path d="M12 2v8" /><path d="m4.93 10.93 1.41 1.41" /><path d="M2 18h2" /><path d="M20 18h2" /><path d="m19.07 10.93-1.41 1.41" /><path d="M22 22H2" /><path d="m8 6 4-4 4 4" /><path d="M16 18a4 4 0 0 0-8 0" /></svg></span><div class="stage-txt"><span class="label">Módulos 16 a&nbsp;19</span><h3>Que&nbsp;funcione solo</h3><p>Claude Code hace el&nbsp;trabajo cada&nbsp;mañana en&nbsp;tu&nbsp;ordenador, sin&nbsp;programar.</p></div></li>
@@ -979,10 +981,10 @@ body::before { content: ""; position: fixed; inset: 0 0 auto; height: env(safe-a
         <p class="save-total">Las&nbsp;seis juntas te&nbsp;ahorran unas&nbsp;<strong>30&nbsp;h al&nbsp;mes: <span class="save-sum">+750&nbsp;€ al&nbsp;mes</span></strong>. Calculado a&nbsp;25&nbsp;€ la&nbsp;hora. La&nbsp;media en&nbsp;España es&nbsp;de&nbsp;26,18&nbsp;€ (<a href="https://www.ine.es/dyngs/Prensa/ETCL2T26.htm" target="_blank" rel="noopener">INE</a>).</p>
       </div>
       <ul class="tasks">
-        <li class="card task"><div class="viz" aria-hidden="true"><div class="mini"><span class="v-line b" style="--w:46%"></span><span class="v-line" style="--w:88%"></span><span class="v-line" style="--w:74%"></span><span class="v-line" style="--w:60%"></span><span class="v-badge icon"><svg viewBox="0 0 100 100"><use href="#flower"/></svg></span></div></div><div class="card-txt"><h3>Que&nbsp;Claude conozca tu&nbsp;negocio</h3><span class="label">Disponible en&nbsp;el&nbsp;Módulo 04</span><p>Le&nbsp;explicas tu&nbsp;negocio una&nbsp;vez y&nbsp;responde a&nbsp;tus&nbsp;clientes como&nbsp;lo&nbsp;harías tú.</p><p class="save" data-h="2"><span class="save-h">2&nbsp;h menos al&nbsp;mes corrigiendo respuestas</span><strong>Ahorras unos&nbsp;50&nbsp;€ al&nbsp;mes</strong></p></div></li>
+        <li class="card task"><div class="viz" aria-hidden="true"><div class="mini"><span class="v-line b" style="--w:46%"></span><span class="v-line" style="--w:88%"></span><span class="v-line" style="--w:74%"></span><span class="v-line" style="--w:60%"></span><span class="v-badge icon"><svg viewBox="0 0 100 100"><use href="#flower"/></svg></span></div></div><div class="card-txt"><h3>Que&nbsp;Claude conozca tu&nbsp;negocio y&nbsp;conteste como&nbsp;tú</h3><span class="label">Disponible en&nbsp;el&nbsp;Módulo 04</span><p>Le&nbsp;explicas tu&nbsp;negocio una&nbsp;vez y&nbsp;responde a&nbsp;tus&nbsp;clientes como&nbsp;lo&nbsp;harías tú.</p><p class="save" data-h="2"><span class="save-h">2&nbsp;h menos al&nbsp;mes corrigiendo respuestas</span><strong>Ahorras unos&nbsp;50&nbsp;€ al&nbsp;mes</strong></p></div></li>
         <li class="card task"><div class="viz" aria-hidden="true"><div class="mini"><span class="v-line b" style="--w:52%"></span><span class="v-line" style="--w:86%"></span><span class="v-line" style="--w:68%"></span><span class="v-badge"><svg viewBox="0 0 24 24"><path d="M20 11a8 8 0 0 0-14.3-4.9L4 8M4 4v4h4M4 13a8 8 0 0 0 14.3 4.9L20 16M20 20v-4h-4"/></svg>Cada&nbsp;semana</span></div></div><div class="card-txt"><h3>Presupuestos, informes y&nbsp;correos en&nbsp;un&nbsp;clic</h3><span class="label">Disponible en&nbsp;el&nbsp;Módulo 10</span><p>Los&nbsp;presupuestos e&nbsp;informes de&nbsp;cada&nbsp;semana salen con&nbsp;tu&nbsp;formato en&nbsp;un&nbsp;clic.</p><p class="save" data-h="6"><span class="save-h">6&nbsp;h menos al&nbsp;mes haciendo documentos</span><strong>Ahorras unos&nbsp;150&nbsp;€ al&nbsp;mes</strong></p></div></li>
-        <li class="card task"><div class="viz" aria-hidden="true"><div class="mini rows"><div class="v-row hot"><span>Hoy</span><b>3</b></div><div class="v-row"><span>Esta semana</span><b>5</b></div><div class="v-row"><span>Delegar</span><b>2</b></div><div class="v-row mute"><span>Archivar</span><b>30</b></div></div></div><div class="card-txt"><h3>El&nbsp;correo pendiente, ordenado</h3><span class="label">Disponible en&nbsp;el&nbsp;Módulo 11</span><p>Abres el&nbsp;correo y&nbsp;ya&nbsp;está ordenado por&nbsp;urgencia, con&nbsp;las&nbsp;respuestas de&nbsp;hoy escritas.</p><p class="save" data-h="8"><span class="save-h">8&nbsp;h menos al&nbsp;mes con&nbsp;el&nbsp;correo</span><strong>Ahorras unos&nbsp;200&nbsp;€ al&nbsp;mes</strong></p></div></li>
-        <li class="card task"><div class="viz" aria-hidden="true"><div class="mini"><div class="v-step"><i>1</i><span class="v-line" style="--w:80%"></span></div><div class="v-step"><i>2</i><span class="v-line" style="--w:60%"></span></div><div class="v-step"><i>3</i><span class="v-line" style="--w:72%"></span></div><span class="v-badge icon q">?</span></div></div><div class="card-txt"><h3>Tus&nbsp;procesos, por&nbsp;escrito</h3><span class="label">Disponible en&nbsp;el&nbsp;Módulo 11</span><p>Se&nbsp;lo&nbsp;cuentas a&nbsp;Claude y&nbsp;escribe el&nbsp;manual de&nbsp;tu&nbsp;equipo, para&nbsp;que&nbsp;dejen de&nbsp;preguntarte lo&nbsp;mismo.</p><p class="save" data-h="4"><span class="save-h">4&nbsp;h menos al&nbsp;mes resolviendo dudas del&nbsp;equipo</span><strong>Ahorras unos&nbsp;100&nbsp;€ al&nbsp;mes</strong></p></div></li>
+        <li class="card task"><div class="viz" aria-hidden="true"><div class="mini rows"><div class="v-row hot"><span>Hoy</span><b>3</b></div><div class="v-row"><span>Esta semana</span><b>5</b></div><div class="v-row"><span>Delegar</span><b>2</b></div><div class="v-row mute"><span>Archivar</span><b>30</b></div></div></div><div class="card-txt"><h3>Tu&nbsp;correo, ordenado por&nbsp;urgencia cada&nbsp;mañana</h3><span class="label">Disponible en&nbsp;el&nbsp;Módulo 11</span><p>Abres el&nbsp;correo y&nbsp;ya&nbsp;está ordenado por&nbsp;urgencia, con&nbsp;las&nbsp;respuestas de&nbsp;hoy escritas.</p><p class="save" data-h="8"><span class="save-h">8&nbsp;h menos al&nbsp;mes con&nbsp;el&nbsp;correo</span><strong>Ahorras unos&nbsp;200&nbsp;€ al&nbsp;mes</strong></p></div></li>
+        <li class="card task"><div class="viz" aria-hidden="true"><div class="mini"><div class="v-step"><i>1</i><span class="v-line" style="--w:80%"></span></div><div class="v-step"><i>2</i><span class="v-line" style="--w:60%"></span></div><div class="v-step"><i>3</i><span class="v-line" style="--w:72%"></span></div><span class="v-badge icon q">?</span></div></div><div class="card-txt"><h3>Tus&nbsp;procesos, por&nbsp;escrito para&nbsp;todo el&nbsp;equipo</h3><span class="label">Disponible en&nbsp;el&nbsp;Módulo 11</span><p>Se&nbsp;lo&nbsp;cuentas a&nbsp;Claude y&nbsp;escribe el&nbsp;manual de&nbsp;tu&nbsp;equipo, para&nbsp;que&nbsp;dejen de&nbsp;preguntarte lo&nbsp;mismo.</p><p class="save" data-h="4"><span class="save-h">4&nbsp;h menos al&nbsp;mes resolviendo dudas del&nbsp;equipo</span><strong>Ahorras unos&nbsp;100&nbsp;€ al&nbsp;mes</strong></p></div></li>
         <li class="card task"><div class="viz" aria-hidden="true"><div class="mini rows"><div class="v-row"><i class="g a">A</i><span class="v-line" style="--w:62%"></span><span class="v-phone"></span></div><div class="v-row"><i class="g">B</i><span class="v-line" style="--w:48%"></span></div><div class="v-row mute"><i class="g">D</i><span class="v-line" style="--w:56%"></span></div></div></div><div class="card-txt"><h3>Las&nbsp;solicitudes, clasificadas solas</h3><span class="label">Disponible en&nbsp;el&nbsp;Módulo 12</span><p>Cada&nbsp;solicitud de&nbsp;tu&nbsp;web llega clasificada, y&nbsp;te&nbsp;avisa al&nbsp;móvil cuando entra un&nbsp;buen cliente.</p><p class="save" data-h="4"><span class="save-h">4&nbsp;h menos al&nbsp;mes ordenando solicitudes</span><strong>Ahorras unos&nbsp;100&nbsp;€ al&nbsp;mes</strong></p></div></li>
         <li class="card task"><div class="viz" aria-hidden="true"><div class="mini rows"><div class="v-row v-head"><span>Cliente</span><b>Fase</b></div><div class="v-row new"><span>Javier R.</span><b>Nuevo</b></div><div class="v-row"><span>Marta L.</span><b>Presupuesto</b></div><div class="v-row mute"><span>Obras Turia</span><b>Ganado</b></div></div></div><div class="card-txt"><h3>Tus&nbsp;clientes, al&nbsp;día en&nbsp;tu&nbsp;Excel o&nbsp;tu&nbsp;CRM</h3><span class="label">Disponible en&nbsp;el&nbsp;Módulo 12</span><p>Cada&nbsp;cliente nuevo se&nbsp;apunta solo en&nbsp;tu&nbsp;Excel o&nbsp;tu&nbsp;CRM, con&nbsp;todos sus&nbsp;datos.</p><p class="save" data-h="6"><span class="save-h">6&nbsp;h menos al&nbsp;mes apuntando clientes</span><strong>Ahorras unos&nbsp;150&nbsp;€ al&nbsp;mes</strong></p></div></li>
       </ul>
@@ -1316,6 +1318,25 @@ Cuando te pegue una solicitud de un posible cliente:
     entries.forEach(function (e) { if (e.isIntersecting) { e.target.classList.add('in'); e.target.classList.remove('pre'); io.unobserve(e.target); } });
   }, { rootMargin: '0px 0px -8% 0px', threshold: 0.12 });
   els.forEach(function (el) { io.observe(el); });
+})();
+</script>
+<script>
+/* Línea de tiempo en escritorio: los títulos de una misma fila miden lo mismo, así las descripciones arrancan a la misma altura */
+(function () {
+  var hs = [].slice.call(document.querySelectorAll('.stage h3'));
+  if (!hs.length) return;
+  function igualar() {
+    hs.forEach(function (h) { h.style.minHeight = ''; });
+    if (window.innerWidth < 1080) return;
+    var filas = {};
+    hs.forEach(function (h) { var t = Math.round(h.closest('.stage').getBoundingClientRect().top + window.scrollY); (filas[t] = filas[t] || []).push(h); });
+    Object.keys(filas).forEach(function (k) {
+      var g = filas[k], m = Math.max.apply(null, g.map(function (h) { return h.getBoundingClientRect().height; }));
+      g.forEach(function (h) { h.style.minHeight = m + 'px'; });
+    });
+  }
+  igualar(); window.addEventListener('resize', igualar);
+  if (document.fonts && document.fonts.ready) document.fonts.ready.then(igualar);
 })();
 </script>
 <script>

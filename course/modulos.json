@@ -187,19 +187,19 @@
           "modulos": [
             "tu-tienda-online"
           ]
-        },
-        {
-          "texto": "Cada contacto de la web entra solo en tu Excel o tu CRM.",
-          "icono": "database",
-          "modulos": [
-            "tu-crm-conectado"
-          ]
         }
       ]
     },
     {
       "fase": "Vende",
       "etapas": [
+        {
+          "texto": "Cada contacto de la web entra solo en tu Excel o tu CRM.",
+          "icono": "database",
+          "modulos": [
+            "tu-crm-conectado"
+          ]
+        },
         {
           "texto": "Claude busca empresas que encajan contigo y las guarda.",
           "icono": "search",
@@ -213,19 +213,19 @@
           "modulos": [
             "contacto-y-agenda"
           ]
-        },
-        {
-          "texto": "Presupuestos e informes con tu formato, en un clic.",
-          "icono": "file-text",
-          "modulos": [
-            "skills-agentes"
-          ]
         }
       ]
     },
     {
       "fase": "Gestiona",
       "etapas": [
+        {
+          "texto": "Presupuestos e informes con tu formato, en un clic.",
+          "icono": "file-text",
+          "modulos": [
+            "skills-agentes"
+          ]
+        },
         {
           "titulo": "Atención al cliente",
           "texto": "El correo ordenado y cada solicitud clasificada al llegar.",

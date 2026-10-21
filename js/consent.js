@@ -15,10 +15,10 @@
 
   var css = ''
     + '.rpc{position:fixed;left:16px;right:16px;bottom:16px;z-index:9998;display:flex;justify-content:center;pointer-events:none;}'
-    + '.rpc-card{pointer-events:auto;width:min(560px,100%);display:flex;flex-wrap:wrap;align-items:center;gap:12px 20px;padding:18px 20px;'
+    + '.rpc-card{pointer-events:auto;width:min(720px,100%);display:flex;flex-wrap:wrap;align-items:center;gap:12px 20px;padding:18px 20px;'
     + 'border-radius:20px;background:#fff;border:1px solid rgba(20,19,17,.12);box-shadow:0 18px 44px rgba(20,19,17,.18);'
     + 'font:400 14.5px/1.5 Archivo,system-ui,-apple-system,sans-serif;color:#45423D;}'
-    + '.rpc-txt{flex:1 1 300px;margin:0;}.rpc-txt a{color:#141311;text-decoration:underline;text-underline-offset:2px;}'
+    + '.rpc-txt{flex:1 1 260px;margin:0;}.rpc-txt a{color:#141311;text-decoration:underline;text-underline-offset:2px;}'
     + '.rpc-btns{display:flex;gap:8px;flex:0 0 auto;}'
     + '.rpc-b{min-width:112px;height:44px;padding:0 18px;border-radius:999px;border:1.5px solid #141311;background:#141311;color:#fff;'
     + 'font:700 14.5px/1 Archivo,system-ui,sans-serif;cursor:pointer;}'

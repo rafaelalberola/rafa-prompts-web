@@ -243,12 +243,10 @@ h3 { margin: 0; font-size: 20px; line-height: 1.2; font-weight: 800; letter-spac
 .save span { font-size: 13px; line-height: 1.4; color: var(--ink-mute); }
 .task .card-txt { flex: 1; }
 .task .save { margin-top: auto; }
-.rate { margin: var(--s2) 0 0; display: flex; align-items: center; justify-content: center; gap: var(--s2); font-size: 15px; color: var(--ink-soft); }
-.rate input { width: 76px; height: 38px; padding: 0 10px; border: 1px solid var(--line-strong); border-radius: 10px; background: var(--surface); font: 800 16px/1 var(--f-sans); color: var(--ok); text-align: center; }
-.rate input:focus-visible { outline: 2px solid var(--ok); outline-offset: 2px; }
-.save-total { margin: 0; text-align: center; font-size: 16px; color: var(--ink-soft); }
-.save-total .save-sum { color: var(--ok); }
-@media (max-width: 899px) { .rate { justify-content: flex-start; } }
+.save-total { margin: var(--s2) 0 0; font-size: 17px; font-weight: 600; color: var(--ink); }
+.save-total .save-sum { color: var(--ok); font-weight: 800; }
+.save-note { margin: 0; font-size: 13.5px; color: var(--ink-mute); }
+.save-note a { color: inherit; text-decoration: underline; text-underline-offset: 2px; }
 
 /* ---------- qué es Claude ---------- */
 
@@ -811,7 +809,7 @@ body::before { content: ""; position: fixed; inset: 0 0 auto; height: env(safe-a
         <h2 id="h-claude">¿Qué es&nbsp;Claude y&nbsp;por&nbsp;qué te&nbsp;interesa?</h2>
       </div>
       <ul class="about">
-        <li class="card"><span class="card-ico" aria-hidden="true"><svg viewBox="0 0 24 24"><path d="M9.937 15.5A2 2 0 0 0 8.5 14.063l-6.135-1.582a.5.5 0 0 1 0-.962L8.5 9.936A2 2 0 0 0 9.937 8.5l1.582-6.135a.5.5 0 0 1 .963 0L14.063 8.5A2 2 0 0 0 15.5 9.937l6.135 1.581a.5.5 0 0 1 0 .964L15.5 14.063a2 2 0 0 0-1.437 1.437l-1.582 6.135a.5.5 0 0 1-.963 0z"/><path d="M20 3v4"/><path d="M22 5h-4"/><path d="M4 17v2"/><path d="M5 18H3"/></svg></span><div class="card-txt"><h3>Qué es</h3><p>Un&nbsp;asistente de&nbsp;inteligencia artificial, como&nbsp;ChatGPT, creado por&nbsp;Anthropic. Le&nbsp;escribes como&nbsp;a&nbsp;una&nbsp;persona y&nbsp;hace la&nbsp;tarea. La&nbsp;diferencia: escribe más&nbsp;natural, respeta tus&nbsp;reglas al&nbsp;pie de&nbsp;la&nbsp;letra y&nbsp;lee documentos enteros de&nbsp;una&nbsp;vez.</p></div></li>
+        <li class="card"><span class="card-ico" aria-hidden="true"><svg viewBox="0 0 24 24"><path d="M9.937 15.5A2 2 0 0 0 8.5 14.063l-6.135-1.582a.5.5 0 0 1 0-.962L8.5 9.936A2 2 0 0 0 9.937 8.5l1.582-6.135a.5.5 0 0 1 .963 0L14.063 8.5A2 2 0 0 0 15.5 9.937l6.135 1.581a.5.5 0 0 1 0 .964L15.5 14.063a2 2 0 0 0-1.437 1.437l-1.582 6.135a.5.5 0 0 1-.963 0z"/><path d="M20 3v4"/><path d="M22 5h-4"/><path d="M4 17v2"/><path d="M5 18H3"/></svg></span><div class="card-txt"><h3>Qué es</h3><p>Una&nbsp;IA como&nbsp;ChatGPT, creada por&nbsp;Anthropic. Le&nbsp;escribes como&nbsp;a&nbsp;una&nbsp;persona y&nbsp;hace la&nbsp;tarea.</p><p>La&nbsp;diferencia: escribe más&nbsp;natural, sigue tus&nbsp;reglas al&nbsp;pie de&nbsp;la&nbsp;letra y&nbsp;lee documentos enteros.</p></div></li>
         <li class="card"><span class="card-ico" aria-hidden="true"><svg viewBox="0 0 24 24"><path d="m3 17 2 2 4-4"/><path d="m3 7 2 2 4-4"/><path d="M13 6h8"/><path d="M13 12h8"/><path d="M13 18h8"/></svg></span><div class="card-txt"><h3>Qué puede hacer</h3><p>Escribir y&nbsp;contestar correos, leer PDF y&nbsp;documentos, ordenar los&nbsp;datos de&nbsp;tu&nbsp;Excel o&nbsp;tu&nbsp;CRM, preparar textos y&nbsp;conectarse con&nbsp;Gmail o&nbsp;Google Drive.</p></div></li>
         <li class="card"><span class="card-ico" aria-hidden="true"><svg viewBox="0 0 24 24"><polyline points="22 7 13.5 15.5 8.5 10.5 2 17"/><polyline points="16 7 22 7 22 13"/></svg></span><div class="card-txt"><h3>Por&nbsp;qué aprenderlo</h3><p>Usado a&nbsp;ratos te&nbsp;ahorra minutos. Con&nbsp;tu&nbsp;negocio explicado y&nbsp;tus&nbsp;tareas guardadas te&nbsp;quita horas cada&nbsp;semana, y&nbsp;eso es&nbsp;lo&nbsp;que&nbsp;aprendes aquí.</p></div></li>
       </ul>
@@ -825,7 +823,8 @@ body::before { content: ""; position: fixed; inset: 0 0 auto; height: env(safe-a
         <p class="kicker">Lo&nbsp;que&nbsp;vas a&nbsp;montar</p>
         <h2 id="h-montas">Algunas de&nbsp;las&nbsp;tareas que&nbsp;aprenderás a&nbsp;automatizar en&nbsp;tu&nbsp;negocio</h2>
         <p>Te&nbsp;las&nbsp;explico paso a&nbsp;paso dentro del&nbsp;curso, cada&nbsp;una&nbsp;con&nbsp;su&nbsp;plantilla lista para&nbsp;copiar.</p>
-        <p class="rate"><label for="rate">Ahorro estimado con&nbsp;tu&nbsp;hora a</label> <input id="rate" type="number" inputmode="numeric" min="10" max="300" step="5" value="25" aria-label="Cuánto vale una hora de tu tiempo, en euros"> <span>€</span></p>
+        <p class="save-total">Las&nbsp;seis juntas te&nbsp;ahorran unas&nbsp;<strong>30&nbsp;h al&nbsp;mes</strong>: <strong class="save-sum">+750&nbsp;€ al&nbsp;mes</strong></p>
+        <p class="save-note">Calculado a&nbsp;25&nbsp;€ la&nbsp;hora. La&nbsp;media en&nbsp;España es&nbsp;de&nbsp;26,18&nbsp;€ (<a href="https://www.ine.es/dyngs/Prensa/ETCL2T26.htm" target="_blank" rel="noopener">INE</a>).</p>
       </div>
       <ul class="tasks">
         <li class="card task"><div class="viz" aria-hidden="true"><div class="mini"><span class="v-line b" style="--w:46%"></span><span class="v-line" style="--w:88%"></span><span class="v-line" style="--w:74%"></span><span class="v-line" style="--w:60%"></span><span class="v-badge icon"><svg viewBox="0 0 100 100"><use href="#flower"/></svg></span></div></div><div class="card-txt"><h3>Que&nbsp;Claude conozca tu&nbsp;negocio</h3><span class="label">Disponible en&nbsp;el&nbsp;Módulo 02</span><p>Claude conoce tus&nbsp;servicios, tus&nbsp;precios y&nbsp;tu&nbsp;forma de&nbsp;hablar, y&nbsp;te&nbsp;responde como&nbsp;lo&nbsp;harías tú.</p><p class="save" data-h="2"><strong>+50&nbsp;€ al&nbsp;mes</strong><span>2&nbsp;h al&nbsp;mes: 30 min a&nbsp;la&nbsp;semana sin&nbsp;corregir respuestas genéricas</span></p></div></li>
@@ -835,7 +834,6 @@ body::before { content: ""; position: fixed; inset: 0 0 auto; height: env(safe-a
         <li class="card task"><div class="viz" aria-hidden="true"><div class="mini"><div class="v-step"><i>1</i><span class="v-line" style="--w:80%"></span></div><div class="v-step"><i>2</i><span class="v-line" style="--w:60%"></span></div><div class="v-step"><i>3</i><span class="v-line" style="--w:72%"></span></div><span class="v-badge icon q">?</span></div></div><div class="card-txt"><h3>Tus&nbsp;procesos, por&nbsp;escrito</h3><span class="label">Disponible en&nbsp;el&nbsp;Módulo 04</span><p>Convierte lo&nbsp;que&nbsp;sabes en&nbsp;un&nbsp;manual para&nbsp;tu&nbsp;equipo: se&nbsp;lo&nbsp;cuentas a&nbsp;Claude y&nbsp;lo&nbsp;escribe, con&nbsp;sus&nbsp;preguntas frecuentes.</p><p class="save" data-h="4"><strong>+100&nbsp;€ al&nbsp;mes</strong><span>4&nbsp;h al&nbsp;mes: 1 h a&nbsp;la&nbsp;semana sin&nbsp;resolver las&nbsp;mismas dudas del&nbsp;equipo</span></p></div></li>
         <li class="card task"><div class="viz" aria-hidden="true"><div class="mini"><span class="v-line b" style="--w:52%"></span><span class="v-line" style="--w:86%"></span><span class="v-line" style="--w:68%"></span><span class="v-badge"><svg viewBox="0 0 24 24"><path d="M20 11a8 8 0 0 0-14.3-4.9L4 8M4 4v4h4M4 13a8 8 0 0 0 14.3 4.9L20 16M20 20v-4h-4"/></svg>cada&nbsp;semana</span></div></div><div class="card-txt"><h3>Presupuestos, informes y&nbsp;correos en&nbsp;un&nbsp;clic</h3><span class="label">Disponible en&nbsp;el&nbsp;Módulo 03</span><p>Automatiza los&nbsp;presupuestos, informes o&nbsp;correos que&nbsp;repites cada&nbsp;semana: Claude los&nbsp;hace por&nbsp;ti.</p><p class="save" data-h="6"><strong>+150&nbsp;€ al&nbsp;mes</strong><span>6&nbsp;h al&nbsp;mes: 30 min menos por&nbsp;documento, 3 a&nbsp;la&nbsp;semana</span></p></div></li>
       </ul>
-      <p class="save-total">Las&nbsp;seis juntas: unas&nbsp;<strong>30&nbsp;h</strong> al&nbsp;mes, <strong class="save-sum">+750&nbsp;€ al&nbsp;mes</strong> con&nbsp;tu&nbsp;hora a&nbsp;<span class="rate-echo">25</span>&nbsp;€.</p>
     </section>
   </div>
 
@@ -1025,9 +1023,9 @@ body::before { content: ""; position: fixed; inset: 0 0 auto; height: env(safe-a
       </div>
       <div class="card-stack">
       <ul class="guides">
-        <li><a class="card guide" href="https://rafaprompts.com/reel-hiperrealista-con-claude.html"><h3>Cómo producir un&nbsp;reel hiperrealista con&nbsp;Claude</h3><span class="label">Guía 01 · Producción</span><p>Guion, imagen, vídeo, voz, subtítulos, sonido y&nbsp;mezcla. El&nbsp;sistema completo, abierto.</p><span class="go">Leer la&nbsp;guía gratis</span></a></li>
-        <li><a class="card guide" href="https://rafaprompts.com/agente-creador-reels-claude.html"><h3>Cómo montar un&nbsp;sistema que&nbsp;produce reels mientras duermes</h3><span class="label">Guía 02 · Automatización</span><p>El&nbsp;agente se&nbsp;levanta de&nbsp;madrugada, escribe el&nbsp;guion, genera el&nbsp;vídeo y&nbsp;lo&nbsp;monta. Tú solo revisas y&nbsp;publicas por&nbsp;la&nbsp;mañana.</p><span class="go">Leer la&nbsp;guía gratis</span></a></li>
-        <li><a class="card guide" href="https://rafaprompts.com/hooks.html"><h3>8 fórmulas para&nbsp;escribir hooks que&nbsp;paren el&nbsp;scroll</h3><span class="label">Guía 03 · Hooks</span><p>Las&nbsp;plantillas que&nbsp;han funcionado en&nbsp;mis&nbsp;reels este año. Una&nbsp;fórmula por&nbsp;slide, ejemplos reales, copia y&nbsp;pega.</p><span class="go">Leer la&nbsp;guía gratis</span></a></li>
+        <li><a class="card guide" href="https://rafaprompts.com/reel-hiperrealista-con-claude.html"><h3>Cómo producir un&nbsp;reel hiperrealista con&nbsp;Claude</h3><span class="label"><time data-ago="0" datetime="2026-10">octubre 2026</time> · Producción</span><p>Guion, imagen, vídeo, voz, subtítulos, sonido y&nbsp;mezcla. El&nbsp;sistema completo, abierto.</p><span class="go">Leer la&nbsp;guía gratis</span></a></li>
+        <li><a class="card guide" href="https://rafaprompts.com/agente-creador-reels-claude.html"><h3>Cómo montar un&nbsp;sistema que&nbsp;produce reels mientras duermes</h3><span class="label"><time data-ago="1" datetime="2026-09">septiembre 2026</time> · Automatización</span><p>El&nbsp;agente se&nbsp;levanta de&nbsp;madrugada, escribe el&nbsp;guion, genera el&nbsp;vídeo y&nbsp;lo&nbsp;monta. Tú solo revisas y&nbsp;publicas por&nbsp;la&nbsp;mañana.</p><span class="go">Leer la&nbsp;guía gratis</span></a></li>
+        <li><a class="card guide" href="https://rafaprompts.com/hooks.html"><h3>8 fórmulas para&nbsp;escribir hooks que&nbsp;paren el&nbsp;scroll</h3><span class="label"><time data-ago="2" datetime="2026-08">agosto 2026</time> · Hooks</span><p>Las&nbsp;plantillas que&nbsp;han funcionado en&nbsp;mis&nbsp;reels este año. Una&nbsp;fórmula por&nbsp;slide, ejemplos reales, copia y&nbsp;pega.</p><span class="go">Leer la&nbsp;guía gratis</span></a></li>
       </ul>
       <div class="card subscribe">
           <h2 class="sub-title">¿Te&nbsp;aviso cuando salga la&nbsp;siguiente guía? <span class="it">una&nbsp;al&nbsp;mes y&nbsp;sin&nbsp;spam</span></h2>
@@ -1152,23 +1150,6 @@ Cuando te pegue una solicitud de un posible cliente:
 </script>
 
 <script>
-/* Ahorro estimado: horas al mes de cada tarea × lo que vale la hora del visitante */
-(function () {
-  var input = document.getElementById('rate');
-  if (!input) return;
-  var miles = function (n) { return String(Math.round(n)).replace(/\B(?=(\d{3})+(?!\d))/g, '.'); };
-  var fmt = function (n) { return '+' + miles(n) + '\u00a0€ al mes'; };
-  function update() {
-    var r = parseFloat(input.value); if (!(r > 0)) return;
-    var total = 0;
-    document.querySelectorAll('.save[data-h]').forEach(function (el) { var h = parseFloat(el.dataset.h); total += h * r; el.querySelector('strong').textContent = fmt(h * r); });
-    var sum = document.querySelector('.save-sum'); if (sum) sum.textContent = fmt(total);
-    var echo = document.querySelector('.rate-echo'); if (echo) echo.textContent = r.toLocaleString('es-ES');
-  }
-  input.addEventListener('input', update); update();
-})();
-</script>
-<script>
 /* Cabecera de cristal al hacer scroll y aparición suave de los bloques */
 (function () {
   var top = document.querySelector('.top');
@@ -1188,6 +1169,16 @@ Cuando te pegue una solicitud de un posible cliente:
 })();
 </script>
 <script>
+/* Fechas de las guías: una al mes, la primera en el mes en curso de quien visita */
+(function () {
+  var M = ['enero', 'febrero', 'marzo', 'abril', 'mayo', 'junio', 'julio', 'agosto', 'septiembre', 'octubre', 'noviembre', 'diciembre'];
+  var hoy = new Date();
+  document.querySelectorAll('time[data-ago]').forEach(function (t) {
+    var d = new Date(hoy.getFullYear(), hoy.getMonth() - Number(t.dataset.ago), 1);
+    t.textContent = M[d.getMonth()] + ' ' + d.getFullYear();
+    t.setAttribute('datetime', d.getFullYear() + '-' + String(d.getMonth() + 1).padStart(2, '0'));
+  });
+})();
 /* Modal reutilizable: [data-dialog] lo abre; la X, el fondo o Esc lo cierran */
 (function () {
   document.querySelectorAll('[data-dialog]').forEach(function (b) {

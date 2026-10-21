@@ -25,7 +25,7 @@
 <script>
 /* Píxel de Meta solo en el dominio real: las vistas previas no ensucian los datos */
 if (location.hostname.endsWith('rafaprompts.com')) {
-!function(f,b,e,v,n,t,s){if(f.fbq)return;n=f.fbq=function(){n.callMethod?n.callMethod.apply(n,arguments):n.queue.push(arguments)};if(!f._fbq)f._fbq=n;n.push=n;n.loaded=!0;n.version='2.0';n.queue=[];t=b.createElement(e);t.async=!0;t.src=v;s=b.getElementsByTagName(e)[0];s.parentNode.insertBefore(t,s)}(window,document,'script','https://connect.facebook.net/en_US/fbevents.js');
+!function(f,b,e,v,n,t,s){if(f.fbq)return;n=f.fbq=function(){n.callMethod?n.callMethod.apply(n,arguments):n.queue.push(arguments)};if(!f._fbq)f._fbq=n;n.push=n;n.loaded=!0;n.version='2.0';n.queue=[];}(window,document); /* el script de Meta solo se carga si aceptan las cookies: js/consent.js */
 fbq('init', '952321057516846'); fbq('track', 'PageView');
 }
 </script>
@@ -1297,6 +1297,7 @@ Cuando te pegue una solicitud de un posible cliente:
   if (location.hash === '#comprar') setTimeout(function () { open('esencial'); }, 150);
 })();
 </script>
+<script src="/js/consent.js"></script>
 
 <script>
 /* Cabecera de cristal al hacer scroll y aparición suave de los bloques */

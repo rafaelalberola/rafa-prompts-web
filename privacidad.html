@@ -18,11 +18,10 @@
   <link rel="stylesheet" href="styles.css">
   <!-- Meta Pixel Code -->
   <script>
-  !function(f,b,e,v,n,t,s){if(f.fbq)return;n=f.fbq=function(){n.callMethod?n.callMethod.apply(n,arguments):n.queue.push(arguments)};if(!f._fbq)f._fbq=n;n.push=n;n.loaded=!0;n.version='2.0';n.queue=[];t=b.createElement(e);t.async=!0;t.src=v;s=b.getElementsByTagName(e)[0];s.parentNode.insertBefore(t,s)}(window,document,'script','https://connect.facebook.net/en_US/fbevents.js');
+  !function(f,b,e,v,n,t,s){if(f.fbq)return;n=f.fbq=function(){n.callMethod?n.callMethod.apply(n,arguments):n.queue.push(arguments)};if(!f._fbq)f._fbq=n;n.push=n;n.loaded=!0;n.version='2.0';n.queue=[];}(window,document); /* el script de Meta solo se carga si aceptan las cookies: js/consent.js */
   fbq('init', '952321057516846');
   fbq('track', 'PageView');
   </script>
-  <noscript><img height="1" width="1" style="display:none" src="https://www.facebook.com/tr?id=952321057516846&ev=PageView&noscript=1"/></noscript>
   <!-- End Meta Pixel Code -->
   <!-- SEO:auto:start -->
   <link rel="canonical" href="https://rafaprompts.com/privacidad.html">
@@ -176,7 +175,7 @@
       <h2 id="proveedores"><span class="num">05</span>Con quién compartimos los datos</h2>
       <p>Con proveedores que tratan los datos por nuestra cuenta, cada uno solo para su función:</p>
       <ul>
-        <li><strong>Stripe Payments Europe Ltd.</strong> (Irlanda): pagos y facturas. En el pago puede aparecer el nombre comercial UGC Pack, otra marca del mismo titular que comparte la cuenta de Stripe.</li>
+        <li><strong>Stripe Payments Europe Ltd.</strong> (Irlanda) y <strong>Link</strong>, su servicio de pagos: en las compras del curso, Link es el vendedor registrado. Cobra, calcula el IVA y te envía la factura, y trata tus datos de pago según su propia política de privacidad.</li>
         <li><strong>Calendly LLC</strong> (EE. UU.): reservas de la llamada.</li>
         <li><strong>Brevo (Sendinblue SAS)</strong> (Francia): envío de emails y lista de suscriptores.</li>
         <li><strong>Cloudflare Inc.</strong> (EE. UU.): el servidor de pagos, descargas y altas, y el almacenamiento de los PDF.</li>
@@ -212,8 +211,8 @@
 
       <h2 id="cookies"><span class="num">08</span>Cookies y datos guardados en tu navegador</h2>
       <ul>
-        <li><strong>Técnicas</strong>: las del pago de Stripe (seguridad y prevención del fraude), las de Calendly cuando abres la reserva y un dato en tu navegador que recuerda que ya desbloqueaste las guías. No necesitan consentimiento.</li>
-        <li><strong>De medición y publicidad</strong>: el píxel de Meta (cookies _fbp y _fbc). Necesitan tu consentimiento. Puedes rechazarlas bloqueando las cookies de terceros en tu navegador o desde la configuración de anuncios de Meta.</li>
+        <li><strong>Técnicas</strong>: las del pago de Stripe (seguridad y prevención del fraude), las de Calendly cuando abres la reserva y dos datos en tu navegador: uno recuerda que ya desbloqueaste las guías y otro, lo que elegiste en el aviso de cookies. No necesitan consentimiento.</li>
+        <li><strong>De medición y publicidad</strong>: el píxel de Meta (cookies _fbp y _fbc). Al entrar te lo preguntamos con un aviso: el píxel solo se carga si pulsas «Aceptar» y la web funciona igual si pulsas «Rechazar». Puedes cambiar tu elección cuando quieras en el enlace «Cookies» del pie. Guardamos tu elección 12 meses.</li>
         <li><strong>Google Fonts</strong>: carga las tipografías y no instala cookies.</li>
       </ul>
 
@@ -239,5 +238,6 @@
   </footer>
 
   <script src="app.js"></script>
+<script src="/js/consent.js"></script>
 </body>
 </html>

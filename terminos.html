@@ -18,11 +18,10 @@
   <link rel="stylesheet" href="styles.css">
   <!-- Meta Pixel Code -->
   <script>
-  !function(f,b,e,v,n,t,s){if(f.fbq)return;n=f.fbq=function(){n.callMethod?n.callMethod.apply(n,arguments):n.queue.push(arguments)};if(!f._fbq)f._fbq=n;n.push=n;n.loaded=!0;n.version='2.0';n.queue=[];t=b.createElement(e);t.async=!0;t.src=v;s=b.getElementsByTagName(e)[0];s.parentNode.insertBefore(t,s)}(window,document,'script','https://connect.facebook.net/en_US/fbevents.js');
+  !function(f,b,e,v,n,t,s){if(f.fbq)return;n=f.fbq=function(){n.callMethod?n.callMethod.apply(n,arguments):n.queue.push(arguments)};if(!f._fbq)f._fbq=n;n.push=n;n.loaded=!0;n.version='2.0';n.queue=[];}(window,document); /* el script de Meta solo se carga si aceptan las cookies: js/consent.js */
   fbq('init', '952321057516846');
   fbq('track', 'PageView');
   </script>
-  <noscript><img height="1" width="1" style="display:none" src="https://www.facebook.com/tr?id=952321057516846&ev=PageView&noscript=1"/></noscript>
   <!-- End Meta Pixel Code -->
   <!-- SEO:auto:start -->
   <link rel="canonical" href="https://rafaprompts.com/terminos.html">
@@ -146,10 +145,10 @@
       <h2 id="precio"><span class="num">03</span>Precio y pago</h2>
       <ul>
         <li><strong>Precios</strong> en euros, con IVA incluido. El curso es un pago único.</li>
-        <li><strong>Formas de pago</strong>: tarjeta y las que muestre el pago de Stripe según tu dispositivo (Klarna, Amazon Pay, Link, Apple Pay o Google Pay). Admite 3D Secure.</li>
-        <li><strong>Factura</strong>: la emite Stripe con tus datos. Si compras como empresa, marca «Estoy comprando como empresa» y añade el NIF.</li>
-        <li><strong>Nombre en el pago</strong>: puede aparecer UGC Pack, otra marca del mismo titular que comparte la cuenta de Stripe.</li>
-        <li><strong>El precio que vale</strong> es el que ves en el momento de pagar.</li>
+        <li><strong>Formas de pago</strong>: tarjeta y los métodos que muestre el pago según tu país y tu dispositivo. Admite 3D Secure.</li>
+        <li><strong>Quién te cobra</strong>: el pago lo procesa Link, el servicio de pagos de Stripe, que actúa como vendedor registrado de la compra. Cobra, calcula el IVA según tu país y te envía el recibo y la factura.</li>
+        <li><strong>Factura para tu empresa</strong>: marca «Estoy comprando como empresa» al pagar y añade los datos fiscales.</li>
+                <li><strong>El precio que vale</strong> es el que ves en el momento de pagar.</li>
       </ul>
 
       <h2 id="entrega"><span class="num">04</span>Entrega del curso</h2>
@@ -216,5 +215,6 @@
   </footer>
 
   <script src="app.js"></script>
+<script src="/js/consent.js"></script>
 </body>
 </html>

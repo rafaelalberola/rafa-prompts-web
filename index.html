@@ -397,6 +397,56 @@ h3 { margin: 0; font-size: 20px; line-height: 1.2; font-weight: 800; letter-spac
   .foot { justify-content: flex-start; }
 }
 
+
+/* ---------- enlace subrayado que abre algo en la página ---------- */
+.link-btn { appearance: none; background: none; border: 0; padding: 0; margin: 0; font: inherit; color: inherit; text-align: inherit; cursor: pointer;
+  text-decoration: underline; text-decoration-thickness: 1.5px; text-underline-offset: 4px; text-decoration-color: var(--accent); }
+.link-btn:hover { color: var(--accent-ink); }
+.plan.featured .link-btn:hover { color: #fff; }
+
+/* ---------- modal de los 12 proyectos ---------- */
+body:has(.modal[open]) { overflow: hidden; }
+.modal { border: 0; padding: 0; margin: auto; width: min(640px, calc(100vw - 24px)); max-height: min(88vh, 860px); border-radius: var(--r-card); background: var(--surface); color: var(--ink); box-shadow: 0 30px 80px rgba(20, 19, 17, 0.35); overflow: hidden; }
+.modal[open] { display: flex; flex-direction: column; animation: modalIn .22s ease; }
+.modal::backdrop { background: rgba(20, 19, 17, 0.55); -webkit-backdrop-filter: blur(4px); backdrop-filter: blur(4px); }
+@keyframes modalIn { from { opacity: 0; transform: translateY(10px) scale(.98); } }
+.modal-head { flex: 0 0 auto; display: flex; align-items: flex-start; justify-content: space-between; gap: var(--s4); padding: var(--s5) var(--s5) var(--s4); border-bottom: 1px solid var(--line); }
+.modal-head > div { display: flex; flex-direction: column; gap: var(--s2); }
+.modal-head h3 { font-size: clamp(22px, 3vw, 28px); line-height: 1.1; letter-spacing: -0.02em; }
+.modal-x { flex: 0 0 auto; width: 38px; height: 38px; border-radius: 50%; padding: 0; display: inline-flex; align-items: center; justify-content: center; border: 1px solid var(--line-strong); background: transparent; color: var(--ink); cursor: pointer; }
+.modal-x svg { width: 16px; height: 16px; fill: none; stroke: currentColor; stroke-width: 2; stroke-linecap: round; }
+.modal-body { flex: 1 1 auto; overflow-y: auto; padding: var(--s5); display: flex; flex-direction: column; gap: var(--s5); overscroll-behavior: contain; }
+.modal-body > * { flex-shrink: 0; }
+.modal-lede { margin: 0; font-size: 16px; color: var(--ink-soft); }
+.how { list-style: none; margin: 0; padding: 0; display: grid; grid-template-columns: repeat(3, minmax(0, 1fr)); gap: var(--s2); }
+.how li { display: flex; flex-direction: column; gap: 6px; padding: 12px; border-radius: 12px; background: var(--bg); font-size: 13.5px; font-weight: 600; line-height: 1.35; }
+.how span { width: 22px; height: 22px; border-radius: 50%; display: inline-flex; align-items: center; justify-content: center; background: var(--ink); color: var(--bg); font-size: 11px; font-weight: 800; }
+.peek { position: relative; margin: 0; border-radius: 14px; background: var(--band); color: var(--band-ink); overflow: hidden; }
+.peek figcaption { display: flex; align-items: center; justify-content: space-between; gap: var(--s3); padding: 10px 14px; border-bottom: 1px solid rgba(242, 239, 231, 0.12); font: 700 11px/1.3 var(--f-mono); letter-spacing: 0.04em; color: var(--band-soft); }
+.peek-copy { flex: 0 0 auto; padding: 5px 10px; border-radius: var(--r-pill); border: 1px solid rgba(242, 239, 231, 0.3); background: transparent; color: var(--band-ink); font: 700 11px/1 var(--f-mono); cursor: pointer; }
+.peek-copy:hover { background: rgba(242, 239, 231, 0.12); }
+.peek pre { margin: 0; padding: 14px 14px 64px; font: 400 12.5px/1.55 var(--f-mono); white-space: pre-wrap; }
+.peek-fade { position: absolute; inset: auto 0 0 0; height: 84px; display: flex; align-items: flex-end; justify-content: center; padding-bottom: 12px; background: linear-gradient(180deg, rgba(20, 19, 17, 0) 0%, rgba(20, 19, 17, 0.92) 55%); -webkit-backdrop-filter: blur(2px); backdrop-filter: blur(2px); }
+.peek-fade span { padding: 7px 12px; border-radius: var(--r-pill); background: rgba(242, 239, 231, 0.12); border: 1px solid rgba(242, 239, 231, 0.22); font: 700 11px/1.2 var(--f-mono); color: var(--band-ink); text-align: center; }
+.pj-list { list-style: none; margin: 0; padding: 0; display: flex; flex-direction: column; }
+.pj-list li { display: grid; grid-template-columns: 26px minmax(0, 1fr) auto; align-items: baseline; gap: var(--s3); padding: 11px 0; border-top: 1px solid var(--line); }
+.pj-n { font: 700 11.5px/1 var(--f-mono); color: var(--accent-ink); }
+.pj-t { display: flex; flex-direction: column; gap: 2px; }
+.pj-t strong { font-size: 15px; line-height: 1.3; }
+.pj-t span { font-size: 13.5px; line-height: 1.4; color: var(--ink-mute); }
+.pj-a { font: 700 10px/1 var(--f-mono); letter-spacing: 0.08em; text-transform: uppercase; color: var(--ink-mute); white-space: nowrap; }
+.modal-note { margin: 0; font-size: 13.5px; color: var(--ink-mute); }
+.modal-foot { flex: 0 0 auto; display: flex; flex-direction: column; gap: var(--s3); padding: var(--s4) var(--s5) var(--s5); border-top: 1px solid var(--line); background: var(--surface); }
+@media (max-width: 560px) {
+  .how { grid-template-columns: minmax(0, 1fr); }
+  .how li { flex-direction: row; align-items: center; }
+  .pj-a { display: none; }
+  .pj-list li { grid-template-columns: 26px minmax(0, 1fr); }
+}
+
+/* ---------- credenciales en la bio ---------- */
+.bio-txt .creds { font: 700 11.5px/1.5 var(--f-mono); letter-spacing: 0.08em; text-transform: uppercase; color: var(--accent-ink); }
+
 /* ---------- pie ---------- */
 .foot { display: flex; flex-wrap: wrap; align-items: center; justify-content: center; gap: var(--s3) var(--s5); padding-block: 40px; border-top: 1px solid var(--line); font-size: 14px; color: var(--ink-mute); }
 .foot a { text-decoration: none; }
@@ -661,8 +711,8 @@ h3 { margin: 0; font-size: 20px; line-height: 1.2; font-weight: 800; letter-spac
       <div class="routes">
         <article class="card route">
           <div class="route-head">
-            <h3>En la web de Claude, sin instalar nada</h3>
             <span class="label">Ruta básica · módulos 01 a 06</span>
+            <h3>En la web de Claude, sin instalar nada</h3>
             <p>Escribes instrucciones claras y usas plantillas ya hechas.</p>
           </div>
           <ol class="mods">
@@ -677,8 +727,8 @@ h3 { margin: 0; font-size: 20px; line-height: 1.2; font-weight: 800; letter-spac
         </article>
         <article class="card route">
           <div class="route-head">
-            <h3>Con Claude Code, sin escribir código</h3>
             <span class="label">Ruta avanzada · módulos 07 a 10</span>
+            <h3>Con Claude Code, sin escribir código</h3>
             <p>Instalas Claude en tu ordenador y te acompaño paso a paso. Sirve para que el trabajo se haga solo, a la hora que le digas.</p>
           </div>
           <ol class="mods">
@@ -700,12 +750,12 @@ h3 { margin: 0; font-size: 20px; line-height: 1.2; font-weight: 800; letter-spac
         <h2 id="h-comparar">Otros cursos de IA frente a este</h2>
       </div>
       <div class="vs" role="table" aria-label="Comparativa con otros cursos de IA">
-        <div class="vs-row vs-headrow" role="row"><span class="vs-k" role="columnheader"></span><span class="vs-us" role="columnheader"><svg class="vs-mark" viewBox="0 0 100 100" aria-hidden="true"><use href="#flower"/></svg>El método Claude</span><span class="vs-them" role="columnheader">Un curso de IA cualquiera</span></div>
-        <div class="vs-row" role="row"><span class="vs-k" role="rowheader">Formato</span><span class="vs-us" role="cell"><span class="yes"><svg><use href="#i-yes"/></svg></span>PDF con pasos numerados, abierto mientras trabajas</span><span class="vs-them" role="cell"><span class="no"><svg><use href="#i-no"/></svg></span>Horas de vídeo que ves una vez</span></div><div class="vs-row" role="row"><span class="vs-k" role="rowheader">Herramientas</span><span class="vs-us" role="cell"><span class="yes"><svg><use href="#i-yes"/></svg></span>Claude, a fondo</span><span class="vs-them" role="cell"><span class="no"><svg><use href="#i-no"/></svg></span>Muchas, todas por encima</span></div><div class="vs-row" role="row"><span class="vs-k" role="rowheader">Ejemplos</span><span class="vs-us" role="cell"><span class="yes"><svg><use href="#i-yes"/></svg></span>De un negocio como el tuyo: correo, clientes y procesos</span><span class="vs-them" role="cell"><span class="no"><svg><use href="#i-no"/></svg></span>De marketing o de programación</span></div><div class="vs-row" role="row"><span class="vs-k" role="rowheader">Al terminar</span><span class="vs-us" role="cell"><span class="yes"><svg><use href="#i-yes"/></svg></span>Tienes tus tareas montadas y funcionando</span><span class="vs-them" role="cell"><span class="no"><svg><use href="#i-no"/></svg></span>Sabes qué existe</span></div><div class="vs-row" role="row"><span class="vs-k" role="rowheader">Precio</span><span class="vs-us" role="cell"><span class="yes"><svg><use href="#i-yes"/></svg></span>149&nbsp;€ una vez, con 14 días de garantía</span><span class="vs-them" role="cell"><span class="no"><svg><use href="#i-no"/></svg></span>Cuota mensual o cientos de euros</span></div>
+        <div class="vs-row vs-headrow" role="row"><span class="vs-k" role="columnheader"></span><span class="vs-them" role="columnheader">Un curso de IA cualquiera</span><span class="vs-us" role="columnheader"><svg class="vs-mark" viewBox="0 0 100 100" aria-hidden="true"><use href="#flower"/></svg>El método Claude</span></div>
+        <div class="vs-row" role="row"><span class="vs-k" role="rowheader">Formato</span><span class="vs-them" role="cell"><span class="no"><svg><use href="#i-no"/></svg></span>Horas de vídeo que ves una vez</span><span class="vs-us" role="cell"><span class="yes"><svg><use href="#i-yes"/></svg></span>PDF con pasos numerados, abierto mientras trabajas</span></div><div class="vs-row" role="row"><span class="vs-k" role="rowheader">Herramientas</span><span class="vs-them" role="cell"><span class="no"><svg><use href="#i-no"/></svg></span>Muchas, todas por encima</span><span class="vs-us" role="cell"><span class="yes"><svg><use href="#i-yes"/></svg></span>Claude, a fondo</span></div><div class="vs-row" role="row"><span class="vs-k" role="rowheader">Ejemplos</span><span class="vs-them" role="cell"><span class="no"><svg><use href="#i-no"/></svg></span>De marketing o de programación</span><span class="vs-us" role="cell"><span class="yes"><svg><use href="#i-yes"/></svg></span>De un negocio como el tuyo: correo, clientes y procesos</span></div><div class="vs-row" role="row"><span class="vs-k" role="rowheader">Al terminar</span><span class="vs-them" role="cell"><span class="no"><svg><use href="#i-no"/></svg></span>Sabes qué existe</span><span class="vs-us" role="cell"><span class="yes"><svg><use href="#i-yes"/></svg></span>Tienes tus tareas montadas y funcionando</span></div><div class="vs-row" role="row"><span class="vs-k" role="rowheader">Precio</span><span class="vs-them" role="cell"><span class="no"><svg><use href="#i-no"/></svg></span>Cuota mensual o cientos de euros</span><span class="vs-us" role="cell"><span class="yes"><svg><use href="#i-yes"/></svg></span>149&nbsp;€ una vez, con 14 días de garantía</span></div>
       </div>
       <div class="vs-cards">
-        <div class="card vs-card us"><h3><svg class="vs-mark" viewBox="0 0 100 100" aria-hidden="true"><use href="#flower"/></svg>El método Claude</h3><ul class="vs-items"><li><span class="yes"><svg><use href="#i-yes"/></svg></span><span><span class="label">Formato</span>PDF con pasos numerados, abierto mientras trabajas</span></li><li><span class="yes"><svg><use href="#i-yes"/></svg></span><span><span class="label">Herramientas</span>Claude, a fondo</span></li><li><span class="yes"><svg><use href="#i-yes"/></svg></span><span><span class="label">Ejemplos</span>De un negocio como el tuyo: correo, clientes y procesos</span></li><li><span class="yes"><svg><use href="#i-yes"/></svg></span><span><span class="label">Al terminar</span>Tienes tus tareas montadas y funcionando</span></li><li><span class="yes"><svg><use href="#i-yes"/></svg></span><span><span class="label">Precio</span>149&nbsp;€ una vez, con 14 días de garantía</span></li></ul></div>
         <div class="card vs-card them"><h3>Un curso de IA cualquiera</h3><ul class="vs-items"><li><span class="no"><svg><use href="#i-no"/></svg></span><span><span class="label">Formato</span>Horas de vídeo que ves una vez</span></li><li><span class="no"><svg><use href="#i-no"/></svg></span><span><span class="label">Herramientas</span>Muchas, todas por encima</span></li><li><span class="no"><svg><use href="#i-no"/></svg></span><span><span class="label">Ejemplos</span>De marketing o de programación</span></li><li><span class="no"><svg><use href="#i-no"/></svg></span><span><span class="label">Al terminar</span>Sabes qué existe</span></li><li><span class="no"><svg><use href="#i-no"/></svg></span><span><span class="label">Precio</span>Cuota mensual o cientos de euros</span></li></ul></div>
+        <div class="card vs-card us"><h3><svg class="vs-mark" viewBox="0 0 100 100" aria-hidden="true"><use href="#flower"/></svg>El método Claude</h3><ul class="vs-items"><li><span class="yes"><svg><use href="#i-yes"/></svg></span><span><span class="label">Formato</span>PDF con pasos numerados, abierto mientras trabajas</span></li><li><span class="yes"><svg><use href="#i-yes"/></svg></span><span><span class="label">Herramientas</span>Claude, a fondo</span></li><li><span class="yes"><svg><use href="#i-yes"/></svg></span><span><span class="label">Ejemplos</span>De un negocio como el tuyo: correo, clientes y procesos</span></li><li><span class="yes"><svg><use href="#i-yes"/></svg></span><span><span class="label">Al terminar</span>Tienes tus tareas montadas y funcionando</span></li><li><span class="yes"><svg><use href="#i-yes"/></svg></span><span><span class="label">Precio</span>149&nbsp;€ una vez, con 14 días de garantía</span></li></ul></div>
       </div>
     </section>
   </div>
@@ -716,7 +766,7 @@ h3 { margin: 0; font-size: 20px; line-height: 1.2; font-weight: 800; letter-spac
       <div class="head head-center">
         <p class="kicker">Precio</p>
         <h2 id="h-precio">Elige tu plan</h2>
-        <p>Los tres incluyen el curso completo. Cambia cuánto te llevas hecho.</p>
+        <p>Los tres incluyen el curso completo. En el plan Negocio, además, <button type="button" class="link-btn" data-dialog="dlg-proyectos">12 proyectos listos para copiar y pegar en Claude</button>.</p>
         <p class="assure" aria-label="Condiciones de compra"><span class="assure-line"><span>Pago único</span><span>14 días de garantía</span><span>Factura para tu empresa</span></span></p>
         <p class="licence-line">Licencia individual. Si lo quieres para tu equipo, escríbeme a <span>hola@rafaprompts.com</span> y te preparo un precio.</p>
       </div>
@@ -736,7 +786,7 @@ h3 { margin: 0; font-size: 20px; line-height: 1.2; font-weight: 800; letter-spac
           <p class="plan-price"><strong>249&nbsp;€</strong><small>pago único</small></p>
           <ul class="checks">
             <li><span class="yes"><svg><use href="#i-yes"/></svg></span>Todo lo de Esencial</li>
-            <li><span class="yes"><svg><use href="#i-yes"/></svg></span>12 proyectos listos para copiar</li>
+            <li><span class="yes"><svg><use href="#i-yes"/></svg></span><button type="button" class="link-btn" data-dialog="dlg-proyectos">12 proyectos listos para copiar</button></li>
             <li><span class="yes"><svg><use href="#i-yes"/></svg></span>Adaptados a tu tipo de negocio</li>
             <li><span class="yes"><svg><use href="#i-yes"/></svg></span>Proyectos nuevos cada 3 meses</li>
           </ul>
@@ -748,7 +798,7 @@ h3 { margin: 0; font-size: 20px; line-height: 1.2; font-weight: 800; letter-spac
           <ul class="checks">
             <li><span class="yes"><svg><use href="#i-yes"/></svg></span>Todo lo de Negocio</li>
             <li><span class="yes"><svg><use href="#i-yes"/></svg></span>Llamada de 20 minutos sin coste</li>
-            <li><span class="yes"><svg><use href="#i-yes"/></svg></span>Propuesta cerrada con precio</li>
+            <li><span class="yes"><svg><use href="#i-yes"/></svg></span>Precio final cerrado antes de empezar</li>
             <li><span class="yes"><svg><use href="#i-yes"/></svg></span>Te acompaño hasta que funcione</li>
           </ul>
           <div class="plan-cta"><a class="btn ghost block" href="mailto:hola@rafaprompts.com?subject=Implantaci%C3%B3n%20a%20medida">Pedir una llamada</a></div>
@@ -767,8 +817,10 @@ h3 { margin: 0; font-size: 20px; line-height: 1.2; font-weight: 800; letter-spac
           <h2 id="h-rafa">Soy Rafa</h2>
         </div>
         <div class="bio-txt">
-          <p>Llevo siete años diseñando producto digital: webs, apps y marca. Cuatro de ellos, en los sistemas de pagos de una scale-up española de más de 1.000 empleados. He dado una masterclass en OLX.</p>
+          <p class="creds">Allfunds · Scale-up de pagos de más de 1.000 empleados · OLX</p>
+          <p>Llevo siete años diseñando productos y marcas digitales: webs, tiendas online, apps y marcas para empresas muy distintas. Pasé cuatro años en los sistemas de pagos de una scale-up española de más de 1.000 empleados y he trabajado con Allfunds, la plataforma que conecta gestoras de fondos con bancos de todo el mundo y que cotiza en la bolsa de Ámsterdam. También he dado una masterclass al equipo de OLX.</p>
           <p>Uso Claude a diario desde hace dos años. Mis propios proyectos funcionan con él: paneles que cada mañana me resumen las ventas por Telegram y servidores capaces de ordenar decenas de miles de fotos sin que nadie los toque.</p>
+          <p>He visto lo que cambia en un negocio cuando Claude se usa con método: el trabajo de una tarde se queda en minutos. Por eso he decidido enseñárselo a quien lleva una empresa pequeña y, si hace falta, ayudarle a montarlo.</p>
           <p>Enseño lo que uso. Cada plantilla y cada caso del curso salen de un proyecto mío que funciona.</p>
         </div>
       </div>
@@ -787,7 +839,7 @@ h3 { margin: 0; font-size: 20px; line-height: 1.2; font-weight: 800; letter-spac
         <details><summary>¿Qué plan de Claude necesito?</summary><p>Para los primeros módulos te vale el plan gratuito. Para usarlo a diario y para la ruta avanzada, lo normal es el plan de pago de Claude, que es una suscripción mensual.</p></details>
         <details><summary>¿Me haces factura?</summary><p>Sí. Al pagar puedes poner el nombre y el NIF de tu empresa, y la factura te llega por correo.</p></details>
         <details><summary>¿Qué cambia entre los planes?</summary><p>El curso es el mismo en los tres. Negocio añade 12 proyectos ya preparados para tu tipo de negocio, que te llegan por correo en menos de 24 horas. La implantación a medida es para montarlo juntos en tu empresa, con un precio cerrado según lo que necesites.</p></details>
-        <details><summary>¿Cómo funciona la implantación a medida?</summary><p>Empezamos con una llamada de 20 minutos, sin coste, para ver tu negocio. Después te mando una propuesta cerrada con lo que automatizamos, el plazo y el precio, desde 590&nbsp;€. Lo montamos juntos y te acompaño hasta que funcione.</p></details>
+        <details><summary>¿Cómo funciona la implantación a medida?</summary><p>Empezamos con una llamada de 20 minutos, sin coste, para ver tu negocio. Después te doy un precio final cerrado, desde 590&nbsp;€, según lo que haya que montar. Ese precio incluye todo el plan Negocio y todo mi trabajo hasta que funcione. Aparte solo pagas tus herramientas, como tu plan de Claude.</p></details>
         <details><summary>¿Y si no me sirve?</summary><p>Tienes 14 días para pedir el reembolso. Me escribes una línea contando qué ha fallado y te devuelvo el dinero. Sin preguntas.</p></details>
       </div>
     </section>
@@ -835,6 +887,33 @@ h3 { margin: 0; font-size: 20px; line-height: 1.2; font-weight: 800; letter-spac
     </section>
   </div>
 </main>
+
+
+<dialog class="modal" id="dlg-proyectos" aria-labelledby="dlg-proyectos-t">
+  <div class="modal-head">
+    <div><p class="kicker">Plan Negocio · 249&nbsp;€</p><h3 id="dlg-proyectos-t">12 proyectos listos para copiar y pegar</h3></div>
+    <button type="button" class="modal-x" data-close aria-label="Cerrar"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M6 6l12 12M18 6L6 18"/></svg></button>
+  </div>
+  <div class="modal-body">
+    <p class="modal-lede">Cada proyecto es Claude ya preparado para una tarea de tu negocio. No escribes nada desde cero.</p>
+    <ol class="how"><li><span>1</span>Copias las instrucciones</li><li><span>2</span>Las pegas en Claude</li><li><span>3</span>Cambias lo que va entre corchetes por tus datos</li></ol>
+    <figure class="peek">
+      <figcaption><span>Proyecto 01 · Solicitudes que se ordenan solas</span><button type="button" class="peek-copy" data-copy="peek-text">Copiar</button></figcaption>
+      <pre id="peek-text">Eres el asistente de captación de [TU NEGOCIO].
+Cuando te pegue una solicitud de un posible cliente:
+1. Haz una ficha: nombre, qué necesita, dónde y para cuándo.
+2. Clasifícala de la A a la D con mis criterios.
+3. Escribe una respuesta corta con mi tono y propón dos huecos…</pre>
+      <div class="peek-fade" aria-hidden="true"><span>Y así los 12, con un ejemplo y cómo adaptarlo a tu sector</span></div>
+    </figure>
+    <ul class="pj-list"><li><span class="pj-n">01</span><span class="pj-t"><strong>Solicitudes que se ordenan solas</strong><span>Cada petición, con su prioridad y la respuesta ya escrita.</span></span><span class="pj-a">Captación</span></li><li><span class="pj-n">02</span><span class="pj-t"><strong>Presupuestos</strong><span>De las notas de la visita al presupuesto con tus precios.</span></span><span class="pj-a">Ventas</span></li><li><span class="pj-n">03</span><span class="pj-t"><strong>Propuestas</strong><span>Para trabajos grandes: fases, plazos y precio en dos páginas.</span></span><span class="pj-a">Ventas</span></li><li><span class="pj-n">04</span><span class="pj-t"><strong>Seguimiento de presupuestos</strong><span>A quién escribir hoy y qué decirle.</span></span><span class="pj-a">Ventas</span></li><li><span class="pj-n">05</span><span class="pj-t"><strong>Respuestas a clientes</strong><span>Cada mensaje contestado con tu tono y tus fechas.</span></span><span class="pj-a">Clientes</span></li><li><span class="pj-n">06</span><span class="pj-t"><strong>Reseñas y quejas</strong><span>Respuestas a Google y a quejas que no suenan a plantilla.</span></span><span class="pj-a">Clientes</span></li><li><span class="pj-n">07</span><span class="pj-t"><strong>Preguntas frecuentes</strong><span>Los correos que repites, convertidos en respuestas guardadas.</span></span><span class="pj-a">Clientes</span></li><li><span class="pj-n">08</span><span class="pj-t"><strong>Publicaciones para redes</strong><span>De una foto y dos datos, el texto para cada red.</span></span><span class="pj-a">Marketing</span></li><li><span class="pj-n">09</span><span class="pj-t"><strong>Ofertas y campañas</strong><span>La oferta, los mensajes y el calendario de una campaña.</span></span><span class="pj-a">Marketing</span></li><li><span class="pj-n">10</span><span class="pj-t"><strong>Facturas para la gestoría</strong><span>Las facturas del mes en la tabla que pide tu gestoría.</span></span><span class="pj-a">Administración</span></li><li><span class="pj-n">11</span><span class="pj-t"><strong>Revisión de contratos</strong><span>Lo que vas a firmar, explicado en lenguaje llano.</span></span><span class="pj-a">Administración</span></li><li><span class="pj-n">12</span><span class="pj-t"><strong>Informe del mes</strong><span>Cómo ha ido el mes y qué hacer el siguiente.</span></span><span class="pj-a">Administración</span></li></ul>
+    <p class="modal-note">Cada tres meses añado proyectos nuevos y te llegan al mismo correo.</p>
+  </div>
+  <div class="modal-foot">
+    <a class="btn block js-negocio" href="https://buy.stripe.com/00waEYaL6eAagQe8xtaZi0d">Comprar · 249&nbsp;€</a>
+    <p class="assure" aria-label="Condiciones de compra"><span class="assure-line"><span>Pago único</span><span>14 días de garantía</span><span>Factura para tu empresa</span></span></p>
+  </div>
+</dialog>
 
 <div class="wrap">
   <footer class="foot">
@@ -905,6 +984,24 @@ h3 { margin: 0; font-size: 20px; line-height: 1.2; font-weight: 800; letter-spac
 })();
 </script>
 
+<script>
+/* Modal reutilizable: [data-dialog] lo abre; la X, el fondo o Esc lo cierran */
+(function () {
+  document.querySelectorAll('[data-dialog]').forEach(function (b) {
+    b.addEventListener('click', function () { var d = document.getElementById(b.dataset.dialog); if (d && d.showModal) d.showModal(); });
+  });
+  document.querySelectorAll('dialog.modal').forEach(function (d) {
+    d.addEventListener('click', function (e) { if (e.target === d || e.target.closest('[data-close]')) d.close(); });
+  });
+  document.querySelectorAll('[data-copy]').forEach(function (b) {
+    b.addEventListener('click', function () {
+      var t = document.getElementById(b.dataset.copy).innerText;
+      var done = function () { b.textContent = 'Copiado'; setTimeout(function () { b.textContent = 'Copiar'; }, 1600); };
+      if (navigator.clipboard) navigator.clipboard.writeText(t).then(done).catch(function () {}); else done();
+    });
+  });
+})();
+</script>
 <script>
 /* Newsletter: el mismo envío que la home actual (Brevo vía el Worker), solo en el dominio real */
 (function () {

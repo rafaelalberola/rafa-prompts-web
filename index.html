@@ -219,23 +219,15 @@ h3 { margin: 0; font-size: 20px; line-height: 1.2; font-weight: 800; letter-spac
 @media (min-width: 900px) { .about { grid-template-columns: repeat(3, minmax(0, 1fr)); } }
 .about p { margin: 0; font-size: 15.5px; color: var(--ink-soft); }
 
-/* bloque «¿Por qué Claude y no ChatGPT?» */
-#claude .about + .why { margin-top: calc(var(--gap-card) - 40px); }
-@media (max-width: 899px) { #claude .about + .why { margin-top: calc(var(--gap-card) - var(--s6)); } }
-.why { background: var(--band); border-color: var(--band); color: var(--band-ink); }
-.why h3 { color: var(--band-ink); font-size: 22px; }
-.why > p { font-size: 16px; color: var(--band-soft); }
-.why-list { list-style: none; margin: 0; padding: 0; display: grid; grid-template-columns: minmax(0, 1fr); gap: var(--s4) var(--s6); }
-@media (min-width: 760px) { .why-list { grid-template-columns: repeat(2, minmax(0, 1fr)); } }
-.why-list li { display: flex; align-items: flex-start; gap: var(--s3); }
-.why-list li > span:last-child { display: flex; flex-direction: column; gap: 3px; font-size: 15px; line-height: 1.45; color: var(--band-soft); }
-.why-list strong { font-size: 16px; color: var(--band-ink); }
-.why .yes { background: rgba(111, 221, 163, 0.16); color: var(--ok-on-dark); }
+/* icono de las tarjetas de «¿Qué es Claude?» (Lucide), en terracota suave para no confundirse con los números de «Cómo funciona» */
+.card-ico { width: 44px; height: 44px; border-radius: 12px; display: inline-flex; align-items: center; justify-content: center; background: rgba(218, 119, 86, 0.12); color: var(--accent-ink); }
+.card-ico svg { width: 22px; height: 22px; fill: none; stroke: currentColor; stroke-width: 2; stroke-linecap: round; stroke-linejoin: round; }
 
 /* ---------- el método ---------- */
 .steps { list-style: none; margin: 0; padding: 0; display: grid; grid-template-columns: minmax(0, 1fr); gap: var(--gap-card); }
 @media (min-width: 900px) { .steps { grid-template-columns: repeat(3, minmax(0, 1fr)); } }
 .step { gap: var(--s3); }
+.step-n { width: 40px; height: 40px; border-radius: 50%; display: inline-flex; align-items: center; justify-content: center; background: var(--ink); color: var(--bg); font-weight: 900; font-size: 17px; }
 /* iconos de Lucide (ISC), dibujados en línea */
 .step-ico { width: 44px; height: 44px; border-radius: 12px; display: inline-flex; align-items: center; justify-content: center; background: var(--ink); color: var(--bg); }
 .step-ico svg { width: 22px; height: 22px; fill: none; stroke: currentColor; stroke-width: 2; stroke-linecap: round; stroke-linejoin: round; }
@@ -770,15 +762,10 @@ body::before { content: ""; position: fixed; inset: 0 0 auto; height: env(safe-a
         <h2 id="h-claude">¿Qué es&nbsp;Claude y&nbsp;por&nbsp;qué te&nbsp;interesa?</h2>
       </div>
       <ul class="about">
-        <li class="card"><h3>Qué es</h3><p>Un&nbsp;asistente de&nbsp;inteligencia artificial, como&nbsp;ChatGPT, creado por&nbsp;Anthropic, una&nbsp;empresa que&nbsp;fundaron antiguos investigadores de&nbsp;OpenAI. Le&nbsp;escribes como&nbsp;a&nbsp;una&nbsp;persona y&nbsp;te&nbsp;contesta o&nbsp;hace la&nbsp;tarea.</p></li>
-        <li class="card"><h3>Qué puede hacer</h3><p>Escribir y&nbsp;contestar correos, leer PDF y&nbsp;documentos, ordenar datos, preparar textos y&nbsp;conectarse con&nbsp;Gmail o&nbsp;Google Drive.</p></li>
-        <li class="card"><h3>Por&nbsp;qué aprenderlo</h3><p>Usado a&nbsp;ratos te&nbsp;ahorra minutos. Con&nbsp;tu&nbsp;negocio explicado y&nbsp;tus&nbsp;tareas guardadas te&nbsp;quita horas cada&nbsp;semana, y&nbsp;eso es&nbsp;lo&nbsp;que&nbsp;aprendes aquí.</p></li>
+        <li class="card"><span class="card-ico" aria-hidden="true"><svg viewBox="0 0 24 24"><path d="M9.937 15.5A2 2 0 0 0 8.5 14.063l-6.135-1.582a.5.5 0 0 1 0-.962L8.5 9.936A2 2 0 0 0 9.937 8.5l1.582-6.135a.5.5 0 0 1 .963 0L14.063 8.5A2 2 0 0 0 15.5 9.937l6.135 1.581a.5.5 0 0 1 0 .964L15.5 14.063a2 2 0 0 0-1.437 1.437l-1.582 6.135a.5.5 0 0 1-.963 0z"/><path d="M20 3v4"/><path d="M22 5h-4"/><path d="M4 17v2"/><path d="M5 18H3"/></svg></span><h3>Qué es</h3><p>Un&nbsp;asistente de&nbsp;inteligencia artificial, como&nbsp;ChatGPT, creado por&nbsp;Anthropic. Le&nbsp;escribes como&nbsp;a&nbsp;una&nbsp;persona y&nbsp;hace la&nbsp;tarea. La&nbsp;diferencia: escribe más&nbsp;natural, respeta tus&nbsp;reglas al&nbsp;pie de&nbsp;la&nbsp;letra y&nbsp;lee documentos enteros de&nbsp;una&nbsp;vez.</p></li>
+        <li class="card"><span class="card-ico" aria-hidden="true"><svg viewBox="0 0 24 24"><path d="m3 17 2 2 4-4"/><path d="m3 7 2 2 4-4"/><path d="M13 6h8"/><path d="M13 12h8"/><path d="M13 18h8"/></svg></span><h3>Qué puede hacer</h3><p>Escribir y&nbsp;contestar correos, leer PDF y&nbsp;documentos, ordenar datos, preparar textos y&nbsp;conectarse con&nbsp;Gmail o&nbsp;Google Drive.</p></li>
+        <li class="card"><span class="card-ico" aria-hidden="true"><svg viewBox="0 0 24 24"><polyline points="22 7 13.5 15.5 8.5 10.5 2 17"/><polyline points="16 7 22 7 22 13"/></svg></span><h3>Por&nbsp;qué aprenderlo</h3><p>Usado a&nbsp;ratos te&nbsp;ahorra minutos. Con&nbsp;tu&nbsp;negocio explicado y&nbsp;tus&nbsp;tareas guardadas te&nbsp;quita horas cada&nbsp;semana, y&nbsp;eso es&nbsp;lo&nbsp;que&nbsp;aprendes aquí.</p></li>
       </ul>
-      <div class="card why">
-        <h3>¿Por&nbsp;qué Claude y&nbsp;no&nbsp;ChatGPT?</h3>
-        <p>Los&nbsp;dos sirven. Para&nbsp;un&nbsp;negocio, para&nbsp;mí Claude gana en&nbsp;cuatro cosas:</p>
-        <ul class="why-list"><li><span class="yes"><svg><use href="#i-yes"/></svg></span><span><strong>Escribe como&nbsp;una&nbsp;persona</strong>Sus&nbsp;correos y&nbsp;presupuestos suenan menos a&nbsp;plantilla: los&nbsp;puedes enviar casi sin&nbsp;tocarlos.</span></li><li><span class="yes"><svg><use href="#i-yes"/></svg></span><span><strong>Respeta tus&nbsp;reglas</strong>Sigue al&nbsp;pie de&nbsp;la&nbsp;letra instrucciones largas, como&nbsp;el&nbsp;documento de&nbsp;tu&nbsp;negocio, y&nbsp;no&nbsp;se&nbsp;las&nbsp;salta a&nbsp;la&nbsp;tercera respuesta.</span></li><li><span class="yes"><svg><use href="#i-yes"/></svg></span><span><strong>Lee documentos enteros</strong>Un&nbsp;contrato, las&nbsp;facturas del&nbsp;mes o&nbsp;una&nbsp;carpeta de&nbsp;correos de&nbsp;una&nbsp;vez, sin&nbsp;tener que&nbsp;trocearlos.</span></li><li><span class="yes"><svg><use href="#i-yes"/></svg></span><span><strong>Trabaja por&nbsp;su&nbsp;cuenta</strong>Con&nbsp;Claude Code hace tareas en&nbsp;tu&nbsp;ordenador y&nbsp;te&nbsp;las&nbsp;deja terminadas, no&nbsp;solo te&nbsp;dice cómo hacerlas.</span></li></ul>
-      </div>
     </section>
   </div>
 
@@ -809,9 +796,9 @@ body::before { content: ""; position: fixed; inset: 0 0 auto; height: env(safe-a
         <h2 id="h-como">Aprendes, lo&nbsp;aplicas y,&nbsp;si&nbsp;lo&nbsp;necesitas, te&nbsp;ayudo</h2>
       </div>
       <ol class="steps">
-        <li class="card step"><span class="step-ico"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M12 7v14"/><path d="M3 18a1 1 0 0 1-1-1V4a1 1 0 0 1 1-1h5a4 4 0 0 1 4 4 4 4 0 0 1 4-4h5a1 1 0 0 1 1 1v13a1 1 0 0 1-1 1h-6a3 3 0 0 0-3 3 3 3 0 0 0-3-3z"/></svg></span><h3>Aprendes</h3><p>Lees el&nbsp;curso a&nbsp;tu&nbsp;ritmo, paso a&nbsp;paso y&nbsp;sin&nbsp;programar.</p></li>
-        <li class="card step"><span class="step-ico"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M4.5 16.5c-1.5 1.26-2 5-2 5s3.74-.5 5-2c.71-.84.7-2.13-.09-2.91a2.18 2.18 0 0 0-2.91-.09z"/><path d="m12 15-3-3a22 22 0 0 1 2-3.95A12.88 12.88 0 0 1 22 2c0 2.72-.78 7.5-6 11a22.35 22.35 0 0 1-4 2z"/><path d="M9 12H4s.55-3.03 2-4c1.62-1.08 5 0 5 0"/><path d="M12 15v5s3.03-.55 4-2c1.08-1.62 0-5 0-5"/></svg></span><h3>Lo&nbsp;aplicas</h3><p>Copias las&nbsp;plantillas en&nbsp;tu&nbsp;negocio y&nbsp;empiezas a&nbsp;ahorrar horas desde&nbsp;el&nbsp;primer día.</p></li>
-        <li class="card step"><span class="step-ico"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M3 11h3a2 2 0 0 1 2 2v3a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-5Zm0 0a9 9 0 1 1 18 0m0 0v5a2 2 0 0 1-2 2h-1a2 2 0 0 1-2-2v-3a2 2 0 0 1 2-2h3Z"/><path d="M21 16v2a4 4 0 0 1-4 4h-5"/></svg></span><h3>Te&nbsp;ayudo si&nbsp;lo&nbsp;necesitas</h3><p>Si&nbsp;te&nbsp;atascas o&nbsp;no&nbsp;tienes tiempo, lo&nbsp;montamos juntos en&nbsp;tu&nbsp;empresa.</p><p class="contact">Escríbeme a&nbsp;<span>hola@rafaprompts.com</span></p></li>
+        <li class="card step"><span class="step-n">1</span><h3>Aprendes</h3><p>Lees el&nbsp;curso a&nbsp;tu&nbsp;ritmo, paso a&nbsp;paso y&nbsp;sin&nbsp;programar.</p></li>
+        <li class="card step"><span class="step-n">2</span><h3>Lo&nbsp;aplicas</h3><p>Copias las&nbsp;plantillas en&nbsp;tu&nbsp;negocio y&nbsp;empiezas a&nbsp;ahorrar horas desde&nbsp;el&nbsp;primer día.</p></li>
+        <li class="card step"><span class="step-n">3</span><h3>Te&nbsp;ayudo si&nbsp;lo&nbsp;necesitas</h3><p>Si&nbsp;te&nbsp;atascas o&nbsp;no&nbsp;tienes tiempo, lo&nbsp;montamos juntos en&nbsp;tu&nbsp;empresa.</p><p class="contact">Escríbeme a&nbsp;<span>hola@rafaprompts.com</span></p></li>
       </ol>
     </section>
   </div>
@@ -1117,7 +1104,7 @@ Cuando te pegue una solicitud de un posible cliente:
   var groups = ['.tasks > li', '.about > li', '.steps > li', '.routes > article', '.plans > article', '.vs-cards > .card', '.guides > li', '.faq-group'];
   var els = [];
   groups.forEach(function (sel) { document.querySelectorAll(sel).forEach(function (el, i) { el.style.setProperty('--d', i % 3); els.push(el); }); });
-  document.querySelectorAll('.sec .head, .demo, .vs, .subscribe, .bio, .why').forEach(function (el) { els.push(el); });
+  document.querySelectorAll('.sec .head, .demo, .vs, .subscribe, .bio').forEach(function (el) { els.push(el); });
   var limit = window.innerHeight * 0.92;
   els.forEach(function (el) { if (el.getBoundingClientRect().top > limit) el.classList.add('pre'); });
   var io = new IntersectionObserver(function (entries) {

@@ -485,18 +485,21 @@ h3 { margin: 0; font-size: 20px; line-height: 1.2; font-weight: 800; letter-spac
 
 
 /* ---------- pago (Stripe embebido; solo en la web) ---------- */
-.checkout-overlay { position: fixed; inset: 0; z-index: 80; display: flex; align-items: center; justify-content: center; padding: 5vh 5vw; background: rgba(17, 17, 17, 0.55); backdrop-filter: blur(4px); -webkit-backdrop-filter: blur(4px); opacity: 0; pointer-events: none; transition: opacity .25s; overscroll-behavior: contain; }
+.checkout-overlay { position: fixed; inset: 0; z-index: 80; display: flex; background: var(--bg); opacity: 0; pointer-events: none; transition: opacity .2s ease; overscroll-behavior: contain; }
 .checkout-overlay.show { opacity: 1; pointer-events: auto; }
-.checkout-modal { position: relative; width: 100%; max-width: 520px; max-height: 90dvh; display: flex; flex-direction: column; overflow: hidden; background: var(--surface); border-radius: 28px; box-shadow: 0 24px 64px rgba(17, 17, 17, 0.25); }
-.checkout-modal-head { flex-shrink: 0; display: flex; justify-content: space-between; align-items: center; padding: 14px 16px 14px 20px; border-bottom: 1px solid var(--line); }
-.checkout-modal-head .title { font: 800 14px/1.3 var(--f-sans); }
+.checkout-modal { position: relative; width: 100%; height: 100%; display: flex; flex-direction: column; overflow: hidden; background: var(--bg); }
+.checkout-modal-head { flex-shrink: 0; display: flex; justify-content: space-between; align-items: center; gap: var(--s4); padding: 12px max(16px, env(safe-area-inset-right)) 12px max(20px, env(safe-area-inset-left)); background: var(--surface); border-bottom: 1px solid var(--line); }
+.checkout-modal-head .title { font: 800 15px/1.3 var(--f-sans); }
 .checkout-close { flex-shrink: 0; width: 40px; height: 40px; display: inline-flex; align-items: center; justify-content: center; border-radius: 50%; border: 1px solid var(--line); background: rgba(17, 17, 17, 0.06); color: var(--ink); cursor: pointer; }
 .checkout-close:hover { background: var(--ink); color: var(--surface); }
 .checkout-close svg { width: 20px; height: 20px; }
 .checkout-body { flex: 1; overflow-y: auto; -webkit-overflow-scrolling: touch; overscroll-behavior: contain; }
-.checkout-body #checkout { min-height: 540px; }
+.checkout-body #checkout { width: 100%; max-width: 1080px; min-height: 100%; margin: 0 auto; padding: var(--s5) var(--s4) var(--s7); }
+.checkout-overlay.is-cal .checkout-body { overflow: hidden; }
+.checkout-overlay.is-cal #checkout { max-width: none; height: 100%; padding: 0; }
+.cal-frame { display: block; width: 100%; height: 100%; border: 0; background: var(--surface); }
 .checkout-msg { padding: 40px 24px; text-align: center; color: var(--ink-soft); }
-@media (max-width: 600px) { .checkout-overlay { padding: 16px; } .checkout-modal { max-height: calc(100dvh - 32px); } .checkout-body #checkout { min-height: 0; } }
+@media (max-width: 600px) { .checkout-body #checkout { padding: var(--s3) 0 var(--s6); } }
 
 /* ---------- móvil: todo alineado a la izquierda ---------- */
 @media (max-width: 899px) {
@@ -1057,11 +1060,11 @@ body::before { content: ""; position: fixed; inset: 0 0 auto; height: env(safe-a
           <p class="plan-price"><span class="from">Desde</span><strong>590&nbsp;€</strong></p>
           <ul class="checks">
             <li><span class="yes"><svg><use href="#i-yes"/></svg></span>Todo lo&nbsp;de&nbsp;Negocio</li>
-            <li><span class="yes"><svg><use href="#i-yes"/></svg></span>Diagnóstico de&nbsp;45 minutos para&nbsp;empezar (50&nbsp;€, se&nbsp;descuentan si&nbsp;contratas)</li>
+            <li><span class="yes"><svg><use href="#i-yes"/></svg></span>Primera llamada de&nbsp;45 minutos por&nbsp;50&nbsp;€, que&nbsp;se&nbsp;descuentan si&nbsp;contratas</li>
             <li><span class="yes"><svg><use href="#i-yes"/></svg></span>Precio final cerrado antes de&nbsp;empezar</li>
             <li><span class="yes"><svg><use href="#i-yes"/></svg></span>Te&nbsp;acompaño hasta&nbsp;que&nbsp;funcione</li>
           </ul>
-          <div class="plan-cta"><a class="btn ghost block js-diag" href="https://calendly.com/rafaprompts/30min">Diagnóstico · 50&nbsp;€</a></div>
+          <div class="plan-cta"><a class="btn ghost block js-diag" href="https://calendly.com/rafaprompts/30min">Reservar llamada · 50&nbsp;€</a></div>
         </article>
       </div>
     </section>
@@ -1103,7 +1106,7 @@ body::before { content: ""; position: fixed; inset: 0 0 auto; height: env(safe-a
         </div>
         <div class="faq-group"><p class="faq-k">Planes y&nbsp;compra</p>
           <details><summary>¿Qué cambia entre&nbsp;los&nbsp;planes?</summary><p>El&nbsp;curso es&nbsp;el&nbsp;mismo en&nbsp;los&nbsp;tres. Negocio añade 12 proyectos ya&nbsp;preparados para&nbsp;tu&nbsp;tipo de&nbsp;negocio, que&nbsp;te&nbsp;llegan por&nbsp;correo en&nbsp;menos de&nbsp;24 horas. La&nbsp;implantación a&nbsp;medida es&nbsp;para&nbsp;montarlo juntos en&nbsp;tu&nbsp;empresa, con&nbsp;un&nbsp;precio cerrado según lo&nbsp;que&nbsp;necesites.</p></details>
-          <details><summary>¿Cómo funciona la&nbsp;implantación a&nbsp;medida?</summary><p>Empezamos con&nbsp;un&nbsp;diagnóstico de&nbsp;45 minutos que&nbsp;cuesta 50&nbsp;€. Repasamos tu&nbsp;negocio y&nbsp;te&nbsp;llevas por&nbsp;escrito las&nbsp;tres tareas que&nbsp;más&nbsp;horas te&nbsp;quitan y&nbsp;cuánto costaría automatizarlas. Si&nbsp;contratas la&nbsp;implantación, desde&nbsp;590&nbsp;€, esos 50&nbsp;€ se&nbsp;descuentan del&nbsp;precio. El&nbsp;precio final incluye todo el&nbsp;plan Negocio y&nbsp;todo mi&nbsp;trabajo hasta&nbsp;que&nbsp;funcione; aparte solo pagas tus&nbsp;herramientas, como&nbsp;tu&nbsp;plan de&nbsp;Claude.</p></details>
+          <details><summary>¿Cómo funciona la&nbsp;implantación a&nbsp;medida?</summary><p>Empezamos con&nbsp;una&nbsp;llamada de&nbsp;45 minutos que&nbsp;cuesta 50&nbsp;€. Repasamos tu&nbsp;negocio y&nbsp;te&nbsp;llevas por&nbsp;escrito las&nbsp;tres tareas que&nbsp;más&nbsp;horas te&nbsp;quitan y&nbsp;cuánto costaría automatizarlas. Si&nbsp;contratas la&nbsp;implantación, desde&nbsp;590&nbsp;€, esos 50&nbsp;€ se&nbsp;descuentan del&nbsp;precio. El&nbsp;precio final incluye todo el&nbsp;plan Negocio y&nbsp;todo mi&nbsp;trabajo hasta&nbsp;que&nbsp;funcione; aparte solo pagas tus&nbsp;herramientas, como&nbsp;tu&nbsp;plan de&nbsp;Claude.</p></details>
           <details><summary>¿Me&nbsp;haces factura?</summary><p>Sí. Al&nbsp;pagar puedes poner el&nbsp;nombre y&nbsp;el&nbsp;NIF de&nbsp;tu&nbsp;empresa, y&nbsp;la&nbsp;factura te&nbsp;llega por&nbsp;correo.</p></details>
           <details><summary>¿Y&nbsp;si&nbsp;no&nbsp;me&nbsp;sirve?</summary><p>Tienes 14 días para&nbsp;pedir el&nbsp;reembolso. Me&nbsp;escribes una&nbsp;línea y&nbsp;te&nbsp;devuelvo el&nbsp;dinero, sin&nbsp;preguntas.</p></details>
         </div>
@@ -1200,7 +1203,6 @@ Cuando te pegue una solicitud de un posible cliente:
 
 <div class="wrap">
   <footer class="foot">
-    <a href="https://instagram.com/rafa.prompts" target="_blank" rel="noopener">@rafa.prompts</a>
     <a href="https://rafaprompts.com/privacidad.html">Privacidad</a>
     <a href="https://rafaprompts.com/terminos.html">Condiciones</a>
   </footer>
@@ -1208,10 +1210,10 @@ Cuando te pegue una solicitud de un posible cliente:
 
 
 <div class="checkout-overlay" id="checkout-overlay" aria-hidden="true">
-  <div class="checkout-modal" role="dialog" aria-modal="true" aria-label="Pago">
+  <div class="checkout-modal" role="dialog" aria-modal="true" aria-label="Pago o reserva">
     <div class="checkout-modal-head">
       <div class="title">El&nbsp;método Claude · 149 €</div>
-      <button class="checkout-close" id="checkout-close" type="button" aria-label="Cerrar el pago"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><path d="M18 6L6 18M6 6l12 12"/></svg></button>
+      <button class="checkout-close" id="checkout-close" type="button" aria-label="Cerrar"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><path d="M18 6L6 18M6 6l12 12"/></svg></button>
     </div>
     <div class="checkout-body"><div id="checkout"></div></div>
   </div>
@@ -1232,6 +1234,7 @@ Cuando te pegue una solicitud de un posible cliente:
   /* plan: «esencial» (149 €) o «negocio» (249 €). Si el servidor aún no vende Negocio, se abre su enlace de pago. */
   async function open(plan, fallbackUrl) {
     plan = plan || 'esencial';
+    document.querySelectorAll('dialog[open]').forEach(function (d) { d.close(); });
     overlay.querySelector('.checkout-modal-head .title').textContent = TITULO[plan] || TITULO.esencial;
     overlay.classList.add('show'); overlay.setAttribute('aria-hidden', 'false'); document.body.style.overflow = 'hidden';
     if (!LIVE) { box.innerHTML = '<div class="checkout-msg">Vista previa: el pago de Stripe solo se abre en rafaprompts.com.</div>'; return; }
@@ -1261,18 +1264,28 @@ Cuando te pegue una solicitud de un posible cliente:
     }
   }
   function close() {
-    overlay.classList.remove('show'); overlay.setAttribute('aria-hidden', 'true'); document.body.style.overflow = '';
+    overlay.classList.remove('show', 'is-cal'); overlay.setAttribute('aria-hidden', 'true'); document.body.style.overflow = '';
     if (checkout) { try { checkout.destroy(); } catch (_) {} checkout = null; }
     box.innerHTML = '';
   }
   document.querySelectorAll('.js-buy').forEach(function (a) { a.addEventListener('click', function (e) { e.preventDefault(); open('esencial'); }); });
-  /* Diagnóstico de 50 €: inicio de pago y al enlace de Stripe */
-  document.querySelectorAll('.js-diag').forEach(function (a) { a.addEventListener('click', function (e) {
-    if (!window.fbq) return;
-    e.preventDefault();
-    fbq('track', 'InitiateCheckout', { content_name: 'Diagnóstico de implantación', content_ids: ['diagnostico-implantacion'], value: 50.00, currency: 'EUR' });
-    setTimeout(function () { location.href = a.href; }, 250);
-  }); });
+  /* Llamada de 45 minutos (50 €): Calendly dentro de la web, a pantalla completa. Calendly cobra y reserva. */
+  function abrirCalendly(url) {
+    document.querySelectorAll('dialog[open]').forEach(function (d) { d.close(); });
+    overlay.querySelector('.checkout-modal-head .title').textContent = 'Llamada de 45 minutos · 50\u00a0€';
+    overlay.classList.add('show', 'is-cal'); overlay.setAttribute('aria-hidden', 'false'); document.body.style.overflow = 'hidden';
+    var u = url + (url.indexOf('?') < 0 ? '?' : '&') + 'embed_domain=' + encodeURIComponent(location.hostname || 'rafaprompts.com')
+      + '&embed_type=Inline&hide_gdpr_banner=1&primary_color=da7756&text_color=141311&background_color=ffffff';
+    box.innerHTML = '<iframe class="cal-frame" title="Reservar la llamada" src="' + u + '" allow="payment"></iframe>';
+    if (window.fbq) fbq('track', 'InitiateCheckout', { content_name: 'Diagnóstico de implantación', content_ids: ['diagnostico-implantacion'], value: 50.00, currency: 'EUR' });
+  }
+  document.querySelectorAll('.js-diag').forEach(function (a) { a.addEventListener('click', function (e) { e.preventDefault(); abrirCalendly(a.href); }); });
+  /* reserva pagada: compra en Meta con el mismo id que manda el servidor (así no se cuenta dos veces) */
+  window.addEventListener('message', function (e) {
+    if (e.origin !== 'https://calendly.com' || !e.data || e.data.event !== 'calendly.event_scheduled') return;
+    var inv = ((e.data.payload || {}).invitee || {}).uri || '';
+    if (window.fbq) fbq('track', 'Purchase', { content_name: 'Diagnóstico de implantación', content_ids: ['diagnostico-implantacion'], value: 50.00, currency: 'EUR' }, inv ? { eventID: 'diag_' + inv.split('/').pop() } : undefined);
+  });
   /* Negocio se paga en el mismo pago integrado; si el servidor aún no lo vende, se abre su enlace de pago de siempre */
   document.querySelectorAll('.js-negocio').forEach(function (a) { a.addEventListener('click', function (e) {
     e.preventDefault(); open('negocio', a.href);

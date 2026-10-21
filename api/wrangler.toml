@@ -9,6 +9,7 @@ workers_dev = true
 [vars]
 ALLOWED_ORIGIN = "https://rafaprompts.com"
 STRIPE_PRICE_ID = "price_1TQPLuIYM3GXrMLHqFxUdIrT"
+STRIPE_PRICE_NEGOCIO = "price_1UStwcIYM3GXrMLH0Sr1iGvK"   # 249 € IVA incl.: Negocio se paga en el mismo pago integrado
 STRIPE_PUBLISHABLE_KEY = "pk_live_51T50VyIYM3GXrMLHGGfo81iUzPdi6XJfSZW91UkNEISZ9U12a0mkPO8YnyaoZTyxTP1vwzKeXmCXfCRn9YyMaDjo000gDMaXZR"
 EMAIL_FROM = "El método Claude <hola@rafaprompts.com>"
 EMAIL_REPLY_TO = "hola@rafaprompts.com"

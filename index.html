@@ -96,7 +96,7 @@ h3 { margin: 0; font-size: 20px; line-height: 1.2; font-weight: 800; letter-spac
 .head p:not(.kicker) { margin: 0; max-width: 60ch; font-size: 17px; color: var(--ink-soft); }
 .it { font-family: var(--f-serif); font-style: italic; font-weight: 500; letter-spacing: -0.01em; color: var(--accent); }
 
-/* ---------- el recorrido: vertical en móvil, horizontal en escritorio ---------- */
+/* ---------- el recorrido: vertical en móvil y en escritorio ---------- */
 .journey { display: flex; flex-direction: column; gap: var(--s5); }
 .act { display: flex; flex-direction: column; gap: var(--s3); min-width: 0; }
 .act-name { margin: 0; font: 700 11.5px/1.3 var(--f-mono); letter-spacing: 0.14em; text-transform: uppercase; color: var(--ink-mute); }
@@ -122,30 +122,15 @@ h3 { margin: 0; font-size: 20px; line-height: 1.2; font-weight: 800; letter-spac
 .journey-auto strong { color: var(--ink); }
 .value-line { margin: 0; font-weight: 700; font-size: 16px; color: var(--ok); text-align: center; }
 @media (max-width: 899px) { .value-line { text-align: left; } }
-@media (min-width: 1080px) {
-  .journey { flex-direction: row; gap: 0; align-self: center; width: min(1440px, calc(100vw - 64px)); }
-  .journey { flex-wrap: wrap; row-gap: var(--s7); }
-  .act { flex: 0 0 calc(var(--n) * 100% / 6); min-width: 0; gap: var(--s5); }
-  .act-name { margin-right: var(--s4); padding-bottom: var(--s2); border-bottom: 2px solid rgba(218, 119, 86, 0.35); }
-  .stages { flex-direction: row; }
-  .stage { flex: 1 1 0; min-width: 0; flex-direction: column; gap: var(--s4); padding: 0 var(--s3) 0 0; }
-  .stage .label { letter-spacing: 0.06em; }
-  .stage::before, .stage:first-child::before, .stage:last-child::before, .stage:only-child::before { display: block; top: 21px; bottom: auto; left: 0; right: 0; width: auto; height: 2px; transform-origin: left center; }
-  .act:first-child .stage:first-child::before { left: 22px; }
-  .act:last-child .stage:last-child::before, .act.fin-fila .stage:last-child::before { right: auto; width: 22px; }
-  .act.ini-fila .stage:first-child::before { left: 22px; }
-  .stage-txt { padding-top: 0; }
-  .stage h3 { font-size: 17px; }
-  .stage p { font-size: 15px; }
-  .journey-auto { align-self: center; }
+@media (min-width: 900px) {
+  /* escritorio: el mismo formato vertical que en móvil, en una columna centrada */
+  .journey, .card.journey-auto { width: 100%; max-width: 760px; margin-inline: auto; }
 }
 @media (prefers-reduced-motion: no-preference) {
   .journey.in .stage::before { animation: jLineY .7s cubic-bezier(.2,.7,.2,1) both; animation-delay: calc(var(--i) * 110ms); }
   .journey.in .node { animation: jNode .5s cubic-bezier(.2,.7,.2,1) both; animation-delay: calc(var(--i) * 110ms + 60ms); }
-  @media (min-width: 1080px) { .journey.in .stage::before { animation-name: jLineX; } }
 }
 @keyframes jLineY { from { transform: scaleY(0); } }
-@keyframes jLineX { from { transform: scaleX(0); } }
 @keyframes jNode { from { transform: scale(.6); opacity: 0; } }
 
 /* ---------- módulos: una tarjeta por módulo, una debajo de otra ---------- */
@@ -1318,25 +1303,6 @@ Cuando te pegue una solicitud de un posible cliente:
     entries.forEach(function (e) { if (e.isIntersecting) { e.target.classList.add('in'); e.target.classList.remove('pre'); io.unobserve(e.target); } });
   }, { rootMargin: '0px 0px -8% 0px', threshold: 0.12 });
   els.forEach(function (el) { io.observe(el); });
-})();
-</script>
-<script>
-/* Línea de tiempo en escritorio: los títulos de una misma fila miden lo mismo, así las descripciones arrancan a la misma altura */
-(function () {
-  var hs = [].slice.call(document.querySelectorAll('.stage h3'));
-  if (!hs.length) return;
-  function igualar() {
-    hs.forEach(function (h) { h.style.minHeight = ''; });
-    if (window.innerWidth < 1080) return;
-    var filas = {};
-    hs.forEach(function (h) { var t = Math.round(h.closest('.stage').getBoundingClientRect().top + window.scrollY); (filas[t] = filas[t] || []).push(h); });
-    Object.keys(filas).forEach(function (k) {
-      var g = filas[k], m = Math.max.apply(null, g.map(function (h) { return h.getBoundingClientRect().height; }));
-      g.forEach(function (h) { h.style.minHeight = m + 'px'; });
-    });
-  }
-  igualar(); window.addEventListener('resize', igualar);
-  if (document.fonts && document.fonts.ready) document.fonts.ready.then(igualar);
 })();
 </script>
 <script>

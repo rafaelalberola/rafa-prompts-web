@@ -8,9 +8,10 @@ workers_dev = true
 
 [vars]
 ALLOWED_ORIGIN = "https://rafaprompts.com"
-STRIPE_PRICE_ID = "price_1TQPLuIYM3GXrMLHqFxUdIrT"
-STRIPE_PRICE_NEGOCIO = "price_1UStwcIYM3GXrMLH0Sr1iGvK"   # 249 € IVA incl.: Negocio se paga en el mismo pago integrado
-STRIPE_PUBLISHABLE_KEY = "pk_live_51T50VyIYM3GXrMLHGGfo81iUzPdi6XJfSZW91UkNEISZ9U12a0mkPO8YnyaoZTyxTP1vwzKeXmCXfCRn9YyMaDjo000gDMaXZR"
+STRIPE_PRICE_ID = "price_1UT06LEbybsfC75FLDnjAUjE"   # cuenta Rafa Prompts, 149 € IVA incl.
+STRIPE_MANAGED_PAYMENTS = "on"   # Stripe como vendedor registrado (IVA y factura)
+STRIPE_API_VERSION = "2026-09-30.endive"
+STRIPE_PRICE_NEGOCIO = "price_1UT06NEbybsfC75FKE1BYBfI"   # cuenta Rafa Prompts, 249 € IVA incl.
 EMAIL_FROM = "El método Claude <hola@rafaprompts.com>"
 EMAIL_REPLY_TO = "hola@rafaprompts.com"
 SUCCESS_URL = "https://rafaprompts.com/gracias.html?session_id={CHECKOUT_SESSION_ID}"

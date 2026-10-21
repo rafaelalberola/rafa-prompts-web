@@ -289,15 +289,22 @@ async function handleCalendly(req, env) {
 async function handleWebhook(req, env) {
   const payload = await req.text();
   const sig = req.headers.get('stripe-signature');
-  const ok = await verifyStripeSignature(payload, sig, env.STRIPE_WEBHOOK_SECRET);
+  // Dos cuentas de Stripe mientras dura el cambio: la de Rafa Prompts (STRIPE_WEBHOOK_SECRET_RP) y la anterior (STRIPE_WEBHOOK_SECRET)
+  const ok = (await verifyStripeSignature(payload, sig, env.STRIPE_WEBHOOK_SECRET_RP))
+    || (await verifyStripeSignature(payload, sig, env.STRIPE_WEBHOOK_SECRET));
   if (!ok) return new Response('invalid signature', { status: 400 });
 
   const event = JSON.parse(payload);
-  if (event.type !== 'checkout.session.completed') {
+  const cs = event.data.object;
+  // El curso se entrega cuando el pago está confirmado: al completar el pago o, con métodos lentos, al confirmarse después
+  if (event.type === 'checkout.session.completed') {
+    if (cs.payment_status && cs.payment_status !== 'paid' && cs.payment_status !== 'no_payment_required') {
+      return new Response('awaiting async payment', { status: 200 });
+    }
+  } else if (event.type !== 'checkout.session.async_payment_succeeded') {
     return new Response('ignored', { status: 200 });
   }
 
-  const cs = event.data.object;
   const csid = cs.id;
   // Idempotency
   const existing = await env.STORE.get(`session:${csid}`);

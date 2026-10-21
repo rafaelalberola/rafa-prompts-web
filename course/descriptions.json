@@ -21,6 +21,52 @@
     "cover_image": "modulo-01-cover.png"
   },
   "modulo_02": {
+    "title": "Primeros pasos: tu cuenta de Claude",
+    "subtitle": "Creas la cuenta, eliges plan, instalas la app y dejas los ajustes listos. Al terminar habrás resuelto una tarea real.",
+    "lessons": [
+      "Crear tu cuenta en 3 minutos",
+      "Gratis o de pago: qué plan te conviene",
+      "La app en el ordenador y en el móvil",
+      "Ajustes que conviene tocar el primer día",
+      "Tu primera conversación útil",
+      "Proyectos: tu carpeta de trabajo",
+      "Errores típicos del primer mes"
+    ],
+    "duration_minutes": 40,
+    "what_you_learn": [
+      "Tener tu cuenta en español, en el ordenador y en el móvil",
+      "Elegir plan y saber cuándo te toca subir",
+      "Pagar con la factura a nombre de tu empresa",
+      "Dejar listas la privacidad, la memoria y tus instrucciones",
+      "Resolver un correo difícil o un PDF largo en tu primera conversación",
+      "Crear tu primer proyecto"
+    ],
+    "cover_image": "modulo-02-cover.png"
+  },
+  "modulo_03": {
+    "title": "Conecta tus herramientas",
+    "subtitle": "Deja Claude conectado al correo, los documentos, la agenda y las notas que ya usa tu empresa. Los módulos siguientes cuentan con ello.",
+    "lessons": [
+      "Qué es un conector",
+      "Gmail: tu correo, sin copiar y pegar",
+      "Google Drive y Google Sheets: tus documentos y tus hojas",
+      "Google Calendar: huecos libres y citas",
+      "Notion: tus notas y tus procesos",
+      "Si usas Microsoft 365 u otras herramientas",
+      "Seguridad: qué ve Claude y cómo quitarle la llave",
+      "Qué conector usarás en cada módulo"
+    ],
+    "duration_minutes": 40,
+    "what_you_learn": [
+      "Activar los conectores de Gmail, Google Drive y Google Calendar en claude.ai.",
+      "Pedirle a Claude tus correos pendientes, que encuentre uno y que deje un borrador sin enviarlo.",
+      "Hacer que lea tu tarifa en Google Sheets o un contrato en PDF de Drive.",
+      "Conectar Notion y saber qué te hace falta si trabajas con Microsoft 365.",
+      "Decidir qué te consulta Claude antes de actuar y quitarle el acceso cuando quieras."
+    ],
+    "cover_image": "modulo-03-cover.png"
+  },
+  "modulo_04": {
     "title": "El CLAUDE.md",
     "subtitle": "El artefacto más importante del sistema. Un documento que hace que Claude se comporte como tú quieres, sin repetir instrucciones cada vez.",
     "lessons": [
@@ -40,9 +86,9 @@
       "Saber dónde vive el CLAUDE.md en claude.ai y dónde vive en Claude Code (jerarquía global / proyecto / local)",
       "Escribir tu primer CLAUDE.md propio antes de cerrar este módulo"
     ],
-    "cover_image": "modulo-02-cover.png"
+    "cover_image": "modulo-04-cover.png"
   },
-  "modulo_03": {
+  "modulo_05": {
     "title": "Tu web, hecha con Claude",
     "subtitle": "Reservas tu dominio, Claude te entrevista como un diseñador sénior, te escribe y diseña la web, y la publicas en una tarde.",
     "lessons": [
@@ -62,9 +108,31 @@
       "Poner el aviso legal, la privacidad y, si hace falta, el aviso de cookies",
       "Crear tu ficha de Google y pedir reseñas a clientes reales"
     ],
-    "cover_image": "modulo-03-cover.png"
+    "cover_image": "modulo-05-cover.png"
   },
-  "modulo_04": {
+  "modulo_06": {
+    "title": "Tu tienda online con Claude",
+    "subtitle": "Claude escribe tus fichas de producto, prepara los pedidos del día y te avisa al móvil cuando algo se acaba.",
+    "lessons": [
+      "¿Shopify o WordPress con WooCommerce?",
+      "Las fichas de producto con Claude",
+      "Conectar Claude con tu tienda",
+      "Pedidos del día",
+      "Una skill para el stock",
+      "Que te avise solo al móvil",
+      "Lo legal de vender online en España"
+    ],
+    "duration_minutes": 40,
+    "what_you_learn": [
+      "Elegir entre Shopify y WooCommerce",
+      "Escribir con Claude tus fichas de producto y subirlas con un CSV",
+      "Preguntar a Claude por pedidos, stock y ventas",
+      "Tener una skill de reposición y avisos en Telegram",
+      "Preparar tus condiciones de venta"
+    ],
+    "cover_image": "modulo-06-cover.png"
+  },
+  "modulo_07": {
     "title": "Tu CRM, conectado a tu web",
     "subtitle": "Cada persona que te escribe desde la web entra sola en tu lista de clientes, y Claude te dice si encaja y qué hacer con ella.",
     "lessons": [
@@ -85,9 +153,9 @@
       "Montar un proyecto en claude.ai que clasifica cada contacto según tus servicios",
       "Revisar la lista con Claude en 15 minutos a la semana"
     ],
-    "cover_image": "modulo-04-cover.png"
+    "cover_image": "modulo-07-cover.png"
   },
-  "modulo_05": {
+  "modulo_08": {
     "title": "Encontrar clientes potenciales",
     "subtitle": "Claude busca negocios que encajan con lo que vendes, te dice por qué encaja cada uno y te los deja en tu hoja o tu CRM.",
     "lessons": [
@@ -107,9 +175,9 @@
       "Puntuar el encaje de 1 a 5 y guardar los buenos en tu hoja o tu CRM sin duplicados",
       "Repetir la búsqueda cada semana y saber qué datos no debes guardar"
     ],
-    "cover_image": "modulo-05-cover.png"
+    "cover_image": "modulo-08-cover.png"
   },
-  "modulo_06": {
+  "modulo_09": {
     "title": "Primer contacto, llamadas y seguimiento",
     "subtitle": "Claude escribe el primer mensaje, prepara tus llamadas, te ayuda a cerrar la cita y deja el CRM al día. Tú revisas y envías.",
     "lessons": [
@@ -129,9 +197,9 @@
       "Cerrar citas con una página de reservas o con Google Calendar conectado",
       "Pasar de las notas de una llamada al CRM al día y a un seguimiento semanal"
     ],
-    "cover_image": "modulo-06-cover.png"
+    "cover_image": "modulo-09-cover.png"
   },
-  "modulo_07": {
+  "modulo_10": {
     "title": "Skills y agentes",
     "subtitle": "Cómo convertir tareas que repites en piezas reutilizables. Y cuándo una tarea merece volverse un agente que trabaja solo.",
     "lessons": [
@@ -151,10 +219,10 @@
       "Entender cómo funcionan las skills nativas de Claude Code (con SKILL.md y frontmatter) y cuándo darán el salto",
       "Diseñar un agente simple que haga una tarea repetitiva por ti"
     ],
-    "cover_image": "modulo-07-cover.png"
+    "cover_image": "modulo-10-cover.png"
   },
-  "modulo_08": {
-    "title": "Pipelines reales",
+  "modulo_11": {
+    "title": "Correo, ventas y manuales, resueltos",
     "subtitle": "5 casos completos, paso a paso. Artículos, investigación de mercado, inbox, datos y documentación. Copia, adapta y pon en marcha.",
     "lessons": [
       "Pipeline 01: Un artículo de 1500 palabras en 30 minutos",
@@ -172,9 +240,9 @@
       "Saber cómo cada pipeline se transforma cuando lo migras a Claude Code (slash command)",
       "Reducir tareas de 2-3 horas a 15-30 minutos en tu semana"
     ],
-    "cover_image": "modulo-08-cover.png"
+    "cover_image": "modulo-11-cover.png"
   },
-  "modulo_09": {
+  "modulo_12": {
     "title": "Orquestación",
     "subtitle": "Cómo conectar Claude con otras herramientas. El salto de hacer tareas manuales a sistemas que funcionan solos mientras tú vives tu vida.",
     "lessons": [
@@ -194,9 +262,9 @@
       "Saber cuándo te conviene Make / n8n / Zapier y cuándo es mejor un slash command de Claude Code con hooks",
       "Escoger tu primera automatización propia y saber cómo empezar"
     ],
-    "cover_image": "modulo-09-cover.png"
+    "cover_image": "modulo-12-cover.png"
   },
-  "modulo_10": {
+  "modulo_13": {
     "title": "Facturas, cobros y los números del mes",
     "subtitle": "Claude ordena las facturas para la gestoría, encuentra quién te debe, redacta los recordatorios y prepara el informe del mes. Tú revisas y envías.",
     "lessons": [
@@ -217,9 +285,9 @@
       "Preparar el informe del mes sin cifras inventadas y el paquete del trimestre",
       "Saber qué datos subir y cómo evitar que tus conversaciones se usen para entrenar"
     ],
-    "cover_image": "modulo-10-cover.png"
+    "cover_image": "modulo-13-cover.png"
   },
-  "modulo_11": {
+  "modulo_14": {
     "title": "Contratar y formar a tu equipo",
     "subtitle": "El puesto, la oferta, los currículos, las entrevistas y el manual del primer día. Claude lo prepara y tú decides.",
     "lessons": [
@@ -239,9 +307,9 @@
       "Leer currículos y entrevistar con ayuda de Claude, decidiendo tú",
       "Recibir a la persona nueva con un plan de bienvenida y un manual del puesto"
     ],
-    "cover_image": "modulo-11-cover.png"
+    "cover_image": "modulo-14-cover.png"
   },
-  "modulo_12": {
+  "modulo_15": {
     "title": "Iteración y medida",
     "subtitle": "Cómo saber si un sistema funciona. Qué medir, qué ignorar, y cómo mejorarlo sin romperlo. El paso que todos se saltan y por eso fallan.",
     "lessons": [
@@ -260,9 +328,9 @@
       "Saber cómo aprovechar la memoria persistente de Claude Code para no repetir aprendizajes",
       "Llegar al mes 3 con un sistema que sigue funcionando, no abandonado"
     ],
-    "cover_image": "modulo-12-cover.png"
+    "cover_image": "modulo-15-cover.png"
   },
-  "modulo_13": {
+  "modulo_16": {
     "title": "Claude Code: el agente que vive en tu editor",
     "subtitle": "Instalación, primer CLAUDE.md real, slash commands, modo plan y permisos. El salto del navegador al disco.",
     "lessons": [
@@ -283,9 +351,9 @@
       "Entender el modo plan (cuando le pides al agente que piense antes de hacer)",
       "Saber configurar permisos para que el agente actúe sin pedirte autorización en cada paso, sin sorpresas"
     ],
-    "cover_image": "modulo-13-cover.png"
+    "cover_image": "modulo-16-cover.png"
   },
-  "modulo_14": {
+  "modulo_17": {
     "title": "Skills nativas, subagentes y MCP",
     "subtitle": "Las tres capacidades que convierten Claude Code en un equipo. Cuándo usar cada una y cómo combinarlas sin que se peleen.",
     "lessons": [
@@ -305,9 +373,9 @@
       "Conectar Claude Code con MCP servers (Notion, Gmail, Drive, Slack) sin programar",
       "Decidir qué tarea va a skill, qué a subagente y qué a MCP"
     ],
-    "cover_image": "modulo-14-cover.png"
+    "cover_image": "modulo-17-cover.png"
   },
-  "modulo_15": {
+  "modulo_18": {
     "title": "Construir tu primer sistema autónomo",
     "subtitle": "Un caso real end-to-end. De pipeline manual a sistema que se ejecuta solo. Con código, archivos y resultados al final.",
     "lessons": [
@@ -327,9 +395,9 @@
       "Programar ejecuciones recurrentes (cron) para que corra sin que tú lo pidas",
       "Saber qué dejar manual y qué automatizar (la línea de control humano)"
     ],
-    "cover_image": "modulo-15-cover.png"
+    "cover_image": "modulo-18-cover.png"
   },
-  "modulo_16": {
+  "modulo_19": {
     "title": "Vivir con un sistema de IA",
     "subtitle": "Mantenimiento, troubleshooting, ética y cuándo abandonar. La parte que separa a quien construye sistemas de quien acumula prototipos rotos.",
     "lessons": [
@@ -349,6 +417,6 @@
       "Tener una postura clara sobre la ética de delegar trabajo a un agente",
       "Saber abandonar un sistema cuando deja de servir, sin culpa"
     ],
-    "cover_image": "modulo-16-cover.png"
+    "cover_image": "modulo-19-cover.png"
   }
 }

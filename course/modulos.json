@@ -5,9 +5,25 @@
       "slug": "pensar-en-claude",
       "contenido": "modulo-01.json",
       "titulo_pdf": "Pensar en Claude",
-      "titulo": "Qué le puedes pedir a Claude",
+      "titulo": "Qué es Claude y qué puede hacer por tu negocio",
       "descripcion": "Qué trabajo de tu negocio puede hacer Claude y cuál te conviene seguir haciendo tú.",
       "icono": "message-circle-question"
+    },
+    {
+      "contenido": "primeros-pasos.json",
+      "titulo_pdf": "Primeros pasos: tu cuenta de Claude",
+      "titulo": "Primeros pasos: tu cuenta de Claude",
+      "descripcion": "Crea tu cuenta, elige el plan que te conviene y deja Claude listo en el ordenador y en el móvil.",
+      "icono": "rocket",
+      "slug": "primeros-pasos"
+    },
+    {
+      "contenido": "conecta-tus-herramientas.json",
+      "titulo_pdf": "Conecta tus herramientas",
+      "titulo": "Conecta tus herramientas",
+      "descripcion": "Gmail, Drive, Calendar y Notion conectados a Claude, para usarlos en el resto del curso.",
+      "icono": "plug",
+      "slug": "conecta-tus-herramientas"
     },
     {
       "slug": "claude-md",
@@ -24,6 +40,14 @@
       "titulo": "Tu web, hecha con Claude",
       "descripcion": "Claude diseña y escribe tu web, y la publicas en una tarde con tu dominio.",
       "icono": "globe"
+    },
+    {
+      "contenido": "tu-tienda-online.json",
+      "titulo_pdf": "Tu tienda online con Claude",
+      "titulo": "Tu tienda online con Claude",
+      "descripcion": "Shopify o WooCommerce: fichas de producto, pedidos del día y aviso al móvil cuando baja el stock.",
+      "icono": "shopping-cart",
+      "slug": "tu-tienda-online"
     },
     {
       "slug": "tu-crm-conectado",
@@ -60,18 +84,18 @@
     {
       "slug": "pipelines-reales",
       "contenido": "modulo-04.json",
-      "titulo_pdf": "Pipelines reales",
-      "titulo": "Cinco casos, paso a paso",
-      "descripcion": "Los textos de tu web, tu competencia, la bandeja de entrada, tus ventas y tus procesos.",
+      "titulo_pdf": "Correo, ventas y manuales, resueltos",
+      "titulo": "Correo, ventas y manuales, resueltos",
+      "descripcion": "Ordena tu bandeja de entrada, analiza tu competencia y tus ventas, y escribe los textos de tu web y el manual del equipo.",
       "icono": "clipboard-list"
     },
     {
       "slug": "orquestacion",
       "contenido": "modulo-05.json",
       "titulo_pdf": "Orquestación",
-      "titulo": "Conectarlo con tus herramientas",
+      "titulo": "Solicitudes y avisos que llegan solos",
       "descripcion": "Gmail, tus formularios y Telegram: el resumen te llega al móvil sin que toques nada.",
-      "icono": "plug"
+      "icono": "bell"
     },
     {
       "slug": "facturas-y-cobros",
@@ -109,7 +133,7 @@
       "slug": "skills-subagentes-mcp",
       "contenido": "modulo-08.json",
       "titulo_pdf": "Skills nativas, subagentes y MCP",
-      "titulo": "Conectarlo con tus cuentas",
+      "titulo": "Varios asistentes trabajando a la vez",
       "descripcion": "Gmail, Drive y Notion, con varios asistentes repartiéndose el trabajo.",
       "icono": "network"
     },
@@ -132,6 +156,22 @@
   ],
   "recorrido": [
     {
+      "fase": "Prepara",
+      "etapas": [
+        {
+          "titulo": "Claude, listo",
+          "texto": "Tu cuenta, tus herramientas conectadas y tu negocio explicado.",
+          "icono": "settings-2",
+          "modulos": [
+            "pensar-en-claude",
+            "primeros-pasos",
+            "conecta-tus-herramientas",
+            "claude-md"
+          ]
+        }
+      ]
+    },
+    {
       "fase": "Empieza",
       "etapas": [
         {
@@ -140,6 +180,14 @@
           "icono": "globe",
           "modulos": [
             "tu-web-con-claude"
+          ]
+        },
+        {
+          "titulo": "Tu tienda online",
+          "texto": "Productos, pedidos y un aviso cuando baja el stock.",
+          "icono": "shopping-cart",
+          "modulos": [
+            "tu-tienda-online"
           ]
         },
         {

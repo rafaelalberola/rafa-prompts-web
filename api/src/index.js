@@ -169,7 +169,7 @@ async function sendDeliveryEmail(env, { to, name, token }) {
   <div style="max-width:560px; margin:0 auto; background:#fff; padding:40px 36px; border-radius:20px;">
     <div style="font-family: 'IBM Plex Mono', monospace; font-size:11px; letter-spacing:0.18em; text-transform:uppercase; color:#DA7756; font-weight:700; margin-bottom:16px;">El método Claude</div>
     <h1 style="font-size:28px; font-weight:900; line-height:1.1; margin:0 0 16px; letter-spacing:-0.02em;">${greeting}, gracias por tu compra</h1>
-    <p style="font-size:16px; line-height:1.6; color:#333; margin:0 0 20px;">Tu acceso al curso ya está listo. Puedes descargar los 18 PDFs (los 16 módulos, la guía "empezar aquí" y la biblioteca de 100 prompts) desde tu página personal:</p>
+    <p style="font-size:16px; line-height:1.6; color:#333; margin:0 0 20px;">Tu acceso al curso ya está listo. Puedes descargar los ${PDF_CATALOG.length} PDFs (los ${ORDEN_CURSO.modulos.length} módulos, la guía "empezar aquí" y la biblioteca de 100 prompts) desde tu página personal:</p>
     <p style="margin:28px 0;">
       <a href="${downloadUrl}" style="display:inline-block; background:#DA7756; color:#fff; padding:16px 28px; border-radius:999px; text-decoration:none; font-weight:700; font-size:15px;">Acceder a las descargas</a>
     </p>

@@ -165,7 +165,7 @@ h3 { margin: 0; font-size: 20px; line-height: 1.2; font-weight: 800; letter-spac
 .demo { display: grid; grid-template-columns: minmax(0, 1fr); justify-items: center; gap: var(--s4); }
 .flow { display: flex; flex-direction: column; align-items: center; justify-content: center; gap: var(--s2); color: var(--accent); }
 .flow .arrow { width: 24px; height: 24px; transform: rotate(90deg); }
-.chip { display: inline-flex; align-items: center; gap: 6px; padding: 6px 12px 6px 8px; border-radius: var(--r-pill); background: var(--surface); border: 1px solid var(--line-strong); font: 800 13px/1 var(--f-sans); color: var(--accent-ink); white-space: nowrap; }
+.chip { display: inline-flex; align-items: center; gap: 6px; padding: 6px 12px 6px 8px; border-radius: var(--r-pill); border: 1px solid var(--lg-border); font: 800 13px/1 var(--f-sans); color: var(--accent-ink); white-space: nowrap; }
 .chip svg { width: 18px; height: 18px; }
 .demo-cap { width: 100%; margin: 0; display: flex; flex-direction: column; align-items: center; gap: 2px; text-align: center; }
 .hero .demo-cap strong { font: 700 14.5px/1.4 var(--f-sans); color: var(--ink-soft); white-space: nowrap; }
@@ -208,7 +208,7 @@ h3 { margin: 0; font-size: 20px; line-height: 1.2; font-weight: 800; letter-spac
 .v-step { display: flex; align-items: center; gap: 8px; }
 .v-step i { flex: 0 0 auto; width: 16px; height: 16px; border-radius: 50%; display: inline-flex; align-items: center; justify-content: center; background: var(--ink); color: var(--bg); font: 800 9px/1 var(--f-sans); font-style: normal; }
 .v-step .v-line { flex: 1; width: auto; max-width: var(--w); }
-.v-badge { position: absolute; right: -12px; top: -12px; height: 30px; padding: 0 10px; display: inline-flex; align-items: center; justify-content: center; gap: 5px; border-radius: var(--r-pill); background: var(--surface); border: 1px solid rgba(218, 119, 86, 0.45); box-shadow: 0 4px 10px rgba(20, 19, 17, 0.08); font: 700 10.5px/1 var(--f-mono); color: var(--accent-ink); white-space: nowrap; }
+.v-badge { position: absolute; right: -12px; top: -12px; height: 30px; padding: 0 10px; display: inline-flex; align-items: center; justify-content: center; gap: 5px; border-radius: var(--r-pill); border: 1px solid rgba(218, 119, 86, 0.45); font: 700 10.5px/1 var(--f-mono); color: var(--accent-ink); white-space: nowrap; }
 .v-badge.icon { width: 30px; padding: 0; }
 .v-badge.icon svg { width: 19px; height: 19px; }
 .v-badge.q { font: 800 14px/1 var(--f-sans); }
@@ -455,6 +455,91 @@ body:has(.modal[open]) { overflow: hidden; }
 
 /* ---------- credenciales en la bio ---------- */
 
+
+/* ======================================================================
+   Liquid glass: la misma receta que byrafa.design y UGC Pack, adaptada al
+   crema de la marca. Translúcido + desenfoque + saturación + refracción (SVG,
+   solo Chromium) + borde fino + brillo especular arriba + sombra de profundidad.
+   ====================================================================== */
+:root {
+  --lg-blur: 18px; --lg-sat: 170%;
+  --lg-fill: rgba(255, 255, 255, 0.58);
+  --lg-border: rgba(20, 19, 17, 0.10);
+  --lg-rim-edge: rgba(20, 19, 17, 0.06);
+  --lg-rim-top: rgba(255, 255, 255, 0.92);
+  --lg-depth: 0 12px 30px -14px rgba(20, 19, 17, 0.28), 0 1px 2px rgba(20, 19, 17, 0.06);
+}
+.lg, .chip, .v-badge, .btn.ghost {
+  background: var(--lg-fill);
+  -webkit-backdrop-filter: blur(var(--lg-blur)) saturate(var(--lg-sat)) brightness(1.06);
+  backdrop-filter: url(#lg-disp) blur(var(--lg-blur)) saturate(var(--lg-sat)) brightness(1.06);
+  box-shadow: inset 0 0 0 0.5px var(--lg-rim-edge), inset 0 1px 0 var(--lg-rim-top), inset 0 12px 28px -20px rgba(255, 255, 255, 0.6), var(--lg-depth);
+}
+.btn.ghost { box-shadow: inset 0 0 0 1.5px var(--ink), inset 0 1px 0 var(--lg-rim-top), var(--lg-depth); }
+.btn.ghost:hover { background: var(--ink); color: var(--bg); box-shadow: var(--lg-depth); }
+/* el botón principal gana el brillo de cristal: borde claro y luz arriba */
+.btn { position: relative; border: 1px solid rgba(255, 255, 255, 0.22); box-shadow: 0 10px 26px rgba(185, 90, 57, 0.30), inset 0 1px 0 rgba(255, 255, 255, 0.5), inset 0 -10px 18px -10px rgba(110, 38, 16, 0.35); }
+.btn:hover { box-shadow: 0 14px 32px rgba(185, 90, 57, 0.36), inset 0 1px 0 rgba(255, 255, 255, 0.55), inset 0 -10px 18px -10px rgba(110, 38, 16, 0.35); }
+.modal { background: rgba(255, 255, 255, 0.9); -webkit-backdrop-filter: blur(24px) saturate(170%); backdrop-filter: blur(24px) saturate(170%); box-shadow: inset 0 1px 0 rgba(255, 255, 255, 0.95), 0 30px 80px rgba(20, 19, 17, 0.35); }
+
+/* cabecera flotante de cristal */
+html { scroll-padding-top: 96px; }
+body::before { content: ""; position: fixed; inset: 0 0 auto; height: env(safe-area-inset-top, 0px); z-index: 60; background: var(--bg); }
+.topwrap { position: sticky; top: env(safe-area-inset-top, 0px); z-index: 50; }
+.top { border-radius: var(--r-pill); border: 1px solid transparent; transition: margin .35s cubic-bezier(.2,.7,.2,1), padding .35s cubic-bezier(.2,.7,.2,1), background .35s, box-shadow .35s, border-color .35s; }
+.top.is-floating { margin-top: 10px; padding: 10px 10px 10px 22px; border-color: var(--lg-border); }
+.top.is-floating .top-cta { background: var(--ink); color: var(--bg); }
+.top.lg { background: rgba(255, 255, 255, 0.78); } /* como la barra de byrafa.design: cristal, pero el texto de detrás no compite */
+
+/* ======================================================================
+   Movimiento: aparición al hacer scroll y vida en los visuales.
+   Lo que ya se ve al cargar nunca se oculta. Con «reducir movimiento», nada se mueve.
+   ====================================================================== */
+.pre { opacity: 0; transform: translateY(20px); }
+.in { opacity: 1; transform: none; transition: opacity .8s cubic-bezier(.2,.7,.2,1), transform .8s cubic-bezier(.2,.7,.2,1); transition-delay: calc(var(--d, 0) * 90ms); }
+
+.task .mini { transition: transform .45s cubic-bezier(.2,.7,.2,1), box-shadow .45s; }
+.task:hover .mini { transform: translateY(-5px); box-shadow: 0 22px 40px rgba(20, 19, 17, 0.16); }
+.tg-chat { position: relative; }
+.tg-typing { display: none; }
+
+@media (prefers-reduced-motion: no-preference) {
+  .task.in .v-line { transform-origin: left center; animation: vLine .9s cubic-bezier(.2,.7,.2,1) both; animation-delay: .25s; }
+  .task.in .mini > .v-line:nth-child(2), .task.in .v-step:nth-child(2) .v-line { animation-delay: .35s; }
+  .task.in .mini > .v-line:nth-child(3), .task.in .v-step:nth-child(3) .v-line { animation-delay: .45s; }
+  .task.in .mini > .v-line:nth-child(4) { animation-delay: .55s; }
+  .task.in .v-row { animation: vRow .6s cubic-bezier(.2,.7,.2,1) both; }
+  .task.in .v-row:nth-child(1) { animation-delay: .25s; } .task.in .v-row:nth-child(2) { animation-delay: .37s; }
+  .task.in .v-row:nth-child(3) { animation-delay: .49s; } .task.in .v-row:nth-child(4) { animation-delay: .61s; }
+  .task.in .v-row.hot { animation: vRow .6s cubic-bezier(.2,.7,.2,1) .25s both, vHot 1.4s ease .9s 1; }
+  .task.in .v-map i { animation: vPop .5s cubic-bezier(.2,1.4,.4,1) both; }
+  .task.in .v-map i:nth-child(2) { animation-delay: .1s; } .task.in .v-map i:nth-child(3) { animation-delay: .2s; }
+  .task.in .v-map i:nth-child(4) { animation-delay: .3s; } .task.in .v-map i:nth-child(5) { animation-delay: .4s; }
+  .task.in .v-gap { animation: vPop .5s cubic-bezier(.2,1.4,.4,1) .6s both, vPulse 2.6s ease-in-out 1.2s infinite; }
+  .task.in .v-phone { animation: vBlink 1.6s ease-in-out .8s 3; }
+  .v-badge.icon:not(.q) svg { animation: vSpin 22s linear infinite; }
+  .v-badge.q { animation: vBob 2.8s ease-in-out infinite; }
+  .v-badge:not(.icon) svg { animation: vLoop 4.5s cubic-bezier(.6,0,.2,1) infinite; }
+
+  /* demo: «escribiendo…» y después el resumen */
+  .tg-typing { position: absolute; left: 12px; top: 46px; display: inline-flex; gap: 4px; padding: 11px 13px; border-radius: 16px 16px 16px 4px; background: #fff; box-shadow: 0 1px 1px rgba(0, 0, 0, 0.08); animation: tgOut .25s ease 1.3s forwards; }
+  .tg-typing i { width: 6px; height: 6px; border-radius: 50%; background: #A9A9AE; animation: tgDot 1s ease-in-out infinite; }
+  .tg-typing i:nth-child(2) { animation-delay: .15s; } .tg-typing i:nth-child(3) { animation-delay: .3s; }
+  .tg-msg { animation: tgIn .55s cubic-bezier(.2,.7,.2,1) 1.35s both; }
+}
+@keyframes vLine { from { transform: scaleX(0); } to { transform: scaleX(1); } }
+@keyframes vRow { from { opacity: 0; transform: translateX(-10px); } to { opacity: 1; transform: none; } }
+@keyframes vHot { 0%, 100% { box-shadow: 0 0 0 0 rgba(218, 119, 86, 0); } 40% { box-shadow: 0 0 0 4px rgba(218, 119, 86, 0.22); } }
+@keyframes vPop { from { opacity: 0; transform: translate(-50%, -50%) scale(0); } to { opacity: 1; transform: translate(-50%, -50%) scale(1); } }
+@keyframes vPulse { 0%, 100% { transform: translate(-50%, -50%) scale(1); } 50% { transform: translate(-50%, -50%) scale(1.18); } }
+@keyframes vBlink { 0%, 100% { opacity: 1; } 50% { opacity: 0.25; } }
+@keyframes vSpin { to { transform: rotate(360deg); } }
+@keyframes vBob { 0%, 100% { transform: translateY(0); } 50% { transform: translateY(-3px); } }
+@keyframes vLoop { 0%, 70% { transform: rotate(0); } 100% { transform: rotate(360deg); } }
+@keyframes tgDot { 0%, 100% { opacity: .35; transform: translateY(0); } 50% { opacity: 1; transform: translateY(-2px); } }
+@keyframes tgOut { to { opacity: 0; transform: scale(.9); visibility: hidden; } }
+@keyframes tgIn { from { opacity: 0; transform: translateY(8px) scale(.98); } to { opacity: 1; transform: none; } }
+
 /* ---------- pie ---------- */
 .foot { display: flex; flex-wrap: wrap; align-items: center; justify-content: center; gap: var(--s3) var(--s5); padding-block: 40px; border-top: 1px solid var(--line); font-size: 14px; color: var(--ink-mute); }
 .foot a { text-decoration: none; }
@@ -565,6 +650,10 @@ body:has(.modal[open]) { overflow: hidden; }
       <feGaussianBlur in="w" stdDeviation="0.3" result="b"/>
       <feComponentTransfer in="b"><feFuncA type="linear" slope="1.8" intercept="-0.05"/></feComponentTransfer>
     </filter>
+    <filter id="lg-disp" x="0%" y="0%" width="100%" height="100%">
+      <feTurbulence type="fractalNoise" baseFrequency="0.012" numOctaves="2" seed="3" result="noise"/>
+      <feDisplacementMap in="SourceGraphic" in2="noise" scale="28"/>
+    </filter>
     <filter id="grainSoft" x="-30%" y="-30%" width="160%" height="160%">
       <feTurbulence type="fractalNoise" baseFrequency="1.2" numOctaves="1" seed="3" result="n"/>
       <feDisplacementMap in="SourceGraphic" in2="n" scale="0.8" xChannelSelector="R" yChannelSelector="G"/>
@@ -584,7 +673,7 @@ body:has(.modal[open]) { overflow: hidden; }
   </defs>
 </svg>
 
-<div class="wrap">
+<div class="wrap topwrap">
   <header class="top">
     <a class="brand" href="https://rafaprompts.com/"><strong>rafa</strong>.prompts</a>
     <nav aria-label="Secciones">
@@ -643,6 +732,7 @@ body:has(.modal[open]) { overflow: hidden; }
             <div class="tg-head"><span class="tg-back">‹</span><span class="tg-av"><i class="ico ico-mail"></i></span><div class="tg-name"><strong>Resumen del&nbsp;correo</strong><span>bot</span></div></div>
             <div class="tg-chat">
               <span class="tg-day">Hoy</span>
+              <span class="tg-typing" aria-hidden="true"><i></i><i></i><i></i></span>
               <div class="tg-msg">
                 <p><b>Buenos días. 40 correos nuevos desde&nbsp;ayer.</b></p>
                 <p><b>Responder hoy (3)</b><br>· Marta López: quiere pasar la&nbsp;visita al&nbsp;jueves.<br>· Gestoría Ruiz: le&nbsp;falta la&nbsp;factura de&nbsp;septiembre.<br>· Javier R.: pide presupuesto para&nbsp;una&nbsp;cocina.</p>
@@ -997,6 +1087,25 @@ Cuando te pegue una solicitud de un posible cliente:
 })();
 </script>
 
+<script>
+/* Cabecera de cristal al hacer scroll y aparición suave de los bloques */
+(function () {
+  var top = document.querySelector('.top');
+  function onScroll() { var f = window.scrollY > 40; top.classList.toggle('lg', f); top.classList.toggle('is-floating', f); }
+  window.addEventListener('scroll', onScroll, { passive: true }); onScroll();
+  if (window.matchMedia('(prefers-reduced-motion: reduce)').matches || !('IntersectionObserver' in window)) return;
+  var groups = ['.tasks > li', '.about > li', '.steps > li', '.routes > article', '.plans > article', '.vs-cards > .card', '.guides > li', '.faq-group'];
+  var els = [];
+  groups.forEach(function (sel) { document.querySelectorAll(sel).forEach(function (el, i) { el.style.setProperty('--d', i % 3); els.push(el); }); });
+  document.querySelectorAll('.sec .head, .demo, .vs, .subscribe, .bio').forEach(function (el) { els.push(el); });
+  var limit = window.innerHeight * 0.92;
+  els.forEach(function (el) { if (el.getBoundingClientRect().top > limit) el.classList.add('pre'); });
+  var io = new IntersectionObserver(function (entries) {
+    entries.forEach(function (e) { if (e.isIntersecting) { e.target.classList.add('in'); e.target.classList.remove('pre'); io.unobserve(e.target); } });
+  }, { rootMargin: '0px 0px -8% 0px', threshold: 0.12 });
+  els.forEach(function (el) { io.observe(el); });
+})();
+</script>
 <script>
 /* Modal reutilizable: [data-dialog] lo abre; la X, el fondo o Esc lo cierran */
 (function () {

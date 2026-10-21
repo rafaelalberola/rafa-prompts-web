@@ -845,6 +845,9 @@ async function ofertaValida(env, code) {
 }
 
 async function ofertasDiarias(env, ahora = Date.now()) {
+  // Mientras dure el lanzamiento todo el mundo ve ya los 99 €: la oferta espera y sale el primer día después
+  // (a los que lleven 4 días o más sin comprar), así nunca hay dos descuentos a la vez.
+  if (lanzamiento(env, ahora)) return 0;
   const enviados = [];
   const hasta = finDiaMadrid(ahora, OFERTA_DIAS);
   const hastaTxt = `${fechaLarga(hasta)} a las 23:59`;

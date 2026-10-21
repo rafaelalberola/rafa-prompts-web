@@ -78,6 +78,10 @@
           En unos minutos vas a recibir un email con el enlace de acceso a tus 12 PDFs. Mientras tanto, esto es lo que tienes que saber:
         </p>
 
+        <p class="lede" id="negocio-note" hidden>
+          <strong>Plan Negocio:</strong> los 12 proyectos listos para copiar te llegan por correo en menos de 24 horas, en un email aparte.
+        </p>
+
         <ol class="thanks-steps">
           <li>
             <strong>Revisa tu bandeja de entrada</strong> — el email llega desde <code>hola@rafaprompts.com</code> con asunto <em>"Tus PDFs de El método Claude están listos"</em>.
@@ -118,16 +122,19 @@
     (function() {
       const params = new URLSearchParams(window.location.search);
       const sessionId = params.get('session_id') || '';
+      // Plan Negocio (enlace de pago de 249 €): aviso de los proyectos y valor real de la compra
+      const isNegocio = params.get('plan') === 'negocio';
+      if (isNegocio) { const n = document.getElementById('negocio-note'); if (n) n.hidden = false; }
       const dedupKey = sessionId ? `purchase_tracked_${sessionId}` : '';
       if (dedupKey && sessionStorage.getItem(dedupKey)) return;
 
       const fire = () => {
         if (!window.fbq) { setTimeout(fire, 200); return; }
         fbq('track', 'Purchase', {
-          content_name: 'El método Claude',
-          content_ids: ['metodo-claude'],
+          content_name: isNegocio ? 'El método Claude · Negocio' : 'El método Claude',
+          content_ids: [isNegocio ? 'metodo-claude-negocio' : 'metodo-claude'],
           content_type: 'product',
-          value: 149.00,
+          value: isNegocio ? 249.00 : 149.00,
           currency: 'EUR'
         }, sessionId ? { eventID: sessionId } : undefined);
         if (dedupKey) sessionStorage.setItem(dedupKey, '1');

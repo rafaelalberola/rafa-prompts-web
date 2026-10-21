@@ -212,6 +212,11 @@ h3 { margin: 0; font-size: 20px; line-height: 1.2; font-weight: 800; letter-spac
 .v-badge.q { font: 800 14px/1 var(--f-sans); }
 .v-badge:not(.icon) svg { width: 12px; height: 12px; fill: none; stroke: currentColor; stroke-width: 2.2; stroke-linecap: round; stroke-linejoin: round; }
 
+/* ---------- qué es Claude ---------- */
+.about { list-style: none; margin: 0; padding: 0; display: grid; grid-template-columns: minmax(0, 1fr); gap: var(--gap-card); }
+@media (min-width: 900px) { .about { grid-template-columns: repeat(3, minmax(0, 1fr)); } }
+.about p { margin: 0; font-size: 15.5px; color: var(--ink-soft); }
+
 /* ---------- el método ---------- */
 .steps { list-style: none; margin: 0; padding: 0; display: grid; grid-template-columns: minmax(0, 1fr); gap: var(--gap-card); }
 @media (min-width: 900px) { .steps { grid-template-columns: repeat(3, minmax(0, 1fr)); } }
@@ -252,15 +257,24 @@ h3 { margin: 0; font-size: 20px; line-height: 1.2; font-weight: 800; letter-spac
 .vs-mark { width: 22px; height: 22px; flex: 0 0 auto; }
 .no { flex: 0 0 22px; width: 22px; height: 22px; border-radius: 50%; display: inline-flex; align-items: center; justify-content: center; background: rgba(210, 59, 59, 0.10); color: #C9302C; }
 .no svg { width: 12px; height: 12px; fill: none; stroke: currentColor; stroke-width: 3; stroke-linecap: round; }
+.vs-cards { display: none; }
 @media (max-width: 759px) {
-  /* en móvil, cada fila se lee de arriba abajo: qué es, lo de otros y lo de aquí */
-  .vs-row { grid-template-columns: minmax(0, 1fr); padding: 14px 16px; gap: 8px; }
-  .vs-row + .vs-row { border-top: 1px solid var(--line); }
-  .vs-row + .vs-row .vs-k, .vs-row + .vs-row .vs-them, .vs-row + .vs-row .vs-us { border-top: 0; }
-  .vs-headrow { display: none; }
-  .vs-k, .vs-them { padding: 0; }
-  .vs-us { padding: 12px 14px; border-radius: 12px; }
+  /* en móvil, dos tarjetas: lo que te llevas aquí primero y, debajo, lo de otros cursos */
+  .vs { display: none; }
+  .vs-cards { display: flex; flex-direction: column; gap: var(--gap-card); }
 }
+.vs-card h3 { display: flex; align-items: center; gap: var(--s2); }
+.vs-items { list-style: none; margin: 0; padding: 0; display: flex; flex-direction: column; gap: var(--s4); }
+.vs-items li { display: flex; align-items: flex-start; gap: var(--s3); }
+.vs-items li > span:last-child { display: flex; flex-direction: column; gap: 3px; font-size: 15.5px; line-height: 1.4; }
+.vs-items .label { font-size: 10.5px; }
+.vs-card.us { background: var(--band); border-color: var(--band); color: var(--band-ink); }
+.vs-card.us h3 { color: var(--band-ink); }
+.vs-card.us li > span:last-child { font-weight: 700; }
+.vs-card.us .label { color: var(--accent); font-weight: 700; }
+.vs-card.us .yes { background: rgba(111, 221, 163, 0.16); color: var(--ok-on-dark); }
+.vs-card.them { color: var(--ink-mute); }
+.vs-card.them h3 { color: var(--ink-soft); }
 
 /* ---------- planes ---------- */
 .plans { display: grid; grid-template-columns: minmax(0, 1fr); gap: var(--gap-card); align-items: stretch; }
@@ -280,12 +294,13 @@ h3 { margin: 0; font-size: 20px; line-height: 1.2; font-weight: 800; letter-spac
 .plan.featured .label { color: var(--accent); }
 .plan.featured .plan-price small, .plan.featured .plan-cta small { color: var(--band-soft); }
 .plan.featured .yes { background: rgba(111, 221, 163, 0.16); color: var(--ok-on-dark); }
-.soon { padding: 4px 9px; border-radius: var(--r-pill); background: var(--accent-tint, rgba(218, 119, 86, 0.12)); color: var(--accent-ink); font: 700 10px/1 var(--f-mono); letter-spacing: 0.1em; text-transform: uppercase; }
+.badge { padding: 5px 10px; border-radius: var(--r-pill); background: var(--accent); color: #fff; font: 700 10px/1 var(--f-mono); letter-spacing: 0.1em; text-transform: uppercase; }
+.head .assure.assure { margin-top: var(--s2); max-width: none; color: var(--ok); font-size: inherit; }
+.head .licence-line.licence-line { max-width: 52ch; font-size: 13.5px; line-height: 1.5; color: var(--ink-mute); }
 .btn.ghost { background: transparent; color: var(--ink); box-shadow: inset 0 0 0 1.5px var(--ink); }
 .btn.ghost:hover { background: var(--ink); color: var(--bg); box-shadow: none; }
 .licence-line { margin: 0; text-align: center; font-size: 13.5px; color: var(--ink-mute); }
 .licence-line span { color: var(--ink); font-weight: 600; user-select: all; }
-#precio > .assure { max-width: 980px; margin-inline: auto; }
 
 /* ---------- quién te lo enseña ---------- */
 .bio { display: flex; flex-direction: column; align-items: center; gap: var(--s5); max-width: 660px; margin-inline: auto; text-align: center; }
@@ -374,7 +389,8 @@ h3 { margin: 0; font-size: 20px; line-height: 1.2; font-weight: 800; letter-spac
   .buy { align-items: flex-start; }
   .cta-row, .assure { justify-content: flex-start; }
   .note { margin-inline: 0; text-align: left; }
-  #precio > .assure, .licence-line { text-align: left; }
+  /* el bloque de precio va centrado también en móvil */
+  .head-center { align-items: center; text-align: center; margin-inline: auto; }
   /* el hero sigue centrado también en móvil */
   .hero .buy, .close .buy { align-items: center; }
   .hero .cta-row, .hero .assure, .close .assure { justify-content: center; }
@@ -584,6 +600,21 @@ h3 { margin: 0; font-size: 20px; line-height: 1.2; font-weight: 800; letter-spac
     </section>
   </div>
 
+  <!-- 1b. Qué es Claude: el contexto que le falta a quien no lo conoce -->
+  <div class="wrap">
+    <section class="sec" id="claude" aria-labelledby="h-claude">
+      <div class="head">
+        <p class="kicker">Antes de nada</p>
+        <h2 id="h-claude">¿Qué es Claude y por qué te interesa?</h2>
+      </div>
+      <ul class="about">
+        <li class="card"><h3>Qué es</h3><p>Un asistente de inteligencia artificial, como ChatGPT, creado por la empresa Anthropic. Le escribes como a una persona y te contesta o hace la tarea.</p></li>
+        <li class="card"><h3>Qué puede hacer</h3><p>Escribir y contestar correos, leer PDF y documentos, ordenar datos, preparar textos y conectarse con Gmail o Google Drive.</p></li>
+        <li class="card"><h3>Por qué aprenderlo</h3><p>Usado a ratos te ahorra minutos. Con tu negocio explicado y tus tareas guardadas te quita horas cada semana, y eso es lo que aprendes aquí.</p></li>
+      </ul>
+    </section>
+  </div>
+
   <!-- 2. Lo que vas a montar: cada resultado con el módulo del que sale -->
   <div class="wrap">
     <section class="sec" id="montas" aria-labelledby="h-montas">
@@ -672,19 +703,25 @@ h3 { margin: 0; font-size: 20px; line-height: 1.2; font-weight: 800; letter-spac
         <div class="vs-row vs-headrow" role="row"><span class="vs-k" role="columnheader"></span><span class="vs-us" role="columnheader"><svg class="vs-mark" viewBox="0 0 100 100" aria-hidden="true"><use href="#flower"/></svg>El método Claude</span><span class="vs-them" role="columnheader">Un curso de IA cualquiera</span></div>
         <div class="vs-row" role="row"><span class="vs-k" role="rowheader">Formato</span><span class="vs-us" role="cell"><span class="yes"><svg><use href="#i-yes"/></svg></span>PDF con pasos numerados, abierto mientras trabajas</span><span class="vs-them" role="cell"><span class="no"><svg><use href="#i-no"/></svg></span>Horas de vídeo que ves una vez</span></div><div class="vs-row" role="row"><span class="vs-k" role="rowheader">Herramientas</span><span class="vs-us" role="cell"><span class="yes"><svg><use href="#i-yes"/></svg></span>Claude, a fondo</span><span class="vs-them" role="cell"><span class="no"><svg><use href="#i-no"/></svg></span>Muchas, todas por encima</span></div><div class="vs-row" role="row"><span class="vs-k" role="rowheader">Ejemplos</span><span class="vs-us" role="cell"><span class="yes"><svg><use href="#i-yes"/></svg></span>De un negocio como el tuyo: correo, clientes y procesos</span><span class="vs-them" role="cell"><span class="no"><svg><use href="#i-no"/></svg></span>De marketing o de programación</span></div><div class="vs-row" role="row"><span class="vs-k" role="rowheader">Al terminar</span><span class="vs-us" role="cell"><span class="yes"><svg><use href="#i-yes"/></svg></span>Tienes tus tareas montadas y funcionando</span><span class="vs-them" role="cell"><span class="no"><svg><use href="#i-no"/></svg></span>Sabes qué existe</span></div><div class="vs-row" role="row"><span class="vs-k" role="rowheader">Precio</span><span class="vs-us" role="cell"><span class="yes"><svg><use href="#i-yes"/></svg></span>149&nbsp;€ una vez, con 14 días de garantía</span><span class="vs-them" role="cell"><span class="no"><svg><use href="#i-no"/></svg></span>Cuota mensual o cientos de euros</span></div>
       </div>
+      <div class="vs-cards">
+        <div class="card vs-card us"><h3><svg class="vs-mark" viewBox="0 0 100 100" aria-hidden="true"><use href="#flower"/></svg>El método Claude</h3><ul class="vs-items"><li><span class="yes"><svg><use href="#i-yes"/></svg></span><span><span class="label">Formato</span>PDF con pasos numerados, abierto mientras trabajas</span></li><li><span class="yes"><svg><use href="#i-yes"/></svg></span><span><span class="label">Herramientas</span>Claude, a fondo</span></li><li><span class="yes"><svg><use href="#i-yes"/></svg></span><span><span class="label">Ejemplos</span>De un negocio como el tuyo: correo, clientes y procesos</span></li><li><span class="yes"><svg><use href="#i-yes"/></svg></span><span><span class="label">Al terminar</span>Tienes tus tareas montadas y funcionando</span></li><li><span class="yes"><svg><use href="#i-yes"/></svg></span><span><span class="label">Precio</span>149&nbsp;€ una vez, con 14 días de garantía</span></li></ul></div>
+        <div class="card vs-card them"><h3>Un curso de IA cualquiera</h3><ul class="vs-items"><li><span class="no"><svg><use href="#i-no"/></svg></span><span><span class="label">Formato</span>Horas de vídeo que ves una vez</span></li><li><span class="no"><svg><use href="#i-no"/></svg></span><span><span class="label">Herramientas</span>Muchas, todas por encima</span></li><li><span class="no"><svg><use href="#i-no"/></svg></span><span><span class="label">Ejemplos</span>De marketing o de programación</span></li><li><span class="no"><svg><use href="#i-no"/></svg></span><span><span class="label">Al terminar</span>Sabes qué existe</span></li><li><span class="no"><svg><use href="#i-no"/></svg></span><span><span class="label">Precio</span>Cuota mensual o cientos de euros</span></li></ul></div>
+      </div>
     </section>
   </div>
 
-  <!-- 6. Precios: tres planes, el total siempre a la vista -->
+  <!-- 6. Precios: tres planes, con las condiciones a la vista bajo el título -->
   <div class="wrap">
     <section class="sec" id="precio" aria-labelledby="h-precio">
-      <div class="head">
+      <div class="head head-center">
         <p class="kicker">Precio</p>
-        <h2 id="h-precio">Elige cuánto te acompaño</h2>
-        <p>El mismo curso en los tres planes. Cambia cuánto te llevas hecho.</p>
+        <h2 id="h-precio">Elige tu plan</h2>
+        <p>Los tres incluyen el curso completo. Cambia cuánto te llevas hecho.</p>
+        <p class="assure" aria-label="Condiciones de compra"><span class="assure-line"><span>Pago único</span><span>14 días de garantía</span><span>Factura para tu empresa</span></span></p>
+        <p class="licence-line">Licencia individual. Si lo quieres para tu equipo, escríbeme a <span>hola@rafaprompts.com</span> y te preparo un precio.</p>
       </div>
       <div class="plans">
-        <article class="card plan featured">
+        <article class="card plan">
           <h3>Esencial</h3><span class="label">El curso completo</span>
           <p class="plan-price"><strong>149&nbsp;€</strong><small>pago único</small></p>
           <ul class="checks">
@@ -692,10 +729,10 @@ h3 { margin: 0; font-size: 20px; line-height: 1.2; font-weight: 800; letter-spac
             <li><span class="yes"><svg><use href="#i-yes"/></svg></span>100 instrucciones y plantillas para copiar</li>
             <li><span class="yes"><svg><use href="#i-yes"/></svg></span>Actualizaciones gratis</li>
           </ul>
-          <div class="plan-cta"><a class="btn block js-buy" href="https://rafaprompts.com/#comprar">Comprar · 149&nbsp;€</a><small>Acceso inmediato</small></div>
+          <div class="plan-cta"><a class="btn ghost block js-buy" href="https://rafaprompts.com/#comprar">Comprar · 149&nbsp;€</a></div>
         </article>
-        <article class="card plan">
-          <h3>Negocio <span class="soon">Muy pronto</span></h3><span class="label">El curso y 12 proyectos listos</span>
+        <article class="card plan featured">
+          <h3>Negocio <span class="badge">Recomendado</span></h3><span class="label">El curso y 12 proyectos listos</span>
           <p class="plan-price"><strong>249&nbsp;€</strong><small>pago único</small></p>
           <ul class="checks">
             <li><span class="yes"><svg><use href="#i-yes"/></svg></span>Todo lo de Esencial</li>
@@ -703,7 +740,7 @@ h3 { margin: 0; font-size: 20px; line-height: 1.2; font-weight: 800; letter-spac
             <li><span class="yes"><svg><use href="#i-yes"/></svg></span>Adaptados a tu tipo de negocio</li>
             <li><span class="yes"><svg><use href="#i-yes"/></svg></span>Proyectos nuevos cada 3 meses</li>
           </ul>
-          <div class="plan-cta"><a class="btn ghost block" href="mailto:hola@rafaprompts.com?subject=Plan%20Negocio%3A%20av%C3%ADsame">Avísame cuando esté</a><small>Te escribo en cuanto abra</small></div>
+          <div class="plan-cta"><a class="btn block js-negocio" href="https://buy.stripe.com/00waEYaL6eAagQe8xtaZi0d">Comprar · 249&nbsp;€</a></div>
         </article>
         <article class="card plan">
           <h3>Implantación a medida</h3><span class="label">Lo montamos juntos en tu empresa</span>
@@ -714,11 +751,9 @@ h3 { margin: 0; font-size: 20px; line-height: 1.2; font-weight: 800; letter-spac
             <li><span class="yes"><svg><use href="#i-yes"/></svg></span>Propuesta cerrada con precio</li>
             <li><span class="yes"><svg><use href="#i-yes"/></svg></span>Te acompaño hasta que funcione</li>
           </ul>
-          <div class="plan-cta"><a class="btn ghost block" href="mailto:hola@rafaprompts.com?subject=Implantaci%C3%B3n%20a%20medida">Pedir una llamada</a><small>Escríbeme a hola@rafaprompts.com</small></div>
+          <div class="plan-cta"><a class="btn ghost block" href="mailto:hola@rafaprompts.com?subject=Implantaci%C3%B3n%20a%20medida">Pedir una llamada</a></div>
         </article>
       </div>
-      <p class="assure" aria-label="Condiciones de compra"><span class="assure-line"><span>Pago único</span><span>14 días de garantía</span><span>Factura para tu empresa</span></span></p>
-      <p class="licence-line">Licencia individual. Si lo quieres para tu equipo, escríbeme a <span>hola@rafaprompts.com</span> y te preparo un precio.</p>
     </section>
   </div>
 
@@ -751,7 +786,7 @@ h3 { margin: 0; font-size: 20px; line-height: 1.2; font-weight: 800; letter-spac
         <details><summary>¿Cuánto tiempo me lleva?</summary><p>Unas 5 o 6 horas de lectura entre las dos rutas. Si haces un módulo cada dos días con tu propio negocio, en tres semanas tienes tu sistema funcionando.</p></details>
         <details><summary>¿Qué plan de Claude necesito?</summary><p>Para los primeros módulos te vale el plan gratuito. Para usarlo a diario y para la ruta avanzada, lo normal es el plan de pago de Claude, que es una suscripción mensual.</p></details>
         <details><summary>¿Me haces factura?</summary><p>Sí. Al pagar puedes poner el nombre y el NIF de tu empresa, y la factura te llega por correo.</p></details>
-        <details><summary>¿Qué cambia entre los planes?</summary><p>El curso es el mismo en los tres. Negocio añade 12 proyectos ya preparados para tu tipo de negocio y llega muy pronto. La implantación a medida es para montarlo juntos en tu empresa, con un precio cerrado según lo que necesites.</p></details>
+        <details><summary>¿Qué cambia entre los planes?</summary><p>El curso es el mismo en los tres. Negocio añade 12 proyectos ya preparados para tu tipo de negocio, que te llegan por correo en menos de 24 horas. La implantación a medida es para montarlo juntos en tu empresa, con un precio cerrado según lo que necesites.</p></details>
         <details><summary>¿Cómo funciona la implantación a medida?</summary><p>Empezamos con una llamada de 20 minutos, sin coste, para ver tu negocio. Después te mando una propuesta cerrada con lo que automatizamos, el plazo y el precio, desde 590&nbsp;€. Lo montamos juntos y te acompaño hasta que funcione.</p></details>
         <details><summary>¿Y si no me sirve?</summary><p>Tienes 14 días para pedir el reembolso. Me escribes una línea contando qué ha fallado y te devuelvo el dinero. Sin preguntas.</p></details>
       </div>
@@ -855,6 +890,13 @@ h3 { margin: 0; font-size: 20px; line-height: 1.2; font-weight: 800; letter-spac
     box.innerHTML = '';
   }
   document.querySelectorAll('.js-buy').forEach(function (a) { a.addEventListener('click', function (e) { e.preventDefault(); open(); }); });
+  /* Negocio se paga en la página de Stripe: se registra el inicio de pago y se abre el enlace */
+  document.querySelectorAll('.js-negocio').forEach(function (a) { a.addEventListener('click', function (e) {
+    if (!window.fbq) return;
+    e.preventDefault();
+    fbq('track', 'InitiateCheckout', { content_name: 'El método Claude · Negocio', content_ids: ['metodo-claude-negocio'], value: 249.00, currency: 'EUR' });
+    setTimeout(function () { location.href = a.href; }, 250);
+  }); });
   document.getElementById('checkout-close').addEventListener('click', close);
   overlay.addEventListener('click', function (e) { if (e.target === overlay) close(); });
   document.addEventListener('keydown', function (e) { if (e.key === 'Escape' && overlay.classList.contains('show')) close(); });

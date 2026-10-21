@@ -10,22 +10,41 @@ export const PLANES = {
   negocio: 'STRIPE_PRICE_NEGOCIO',
 };
 
-export function checkoutParams(env, body = {}, metadata = {}) {
+// Importe con IVA de cada plan, para el píxel y la API de conversiones
+export const IMPORTE = { esencial: 149, negocio: 249 };
+
+// Precio de lanzamiento de Esencial: solo existe mientras no pasa LANZAMIENTO_HASTA (ISO, UTC).
+// Lo decide el servidor, así que la fecha de fin es real aunque alguien cambie el reloj de su móvil.
+export function lanzamiento(env, ahora = Date.now()) {
+  const hasta = Date.parse(env.LANZAMIENTO_HASTA || '');
+  if (!env.STRIPE_PRICE_LANZAMIENTO || !hasta || ahora >= hasta) return null;
+  return { price: env.STRIPE_PRICE_LANZAMIENTO, importe: Number(env.LANZAMIENTO_IMPORTE), hasta };
+}
+
+export function checkoutParams(env, body = {}, metadata = {}, ahora = Date.now()) {
   const pedido = String(body.plan || 'esencial').toLowerCase();
   // solo se vende un plan si su precio está configurado; si no, se usa Esencial
   const plan = Object.hasOwn(PLANES, pedido) && env[PLANES[pedido]] ? pedido : 'esencial';
   const managed = env.STRIPE_MANAGED_PAYMENTS === 'on';
+  const lanz = plan === 'esencial' ? lanzamiento(env, ahora) : null;
+  const importe = lanz ? lanz.importe : IMPORTE[plan];
   const params = {
     ui_mode: managed ? 'embedded_page' : 'embedded',
     mode: 'payment',
-    line_items: [{ price: env[PLANES[plan]], quantity: 1 }],
+    line_items: [{ price: lanz ? lanz.price : env[PLANES[plan]], quantity: 1 }],
     customer_creation: 'always',
     billing_address_collection: 'auto',
     allow_promotion_codes: true,
-    return_url: plan === 'negocio' ? `${env.SUCCESS_URL}&plan=negocio` : env.SUCCESS_URL,
+    // v = importe cobrado, para que la página de gracias mande a Meta el valor real
+    return_url: `${env.SUCCESS_URL}${plan === 'negocio' ? '&plan=negocio' : ''}&v=${importe}`,
     locale: 'es',
-    metadata: { ...metadata, plan },
+    metadata: { ...metadata, plan, ...(lanz ? { precio: 'lanzamiento' } : {}) },
   };
+  // Con el precio de lanzamiento, la sesión caduca cuando acaba la oferta (Stripe pide entre 30 min y 24 h)
+  if (lanz) {
+    const s = Math.floor(ahora / 1000);
+    params.expires_at = Math.min(Math.max(Math.floor(lanz.hasta / 1000), s + 31 * 60), s + 23 * 3600);
+  }
   if (managed) {
     params.managed_payments = { enabled: true };
   } else {
@@ -36,5 +55,5 @@ export function checkoutParams(env, body = {}, metadata = {}) {
     // la factura sale a nombre de la empresa con su NIF (la web promete «Factura para tu empresa»)
     params.tax_id_collection = { enabled: true };
   }
-  return { params, plan, managed };
+  return { params, plan, managed, importe };
 }

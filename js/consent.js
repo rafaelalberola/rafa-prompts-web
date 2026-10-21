@@ -8,6 +8,11 @@
   function leer() { try { var d = JSON.parse(localStorage.getItem(KEY) || 'null'); if (d && Date.now() - d.t < DOCE_MESES) return d.v; } catch (e) {} return null; }
   function guardar(v) { try { localStorage.setItem(KEY, JSON.stringify({ v: v, t: Date.now() })); } catch (e) {} }
   var cargado = false;
+  // Cola de tareas que solo pueden correr con las cookies aceptadas (la copia de eventos para la API de
+  // conversiones). La página añade funciones con window.rpConsentQ.push(fn), antes o después de cargar este archivo.
+  var cola = Array.isArray(window.rpConsentQ) ? window.rpConsentQ.slice() : [];
+  function vaciar() { while (cola.length) { try { cola.shift()(); } catch (e) {} } }
+  window.rpConsentQ = { push: function (fn) { cola.push(fn); if (leer() === 'si') vaciar(); } };
   function cargarPixel() {
     if (cargado || !window.fbq) return; cargado = true;
     var s = document.createElement('script'); s.async = true; s.src = PIXEL; document.head.appendChild(s);
@@ -35,7 +40,7 @@
     el.addEventListener('click', function (e) {
       var b = e.target.closest('[data-v]'); if (!b) return;
       guardar(b.dataset.v); el.remove();
-      if (b.dataset.v === 'si') cargarPixel();
+      if (b.dataset.v === 'si') { cargarPixel(); vaciar(); } else cola.length = 0;
     });
     document.body.appendChild(el);
   }
@@ -52,7 +57,7 @@
   function iniciar() {
     enlacePie();
     var v = leer();
-    if (v === 'si') cargarPixel(); else if (v !== 'no') mostrar();
+    if (v === 'si') { cargarPixel(); vaciar(); } else if (v !== 'no') mostrar();
   }
   if (document.readyState === 'loading') document.addEventListener('DOMContentLoaded', iniciar); else iniciar();
   window.rpCookies = { abrir: mostrar };

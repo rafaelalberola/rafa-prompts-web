@@ -8,16 +8,22 @@
  *   GET  /session?token=...   → metadata for the /descargas page
  *   GET  /download?token=...&file=... → stream watermarked PDF
  *   GET  /pdfs                → list of files (catalog used by /descargas)
+ *   POST /evento              → copia en servidor (API de conversiones) de PageView, ViewContent e InitiateCheckout
+ *   GET  /oferta              → precio de lanzamiento vigente y su fecha de fin
+ *   POST /admin/pruebas | GET /admin/brevo | POST /admin/capi | POST /admin/tareas → operaciones con OPS_TOKEN
+ *   cron cada 5 min           → bienvenida del día después y recordatorios de la llamada (24 h y 1 h)
  *
  * Storage: Cloudflare KV namespace `STORE`
  *   - file:<slug>     → ArrayBuffer (PDF master)
  *   - token:<token>   → JSON { email, name, downloads_left, created_at }
  *   - session:<csid>  → token (lookup by stripe checkout session id)
+ *   - prog:bienv:<token> / prog:cita:<id> → emails programados
  */
 
 import { PDFDocument, StandardFonts, rgb } from 'pdf-lib';
 import ORDEN_CURSO from '../../course/modulos.json';
-import { checkoutParams } from './checkout.js';
+import { checkoutParams, lanzamiento, IMPORTE } from './checkout.js';
+import * as correo from './emails.js';
 
 // El orden y los títulos de los módulos salen de course/modulos.json (fuente única del curso)
 const PDF_CATALOG = [
@@ -125,28 +131,14 @@ async function hashedUserData({ email, name, fbp, fbc, ip, userAgent }) {
   return ud;
 }
 
-async function metaCapiPurchase(env, { eventId, eventTime, value, currency, email, name, fbp, fbc, ip, userAgent, sourceUrl, contentName = 'El método Claude', contentIds = ['metodo-claude'] }) {
+// Envía uno o varios eventos a la API de conversiones. Cada evento lleva el mismo event_id que el
+// del píxel del navegador, así Meta los junta y no cuenta nada dos veces.
+async function metaCapiEnviar(env, data) {
   if (!env.META_PIXEL_ID || !env.META_CAPI_TOKEN) {
     console.warn('CAPI skipped: META_PIXEL_ID or META_CAPI_TOKEN missing');
     return { skipped: true };
   }
-  const body = {
-    data: [{
-      event_name: 'Purchase',
-      event_time: Math.floor(eventTime || Date.now() / 1000),
-      event_id: eventId,
-      action_source: 'website',
-      event_source_url: sourceUrl || 'https://rafaprompts.com/gracias.html',
-      user_data: await hashedUserData({ email, name, fbp, fbc, ip, userAgent }),
-      custom_data: {
-        currency: currency || 'EUR',
-        value: Number(value),
-        content_name: contentName,
-        content_ids: contentIds,
-        content_type: 'product',
-      },
-    }],
-  };
+  const body = { data };
   if (env.META_TEST_EVENT_CODE) body.test_event_code = env.META_TEST_EVENT_CODE;
   const r = await fetch(
     `https://graph.facebook.com/v21.0/${env.META_PIXEL_ID}/events?access_token=${env.META_CAPI_TOKEN}`,
@@ -154,53 +146,78 @@ async function metaCapiPurchase(env, { eventId, eventTime, value, currency, emai
   );
   const out = await r.json();
   if (!r.ok || out.error) {
-    console.error('CAPI Purchase error:', JSON.stringify(out));
+    console.error('CAPI error:', JSON.stringify(out));
     return { ok: false, error: out };
   }
   return { ok: true, response: out };
 }
 
+async function metaCapiPurchase(env, { eventId, eventTime, value, currency, email, name, fbp, fbc, ip, userAgent, sourceUrl, contentName = 'El método Claude', contentIds = ['metodo-claude'] }) {
+  return metaCapiEnviar(env, [{
+    event_name: 'Purchase',
+    event_time: Math.floor(eventTime || Date.now() / 1000),
+    event_id: eventId,
+    action_source: 'website',
+    event_source_url: sourceUrl || 'https://rafaprompts.com/gracias.html',
+    user_data: await hashedUserData({ email, name, fbp, fbc, ip, userAgent }),
+    custom_data: {
+      currency: currency || 'EUR',
+      value: Number(value),
+      content_name: contentName,
+      content_ids: contentIds,
+      content_type: 'product',
+    },
+  }]);
+}
+
+// POST /evento: copia en el servidor de PageView, ViewContent e InitiateCheckout.
+// La web solo la llama si la persona aceptó las cookies de Meta, con el mismo event_id que el píxel.
+const EVENTOS_WEB = new Set(['PageView', 'ViewContent', 'InitiateCheckout']);
+const PRODUCTOS = {
+  'metodo-claude': 'El método Claude',
+  'metodo-claude-negocio': 'El método Claude · Negocio',
+  'diagnostico-implantacion': 'Diagnóstico de implantación',
+};
+async function handleEvento(req, env, ctx) {
+  const origen = req.headers.get('origin') || '';
+  if (origen && !/^https:\/\/(www\.)?rafaprompts\.com$/.test(origen)) return json({ error: 'forbidden' }, 403);
+  const body = await req.json().catch(() => ({}));
+  const url = String(body.url || '').slice(0, 500);
+  if (!/^https:\/\/(www\.)?rafaprompts\.com\//.test(url)) return json({ error: 'bad_url' }, 400);
+  const eventos = (Array.isArray(body.eventos) ? body.eventos : []).slice(0, 4)
+    .filter(e => e && EVENTOS_WEB.has(e.name) && typeof e.id === 'string' && /^[\w.-]{6,80}$/.test(e.id));
+  if (!eventos.length) return json({ error: 'no_events' }, 400);
+  const ud = await hashedUserData({
+    fbp: String(body.fbp || '').slice(0, 200), fbc: String(body.fbc || '').slice(0, 200),
+    ip: req.headers.get('cf-connecting-ip') || '', userAgent: (req.headers.get('user-agent') || '').slice(0, 400),
+  });
+  const ahora = Math.floor(Date.now() / 1000);
+  const data = eventos.map(e => {
+    const ev = { event_name: e.name, event_time: ahora, event_id: e.id, action_source: 'website', event_source_url: url, user_data: ud };
+    if (e.name !== 'PageView') {
+      const id = PRODUCTOS[e.content_id] ? e.content_id : 'metodo-claude';
+      const valor = Math.min(Math.max(Number(e.value) || 0, 0), 1000);
+      ev.custom_data = { currency: 'EUR', value: valor, content_ids: [id], content_name: PRODUCTOS[id], content_type: 'product' };
+    }
+    return ev;
+  });
+  ctx.waitUntil(metaCapiEnviar(env, data).catch(e => console.error('CAPI evento:', e)));
+  return json({ ok: true });
+}
+
 // ---------- Email (Brevo) ----------
 
-async function sendDeliveryEmail(env, { to, name, token }) {
-  const downloadUrl = `${env.DOWNLOAD_PAGE}?t=${token}`;
-  const greeting = name ? `Hola ${name.split(' ')[0]}` : 'Hola';
-  const html = `<!doctype html><html><head><meta charset="utf-8"></head><body style="font-family: -apple-system, system-ui, sans-serif; background:#F2EFE7; color:#111; padding:40px 20px;">
-  <div style="max-width:560px; margin:0 auto; background:#fff; padding:40px 36px; border-radius:20px;">
-    <div style="font-family: 'IBM Plex Mono', monospace; font-size:11px; letter-spacing:0.18em; text-transform:uppercase; color:#DA7756; font-weight:700; margin-bottom:16px;">El método Claude</div>
-    <h1 style="font-size:28px; font-weight:900; line-height:1.1; margin:0 0 16px; letter-spacing:-0.02em;">${greeting}, gracias por tu compra</h1>
-    <p style="font-size:16px; line-height:1.6; color:#333; margin:0 0 20px;">Tu acceso al curso ya está listo. Puedes descargar los ${PDF_CATALOG.length} PDFs (los ${ORDEN_CURSO.modulos.length} módulos, la guía "empezar aquí" y la biblioteca de 100 prompts) desde tu página personal:</p>
-    <p style="margin:28px 0;">
-      <a href="${downloadUrl}" style="display:inline-block; background:#DA7756; color:#fff; padding:16px 28px; border-radius:999px; text-decoration:none; font-weight:700; font-size:15px;">Acceder a las descargas</a>
-    </p>
-    <p style="font-size:14px; line-height:1.6; color:#5a5a5a; margin:24px 0 0;">Cada PDF lleva tu nombre y email impresos. Son tuyos para siempre, con actualizaciones gratuitas. Si tienes cualquier duda, responde a este email.</p>
-    <hr style="border:0; border-top:1px solid rgba(0,0,0,0.08); margin:32px 0;">
-    <p style="font-size:13px; color:#8a8a8a; margin:0;">Si el botón no funciona, copia este enlace en tu navegador:<br><span style="word-break:break-all; color:#DA7756;">${downloadUrl}</span></p>
-  </div>
-  <p style="text-align:center; font-size:12px; color:#8a8a8a; margin-top:24px;">rafa.prompts · hola@rafaprompts.com</p>
-</body></html>`;
-
-  // Parse "Display Name <email>" format from EMAIL_FROM env var
-  const m = (env.EMAIL_FROM || '').match(/^(.*?)\s*<([^>]+)>\s*$/);
-  const senderName = m ? m[1].trim() : 'rafa.prompts';
-  const senderEmail = m ? m[2].trim() : env.EMAIL_REPLY_TO;
-
-  const r = await fetch('https://api.brevo.com/v3/smtp/email', {
-    method: 'POST',
-    headers: {
-      'api-key': env.BREVO_API_KEY,
-      'Content-Type': 'application/json',
-      'accept': 'application/json',
-    },
-    body: JSON.stringify({
-      sender: { name: senderName, email: senderEmail },
-      to: [{ email: to, name: name || undefined }],
-      replyTo: { email: env.EMAIL_REPLY_TO, name: senderName },
-      subject: 'Tus PDFs de El método Claude están listos',
-      htmlContent: html,
-    }),
+async function sendDeliveryEmail(env, { to, name, token, plan, importe }) {
+  const m = correo.compra({
+    nombre: name, plan, importe, url: `${env.DOWNLOAD_PAGE}?t=${token}`,
+    nPdfs: PDF_CATALOG.length, nModulos: ORDEN_CURSO.modulos.length,
   });
-  return r.json();
+  return brevoSendEmail(env, { to, name, subject: m.asunto, html: m.html });
+}
+
+async function sendBienvenidaEmail(env, { to, name, token }) {
+  const m = correo.bienvenida({ nombre: name, url: `${env.DOWNLOAD_PAGE}?t=${token}`, modulos: ORDEN_CURSO.modulos.slice(0, 4).map(x => x.titulo) });
+  return brevoSendEmail(env, { to, name, subject: m.asunto, html: m.html });
 }
 
 // ---------- PDF watermarking ----------
@@ -245,7 +262,7 @@ async function handleCheckout(req, env) {
     ip,
     user_agent: userAgent.slice(0, 400),
   };
-  const { params, plan } = checkoutParams(env, body, metadata);
+  const { params, plan, importe } = checkoutParams(env, body, metadata);
   const session = await stripeRequest(env, 'checkout/sessions', params);
   if (session.error) {
     console.error('Stripe error:', session.error);
@@ -256,6 +273,7 @@ async function handleCheckout(req, env) {
     session_id: session.id,
     ui_mode: params.ui_mode,
     plan,
+    importe,
     publishable_key: env.STRIPE_PUBLISHABLE_KEY || null,
   });
 }
@@ -268,8 +286,13 @@ async function handleCalendly(req, env) {
   const ok = await verifyStripeSignature(payload, req.headers.get('calendly-webhook-signature'), env.CALENDLY_SIGNING_KEY);
   if (!ok) return new Response('invalid signature', { status: 400 });
   const ev = JSON.parse(payload);
-  if (ev.event !== 'invitee.created') return new Response('ignored', { status: 200 });
   const inv = ev.payload || {};
+  if (ev.event === 'invitee.canceled') {
+    const idc = String(inv.uri || '').split('/').pop();
+    if (idc) await env.STORE.delete(`prog:cita:${idc}`);
+    return new Response('ok: canceled', { status: 200 });
+  }
+  if (ev.event !== 'invitee.created') return new Response('ignored', { status: 200 });
   const pago = inv.payment || {};
   if (!pago.successful) return new Response('ignored: unpaid', { status: 200 });
   const id = String(inv.uri || '').split('/').pop();
@@ -277,6 +300,19 @@ async function handleCalendly(req, env) {
   const clave = `calendly:${id}`;
   if (await env.STORE.get(clave)) return new Response('already processed', { status: 200 });
   await env.STORE.put(clave, '1', { expirationTtl: 400 * 24 * 60 * 60 });
+  // confirmación propia (qué preparar) y recordatorios 24 h y 1 h antes, que manda el cron
+  const se = inv.scheduled_event || {};
+  const cita = {
+    tipo: 'cita', id, email: inv.email, name: inv.name, inicio: se.start_time, tz: inv.timezone || 'Europe/Madrid',
+    evento: se.uri || '', joinUrl: (se.location || {}).join_url || '', cancelUrl: inv.cancel_url || '', rescheduleUrl: inv.reschedule_url || '',
+    creada: Date.now(), enviados: {},
+  };
+  if (cita.email && cita.inicio) {
+    const fin = Math.max(Math.floor((Date.parse(cita.inicio) - Date.now()) / 1000) + 2 * 86400, 3600);
+    await programar(env, `prog:cita:${id}`, cita, fin).catch(e => console.error('programar cita:', e));
+    const m = correo.citaConfirmada({ nombre: cita.name, inicio: cita.inicio, tz: cita.tz, joinUrl: cita.joinUrl, cancelUrl: cita.cancelUrl, rescheduleUrl: cita.rescheduleUrl });
+    await brevoSendEmail(env, { to: cita.email, name: cita.name, subject: m.asunto, html: m.html }).catch(e => console.error('email cita:', e));
+  }
   await metaCapiPurchase(env, {
     eventId: `diag_${id}`, eventTime: Date.parse(inv.created_at) / 1000 || undefined,
     value: Number(pago.amount) || 50, currency: String(pago.currency || 'EUR').toUpperCase(),
@@ -353,9 +389,12 @@ async function handleWebhook(req, env) {
   await env.STORE.put(`session:${csid}`, token, { expirationTtl: ttlSeconds });
 
   // Send email (Brevo)
-  await sendDeliveryEmail(env, { to: email, name, token }).catch(e => {
+  await sendDeliveryEmail(env, { to: email, name, token, plan: plan || 'esencial', importe: (cs.amount_total || 0) / 100 }).catch(e => {
     console.error('email error:', e);
   });
+  // Bienvenida con el orden para empezar: a las 9:00 (Madrid) del primer día que esté al menos a 8 horas
+  await programar(env, `prog:bienv:${token}`, { tipo: 'bienvenida', email, name, token, cuando: proximasNueve(Date.now() + 8 * 3600e3) }, 30 * 86400)
+    .catch(e => console.error('programar bienvenida:', e));
   // Plan Negocio: aviso a Rafa para enviar los 12 proyectos (se entregan a mano en menos de 24 h)
   if (plan === 'negocio') await sendSaleNotification(env, { plan, email, name, amount: cs.amount_total }).catch(e => console.error('email error:', e));
 
@@ -529,14 +568,14 @@ function senderFromEnv(env) {
   };
 }
 
-async function brevoSendEmail(env, { to, subject, html, replyTo }) {
+async function brevoSendEmail(env, { to, name, subject, html, replyTo }) {
   const sender = senderFromEnv(env);
   return fetch('https://api.brevo.com/v3/smtp/email', {
     method: 'POST',
     headers: { 'api-key': env.BREVO_API_KEY, 'Content-Type': 'application/json', accept: 'application/json' },
     body: JSON.stringify({
       sender,
-      to: [{ email: to }],
+      to: [{ email: to, ...(name ? { name } : {}) }],
       replyTo: replyTo || { email: env.EMAIL_REPLY_TO || sender.email, name: sender.name },
       subject,
       htmlContent: html,
@@ -608,11 +647,11 @@ async function sendWelcomeEmail(env, { to, source }) {
     <p style="margin:28px 0;">
       <a href="${guideUrl}" style="display:inline-block; background:#DA7756; color:#fff; padding:16px 28px; border-radius:999px; text-decoration:none; font-weight:700; font-size:15px;">Abrir la guía</a>
     </p>
-    <p style="font-size:14px; line-height:1.6; color:#5a5a5a; margin:24px 0 0;">Cuando publique la siguiente, te aviso por aquí. Si tienes dudas mientras la lees, responde a este email — lo leo yo.</p>
+    <p style="font-size:14px; line-height:1.6; color:#5a5a5a; margin:24px 0 0;">Cuando publique la siguiente, te aviso por aquí. Si tienes dudas mientras la lees, responde a este email. Lo leo yo.</p>
     <hr style="border:0; border-top:1px solid rgba(0,0,0,0.08); margin:32px 0;">
     <p style="font-size:13px; color:#8a8a8a; margin:0;">Si alguna vez quieres dejar de recibir estos emails, responde con "baja" y te saco de la lista.</p>
   </div>
-  <p style="text-align:center; font-size:12px; color:#8a8a8a; margin-top:24px;">— Rafa · rafaprompts.com</p>
+  <p style="text-align:center; font-size:12px; color:#8a8a8a; margin-top:24px;">Rafa · rafaprompts.com</p>
 </body></html>`;
   return brevoSendEmail(env, { to, subject: `Tu guía de ${guideName}`, html });
 }
@@ -681,6 +720,124 @@ async function handleSubscribe(req, env) {
   return json({ ok: true, existed });
 }
 
+// ---------- Tareas programadas (cron cada 5 minutos) ----------
+// Claves prog:* en KV: la bienvenida del día después de la compra y las citas de Calendly.
+
+async function programar(env, clave, datos, ttlSegundos) {
+  await env.STORE.put(clave, JSON.stringify(datos), { expirationTtl: Math.max(Math.floor(ttlSegundos), 120) });
+}
+
+// Primera hora en punto a las 9:00 de Madrid a partir de «desde» (ms)
+function proximasNueve(desde) {
+  const hora = t => Number(new Intl.DateTimeFormat('en-GB', { timeZone: 'Europe/Madrid', hour: '2-digit', hourCycle: 'h23' }).format(new Date(t)));
+  let t = Math.ceil(desde / 3600e3) * 3600e3;
+  for (let i = 0; i < 48 && hora(t) !== 9; i++) t += 3600e3;
+  return t;
+}
+
+// Estado real de la cita en Calendly (cancelada o no) y enlace de Meet, si hay token
+async function estadoCita(env, cita) {
+  if (!env.CALENDLY_TOKEN || !cita.evento) return null;
+  const r = await fetch(cita.evento, { headers: { Authorization: `Bearer ${env.CALENDLY_TOKEN}` } });
+  if (!r.ok) return null;
+  const ev = (await r.json()).resource || {};
+  return { cancelada: ev.status === 'canceled', inicio: ev.start_time, joinUrl: (ev.location || {}).join_url || '' };
+}
+
+async function tareasProgramadas(env, ahora = Date.now()) {
+  const hecho = [];
+  const lista = await env.STORE.list({ prefix: 'prog:' });
+  for (const k of lista.keys) {
+    const raw = await env.STORE.get(k.name);
+    if (!raw) continue;
+    const d = JSON.parse(raw);
+    try {
+      if (d.tipo === 'bienvenida') {
+        if (ahora < d.cuando) continue;
+        await sendBienvenidaEmail(env, { to: d.email, name: d.name, token: d.token });
+        await env.STORE.delete(k.name);
+        hecho.push(`bienvenida ${d.email}`);
+      } else if (d.tipo === 'cita') {
+        const inicio = Date.parse(d.inicio);
+        const falta = inicio - ahora;
+        if (falta <= 0) { await env.STORE.delete(k.name); continue; }
+        // 24 h antes (si se reservó con más de 26 h de margen) y 1 h antes (si se reservó con más de 2 h)
+        const toca = !d.enviados.d24 && falta <= 24 * 3600e3 && falta > 3 * 3600e3 && inicio - d.creada > 26 * 3600e3 ? '24h'
+          : !d.enviados.h1 && falta <= 65 * 60e3 && inicio - d.creada > 2 * 3600e3 ? '1h' : null;
+        if (!toca) continue;
+        const est = await estadoCita(env, d).catch(() => null);
+        if (est && est.cancelada) { await env.STORE.delete(k.name); hecho.push(`cita cancelada ${d.email}`); continue; }
+        if (est && est.joinUrl) d.joinUrl = est.joinUrl;
+        const m = correo.citaRecordatorio({ tipo: toca, nombre: d.name, inicio: d.inicio, tz: d.tz, joinUrl: d.joinUrl, rescheduleUrl: d.rescheduleUrl });
+        await brevoSendEmail(env, { to: d.email, name: d.name, subject: m.asunto, html: m.html });
+        d.enviados[toca === '24h' ? 'd24' : 'h1'] = Date.now();
+        await programar(env, k.name, d, Math.floor(falta / 1000) + 2 * 86400);
+        hecho.push(`recordatorio ${toca} ${d.email}`);
+      }
+    } catch (e) {
+      console.error('tarea programada', k.name, e.stack || e.message);
+    }
+  }
+  return hecho;
+}
+
+// ---------- Operaciones (solo con OPS_TOKEN) ----------
+// POST /admin/pruebas: manda un ejemplo de cada email a ADMIN_EMAIL (nunca a clientes)
+// GET  /admin/brevo?ids=a,b: estado de esos envíos en Brevo
+// POST /admin/capi: manda a Meta un PageView de prueba con test_event_code (no es una compra)
+function opsOk(req, env, body) {
+  const t = (body && body.token) || new URL(req.url).searchParams.get('token') || '';
+  return env.OPS_TOKEN && t.length === env.OPS_TOKEN.length && t === env.OPS_TOKEN;
+}
+
+async function handlePruebas(req, env) {
+  const body = await req.json().catch(() => ({}));
+  if (!opsOk(req, env, body)) return json({ error: 'forbidden' }, 403);
+  const to = env.ADMIN_EMAIL;
+  const prueba = s => `[Prueba] ${s}`;
+  const urlDesc = `${env.DOWNLOAD_PAGE}?t=prueba`;
+  const inicio = new Date(Date.now() + 26 * 3600e3).toISOString().replace(/:\d\d\.\d+Z$/, ':00.000Z');
+  const cita = { nombre: 'Rafa Alberola', inicio, tz: 'Europe/Madrid', joinUrl: 'https://meet.google.com/', cancelUrl: 'https://calendly.com/', rescheduleUrl: 'https://calendly.com/' };
+  const tipos = {
+    compra: correo.compra({ nombre: 'Rafa Alberola', plan: 'esencial', importe: 99, url: urlDesc, nPdfs: PDF_CATALOG.length, nModulos: ORDEN_CURSO.modulos.length }),
+    bienvenida: correo.bienvenida({ nombre: 'Rafa Alberola', url: urlDesc, modulos: ORDEN_CURSO.modulos.slice(0, 4).map(x => x.titulo) }),
+    cita: correo.citaConfirmada(cita),
+    recordatorio24: correo.citaRecordatorio({ tipo: '24h', ...cita }),
+    recordatorio1h: correo.citaRecordatorio({ tipo: '1h', ...cita }),
+  };
+  const pedidos = Array.isArray(body.tipos) && body.tipos.length ? body.tipos : Object.keys(tipos);
+  const out = {};
+  for (const t of pedidos) {
+    if (!tipos[t]) continue;
+    out[t] = await brevoSendEmail(env, { to, name: 'Rafa', subject: prueba(tipos[t].asunto), html: tipos[t].html });
+  }
+  if (pedidos.includes('guia')) out.guia = await sendWelcomeEmail(env, { to, source: 'yate' });
+  return json({ to, enviados: out });
+}
+
+async function handleBrevoEstado(req, env) {
+  if (!opsOk(req, env)) return json({ error: 'forbidden' }, 403);
+  const ids = (new URL(req.url).searchParams.get('ids') || '').split(',').filter(Boolean).slice(0, 10);
+  const out = {};
+  for (const id of ids) {
+    const r = await fetch(`https://api.brevo.com/v3/smtp/statistics/events?messageId=${encodeURIComponent(id)}&limit=20`, { headers: { 'api-key': env.BREVO_API_KEY, accept: 'application/json' } });
+    out[id] = ((await r.json()).events || []).map(e => ({ evento: e.event, cuando: e.date, motivo: e.reason }));
+  }
+  return json(out);
+}
+
+async function handleCapiPrueba(req, env) {
+  const body = await req.json().catch(() => ({}));
+  if (!opsOk(req, env, body)) return json({ error: 'forbidden' }, 403);
+  const code = String(body.test_event_code || '');
+  if (!/^TEST\w{3,20}$/.test(code)) return json({ error: 'test_event_code requerido' }, 400);
+  const r = await metaCapiEnviar({ ...env, META_TEST_EVENT_CODE: code }, [{
+    event_name: 'PageView', event_time: Math.floor(Date.now() / 1000), event_id: `prueba_${Date.now()}`, action_source: 'website',
+    event_source_url: 'https://rafaprompts.com/', user_data: await hashedUserData({ ip: req.headers.get('cf-connecting-ip') || '', userAgent: req.headers.get('user-agent') || '' }),
+  }]);
+  return json(r);
+}
+
 // ---------- Main entry ----------
 
 export default {
@@ -697,6 +854,26 @@ export default {
       switch (`${req.method} ${url.pathname}`) {
         case 'POST /checkout':
           res = await handleCheckout(req, env);
+          break;
+        case 'POST /evento':
+          res = await handleEvento(req, env, ctx);
+          break;
+        case 'GET /oferta': {
+          const l = lanzamiento(env);
+          res = json(l ? { lanzamiento: true, importe: l.importe, normal: IMPORTE.esencial, hasta: new Date(l.hasta).toISOString() } : { lanzamiento: false, importe: IMPORTE.esencial });
+          break;
+        }
+        case 'POST /admin/pruebas':
+          res = await handlePruebas(req, env);
+          break;
+        case 'GET /admin/brevo':
+          res = await handleBrevoEstado(req, env);
+          break;
+        case 'POST /admin/capi':
+          res = await handleCapiPrueba(req, env);
+          break;
+        case 'POST /admin/tareas':
+          res = opsOk(req, env, await req.clone().json().catch(() => ({}))) ? json({ hecho: await tareasProgramadas(env) }) : json({ error: 'forbidden' }, 403);
           break;
         case 'POST /subscribe':
           res = await handleSubscribe(req, env);
@@ -735,5 +912,9 @@ export default {
 
     Object.entries(headers).forEach(([k, v]) => res.headers.set(k, v));
     return res;
+  },
+
+  async scheduled(event, env, ctx) {
+    ctx.waitUntil(tareasProgramadas(env).then(h => { if (h.length) console.log('tareas:', h.join(' · ')); }));
   },
 };

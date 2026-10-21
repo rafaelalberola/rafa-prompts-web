@@ -12,6 +12,11 @@ STRIPE_PRICE_ID = "price_1UT06LEbybsfC75FLDnjAUjE"   # cuenta Rafa Prompts, 149 
 STRIPE_MANAGED_PAYMENTS = "on"   # Stripe como vendedor registrado (IVA y factura)
 STRIPE_API_VERSION = "2026-09-30.endive"
 STRIPE_PRICE_NEGOCIO = "price_1UT06NEbybsfC75FKE1BYBfI"   # cuenta Rafa Prompts, 249 € IVA incl.
+# Precio de lanzamiento de Esencial (99 € IVA incl.). Deja de aplicarse solo al pasar LANZAMIENTO_HASTA (UTC):
+# lunes 26-10-2026 a las 7:00 de Madrid, cuando acaba la campaña. La home usa la misma fecha.
+STRIPE_PRICE_LANZAMIENTO = "price_1UT2WvEbybsfC75F8AtPGkEi"
+LANZAMIENTO_IMPORTE = "99"
+LANZAMIENTO_HASTA = "2026-10-26T06:00:00Z"
 EMAIL_FROM = "El método Claude <hola@rafaprompts.com>"
 EMAIL_REPLY_TO = "hola@rafaprompts.com"
 SUCCESS_URL = "https://rafaprompts.com/gracias.html?session_id={CHECKOUT_SESSION_ID}"
@@ -32,6 +37,10 @@ id = "b6dd7fed4d23474bbca1a23f101a80b4"
 # routes = [
 #   { pattern = "api.rafaprompts.com/*", custom_domain = true }
 # ]
+
+# bienvenida del día después de la compra y recordatorios de la llamada
+[triggers]
+crons = ["*/5 * * * *"]
 
 [observability]
 enabled = true

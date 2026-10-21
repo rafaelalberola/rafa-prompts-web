@@ -122,6 +122,8 @@
       const sessionId = params.get('session_id') || '';
       // Plan Negocio (enlace de pago de 249 €): aviso de los proyectos y valor real de la compra
       const isNegocio = params.get('plan') === 'negocio';
+      // importe cobrado (lo pone el servidor en la URL de vuelta de Stripe; con el precio de lanzamiento es 99)
+      const v = parseFloat(params.get('v'));
       if (isNegocio) { const n = document.getElementById('negocio-note'); if (n) n.hidden = false; }
       // Diagnóstico de implantación (50 €): no hay PDFs, se fija una llamada
       const isDiag = params.get('plan') === 'diagnostico';
@@ -141,7 +143,7 @@
           content_name: isDiag ? 'Diagnóstico de implantación' : (isNegocio ? 'El método Claude · Negocio' : 'El método Claude'),
           content_ids: [isDiag ? 'diagnostico-implantacion' : (isNegocio ? 'metodo-claude-negocio' : 'metodo-claude')],
           content_type: 'product',
-          value: isDiag ? 50.00 : (isNegocio ? 249.00 : 149.00),
+          value: isDiag ? 50.00 : (v > 0 && v < 1000 ? v : (isNegocio ? 249.00 : 149.00)),
           currency: 'EUR'
         }, sessionId ? { eventID: sessionId } : undefined);
         if (dedupKey) sessionStorage.setItem(dedupKey, '1');

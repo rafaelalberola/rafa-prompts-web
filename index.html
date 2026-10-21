@@ -3,6 +3,13 @@
 <head>
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<script>
+/* Precio de lanzamiento: 99 € hasta el lunes 26-10-2026 a las 7:00 de Madrid (6:00 UTC). El servidor cobra
+   lo mismo hasta la misma fecha (LANZAMIENTO_HASTA en api/wrangler.toml): si cambias una, cambia la otra. */
+window.RP_LANZ = { hasta: Date.parse('2026-10-26T06:00:00Z'), importe: 99, normal: 149 };
+if (Date.now() < window.RP_LANZ.hasta) document.documentElement.classList.add('rp-lanz');
+window.rpPv = 'pv_' + Date.now().toString(36) + Math.random().toString(36).slice(2, 8);
+</script>
 
 
 <script>if(location.protocol!=="https:"&&location.hostname.endsWith("rafaprompts.com"))location.replace("https:"+location.href.substring(location.protocol.length));</script>
@@ -26,7 +33,7 @@
 /* Píxel de Meta solo en el dominio real: las vistas previas no ensucian los datos */
 if (location.hostname.endsWith('rafaprompts.com')) {
 !function(f,b,e,v,n,t,s){if(f.fbq)return;n=f.fbq=function(){n.callMethod?n.callMethod.apply(n,arguments):n.queue.push(arguments)};if(!f._fbq)f._fbq=n;n.push=n;n.loaded=!0;n.version='2.0';n.queue=[];}(window,document); /* el script de Meta solo se carga si aceptan las cookies: js/consent.js */
-fbq('init', '952321057516846'); fbq('track', 'PageView');
+fbq('init', '952321057516846'); fbq('track', 'PageView', {}, { eventID: window.rpPv });
 }
 </script>
 
@@ -188,6 +195,23 @@ h3 { margin: 0; font-size: 20px; line-height: 1.2; font-weight: 800; letter-spac
 .card .assure { text-align: left; }
 .assure.on-dark { color: var(--ok-on-dark); }
 .assure.on-dark svg { color: var(--ok-dark); }
+
+/* Precio de lanzamiento (real: el servidor lo cobra hasta la misma fecha). Sin .rp-lanz en <html>, precio normal. */
+.p-l, .p-lb { display: none; }
+html.rp-lanz .p-n { display: none; }
+html.rp-lanz .p-l { display: inline; }
+html.rp-lanz .p-lb { display: block; }
+.lanz-pill { margin: 0; padding: 10px 18px; border-radius: var(--r-ui); background: rgba(218, 119, 86, 0.13); color: var(--ink); text-align: center; font: 700 15px/1.4 var(--f-sans); }
+.lanz-pill s { color: var(--ink-mute); font-weight: 600; text-decoration-thickness: 1.5px; }
+.lanz-pill strong { color: var(--accent-ink); font-weight: 900; }
+.lanz-cuando { display: block; margin-top: 2px; font-weight: 500; font-size: 13.5px; color: var(--ink-soft); }
+.cuenta { font-variant-numeric: tabular-nums; font-weight: 700; color: var(--ink); }
+.lanz-pill.on-dark { background: rgba(242, 239, 231, 0.09); color: var(--band-ink); }
+.lanz-pill.on-dark strong { color: #F2A27F; }
+.lanz-pill.on-dark s, .lanz-pill.on-dark .lanz-cuando { color: var(--band-soft); }
+.lanz-pill.on-dark .cuenta { color: var(--band-ink); }
+.plan-antes { font: 700 20px/1 var(--f-sans); color: var(--ink-mute); text-decoration-thickness: 1.5px; }
+.lanz-nota { margin: 0; font-size: 13.5px; line-height: 1.45; color: var(--ink-soft); }
 
 /* lista con ✓ verde */
 .checks { list-style: none; margin: 0; padding: 0; display: flex; flex-direction: column; gap: var(--s3); text-align: left; }
@@ -498,6 +522,15 @@ h3 { margin: 0; font-size: 20px; line-height: 1.2; font-weight: 800; letter-spac
 .checkout-overlay.is-cal #checkout { max-width: none; height: 100%; padding: 0; }
 .cal-frame { display: block; width: 100%; height: 100%; border: 0; background: var(--surface); }
 .checkout-msg { padding: 40px 24px; text-align: center; color: var(--ink-soft); }
+/* spinner mientras se prepara el pago o el calendario: nunca una pantalla vacía */
+.checkout-body #checkout { position: relative; }
+.co-cargando { position: absolute; inset: 0; z-index: 2; display: flex; flex-direction: column; align-items: center; gap: 14px; padding: min(26vh, 220px) 24px 0; background: var(--bg); color: var(--ink-soft); font: 600 15px/1.4 var(--f-sans); text-align: center; opacity: 0; visibility: hidden; transition: opacity .2s ease, visibility 0s linear .2s; }
+#checkout.cargando .co-cargando { opacity: 1; visibility: visible; transition: opacity .15s ease .06s, visibility 0s; }
+.co-spin { width: 36px; height: 36px; border-radius: 50%; border: 3px solid rgba(20, 19, 17, 0.12); border-top-color: var(--accent); animation: co-gira .75s linear infinite; }
+@keyframes co-gira { to { transform: rotate(360deg); } }
+@media (prefers-reduced-motion: reduce) { .co-spin { animation-duration: 1.6s; } }
+.co-seguro { font-weight: 500; font-size: 13px; color: var(--ink-mute); }
+.checkout-overlay.is-cal .co-stripe { display: none; }
 @media (max-width: 600px) { .checkout-body #checkout { padding: var(--s3) 0 var(--s6); } }
 
 /* ---------- móvil: todo alineado a la izquierda ---------- */
@@ -833,7 +866,7 @@ body::before { content: ""; position: fixed; inset: 0 0 auto; height: env(safe-a
       <a href="#montas">Lo&nbsp;que&nbsp;ahorras</a>
       <a href="#faq-programar">¿Hay que&nbsp;programar?</a>
       <a href="#precio">Precio</a>
-      <a class="top-cta js-buy" href="https://rafaprompts.com/#comprar">Comprar · 149&nbsp;€</a>
+      <a class="top-cta js-buy" href="https://rafaprompts.com/#comprar">Comprar · <span class="p-n">149&nbsp;€</span><span class="p-l">99&nbsp;€</span></a>
     </nav>
   </header>
 </div>
@@ -847,7 +880,8 @@ body::before { content: ""; position: fixed; inset: 0 0 auto; height: env(safe-a
         <h1 id="h-hero">Aprende a&nbsp;automatizar tu&nbsp;negocio con&nbsp;Claude <span class="it">sin&nbsp;programar</span></h1>
         <p class="lede">¿Se&nbsp;te&nbsp;van las&nbsp;tardes en&nbsp;correos, Excel y&nbsp;papeles? Claude puede devolverte unas&nbsp;30 horas al&nbsp;mes, y&nbsp;empiezas este fin de&nbsp;semana.</p>
         <div class="buy">
-          <a class="btn js-buy" href="https://rafaprompts.com/#comprar">Comprar el&nbsp;curso · 149&nbsp;€</a>
+          <p class="lanz-pill p-lb">Precio de&nbsp;lanzamiento: <s>149&nbsp;€</s> <strong>99&nbsp;€</strong><span class="lanz-cuando">Hasta&nbsp;el&nbsp;lunes 26 a&nbsp;las&nbsp;7:00 · <span class="cuenta" data-cuenta></span></span></p>
+          <a class="btn js-buy" href="https://rafaprompts.com/#comprar"><span>Comprar el&nbsp;curso · <span class="p-n">149&nbsp;€</span><span class="p-l">99&nbsp;€</span></span></a>
           <p class="assure" aria-label="Condiciones de compra"><span class="assure-line"><span>Pago único</span><span>14 días de&nbsp;garantía</span><span>Factura para&nbsp;tu&nbsp;empresa</span></span></p>
         </div>
       </div>
@@ -1048,10 +1082,10 @@ body::before { content: ""; position: fixed; inset: 0 0 auto; height: env(safe-a
       </div>
       <div class="vs" role="table" aria-label="Comparativa con otros cursos de IA">
         <div class="vs-row vs-headrow" role="row"><span class="vs-k" role="columnheader"></span><span class="vs-us" role="columnheader"><svg class="vs-mark" viewBox="0 0 100 100" aria-hidden="true"><use href="#flower"/></svg>El&nbsp;método Claude</span><span class="vs-them" role="columnheader">Un&nbsp;curso de&nbsp;IA cualquiera</span></div>
-        <div class="vs-row" role="row"><span class="vs-k" role="rowheader">Áreas del&nbsp;negocio</span><span class="vs-us" role="cell"><span class="yes"><svg><use href="#i-yes"/></svg></span>Casi todas: web, clientes, ventas, correo, facturas y&nbsp;equipo</span><span class="vs-them" role="cell"><span class="no"><svg><use href="#i-no"/></svg></span>Una&nbsp;o&nbsp;dos, casi siempre marketing</span></div><div class="vs-row" role="row"><span class="vs-k" role="rowheader">Recorrido</span><span class="vs-us" role="cell"><span class="yes"><svg><use href="#i-yes"/></svg></span>De&nbsp;principio a&nbsp;fin, de&nbsp;tu&nbsp;web a&nbsp;tu&nbsp;equipo</span><span class="vs-them" role="cell"><span class="no"><svg><use href="#i-no"/></svg></span>Trucos sueltos, sin&nbsp;un&nbsp;orden</span></div><div class="vs-row" role="row"><span class="vs-k" role="rowheader">Herramientas</span><span class="vs-us" role="cell"><span class="yes"><svg><use href="#i-yes"/></svg></span>Una&nbsp;sola, Claude, a&nbsp;fondo</span><span class="vs-them" role="cell"><span class="no"><svg><use href="#i-no"/></svg></span>Muchas, todas por&nbsp;encima</span></div><div class="vs-row" role="row"><span class="vs-k" role="rowheader">Al&nbsp;terminar</span><span class="vs-us" role="cell"><span class="yes"><svg><use href="#i-yes"/></svg></span>Tus&nbsp;procesos montados y&nbsp;funcionando</span><span class="vs-them" role="cell"><span class="no"><svg><use href="#i-no"/></svg></span>Sabes qué existe</span></div><div class="vs-row" role="row"><span class="vs-k" role="rowheader">Precio</span><span class="vs-us" role="cell"><span class="yes"><svg><use href="#i-yes"/></svg></span>149&nbsp;€ una&nbsp;vez, con&nbsp;14 días de&nbsp;garantía</span><span class="vs-them" role="cell"><span class="no"><svg><use href="#i-no"/></svg></span>Cuota mensual o&nbsp;cientos de&nbsp;euros</span></div>
+        <div class="vs-row" role="row"><span class="vs-k" role="rowheader">Áreas del&nbsp;negocio</span><span class="vs-us" role="cell"><span class="yes"><svg><use href="#i-yes"/></svg></span>Casi todas: web, clientes, ventas, correo, facturas y&nbsp;equipo</span><span class="vs-them" role="cell"><span class="no"><svg><use href="#i-no"/></svg></span>Una&nbsp;o&nbsp;dos, casi siempre marketing</span></div><div class="vs-row" role="row"><span class="vs-k" role="rowheader">Recorrido</span><span class="vs-us" role="cell"><span class="yes"><svg><use href="#i-yes"/></svg></span>De&nbsp;principio a&nbsp;fin, de&nbsp;tu&nbsp;web a&nbsp;tu&nbsp;equipo</span><span class="vs-them" role="cell"><span class="no"><svg><use href="#i-no"/></svg></span>Trucos sueltos, sin&nbsp;un&nbsp;orden</span></div><div class="vs-row" role="row"><span class="vs-k" role="rowheader">Herramientas</span><span class="vs-us" role="cell"><span class="yes"><svg><use href="#i-yes"/></svg></span>Una&nbsp;sola, Claude, a&nbsp;fondo</span><span class="vs-them" role="cell"><span class="no"><svg><use href="#i-no"/></svg></span>Muchas, todas por&nbsp;encima</span></div><div class="vs-row" role="row"><span class="vs-k" role="rowheader">Al&nbsp;terminar</span><span class="vs-us" role="cell"><span class="yes"><svg><use href="#i-yes"/></svg></span>Tus&nbsp;procesos montados y&nbsp;funcionando</span><span class="vs-them" role="cell"><span class="no"><svg><use href="#i-no"/></svg></span>Sabes qué existe</span></div><div class="vs-row" role="row"><span class="vs-k" role="rowheader">Precio</span><span class="vs-us" role="cell"><span class="yes"><svg><use href="#i-yes"/></svg></span><span class="p-n">149&nbsp;€</span><span class="p-l">99&nbsp;€</span> una&nbsp;vez, con&nbsp;14 días de&nbsp;garantía</span><span class="vs-them" role="cell"><span class="no"><svg><use href="#i-no"/></svg></span>Cuota mensual o&nbsp;cientos de&nbsp;euros</span></div>
       </div>
       <div class="vs-cards">
-        <div class="card vs-card us"><h3><svg class="vs-mark" viewBox="0 0 100 100" aria-hidden="true"><use href="#flower"/></svg>El&nbsp;método Claude</h3><ul class="vs-items"><li><span class="yes"><svg><use href="#i-yes"/></svg></span><span><span class="label">Áreas del&nbsp;negocio</span>Casi todas: web, clientes, ventas, correo, facturas y&nbsp;equipo</span></li><li><span class="yes"><svg><use href="#i-yes"/></svg></span><span><span class="label">Recorrido</span>De&nbsp;principio a&nbsp;fin, de&nbsp;tu&nbsp;web a&nbsp;tu&nbsp;equipo</span></li><li><span class="yes"><svg><use href="#i-yes"/></svg></span><span><span class="label">Herramientas</span>Una&nbsp;sola, Claude, a&nbsp;fondo</span></li><li><span class="yes"><svg><use href="#i-yes"/></svg></span><span><span class="label">Al&nbsp;terminar</span>Tus&nbsp;procesos montados y&nbsp;funcionando</span></li><li><span class="yes"><svg><use href="#i-yes"/></svg></span><span><span class="label">Precio</span>149&nbsp;€ una&nbsp;vez, con&nbsp;14 días de&nbsp;garantía</span></li></ul></div>
+        <div class="card vs-card us"><h3><svg class="vs-mark" viewBox="0 0 100 100" aria-hidden="true"><use href="#flower"/></svg>El&nbsp;método Claude</h3><ul class="vs-items"><li><span class="yes"><svg><use href="#i-yes"/></svg></span><span><span class="label">Áreas del&nbsp;negocio</span>Casi todas: web, clientes, ventas, correo, facturas y&nbsp;equipo</span></li><li><span class="yes"><svg><use href="#i-yes"/></svg></span><span><span class="label">Recorrido</span>De&nbsp;principio a&nbsp;fin, de&nbsp;tu&nbsp;web a&nbsp;tu&nbsp;equipo</span></li><li><span class="yes"><svg><use href="#i-yes"/></svg></span><span><span class="label">Herramientas</span>Una&nbsp;sola, Claude, a&nbsp;fondo</span></li><li><span class="yes"><svg><use href="#i-yes"/></svg></span><span><span class="label">Al&nbsp;terminar</span>Tus&nbsp;procesos montados y&nbsp;funcionando</span></li><li><span class="yes"><svg><use href="#i-yes"/></svg></span><span><span class="label">Precio</span><span class="p-n">149&nbsp;€</span><span class="p-l">99&nbsp;€</span> una&nbsp;vez, con&nbsp;14 días de&nbsp;garantía</span></li></ul></div>
         <div class="card vs-card them"><h3>Un&nbsp;curso de&nbsp;IA cualquiera</h3><ul class="vs-items"><li><span class="no"><svg><use href="#i-no"/></svg></span><span><span class="label">Áreas del&nbsp;negocio</span>Una&nbsp;o&nbsp;dos, casi siempre marketing</span></li><li><span class="no"><svg><use href="#i-no"/></svg></span><span><span class="label">Recorrido</span>Trucos sueltos, sin&nbsp;un&nbsp;orden</span></li><li><span class="no"><svg><use href="#i-no"/></svg></span><span><span class="label">Herramientas</span>Muchas, todas por&nbsp;encima</span></li><li><span class="no"><svg><use href="#i-no"/></svg></span><span><span class="label">Al&nbsp;terminar</span>Sabes qué existe</span></li><li><span class="no"><svg><use href="#i-no"/></svg></span><span><span class="label">Precio</span>Cuota mensual o&nbsp;cientos de&nbsp;euros</span></li></ul></div>
       </div>
     </section>
@@ -1070,13 +1104,14 @@ body::before { content: ""; position: fixed; inset: 0 0 auto; height: env(safe-a
       <div class="plans">
         <article class="card plan">
           <h3>Esencial</h3><span class="label">El&nbsp;curso completo</span>
-          <p class="plan-price"><strong>149&nbsp;€</strong><small>pago único</small></p>
+          <p class="plan-price"><strong><span class="p-n">149&nbsp;€</span><span class="p-l">99&nbsp;€</span></strong><s class="p-l plan-antes">149&nbsp;€</s><small>pago único</small></p>
+          <p class="lanz-nota p-lb">Precio de&nbsp;lanzamiento hasta&nbsp;el&nbsp;lunes 26 de&nbsp;octubre a&nbsp;las&nbsp;7:00 (hora de&nbsp;Madrid), <span class="cuenta" data-cuenta></span>. El&nbsp;tachado, 149&nbsp;€, es&nbsp;el&nbsp;precio más&nbsp;bajo de&nbsp;los&nbsp;últimos 30 días.</p>
           <ul class="checks">
             <li><span class="yes"><svg><use href="#i-yes"/></svg></span>Los&nbsp;19 módulos en&nbsp;PDF</li>
             <li><span class="yes"><svg><use href="#i-yes"/></svg></span>100 instrucciones y&nbsp;plantillas para&nbsp;copiar</li>
             <li><span class="yes"><svg><use href="#i-yes"/></svg></span>Actualizaciones gratis</li>
           </ul>
-          <div class="plan-cta"><a class="btn ghost block js-buy" href="https://rafaprompts.com/#comprar">Comprar · 149&nbsp;€</a></div>
+          <div class="plan-cta"><a class="btn ghost block js-buy" href="https://rafaprompts.com/#comprar"><span>Comprar · <span class="p-n">149&nbsp;€</span><span class="p-l">99&nbsp;€</span></span></a></div>
         </article>
         <article class="card plan featured">
           <h3>Negocio <span class="badge">Recomendado</span></h3><span class="label label-ok">El&nbsp;curso y&nbsp;12 proyectos listos</span>
@@ -1134,7 +1169,8 @@ body::before { content: ""; position: fixed; inset: 0 0 auto; height: env(safe-a
     <div class="wrap close-in">
       <h2 id="h-close">Automatiza tu&nbsp;negocio este fin de&nbsp;semana <span class="it">y&nbsp;recupera tus&nbsp;tardes</span></h2>
       <div class="buy">
-        <a class="btn js-buy" href="https://rafaprompts.com/#comprar">Comprar el&nbsp;curso · 149&nbsp;€</a>
+        <p class="lanz-pill p-lb on-dark">Precio de&nbsp;lanzamiento: <s>149&nbsp;€</s> <strong>99&nbsp;€</strong><span class="lanz-cuando">Hasta&nbsp;el&nbsp;lunes 26 a&nbsp;las&nbsp;7:00 · <span class="cuenta" data-cuenta></span></span></p>
+        <a class="btn js-buy" href="https://rafaprompts.com/#comprar"><span>Comprar el&nbsp;curso · <span class="p-n">149&nbsp;€</span><span class="p-l">99&nbsp;€</span></span></a>
         <p class="assure on-dark" aria-label="Condiciones de compra"><span class="assure-line"><span>Pago único</span><span>14 días de&nbsp;garantía</span><span>Factura para&nbsp;tu&nbsp;empresa</span></span></p>
       </div>
     </div>
@@ -1224,75 +1260,187 @@ Cuando te pegue una solicitud de un posible cliente:
 </div>
 
 
-<div class="checkout-overlay" id="checkout-overlay" aria-hidden="true">
+<div class="checkout-overlay" id="checkout-overlay" aria-hidden="true" inert>
   <div class="checkout-modal" role="dialog" aria-modal="true" aria-label="Pago o reserva">
     <div class="checkout-modal-head">
       <div class="title">El&nbsp;método Claude · 149 €</div>
       <button class="checkout-close" id="checkout-close" type="button" aria-label="Cerrar"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><path d="M18 6L6 18M6 6l12 12"/></svg></button>
     </div>
-    <div class="checkout-body"><div id="checkout"></div></div>
+    <div class="checkout-body"><div id="checkout"><div class="co-cargando" role="status" aria-live="polite"><span class="co-spin" aria-hidden="true"></span><span class="co-txt">Abriendo el&nbsp;pago seguro…</span><span class="co-seguro">Pago cifrado con&nbsp;Stripe</span></div></div></div>
   </div>
 </div>
 <script src="https://js.stripe.com/v3/"></script>
 <script>
-/* Comprar abre el pago de Stripe aquí mismo, sin cambiar de página */
+/* Comprar abre el pago de Stripe aquí mismo, sin cambiar de página.
+   Para que salga al momento:
+   - la sesión de pago se pide en cuanto alguien apunta o toca un botón de comprar, antes del clic;
+   - en escritorio, al apuntar, el formulario de Stripe se monta ya, oculto;
+   - mientras carga se ve un spinner, nunca una pantalla vacía. */
 (function () {
   var API_URL = window.__RP_API || 'https://rafa-prompts-api.prxystudio.workers.dev';  /* __RP_API: solo para probar en local */
-  var PK = 'pk_live_51T50VyIYM3GXrMLHGGfo81iUzPdi6XJfSZW91UkNEISZ9U12a0mkPO8YnyaoZTyxTP1vwzKeXmCXfCRn9YyMaDjo000gDMaXZR';
+  var PK = 'pk_live_51USwaAEbybsfC75FeElsEisotgJiPTowSbclNSbfmvXdLiiChyips2NjxUQpVNQj3nhydqGO24FkZRkkukvNW8OA00xKdQJfFK';
   var LIVE = !!window.__RP_API || location.hostname.endsWith('rafaprompts.com');
-  var stripes = {}, checkout = null;
-  var TITULO = { esencial: 'El método Claude · 149\u00a0€', negocio: 'El método Claude · Negocio · 249\u00a0€' };
+  var L = window.RP_LANZ || { hasta: 0, importe: 149, normal: 149 };
+  var enLanz = function () { return Date.now() < L.hasta; };
+  var precio = function (plan) { return plan === 'negocio' ? 249 : (enLanz() ? L.importe : L.normal); };
+  var PROD = { esencial: ['El método Claude', 'metodo-claude'], negocio: ['El método Claude · Negocio', 'metodo-claude-negocio'] };
   var overlay = document.getElementById('checkout-overlay');
   var box = document.getElementById('checkout');
-  if (window.fbq) fbq('track', 'ViewContent', { content_name: 'El método Claude', content_category: 'curso', content_ids: ['metodo-claude'], value: 149.00, currency: 'EUR' });
+  var txtCarga = box.querySelector('.co-txt');
+  var stripes = {}, pre = {}, montado = null, abierto = null, calFrame = null, lento = null;
+
   function cookie(k) { var m = document.cookie.match(new RegExp('(?:^|; )' + k + '=([^;]*)')); return m ? m[1] : ''; }
-  /* plan: «esencial» (149 €) o «negocio» (249 €). Si el servidor aún no vende Negocio, se abre su enlace de pago. */
+  function fbc() { var id = new URLSearchParams(location.search).get('fbclid') || ''; return cookie('_fbc') || (id ? 'fb.1.' + Date.now() + '.' + id : ''); }
+  function nuevoId(p) { return p + '_' + Date.now().toString(36) + Math.random().toString(36).slice(2, 8); }
+  /* copia del evento en el servidor (API de conversiones) con el mismo id que el píxel: Meta los junta.
+     Solo se manda si la persona aceptó las cookies de Meta. */
+  function espejo(eventos) {
+    if (!LIVE) return;
+    (window.rpConsentQ = window.rpConsentQ || []).push(function () {
+      setTimeout(function () {
+        try {
+          fetch(API_URL + '/evento', { method: 'POST', keepalive: true, headers: { 'Content-Type': 'text/plain' },
+            body: JSON.stringify({ eventos: eventos, fbp: cookie('_fbp'), fbc: fbc(), url: location.href }) }).catch(function () {});
+        } catch (e) {}
+      }, 1500);
+    });
+  }
+  var vc = nuevoId('vc');
+  if (window.fbq) fbq('track', 'ViewContent', { content_name: 'El método Claude', content_category: 'curso', content_ids: ['metodo-claude'], value: precio('esencial'), currency: 'EUR' }, { eventID: vc });
+  espejo([{ name: 'PageView', id: window.rpPv || nuevoId('pv') }, { name: 'ViewContent', id: vc, value: precio('esencial'), content_id: 'metodo-claude' }]);
+
+  /* sesión de pago: una por plan, reutilizable 20 minutos (y nunca más allá del fin del lanzamiento) */
+  function sesion(plan) {
+    var s = pre[plan];
+    if (s && Date.now() - s.t < 20 * 60 * 1000 && (s.t >= L.hasta || enLanz())) return s.p;
+    var p = fetch(API_URL + '/checkout', { method: 'POST', headers: { 'Content-Type': 'text/plain' },
+      body: JSON.stringify({ plan: plan, fbp: cookie('_fbp'), fbc: fbc(), page_url: location.href }) })
+      .then(function (r) { return r.json().then(function (d) { if (!r.ok || !d.client_secret) throw new Error(d.error || 'sin sesión'); return d; }); });
+    pre[plan] = { p: p, t: Date.now() };
+    p.catch(function () { if (pre[plan] && pre[plan].p === p) delete pre[plan]; });
+    return p;
+  }
+  function desmontar() {
+    if (!montado) return;
+    try { montado.co && montado.co.destroy(); } catch (_) {}
+    montado.cont.remove(); montado = null;
+  }
+  /* monta el formulario de Stripe; la promesa se cumple cuando el formulario ya se ve */
+  function montar(plan, d) {
+    if (montado && montado.sid === d.session_id) return montado.listo;
+    desmontar();
+    var cont = document.createElement('div'); cont.className = 'co-stripe'; box.appendChild(cont);
+    var m = { plan: plan, sid: d.session_id, cont: cont, co: null, t: Date.now() };
+    montado = m;
+    m.listo = new Promise(function (ok, ko) {
+      var pk = d.publishable_key || PK;
+      var stripe = stripes[pk] || (stripes[pk] = Stripe(pk));
+      Promise.resolve(d.ui_mode === 'embedded_page'
+        ? stripe.createEmbeddedCheckoutPage({ fetchClientSecret: function () { return Promise.resolve(d.client_secret); } })
+        : stripe.initEmbeddedCheckout({ clientSecret: d.client_secret })
+      ).then(function (co) {
+        if (montado !== m) { try { co.destroy(); } catch (_) {} return ko(new Error('cambiado')); }
+        m.co = co;
+        var mira = function () { var f = cont.querySelector('iframe'); if (!f) return false; f.addEventListener('load', function () { setTimeout(ok, 150); }, { once: true }); return true; };
+        if (!mira()) { var mo = new MutationObserver(function () { if (mira()) mo.disconnect(); }); mo.observe(cont, { childList: true, subtree: true }); }
+        setTimeout(ok, 8000);  /* por si el aviso de carga del iframe no llega */
+        return co.mount(cont);
+      }).catch(ko);
+    });
+    m.listo.catch(function () { if (montado === m) desmontar(); });
+    return m.listo;
+  }
+  function cargando(si, texto) {
+    if (texto) txtCarga.textContent = texto;
+    box.classList.toggle('cargando', !!si);
+    clearTimeout(lento);
+    if (si) lento = setTimeout(function () { txtCarga.textContent = 'Está tardando un poco más de lo normal…'; }, 7000);
+  }
+  function mensaje(html) {
+    var m = box.querySelector('.checkout-msg'); if (m) m.remove();
+    if (!html) return;
+    m = document.createElement('div'); m.className = 'checkout-msg'; m.innerHTML = html; box.appendChild(m);
+  }
+  function mostrar(titulo, cal) {
+    document.querySelectorAll('dialog[open]').forEach(function (d) { d.close(); });
+    overlay.querySelector('.checkout-modal-head .title').textContent = titulo;
+    overlay.classList.toggle('is-cal', !!cal);
+    overlay.inert = false;
+    overlay.classList.add('show'); overlay.setAttribute('aria-hidden', 'false'); document.body.style.overflow = 'hidden';
+  }
   async function open(plan, fallbackUrl) {
     plan = plan || 'esencial';
-    document.querySelectorAll('dialog[open]').forEach(function (d) { d.close(); });
-    overlay.querySelector('.checkout-modal-head .title').textContent = TITULO[plan] || TITULO.esencial;
-    overlay.classList.add('show'); overlay.setAttribute('aria-hidden', 'false'); document.body.style.overflow = 'hidden';
-    if (!LIVE) { box.innerHTML = '<div class="checkout-msg">Vista previa: el pago de Stripe solo se abre en rafaprompts.com.</div>'; return; }
-    if (checkout) return;
+    mostrar(plan === 'negocio' ? 'El método Claude · Negocio · 249 €' : 'El método Claude · ' + precio('esencial') + ' €');
+    abierto = plan; mensaje('');
+    if (!LIVE) { mensaje('Vista previa: el pago de Stripe solo se abre en rafaprompts.com.'); return; }
+    if (montado && Date.now() - montado.t > 20 * 60 * 1000) { desmontar(); delete pre[plan]; }
+    cargando(true, 'Abriendo el pago seguro…');
     try {
-      var fbclid = new URLSearchParams(location.search).get('fbclid') || '';
-      var r = await fetch(API_URL + '/checkout', { method: 'POST', headers: { 'Content-Type': 'application/json' },
-        body: JSON.stringify({ plan: plan, fbp: cookie('_fbp'), fbc: cookie('_fbc') || (fbclid ? 'fb.1.' + Date.now() + '.' + fbclid : ''), page_url: location.href }) });
-      var data = await r.json();
-      if (!r.ok || !data.client_secret) throw new Error(data.error || 'No se pudo iniciar el pago');
-      if (plan !== 'esencial' && data.plan !== plan) {
+      var d = await sesion(plan);
+      if (abierto !== plan) return;
+      if (plan !== 'esencial' && d.plan !== plan) {
         if (!fallbackUrl) throw new Error('plan no disponible');
-        if (window.fbq) fbq('track', 'InitiateCheckout', { content_name: 'El método Claude · Negocio', content_ids: ['metodo-claude-negocio'], value: 249.00, currency: 'EUR' });
+        if (window.fbq) fbq('track', 'InitiateCheckout', { content_name: PROD.negocio[0], content_ids: [PROD.negocio[1]], value: 249.00, currency: 'EUR' });
         close(); setTimeout(function () { location.href = fallbackUrl; }, 250); return;
       }
-      var pk = data.publishable_key || PK;
-      var stripe = stripes[pk] || (stripes[pk] = Stripe(pk));
-      checkout = data.ui_mode === 'embedded_page'
-        ? await stripe.createEmbeddedCheckoutPage({ fetchClientSecret: function () { return Promise.resolve(data.client_secret); } })
-        : await stripe.initEmbeddedCheckout({ clientSecret: data.client_secret });
-      await checkout.mount('#checkout');
-      if (window.fbq) fbq('track', 'InitiateCheckout', plan === 'negocio'
-        ? { content_name: 'El método Claude · Negocio', content_ids: ['metodo-claude-negocio'], value: 249.00, currency: 'EUR' }
-        : { content_name: 'El método Claude', content_ids: ['metodo-claude'], value: 149.00, currency: 'EUR' }, { eventID: 'ic_' + (data.session_id || Date.now()) });
+      /* InitiateCheckout: una vez por sesión de pago, con el importe real y el mismo id en el píxel y en el servidor */
+      if (!pre[plan] || !pre[plan].ic) {
+        if (pre[plan]) pre[plan].ic = true;
+        var importe = Number(d.importe) || precio(plan), ic = 'ic_' + d.session_id;
+        if (window.fbq) fbq('track', 'InitiateCheckout', { content_name: PROD[plan][0], content_ids: [PROD[plan][1]], value: importe, currency: 'EUR' }, { eventID: ic });
+        espejo([{ name: 'InitiateCheckout', id: ic, value: importe, content_id: PROD[plan][1] }]);
+      }
+      await montar(plan, d);
+      if (abierto === plan) cargando(false);
     } catch (e) {
-      box.innerHTML = '<div class="checkout-msg">No se pudo cargar el pago. Prueba en un minuto o escríbeme a hola@rafaprompts.com.</div>';
+      if (abierto !== plan) return;
+      cargando(false); delete pre[plan];
+      mensaje('No se pudo cargar el pago. <button type="button" class="link-btn js-reintentar">Reintentar</button><br>Si sigue fallando, escríbeme a hola@rafaprompts.com.');
+      var b = box.querySelector('.js-reintentar'); if (b) b.addEventListener('click', function () { open(plan, fallbackUrl); });
     }
   }
   function close() {
-    overlay.classList.remove('show', 'is-cal'); overlay.setAttribute('aria-hidden', 'true'); document.body.style.overflow = '';
-    if (checkout) { try { checkout.destroy(); } catch (_) {} checkout = null; }
-    box.innerHTML = '';
+    overlay.classList.remove('show', 'is-cal'); overlay.setAttribute('aria-hidden', 'true'); overlay.inert = true; document.body.style.overflow = '';
+    abierto = null; cargando(false); mensaje('');
+    if (calFrame) { calFrame.remove(); calFrame = null; }
+    /* el formulario de Stripe se queda montado y oculto: si vuelve a abrirlo, sale al instante */
   }
-  document.querySelectorAll('.js-buy').forEach(function (a) { a.addEventListener('click', function (e) { e.preventDefault(); open('esencial'); }); });
+  /* intención de compra: apuntar con el ratón, tocar o enfocar el botón */
+  function intencion(plan) {
+    return function (e) {
+      if (!LIVE || abierto) return;
+      var p = sesion(plan);
+      if (e.type === 'pointerenter' && e.pointerType === 'mouse') {
+        p.then(function (d) { if (!abierto && d.plan === plan && !(montado && montado.sid === d.session_id)) montar(plan, d).catch(function () {}); }).catch(function () {});
+      }
+    };
+  }
+  function enganchar(sel, plan, conFallback) {
+    document.querySelectorAll(sel).forEach(function (a) {
+      var f = intencion(plan);
+      a.addEventListener('pointerenter', f); a.addEventListener('touchstart', f, { passive: true }); a.addEventListener('focus', f);
+      a.addEventListener('click', function (e) { e.preventDefault(); open(plan, conFallback ? a.href : undefined); });
+    });
+  }
+  enganchar('.js-buy', 'esencial');
+  /* Negocio se paga en el mismo pago integrado; si el servidor aún no lo vende, se abre su enlace de pago de siempre */
+  enganchar('.js-negocio', 'negocio', true);
+
   /* Llamada de 45 minutos (50 €): Calendly dentro de la web, a pantalla completa. Calendly cobra y reserva. */
   function abrirCalendly(url) {
-    document.querySelectorAll('dialog[open]').forEach(function (d) { d.close(); });
-    overlay.querySelector('.checkout-modal-head .title').textContent = 'Llamada de 45 minutos · 50\u00a0€';
-    overlay.classList.add('show', 'is-cal'); overlay.setAttribute('aria-hidden', 'false'); document.body.style.overflow = 'hidden';
+    mostrar('Llamada de 45 minutos · 50 €', true);
+    abierto = 'cal'; mensaje('');
     var u = url + (url.indexOf('?') < 0 ? '?' : '&') + 'embed_domain=' + encodeURIComponent(location.hostname || 'rafaprompts.com')
       + '&embed_type=Inline&hide_gdpr_banner=1&primary_color=da7756&text_color=141311&background_color=ffffff';
-    box.innerHTML = '<iframe class="cal-frame" title="Reservar la llamada" src="' + u + '" allow="payment"></iframe>';
-    if (window.fbq) fbq('track', 'InitiateCheckout', { content_name: 'Diagnóstico de implantación', content_ids: ['diagnostico-implantacion'], value: 50.00, currency: 'EUR' });
+    if (calFrame) calFrame.remove();
+    cargando(true, 'Abriendo el calendario…');
+    calFrame = document.createElement('iframe');
+    calFrame.className = 'cal-frame'; calFrame.title = 'Reservar la llamada'; calFrame.allow = 'payment'; calFrame.src = u;
+    calFrame.addEventListener('load', function () { if (abierto === 'cal') cargando(false); }, { once: true });
+    box.appendChild(calFrame);
+    var ic = nuevoId('icd');
+    if (window.fbq) fbq('track', 'InitiateCheckout', { content_name: 'Diagnóstico de implantación', content_ids: ['diagnostico-implantacion'], value: 50.00, currency: 'EUR' }, { eventID: ic });
+    espejo([{ name: 'InitiateCheckout', id: ic, value: 50, content_id: 'diagnostico-implantacion' }]);
   }
   document.querySelectorAll('.js-diag').forEach(function (a) { a.addEventListener('click', function (e) { e.preventDefault(); abrirCalendly(a.href); }); });
   /* reserva pagada: compra en Meta con el mismo id que manda el servidor (así no se cuenta dos veces) */
@@ -1301,15 +1449,28 @@ Cuando te pegue una solicitud de un posible cliente:
     var inv = ((e.data.payload || {}).invitee || {}).uri || '';
     if (window.fbq) fbq('track', 'Purchase', { content_name: 'Diagnóstico de implantación', content_ids: ['diagnostico-implantacion'], value: 50.00, currency: 'EUR' }, inv ? { eventID: 'diag_' + inv.split('/').pop() } : undefined);
   });
-  /* Negocio se paga en el mismo pago integrado; si el servidor aún no lo vende, se abre su enlace de pago de siempre */
-  document.querySelectorAll('.js-negocio').forEach(function (a) { a.addEventListener('click', function (e) {
-    e.preventDefault(); open('negocio', a.href);
-  }); });
   document.getElementById('checkout-close').addEventListener('click', close);
   overlay.addEventListener('click', function (e) { if (e.target === overlay) close(); });
   document.addEventListener('keydown', function (e) { if (e.key === 'Escape' && overlay.classList.contains('show')) close(); });
   /* enlaces antiguos a /metodo.html#comprar y anuncios que llegan con #comprar */
   if (location.hash === '#comprar') setTimeout(function () { open('esencial'); }, 150);
+})();
+
+/* Cuenta atrás del precio de lanzamiento. Al llegar a cero, la página vuelve sola al precio normal. */
+(function () {
+  var L = window.RP_LANZ; if (!L) return;
+  var els = document.querySelectorAll('[data-cuenta]');
+  function fmt(ms) {
+    var s = Math.floor(ms / 1000), d = Math.floor(s / 86400), h = Math.floor(s % 86400 / 3600), m = Math.floor(s % 3600 / 60), x = s % 60;
+    return d > 0 ? d + ' d ' + h + ' h ' + m + ' min' : (h > 0 ? h + ' h ' : '') + m + ' min ' + x + ' s';
+  }
+  (function tic() {
+    var falta = L.hasta - Date.now();
+    if (falta <= 0) { document.documentElement.classList.remove('rp-lanz'); return; }
+    var t = 'quedan ' + fmt(falta);
+    els.forEach(function (e) { e.textContent = t; });
+    setTimeout(tic, 1000 - (Date.now() % 1000));
+  })();
 })();
 </script>
 <script src="/js/consent.js"></script>

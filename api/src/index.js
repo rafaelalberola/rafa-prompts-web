@@ -26,6 +26,7 @@ import { PDFDocument, StandardFonts, rgb } from 'pdf-lib';
 import ORDEN_CURSO from '../../course/modulos.json';
 import { checkoutParams, lanzamiento, IMPORTE } from './checkout.js';
 import * as correo from './emails.js';
+import * as avisos from './avisos.js';
 
 // El orden y los títulos de los módulos salen de course/modulos.json (fuente única del curso)
 // parte 1: «Empezar aquí» y el módulo 01, que se quedan aunque pida la devolución.
@@ -301,7 +302,8 @@ async function handleCheckout(req, env) {
     ip,
     user_agent: userAgent.slice(0, 400),
   };
-  const { params, plan, importe } = checkoutParams(env, body, metadata);
+  const oferta = body.oferta ? await ofertaValida(env, String(body.oferta)) : null;
+  const { params, plan, importe } = checkoutParams(env, body, metadata, Date.now(), oferta);
   const session = await stripeRequest(env, 'checkout/sessions', params);
   if (session.error) {
     console.error('Stripe error:', session.error);
@@ -351,7 +353,11 @@ async function handleCalendly(req, env) {
     await programar(env, `prog:cita:${id}`, cita, fin).catch(e => console.error('programar cita:', e));
     const m = correo.citaConfirmada({ nombre: cita.name, inicio: cita.inicio, tz: cita.tz, joinUrl: cita.joinUrl, cancelUrl: cita.cancelUrl, rescheduleUrl: cita.rescheduleUrl });
     const r = await brevoSendEmail(env, { to: cita.email, name: cita.name, subject: m.asunto, html: m.html }).catch(e => ({ error: e.message }));
-    if (!brevoOk(r)) await programar(env, `prog:citaok:${id}`, { tipo: 'citaok', ...cita }, 7 * 86400).catch(() => {});
+    if (!brevoOk(r)) {
+      await programar(env, `prog:citaok:${id}`, { tipo: 'citaok', ...cita }, 7 * 86400).catch(() => {});
+      await avisos.registrar(env, 'fallo', { email: cita.email, que: 'confirmación de la llamada' });
+    }
+    await avisos.registrar(env, 'llamada', { email: cita.email, cuando: correo.cuandoCita(cita.inicio, 'Europe/Madrid').largo });
   }
   await metaCapiPurchase(env, {
     eventId: `diag_${id}`, eventTime: Date.parse(inv.created_at) / 1000 || undefined,
@@ -407,7 +413,7 @@ async function handleWebhook(req, env) {
     await env.STORE.put(`session:${csid}`, 'diagnostico', { expirationTtl: ttl });
     await Promise.all([
       sendDiagnosticoEmail(env, { to: email, name }),
-      sendSaleNotification(env, { plan, email, name, amount: cs.amount_total }),
+      env.TELEGRAM_BOT_TOKEN ? avisos.registrar(env, 'venta', { email, plan, importe: (cs.amount_total || 0) / 100 }) : sendSaleNotification(env, { plan, email, name, amount: cs.amount_total }),
     ]).catch(e => console.error('email error:', e));
     await capi();
     return new Response('ok', { status: 200 });
@@ -435,7 +441,11 @@ async function handleWebhook(req, env) {
   const entrega = { tipo: 'entrega', email, name, token, plan: plan || 'esencial', importe: (cs.amount_total || 0) / 100, garantiaHasta: record.garantia_hasta };
   const envio = await sendDeliveryEmail(env, { to: email, name, token, plan: entrega.plan, importe: entrega.importe, garantiaHasta: entrega.garantiaHasta }).catch(e => ({ error: e.message }));
   // si Brevo falla, el email queda en cola y el cron lo reintenta cada 5 minutos (el acceso ya está en la página de gracias)
+  await env.STORE.put(`comprador:${email.toLowerCase()}`, '1', { expirationTtl: 400 * 86400 }).catch(() => {});
+  const garantiaTxt = `${fechaLarga(new Date(record.garantia_hasta))} a las 23:59`;
+  await avisos.registrar(env, 'venta', { email, plan: entrega.plan, importe: entrega.importe, garantiaHasta: garantiaTxt });
   if (!brevoOk(envio)) {
+    await avisos.registrar(env, 'fallo', { email, que: 'email de compra' });
     console.error('email de compra no enviado, en cola:', JSON.stringify(envio));
     await programar(env, `prog:entrega:${token}`, entrega, 30 * 86400).catch(() => {});
   }
@@ -443,7 +453,7 @@ async function handleWebhook(req, env) {
   await programar(env, `prog:bienv:${token}`, { tipo: 'bienvenida', email, name, token, cuando: proximasNueve(Date.now() + 8 * 3600e3) }, 30 * 86400)
     .catch(e => console.error('programar bienvenida:', e));
   // Aviso a Rafa de la venta (en Negocio, con el recordatorio de mandar los 12 proyectos en menos de 24 h)
-  await sendSaleNotification(env, { plan: entrega.plan, email, name, amount: cs.amount_total, garantiaHasta: `${fechaLarga(new Date(record.garantia_hasta))} a las 23:59` }).catch(e => console.error('email error:', e));
+  if (!env.TELEGRAM_BOT_TOKEN) await sendSaleNotification(env, { plan: entrega.plan, email, name, amount: cs.amount_total, garantiaHasta: garantiaTxt }).catch(e => console.error('email error:', e));
 
   // Meta Conversions API: Purchase event (event_id = stripe session id, dedups with browser pixel)
   await capi();
@@ -533,8 +543,12 @@ async function handleAccesoCompleto(req, env) {
   await env.STORE.put(`token:${token}`, JSON.stringify(data), { expirationTtl: parseInt(env.TOKEN_TTL_DAYS, 10) * 24 * 60 * 60 });
   const m = correo.cursoCompleto({ nombre: data.name, plan: data.plan, url: `${env.DOWNLOAD_PAGE}?t=${token}`, cuando: at, nModulos: ORDEN_CURSO.modulos.length, siguiente: ORDEN_CURSO.modulos[1].titulo });
   const r = await brevoSendEmail(env, { to: data.email, name: data.name, subject: m.asunto, html: m.html }).catch(e => ({ error: e.message }));
-  if (!brevoOk(r)) await programar(env, `prog:completo:${token}`, { tipo: 'completo', token, email: data.email, name: data.name, plan: data.plan, cuando: at }, 30 * 86400).catch(() => {});
-  if (env.ADMIN_EMAIL) {
+  if (!brevoOk(r)) {
+    await programar(env, `prog:completo:${token}`, { tipo: 'completo', token, email: data.email, name: data.name, plan: data.plan, cuando: at }, 30 * 86400).catch(() => {});
+    await avisos.registrar(env, 'fallo', { email: data.email, que: 'email del curso completo' });
+  }
+  await avisos.registrar(env, 'completo', { email: data.email, plan: data.plan || 'esencial' });
+  if (env.ADMIN_EMAIL && !env.TELEGRAM_BOT_TOKEN) {
     const a = correo.avisoCompleto({ plan: data.plan, email: data.email, nombre: data.name });
     await brevoSendEmail(env, { to: env.ADMIN_EMAIL, subject: a.asunto, html: a.html }).catch(() => {});
   }
@@ -725,9 +739,13 @@ async function handleSubscribe(req, env) {
   const ip = req.headers.get('cf-connecting-ip') || '';
   const userAgent = req.headers.get('user-agent') || '';
 
-  // welcome siempre; notif solo si es nuevo
+  // bienvenida siempre; aviso y oferta de los 4 días solo si es nuevo
   const tasks = [sendWelcomeEmail(env, { to: email, source })];
-  if (!existed) tasks.push(sendNewSubscriberNotification(env, { email, source, ip, userAgent }));
+  if (!existed) {
+    tasks.push(avisos.registrar(env, 'contacto', { email, source }));
+    if (!env.TELEGRAM_BOT_TOKEN) tasks.push(sendNewSubscriberNotification(env, { email, source, ip, userAgent }));
+    if (!(await env.STORE.get(`comprador:${email}`))) tasks.push(env.STORE.put(`lead:${email}`, JSON.stringify({ email, source, alta: Date.now() }), { expirationTtl: 60 * 86400 }));
+  }
   await Promise.allSettled(tasks);
 
   return json({ ok: true, existed });
@@ -814,6 +832,46 @@ async function tareasProgramadas(env, ahora = Date.now()) {
   return hecho;
 }
 
+// ---------- Oferta a los 4 días para quien se apuntó y no compró ----------
+// Precio personal (el de STRIPE_PRICE_LANZAMIENTO, 99 €) durante 7 días, solo desde el enlace de su email.
+const OFERTA_TRAS_DIAS = 4, OFERTA_DIAS = 7;
+async function ofertaValida(env, code) {
+  if (!/^[a-f0-9]{16,40}$/.test(code)) return null;
+  const raw = await env.STORE.get(`oferta:${code}`);
+  if (!raw) return null;
+  const o = JSON.parse(raw);
+  if (Date.now() > Date.parse(o.hasta)) return null;
+  return { valida: true, importe: Number(env.LANZAMIENTO_IMPORTE), normal: IMPORTE.esencial, hasta: o.hasta, code };
+}
+
+async function ofertasDiarias(env, ahora = Date.now()) {
+  const enviados = [];
+  const hasta = finDiaMadrid(ahora, OFERTA_DIAS);
+  const hastaTxt = `${fechaLarga(hasta)} a las 23:59`;
+  let cursor;
+  do {
+    const l = await env.STORE.list({ prefix: 'lead:', cursor });
+    for (const k of l.keys) {
+      const raw = await env.STORE.get(k.name);
+      if (!raw) continue;
+      const lead = JSON.parse(raw);
+      if (lead.oferta || ahora - lead.alta < OFERTA_TRAS_DIAS * 86400e3) continue;
+      if (await env.STORE.get(`comprador:${lead.email}`)) { await env.STORE.delete(k.name); continue; }
+      const code = newToken().slice(0, 24);
+      await env.STORE.put(`oferta:${code}`, JSON.stringify({ email: lead.email, hasta: hasta.toISOString() }), { expirationTtl: (OFERTA_DIAS + 3) * 86400 });
+      const m = correo.ofertaContacto({ source: lead.source, url: `https://rafaprompts.com/?oferta=${code}#precio`, importe: Number(env.LANZAMIENTO_IMPORTE), normal: IMPORTE.esencial, hasta: hastaTxt });
+      const r = await brevoSendEmail(env, { to: lead.email, subject: m.asunto, html: m.html });
+      if (!brevoOk(r)) { console.error('oferta no enviada', lead.email, JSON.stringify(r)); continue; }
+      lead.oferta = { code, hasta: hasta.toISOString(), enviada: ahora };
+      await env.STORE.put(k.name, JSON.stringify(lead), { expirationTtl: 30 * 86400 });
+      enviados.push(lead);
+    }
+    cursor = l.list_complete ? null : l.cursor;
+  } while (cursor);
+  if (enviados.length) await avisos.enviarTelegram(env, avisos.textoOfertas({ enviados, importe: Number(env.LANZAMIENTO_IMPORTE), normal: IMPORTE.esencial, hasta: hastaTxt }));
+  return enviados.length;
+}
+
 // ---------- Operaciones (solo con OPS_TOKEN) ----------
 // POST /admin/pruebas: manda un ejemplo de cada email a ADMIN_EMAIL (nunca a clientes)
 // GET  /admin/brevo?ids=a,b: estado de esos envíos en Brevo
@@ -898,6 +956,8 @@ export default {
           res = await handleEvento(req, env, ctx);
           break;
         case 'GET /oferta': {
+          const code = url.searchParams.get('code');
+          if (code) { res = json(await ofertaValida(env, code) || { valida: false }); break; }
           const l = lanzamiento(env);
           res = json(l ? { lanzamiento: true, importe: l.importe, normal: IMPORTE.esencial, hasta: new Date(l.hasta).toISOString() } : { lanzamiento: false, importe: IMPORTE.esencial });
           break;
@@ -911,6 +971,12 @@ export default {
         case 'POST /admin/capi':
           res = await handleCapiPrueba(req, env);
           break;
+        case 'POST /admin/telegram': {
+          const b = await req.clone().json().catch(() => ({}));
+          if (!opsOk(req, env, b)) { res = json({ error: 'forbidden' }, 403); break; }
+          res = json(b.que === 'resumen' ? await avisos.resumenDiario(env) : b.que === 'ofertas' ? { enviadas: await ofertasDiarias(env) } : b.texto ? await avisos.enviarTelegram(env, String(b.texto)) : { avisos: await avisos.aviso10(env) });
+          break;
+        }
         case 'POST /admin/tareas':
           res = opsOk(req, env, await req.clone().json().catch(() => ({}))) ? json({ hecho: await tareasProgramadas(env) }) : json({ error: 'forbidden' }, 403);
           break;
@@ -960,6 +1026,14 @@ export default {
   },
 
   async scheduled(event, env, ctx) {
-    ctx.waitUntil(tareasProgramadas(env).then(h => { if (h.length) console.log('tareas:', h.join(' · ')); }));
+    const t = event.scheduledTime || Date.now();
+    const { hour, minute } = avisos.horaMadrid(t);
+    ctx.waitUntil((async () => {
+      const h = await tareasProgramadas(env, t);
+      if (h.length) console.log('tareas:', h.join(' · '));
+      if (minute % 10 === 0) await avisos.aviso10(env).catch(e => console.error('aviso10', e));
+      if (hour === 9 && minute === 0) await avisos.resumenDiario(env, t).catch(e => console.error('resumen', e));
+      if (hour === 10 && minute === 0) await ofertasDiarias(env, t).catch(e => console.error('ofertas', e));
+    })());
   },
 };

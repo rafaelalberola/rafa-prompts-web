@@ -8,6 +8,12 @@
    lo mismo hasta la misma fecha (LANZAMIENTO_HASTA en api/wrangler.toml): si cambias una, cambia la otra. */
 window.RP_LANZ = { hasta: Date.parse('2026-10-26T06:00:00Z'), importe: 99, normal: 149 };
 if (Date.now() < window.RP_LANZ.hasta) document.documentElement.classList.add('rp-lanz');
+/* Oferta personal de los emails (?oferta=…): se pinta ya para que no parpadee y el JS del pago la confirma con el servidor */
+(function () {
+  var o = new URLSearchParams(location.search).get('oferta');
+  try { if (o) sessionStorage.setItem('rp_oferta', o); else o = sessionStorage.getItem('rp_oferta'); } catch (e) {}
+  if (o && /^[a-f0-9]{16,40}$/.test(o)) { window.RP_OFERTA = o; document.documentElement.classList.add('rp-lanz'); }
+})();
 window.rpPv = 'pv_' + Date.now().toString(36) + Math.random().toString(36).slice(2, 8);
 </script>
 
@@ -511,7 +517,7 @@ html.rp-lanz .p-lb { display: block; }
 .checkout-overlay { position: fixed; inset: 0; z-index: 80; display: flex; background: var(--bg); opacity: 0; pointer-events: none; transition: opacity .2s ease; overscroll-behavior: contain; }
 .checkout-overlay.show { opacity: 1; pointer-events: auto; }
 .checkout-modal { position: relative; width: 100%; height: 100%; display: flex; flex-direction: column; overflow: hidden; background: var(--bg); }
-.checkout-modal-head { flex-shrink: 0; display: flex; justify-content: space-between; align-items: center; gap: var(--s4); padding: 12px max(16px, env(safe-area-inset-right)) 12px max(20px, env(safe-area-inset-left)); background: var(--surface); border-bottom: 1px solid var(--line); }
+.checkout-modal-head { flex-shrink: 0; display: flex; justify-content: space-between; align-items: center; gap: var(--s4); padding: 12px max(16px, env(safe-area-inset-right)) 12px max(20px, env(safe-area-inset-left)); background: var(--bg); border-bottom: 1px solid var(--line); }
 .checkout-modal-head .title { font: 800 15px/1.3 var(--f-sans); }
 .checkout-close { flex-shrink: 0; width: 40px; height: 40px; display: inline-flex; align-items: center; justify-content: center; border-radius: 50%; border: 1px solid var(--line); background: rgba(17, 17, 17, 0.06); color: var(--ink); cursor: pointer; }
 .checkout-close:hover { background: var(--ink); color: var(--surface); }
@@ -880,7 +886,7 @@ body::before { content: ""; position: fixed; inset: 0 0 auto; height: env(safe-a
         <h1 id="h-hero">Aprende a&nbsp;automatizar tu&nbsp;negocio con&nbsp;Claude <span class="it">sin&nbsp;programar</span></h1>
         <p class="lede">¿Se&nbsp;te&nbsp;van las&nbsp;tardes en&nbsp;correos, Excel y&nbsp;papeles? Claude puede devolverte unas&nbsp;30 horas al&nbsp;mes, y&nbsp;empiezas este fin de&nbsp;semana.</p>
         <div class="buy">
-          <p class="lanz-pill p-lb">Precio de&nbsp;lanzamiento: <s>149&nbsp;€</s> <strong>99&nbsp;€</strong><span class="lanz-cuando">Hasta&nbsp;el&nbsp;lunes 26 a&nbsp;las&nbsp;7:00 · <span class="cuenta" data-cuenta></span></span></p>
+          <p class="lanz-pill p-lb"><span data-lanz-etq>Precio de&nbsp;lanzamiento</span>: <s>149&nbsp;€</s> <strong>99&nbsp;€</strong><span class="lanz-cuando"><span data-lanz-fin>Hasta&nbsp;el&nbsp;lunes 26 a&nbsp;las&nbsp;7:00</span> · <span class="cuenta" data-cuenta></span></span></p>
           <a class="btn js-buy" href="https://rafaprompts.com/#comprar"><span>Comprar el&nbsp;curso · <span class="p-n">149&nbsp;€</span><span class="p-l">99&nbsp;€</span></span></a>
           <p class="assure" aria-label="Condiciones de compra"><span class="assure-line"><span>Pago único</span><span>14 días de&nbsp;garantía</span><span>Factura para&nbsp;tu&nbsp;empresa</span></span></p>
         </div>
@@ -1105,7 +1111,7 @@ body::before { content: ""; position: fixed; inset: 0 0 auto; height: env(safe-a
         <article class="card plan">
           <h3>Esencial</h3><span class="label">El&nbsp;curso completo</span>
           <p class="plan-price"><strong><span class="p-n">149&nbsp;€</span><span class="p-l">99&nbsp;€</span></strong><s class="p-l plan-antes">149&nbsp;€</s><small>pago único</small></p>
-          <p class="lanz-nota p-lb">Precio de&nbsp;lanzamiento hasta&nbsp;el&nbsp;lunes 26 de&nbsp;octubre a&nbsp;las&nbsp;7:00 (hora de&nbsp;Madrid), <span class="cuenta" data-cuenta></span>.</p>
+          <p class="lanz-nota p-lb"><span data-lanz-nota>Precio de&nbsp;lanzamiento hasta&nbsp;el&nbsp;lunes 26 de&nbsp;octubre a&nbsp;las&nbsp;7:00 (hora de&nbsp;Madrid)</span>, <span class="cuenta" data-cuenta></span>.</p>
           <ul class="checks">
             <li><span class="yes"><svg><use href="#i-yes"/></svg></span>Los&nbsp;19 módulos en&nbsp;PDF</li>
             <li><span class="yes"><svg><use href="#i-yes"/></svg></span>100 instrucciones y&nbsp;plantillas para&nbsp;copiar</li>
@@ -1184,7 +1190,7 @@ body::before { content: ""; position: fixed; inset: 0 0 auto; height: env(safe-a
     <div class="wrap close-in">
       <h2 id="h-close">Automatiza tu&nbsp;negocio este fin de&nbsp;semana <span class="it">y&nbsp;recupera tus&nbsp;tardes</span></h2>
       <div class="buy">
-        <p class="lanz-pill p-lb on-dark">Precio de&nbsp;lanzamiento: <s>149&nbsp;€</s> <strong>99&nbsp;€</strong><span class="lanz-cuando">Hasta&nbsp;el&nbsp;lunes 26 a&nbsp;las&nbsp;7:00 · <span class="cuenta" data-cuenta></span></span></p>
+        <p class="lanz-pill p-lb on-dark"><span data-lanz-etq>Precio de&nbsp;lanzamiento</span>: <s>149&nbsp;€</s> <strong>99&nbsp;€</strong><span class="lanz-cuando"><span data-lanz-fin>Hasta&nbsp;el&nbsp;lunes 26 a&nbsp;las&nbsp;7:00</span> · <span class="cuenta" data-cuenta></span></span></p>
         <a class="btn js-buy" href="https://rafaprompts.com/#comprar"><span>Comprar el&nbsp;curso · <span class="p-n">149&nbsp;€</span><span class="p-l">99&nbsp;€</span></span></a>
         <p class="assure on-dark" aria-label="Condiciones de compra"><span class="assure-line"><span>Pago único</span><span>14 días de&nbsp;garantía</span><span>Factura para&nbsp;tu&nbsp;empresa</span></span></p>
       </div>
@@ -1320,6 +1326,24 @@ Cuando te pegue una solicitud de un posible cliente:
       }, 1500);
     });
   }
+  if (window.RP_OFERTA && LIVE) {
+    fetch(API_URL + '/oferta?code=' + encodeURIComponent(window.RP_OFERTA)).then(function (r) { return r.json(); }).then(function (o) {
+      if (!o || !o.valida) throw new Error('no vale');
+      var hasta = Date.parse(o.hasta);
+      if (hasta <= L.hasta) return;  /* el lanzamiento dura más: se queda como está */
+      L.hasta = hasta;
+      var dia = new Intl.DateTimeFormat('es-ES', { timeZone: 'Europe/Madrid', weekday: 'long', day: 'numeric', month: 'long' }).format(new Date(hasta)).replace(',', '');
+      document.querySelectorAll('[data-lanz-etq]').forEach(function (e) { e.textContent = 'Tu precio'; });
+      document.querySelectorAll('[data-lanz-fin]').forEach(function (e) { e.textContent = 'Hasta el ' + dia + ' a las 23:59'; });
+      document.querySelectorAll('[data-lanz-nota]').forEach(function (e) { e.textContent = 'Tu precio personal hasta el ' + dia + ' a las 23:59 (hora de Madrid)'; });
+      document.documentElement.classList.add('rp-lanz');
+      if (window.rpCuenta) window.rpCuenta();
+    }).catch(function () {
+      window.RP_OFERTA = undefined;
+      try { sessionStorage.removeItem('rp_oferta'); } catch (e) {}
+      if (!enLanz()) document.documentElement.classList.remove('rp-lanz');
+    });
+  }
   var vc = nuevoId('vc');
   if (window.fbq) fbq('track', 'ViewContent', { content_name: 'El método Claude', content_category: 'curso', content_ids: ['metodo-claude'], value: precio('esencial'), currency: 'EUR' }, { eventID: vc });
   espejo([{ name: 'PageView', id: window.rpPv || nuevoId('pv') }, { name: 'ViewContent', id: vc, value: precio('esencial'), content_id: 'metodo-claude' }]);
@@ -1329,7 +1353,7 @@ Cuando te pegue una solicitud de un posible cliente:
     var s = pre[plan];
     if (s && Date.now() - s.t < 20 * 60 * 1000 && (s.t >= L.hasta || enLanz())) return s.p;
     var p = fetch(API_URL + '/checkout', { method: 'POST', headers: { 'Content-Type': 'text/plain' },
-      body: JSON.stringify({ plan: plan, fbp: cookie('_fbp'), fbc: fbc(), page_url: location.href }) })
+      body: JSON.stringify({ plan: plan, fbp: cookie('_fbp'), fbc: fbc(), page_url: location.href, oferta: window.RP_OFERTA || undefined }) })
       .then(function (r) { return r.json().then(function (d) { if (!r.ok || !d.client_secret) throw new Error(d.error || 'sin sesión'); return d; }); });
     pre[plan] = { p: p, t: Date.now() };
     p.catch(function () { if (pre[plan] && pre[plan].p === p) delete pre[plan]; });
@@ -1479,13 +1503,17 @@ Cuando te pegue una solicitud de un posible cliente:
     var s = Math.floor(ms / 1000), d = Math.floor(s / 86400), h = Math.floor(s % 86400 / 3600), m = Math.floor(s % 3600 / 60), x = s % 60;
     return d > 0 ? d + ' d ' + h + ' h ' + m + ' min' : (h > 0 ? h + ' h ' : '') + m + ' min ' + x + ' s';
   }
-  (function tic() {
+  var vivo = null;
+  function tic() {
+    clearTimeout(vivo);
     var falta = L.hasta - Date.now();
-    if (falta <= 0) { document.documentElement.classList.remove('rp-lanz'); return; }
+    if (falta <= 0) { if (!window.RP_OFERTA) document.documentElement.classList.remove('rp-lanz'); return; }
     var t = 'quedan ' + fmt(falta);
     els.forEach(function (e) { e.textContent = t; });
-    setTimeout(tic, 1000 - (Date.now() % 1000));
-  })();
+    vivo = setTimeout(tic, 1000 - (Date.now() % 1000));
+  }
+  window.rpCuenta = tic;
+  tic();
 })();
 </script>
 <script src="/js/consent.js"></script>

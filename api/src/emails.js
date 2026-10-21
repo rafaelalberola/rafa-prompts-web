@@ -189,22 +189,22 @@ export function llamadaPagada({ nombre }) {
 
 // nombre: va detrás de «Tu guía: …». titular: lo que va a conseguir. promesa: lo que hay dentro (sale de la propia guía).
 export const GUIAS = {
-  'reel-hiperrealista': { nombre: 'cómo producir un reel hiperrealista con Claude', url: 'reel-hiperrealista-con-claude.html', titular: 'Tu primer reel hiperrealista empieza hoy', promesa: 'El sistema completo, del guion a la mezcla final: imagen, vídeo, voz, subtítulos y sonido, con Claude dirigiendo cada paso.' },
-  'agente-creador-reels': { nombre: 'un sistema que produce reels mientras duermes', url: 'agente-creador-reels-claude.html', titular: 'Despierta con tu reel listo para publicar', promesa: 'Cómo montar el agente que escribe el guion, genera el vídeo y lo monta mientras duermes. Tú solo revisas y publicas.' },
-  hooks: { nombre: '8 fórmulas de hooks que paran el scroll', url: 'hooks.html', titular: 'Tus próximos reels van a parar el scroll', promesa: 'Las 8 fórmulas de hook que hay detrás de los reels que retienen, con ejemplos, cuándo usar cada una y una plantilla para tu próximo reel.' },
-  anzuelo: { nombre: 'cómo escribir hooks que paren el scroll', url: 'anzuelo.html', titular: 'Tus próximos reels van a parar el scroll', promesa: 'Cómo escribir los primeros 3 segundos de cada reel: 8 patrones, ejemplos reales y una plantilla para copiar y pegar.' },
-  brujula: { nombre: 'qué métricas miran los creadores que crecen', url: 'brujula.html', titular: 'Vas a saber si tu cuenta crece de verdad', promesa: 'Las 3 métricas que importan, las 5 que son vanidad y un ritual semanal de 15 minutos para convertir números en decisiones.' },
-  portero: { nombre: 'un agente que filtra tus DMs', url: 'portero.html', titular: 'Tus DMs, filtrados por un agente' },
-  tienda: { nombre: 'cómo monetizar sin sponsors', url: 'tienda.html', titular: 'Gana dinero con tu audiencia sin esperar a los sponsors' },
-  voz: { nombre: 'cómo enseñar a Claude a hablar como tú', url: 'voz.html', titular: 'Claude, escribiendo con tu voz' },
-  mensaje: { nombre: 'cómo validar un mensaje sin gastar en anuncios', url: 'mensaje.html', titular: 'Valida tu mensaje antes de gastar un euro' },
-  conectar: { nombre: 'cómo conectar dos herramientas sin integración', url: 'conectar.html', titular: 'Tus herramientas, hablando entre ellas' },
-  vender: { nombre: 'cómo vender tu producto sin sponsors ni anuncios', url: 'vender.html', titular: 'Vende tu producto sin sponsors ni anuncios' },
-  dms: { nombre: 'cómo automatizar tus DMs sin perder clientes', url: 'dms.html', titular: 'Tus DMs en automático, sin perder clientes' },
-  agentes: { nombre: 'por qué tu prompt funciona mejor dividido en tres', url: 'agentes.html', titular: 'Tus prompts, funcionando a la primera' },
-  automatizar: { nombre: 'qué automatizar primero', url: 'automatizar.html', titular: 'Descubre qué te conviene automatizar primero' },
-  metricas: { nombre: 'las 3 métricas que importan y las 5 que mienten', url: 'metricas.html', titular: 'Mide solo lo que te hace crecer' },
-  borrar: { nombre: 'qué automatizaciones mantener y cuáles borrar', url: 'borrar.html', titular: 'Quédate con las automatizaciones que rinden' },
+  'reel-hiperrealista': { ruta: '/videos-ugc', nombre: 'Aprende a crear vídeos UGC con influencers IA', url: 'reel-hiperrealista-con-claude.html', titular: 'Tu primer vídeo UGC con un influencer IA empieza hoy', promesa: 'Del guion al vídeo final con tu influencer IA, paso a paso: imagen, vídeo, voz, subtítulos y sonido.' },
+  'agente-creador-reels': { ruta: '/sistema-videos-ugc', nombre: 'Monta un sistema que crea vídeos UGC automáticamente por ti', url: 'agente-creador-reels-claude.html', titular: 'Despierta con tu vídeo listo para publicar', promesa: 'Mientras duermes, el sistema escribe el guion, genera el vídeo y lo monta. Por la mañana solo revisas y publicas.' },
+  hooks: { ruta: '/hooks', nombre: '8 fórmulas para escribir hooks que paren el scroll', url: 'hooks.html', titular: 'Tus próximos reels van a parar el scroll', promesa: 'Las fórmulas que mejor me han funcionado en reels, con ejemplos para copiar y una plantilla para tu próximo vídeo.' },
+  anzuelo: { ruta: '/anzuelo', nombre: 'Cómo escribir hooks que paren el scroll', url: 'anzuelo.html', titular: 'Tus próximos reels van a parar el scroll', promesa: 'Cómo escribir los primeros 3 segundos de cada reel: 8 patrones, ejemplos reales y una plantilla para copiar y pegar.' },
+  brujula: { ruta: '/brujula', nombre: 'Qué métricas miran los creadores que crecen', url: 'brujula.html', titular: 'Vas a saber si tu cuenta crece de verdad', promesa: 'Las 3 métricas que importan, las 5 que son vanidad y un ritual semanal de 15 minutos para convertir números en decisiones.' },
+  portero: { ruta: '/portero', nombre: 'Un agente que filtra tus DMs', url: 'portero.html', titular: 'Tus DMs, filtrados por un agente' },
+  tienda: { ruta: '/tienda', nombre: 'Cómo monetizar sin sponsors', url: 'tienda.html', titular: 'Gana dinero con tu audiencia sin esperar a los sponsors' },
+  voz: { ruta: '/voz', nombre: 'Cómo enseñar a Claude a hablar como tú', url: 'voz.html', titular: 'Claude, escribiendo con tu voz' },
+  mensaje: { ruta: '/mensaje', nombre: 'Cómo validar un mensaje sin gastar en anuncios', url: 'mensaje.html', titular: 'Valida tu mensaje antes de gastar un euro' },
+  conectar: { ruta: '/conectar', nombre: 'Cómo conectar dos herramientas sin integración', url: 'conectar.html', titular: 'Tus herramientas, hablando entre ellas' },
+  vender: { ruta: '/vender', nombre: 'Cómo vender tu producto sin sponsors ni anuncios', url: 'vender.html', titular: 'Vende tu producto sin sponsors ni anuncios' },
+  dms: { ruta: '/dms', nombre: 'Cómo automatizar tus DMs sin perder clientes', url: 'dms.html', titular: 'Tus DMs en automático, sin perder clientes' },
+  agentes: { ruta: '/agentes', nombre: 'Por qué tu prompt funciona mejor dividido en tres', url: 'agentes.html', titular: 'Tus prompts, funcionando a la primera' },
+  automatizar: { ruta: '/automatizar', nombre: 'Qué automatizar primero', url: 'automatizar.html', titular: 'Descubre qué te conviene automatizar primero' },
+  metricas: { ruta: '/metricas', nombre: 'Las 3 métricas que importan y las 5 que mienten', url: 'metricas.html', titular: 'Mide solo lo que te hace crecer' },
+  borrar: { ruta: '/borrar', nombre: 'Qué automatizaciones mantener y cuáles borrar', url: 'borrar.html', titular: 'Quédate con las automatizaciones que rinden' },
 };
 GUIAS.yate = GUIAS['reel-hiperrealista'];
 GUIAS.madrugon = GUIAS['agente-creador-reels'];
@@ -215,13 +215,13 @@ export function guia(source) {
   const g = GUIAS[source];
   if (!g) return boletin();
   return {
-    asunto: `Tu guía: ${g.nombre}`,
+    asunto: `Tu guía: «${g.nombre}»`,
     html: marco({
       kicker: 'Guía gratis · rafa.prompts',
       titulo: g.titular,
       resumen: g.promesa || `Tu guía: ${g.nombre}.`,
       cuerpo: [
-        p(g.promesa || `Aquí tienes la guía completa: ${esc(g.nombre)}.`),
+        p(g.promesa || `Aquí tienes la guía completa: «${esc(g.nombre)}».`),
         boton('Abrir la guía', urlGuia(g)),
         p('Una vez al mes te escribo con una guía nueva: lo que ya me funciona con Claude, listo para que lo copies.'),
         curso,
@@ -246,6 +246,28 @@ export function boletin() {
         p('Mientras llega la siguiente, estas tres ya son tuyas:'),
         lista(tres.map(g => `${enlace(g.titular, urlGuia(g))}<br><span style="font-size:14px; color:#6B675F;">${g.promesa}</span>`), false),
         curso,
+        separador,
+        baja,
+      ].join(''),
+    }),
+  };
+}
+
+// A los 4 días del alta, si no ha comprado: su precio personal durante unos días, solo desde su enlace
+export function ofertaContacto({ source, url, importe, normal, hasta }) {
+  const g = GUIAS[source];
+  const vino = g ? `Hace unos días te llevaste la guía «${esc(g.nombre)}».` : 'Hace unos días te apuntaste a las guías de rafa.prompts.';
+  return {
+    asunto: `Tu precio para El método Claude: ${euros(importe).replace('&nbsp;', ' ')} hasta el ${hasta}`,
+    html: marco({
+      kicker: 'Solo para ti',
+      titulo: `Automatiza tu negocio con Claude por ${euros(importe)}`,
+      resumen: `El método Claude por ${euros(importe).replace('&nbsp;', ' ')} en vez de ${euros(normal).replace('&nbsp;', ' ')}, hasta el ${hasta}.`,
+      cuerpo: [
+        p(`${vino} Si quieres que Claude te quite trabajo en todo tu negocio, no solo en el contenido, te lo pongo fácil: hasta el <strong>${hasta}</strong>, El método Claude te sale por <strong>${euros(importe)}</strong> en vez de <s>${euros(normal)}</s>.`),
+        boton(`Ver el curso por ${euros(importe)}`, url),
+        p('Aprendes a automatizar tu web, tus clientes, tus presupuestos y tus facturas sin programar, con la biblioteca de 100 prompts. Empiezas con «Empezar aquí» y el módulo 01, y tienes 14 días de garantía.'),
+        p('Este precio es solo tuyo y se aplica desde este enlace.'),
         separador,
         baja,
       ].join(''),
@@ -301,9 +323,9 @@ export function avisoCompleto({ plan, email, nombre }) {
 
 export function avisoContacto({ email, source, ip, userAgent }) {
   const g = GUIAS[source];
-  const origen = g ? `la guía «${esc(g.nombre)}»` : source === 'index' ? 'el boletín de la home' : `«${esc(source)}»`;
+  const origen = g ? `${g.ruta}, «${esc(g.nombre)}»` : source === 'index' ? 'el boletín de la portada' : `«${esc(source)}»`;
   return {
-    asunto: `Nuevo contacto · ${g ? g.nombre : source === 'index' ? 'boletín' : source} · ${email}`,
+    asunto: `Nuevo contacto · ${g ? g.ruta : source === 'index' ? 'boletín' : source} · ${email}`,
     html: marco({
       kicker: 'Nuevo contacto',
       titulo: esc(email),

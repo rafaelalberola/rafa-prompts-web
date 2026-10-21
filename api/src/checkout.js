@@ -21,12 +21,17 @@ export function lanzamiento(env, ahora = Date.now()) {
   return { price: env.STRIPE_PRICE_LANZAMIENTO, importe: Number(env.LANZAMIENTO_IMPORTE), hasta };
 }
 
-export function checkoutParams(env, body = {}, metadata = {}, ahora = Date.now()) {
+// oferta: la personal de los 4 días ({ hasta }), ya validada por el Worker. Usa el mismo precio que el lanzamiento.
+export function checkoutParams(env, body = {}, metadata = {}, ahora = Date.now(), oferta = null) {
   const pedido = String(body.plan || 'esencial').toLowerCase();
   // solo se vende un plan si su precio está configurado; si no, se usa Esencial
   const plan = Object.hasOwn(PLANES, pedido) && env[PLANES[pedido]] ? pedido : 'esencial';
   const managed = env.STRIPE_MANAGED_PAYMENTS === 'on';
-  const lanz = plan === 'esencial' ? lanzamiento(env, ahora) : null;
+  const personal = oferta && env.STRIPE_PRICE_LANZAMIENTO && ahora < Date.parse(oferta.hasta)
+    ? { price: env.STRIPE_PRICE_LANZAMIENTO, importe: Number(env.LANZAMIENTO_IMPORTE), hasta: Date.parse(oferta.hasta), tipo: 'oferta' } : null;
+  const general = lanzamiento(env, ahora);
+  // si valen las dos, la que dura más (la sesión caduca con ella)
+  const lanz = plan !== 'esencial' ? null : [general, personal].filter(Boolean).sort((a, b) => b.hasta - a.hasta)[0] || null;
   const importe = lanz ? lanz.importe : IMPORTE[plan];
   const params = {
     ui_mode: managed ? 'embedded_page' : 'embedded',
@@ -38,7 +43,9 @@ export function checkoutParams(env, body = {}, metadata = {}, ahora = Date.now()
     // v = importe cobrado, para que la página de gracias mande a Meta el valor real
     return_url: `${env.SUCCESS_URL}${plan === 'negocio' ? '&plan=negocio' : ''}&v=${importe}`,
     locale: 'es',
-    metadata: { ...metadata, plan, ...(lanz ? { precio: 'lanzamiento' } : {}) },
+    // el pago integrado con el fondo crema de la web (sin el rectángulo blanco) y el botón en terracota
+    branding_settings: { background_color: '#F2EFE7', button_color: '#B95A39', border_style: 'rounded' },
+    metadata: { ...metadata, plan, ...(lanz ? { precio: lanz.tipo || 'lanzamiento' } : {}), ...(lanz && lanz.tipo === 'oferta' ? { oferta: String(body.oferta || '').slice(0, 40) } : {}) },
   };
   // Con el precio de lanzamiento, la sesión caduca cuando acaba la oferta (Stripe pide entre 30 min y 24 h)
   if (lanz) {

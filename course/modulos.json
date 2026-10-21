@@ -4,7 +4,7 @@
     {
       "slug": "pensar-en-claude",
       "contenido": "modulo-01.json",
-      "titulo_pdf": "Pensar en Claude",
+      "titulo_pdf": "Qué es Claude y qué puede hacer por tu negocio",
       "titulo": "Qué es Claude y qué puede hacer por tu negocio",
       "descripcion": "Qué trabajo de tu negocio puede hacer Claude y cuál te conviene seguir haciendo tú.",
       "icono": "message-circle-question"
@@ -28,7 +28,7 @@
     {
       "slug": "claude-md",
       "contenido": "modulo-02.json",
-      "titulo_pdf": "El CLAUDE.md",
+      "titulo_pdf": "Que Claude conozca tu negocio",
       "titulo": "Que Claude conozca tu negocio",
       "descripcion": "Se lo explicas una vez y responde como lo harías tú.",
       "icono": "store"
@@ -36,15 +36,15 @@
     {
       "slug": "tu-web-con-claude",
       "contenido": "modulo-11.json",
-      "titulo_pdf": "Tu web, hecha con Claude",
-      "titulo": "Tu web, hecha con Claude",
+      "titulo_pdf": "Tu web",
+      "titulo": "Tu web",
       "descripcion": "Claude diseña y escribe tu web, y la publicas en una tarde con tu dominio.",
       "icono": "globe"
     },
     {
       "contenido": "tu-tienda-online.json",
-      "titulo_pdf": "Tu tienda online con Claude",
-      "titulo": "Tu tienda online con Claude",
+      "titulo_pdf": "Tu tienda online",
+      "titulo": "Tu tienda online",
       "descripcion": "Shopify o WooCommerce: fichas de producto, pedidos del día y aviso al móvil cuando baja el stock.",
       "icono": "shopping-cart",
       "slug": "tu-tienda-online"
@@ -52,32 +52,32 @@
     {
       "slug": "tu-crm-conectado",
       "contenido": "modulo-12.json",
-      "titulo_pdf": "Tu CRM, conectado a tu web",
-      "titulo": "Tu CRM, conectado a tu web",
+      "titulo_pdf": "Tu CRM",
+      "titulo": "Tu CRM",
       "descripcion": "Quien te escribe desde la web entra solo en tu Excel o tu CRM, ya clasificado.",
       "icono": "database"
     },
     {
       "slug": "encontrar-clientes",
       "contenido": "modulo-13.json",
-      "titulo_pdf": "Encontrar clientes potenciales",
-      "titulo": "Encontrar clientes potenciales",
+      "titulo_pdf": "Clientes potenciales",
+      "titulo": "Clientes potenciales",
       "descripcion": "Una lista de empresas que encajan con lo que vendes, con el motivo de cada una.",
       "icono": "search"
     },
     {
       "slug": "contacto-y-agenda",
       "contenido": "modulo-14.json",
-      "titulo_pdf": "Primer contacto, llamadas y seguimiento",
-      "titulo": "Primer contacto, llamadas y seguimiento",
+      "titulo_pdf": "Contacto y agenda",
+      "titulo": "Contacto y agenda",
       "descripcion": "El primer mensaje, la llamada en tu agenda y el CRM al día.",
       "icono": "calendar-check"
     },
     {
       "slug": "skills-agentes",
       "contenido": "modulo-03.json",
-      "titulo_pdf": "Skills y agentes",
-      "titulo": "Presupuestos, informes y correos en un clic",
+      "titulo_pdf": "Presupuestos",
+      "titulo": "Presupuestos",
       "descripcion": "Lo que repites cada semana, hecho por Claude con tu formato.",
       "icono": "file-text"
     },
@@ -92,7 +92,7 @@
     {
       "slug": "orquestacion",
       "contenido": "modulo-05.json",
-      "titulo_pdf": "Orquestación",
+      "titulo_pdf": "Solicitudes y avisos que llegan solos",
       "titulo": "Solicitudes y avisos que llegan solos",
       "descripcion": "Gmail, tus formularios y Telegram: el resumen te llega al móvil sin que toques nada.",
       "icono": "bell"
@@ -100,31 +100,31 @@
     {
       "slug": "facturas-y-cobros",
       "contenido": "modulo-15.json",
-      "titulo_pdf": "Facturas, cobros y los números del mes",
-      "titulo": "Facturas, cobros y los números del mes",
+      "titulo_pdf": "Facturas y cobros",
+      "titulo": "Facturas y cobros",
       "descripcion": "Facturas listas para la gestoría, los cobros pendientes a la vista y el informe del mes.",
       "icono": "receipt"
     },
     {
       "slug": "contratar-y-formar",
       "contenido": "modulo-16.json",
-      "titulo_pdf": "Contratar y formar a tu equipo",
-      "titulo": "Contratar y formar a tu equipo",
+      "titulo_pdf": "Tu equipo",
+      "titulo": "Tu equipo",
       "descripcion": "La oferta de empleo, los currículos resumidos y el manual del primer día.",
       "icono": "user-plus"
     },
     {
       "slug": "iteracion-medida",
       "contenido": "modulo-06.json",
-      "titulo_pdf": "Iteración y medida",
-      "titulo": "Comprobar que te ahorra tiempo",
+      "titulo_pdf": "Mide el ahorro",
+      "titulo": "Mide el ahorro",
       "descripcion": "Cuántas horas recuperas cada semana y cómo arreglar lo que falla.",
       "icono": "timer"
     },
     {
       "slug": "claude-code-arranque",
       "contenido": "modulo-07.json",
-      "titulo_pdf": "Claude Code: el agente que vive en tu editor",
+      "titulo_pdf": "Claude en tu ordenador",
       "titulo": "Claude en tu ordenador",
       "descripcion": "Lo instalas en cinco minutos y trabaja con tus archivos.",
       "icono": "laptop"
@@ -132,7 +132,7 @@
     {
       "slug": "skills-subagentes-mcp",
       "contenido": "modulo-08.json",
-      "titulo_pdf": "Skills nativas, subagentes y MCP",
+      "titulo_pdf": "Varios asistentes trabajando a la vez",
       "titulo": "Varios asistentes trabajando a la vez",
       "descripcion": "Gmail, Drive y Notion, con varios asistentes repartiéndose el trabajo.",
       "icono": "network"
@@ -140,7 +140,7 @@
     {
       "slug": "sistema-autonomo",
       "contenido": "modulo-09.json",
-      "titulo_pdf": "Construir tu primer sistema autónomo",
+      "titulo_pdf": "Tu primera automatización que va sola",
       "titulo": "Tu primera automatización que va sola",
       "descripcion": "Cada mañana, el trabajo hecho antes de que abras el ordenador.",
       "icono": "sunrise"
@@ -148,7 +148,7 @@
     {
       "slug": "vivir-con-sistema-ia",
       "contenido": "modulo-10.json",
-      "titulo_pdf": "Vivir con un sistema de IA",
+      "titulo_pdf": "Mantenerlo sin sustos",
       "titulo": "Mantenerlo sin sustos",
       "descripcion": "Media hora al mes de revisión y los cinco fallos más habituales, resueltos.",
       "icono": "wrench"
@@ -159,7 +159,7 @@
       "fase": "Prepara",
       "etapas": [
         {
-          "titulo": "Claude, listo",
+          "titulo": "Primeros pasos con Claude",
           "texto": "Tu cuenta, tus herramientas conectadas y tu negocio explicado.",
           "icono": "settings-2",
           "modulos": [
@@ -175,7 +175,6 @@
       "fase": "Empieza",
       "etapas": [
         {
-          "titulo": "Tu web",
           "texto": "Reservas el dominio y Claude te diseña y escribe la web.",
           "icono": "globe",
           "modulos": [
@@ -183,7 +182,6 @@
           ]
         },
         {
-          "titulo": "Tu tienda online",
           "texto": "Productos, pedidos y un aviso cuando baja el stock.",
           "icono": "shopping-cart",
           "modulos": [
@@ -191,7 +189,6 @@
           ]
         },
         {
-          "titulo": "Tu CRM",
           "texto": "Cada contacto de la web entra solo en tu Excel o tu CRM.",
           "icono": "database",
           "modulos": [
@@ -204,7 +201,6 @@
       "fase": "Vende",
       "etapas": [
         {
-          "titulo": "Clientes potenciales",
           "texto": "Claude busca empresas que encajan contigo y las guarda.",
           "icono": "search",
           "modulos": [
@@ -212,7 +208,6 @@
           ]
         },
         {
-          "titulo": "Contacto y agenda",
           "texto": "El primer mensaje, la llamada en tu agenda y el CRM al día.",
           "icono": "calendar-check",
           "modulos": [
@@ -220,7 +215,6 @@
           ]
         },
         {
-          "titulo": "Presupuestos",
           "texto": "Presupuestos e informes con tu formato, en un clic.",
           "icono": "file-text",
           "modulos": [
@@ -242,7 +236,6 @@
           ]
         },
         {
-          "titulo": "Facturas y cobros",
           "texto": "Facturas para la gestoría y aviso de cada cobro pendiente.",
           "icono": "receipt",
           "modulos": [
@@ -255,11 +248,33 @@
       "fase": "Crece",
       "etapas": [
         {
-          "titulo": "Tu equipo",
           "texto": "La oferta de empleo, los currículos y el manual del primer día.",
           "icono": "user-plus",
           "modulos": [
             "contratar-y-formar"
+          ]
+        },
+        {
+          "texto": "Cuántas horas recuperas cada semana y cómo arreglar lo que falla.",
+          "icono": "timer",
+          "modulos": [
+            "iteracion-medida"
+          ]
+        }
+      ]
+    },
+    {
+      "fase": "Automatiza",
+      "etapas": [
+        {
+          "titulo": "Que funcione solo",
+          "texto": "Claude Code hace el trabajo cada mañana en tu ordenador, sin programar.",
+          "icono": "sunrise",
+          "modulos": [
+            "claude-code-arranque",
+            "skills-subagentes-mcp",
+            "sistema-autonomo",
+            "vivir-con-sistema-ia"
           ]
         }
       ]

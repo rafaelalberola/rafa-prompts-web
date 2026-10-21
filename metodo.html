@@ -9,7 +9,7 @@
   /* El curso vive ahora en la home. Se conservan los parámetros (fbclid, utm) y #comprar abre el pago allí. */
   (function () {
     var h = location.hash;
-    if (h === '#modulos' || h === '#incluye') h = '#rutas';
+    if (h === '#modulos' || h === '#incluye' || h === '#rutas') h = '#recorrido';
     location.replace('/' + location.search + h);
   })();
 </script>

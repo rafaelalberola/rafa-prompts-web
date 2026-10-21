@@ -1,6 +1,6 @@
 {
   "modulo_01": {
-    "title": "Pensar en Claude",
+    "title": "Qué es Claude y qué puede hacer por tu negocio",
     "subtitle": "El modelo mental que cambia todo. Cuándo Claude te ahorra horas y cuándo te hace perderlas.",
     "lessons": [
       "Claude no es un buscador, es un colaborador",
@@ -67,7 +67,7 @@
     "cover_image": "modulo-03-cover.png"
   },
   "modulo_04": {
-    "title": "El CLAUDE.md",
+    "title": "Que Claude conozca tu negocio",
     "subtitle": "El artefacto más importante del sistema. Un documento que hace que Claude se comporte como tú quieres, sin repetir instrucciones cada vez.",
     "lessons": [
       "Qué es un CLAUDE.md y por qué importa",
@@ -89,7 +89,7 @@
     "cover_image": "modulo-04-cover.png"
   },
   "modulo_05": {
-    "title": "Tu web, hecha con Claude",
+    "title": "Tu web",
     "subtitle": "Reservas tu dominio, Claude te entrevista como un diseñador sénior, te escribe y diseña la web, y la publicas en una tarde.",
     "lessons": [
       "Qué hace falta para tener web",
@@ -111,7 +111,7 @@
     "cover_image": "modulo-05-cover.png"
   },
   "modulo_06": {
-    "title": "Tu tienda online con Claude",
+    "title": "Tu tienda online",
     "subtitle": "Claude escribe tus fichas de producto, prepara los pedidos del día y te avisa al móvil cuando algo se acaba.",
     "lessons": [
       "¿Shopify o WordPress con WooCommerce?",
@@ -133,7 +133,7 @@
     "cover_image": "modulo-06-cover.png"
   },
   "modulo_07": {
-    "title": "Tu CRM, conectado a tu web",
+    "title": "Tu CRM",
     "subtitle": "Cada persona que te escribe desde la web entra sola en tu lista de clientes, y Claude te dice si encaja y qué hacer con ella.",
     "lessons": [
       "Qué es un CRM, en cristiano",
@@ -156,7 +156,7 @@
     "cover_image": "modulo-07-cover.png"
   },
   "modulo_08": {
-    "title": "Encontrar clientes potenciales",
+    "title": "Clientes potenciales",
     "subtitle": "Claude busca negocios que encajan con lo que vendes, te dice por qué encaja cada uno y te los deja en tu hoja o tu CRM.",
     "lessons": [
       "Tu cliente ideal en una ficha",
@@ -178,7 +178,7 @@
     "cover_image": "modulo-08-cover.png"
   },
   "modulo_09": {
-    "title": "Primer contacto, llamadas y seguimiento",
+    "title": "Contacto y agenda",
     "subtitle": "Claude escribe el primer mensaje, prepara tus llamadas, te ayuda a cerrar la cita y deja el CRM al día. Tú revisas y envías.",
     "lessons": [
       "Qué canal usar con cada contacto",
@@ -200,7 +200,7 @@
     "cover_image": "modulo-09-cover.png"
   },
   "modulo_10": {
-    "title": "Skills y agentes",
+    "title": "Presupuestos",
     "subtitle": "Cómo convertir tareas que repites en piezas reutilizables. Y cuándo una tarea merece volverse un agente que trabaja solo.",
     "lessons": [
       "Qué es una skill",
@@ -243,7 +243,7 @@
     "cover_image": "modulo-11-cover.png"
   },
   "modulo_12": {
-    "title": "Orquestación",
+    "title": "Solicitudes y avisos que llegan solos",
     "subtitle": "Cómo conectar Claude con otras herramientas. El salto de hacer tareas manuales a sistemas que funcionan solos mientras tú vives tu vida.",
     "lessons": [
       "El patrón universal: trigger, proceso, destino",
@@ -265,7 +265,7 @@
     "cover_image": "modulo-12-cover.png"
   },
   "modulo_13": {
-    "title": "Facturas, cobros y los números del mes",
+    "title": "Facturas y cobros",
     "subtitle": "Claude ordena las facturas para la gestoría, encuentra quién te debe, redacta los recordatorios y prepara el informe del mes. Tú revisas y envías.",
     "lessons": [
       "Qué hace Claude aquí y qué no",
@@ -288,7 +288,7 @@
     "cover_image": "modulo-13-cover.png"
   },
   "modulo_14": {
-    "title": "Contratar y formar a tu equipo",
+    "title": "Tu equipo",
     "subtitle": "El puesto, la oferta, los currículos, las entrevistas y el manual del primer día. Claude lo prepara y tú decides.",
     "lessons": [
       "Antes de contratar, define el puesto",
@@ -310,7 +310,7 @@
     "cover_image": "modulo-14-cover.png"
   },
   "modulo_15": {
-    "title": "Iteración y medida",
+    "title": "Mide el ahorro",
     "subtitle": "Cómo saber si un sistema funciona. Qué medir, qué ignorar, y cómo mejorarlo sin romperlo. El paso que todos se saltan y por eso fallan.",
     "lessons": [
       "Las 3 métricas que importan",
@@ -331,7 +331,7 @@
     "cover_image": "modulo-15-cover.png"
   },
   "modulo_16": {
-    "title": "Claude Code: el agente que vive en tu editor",
+    "title": "Claude en tu ordenador",
     "subtitle": "Instalación, primer CLAUDE.md real, slash commands, modo plan y permisos. El salto del navegador al disco.",
     "lessons": [
       "Por qué dar el salto a Claude Code",
@@ -354,7 +354,7 @@
     "cover_image": "modulo-16-cover.png"
   },
   "modulo_17": {
-    "title": "Skills nativas, subagentes y MCP",
+    "title": "Varios asistentes trabajando a la vez",
     "subtitle": "Las tres capacidades que convierten Claude Code en un equipo. Cuándo usar cada una y cómo combinarlas sin que se peleen.",
     "lessons": [
       "Anatomía de una skill nativa SKILL.md",
@@ -376,7 +376,7 @@
     "cover_image": "modulo-17-cover.png"
   },
   "modulo_18": {
-    "title": "Construir tu primer sistema autónomo",
+    "title": "Tu primera automatización que va sola",
     "subtitle": "Un caso real end-to-end. De pipeline manual a sistema que se ejecuta solo. Con código, archivos y resultados al final.",
     "lessons": [
       "El caso: un pipeline de contenido autónomo",
@@ -398,7 +398,7 @@
     "cover_image": "modulo-18-cover.png"
   },
   "modulo_19": {
-    "title": "Vivir con un sistema de IA",
+    "title": "Mantenerlo sin sustos",
     "subtitle": "Mantenimiento, troubleshooting, ética y cuándo abandonar. La parte que separa a quien construye sistemas de quien acumula prototipos rotos.",
     "lessons": [
       "El protocolo mensual de 30 minutos",

@@ -515,6 +515,30 @@ async function handleAdminSessions(req, env) {
   return json({ sessions: out });
 }
 
+// POST /abierto { session_id, origen } o { plan: 'diagnostico', origen }: alguien abre el pago (o el calendario).
+// Para que nadie pueda inventar avisos, la sesión se comprueba en Stripe y cada una se avisa una sola vez.
+async function handleAbierto(req, env, ctx) {
+  const body = await req.json().catch(() => ({}));
+  const origen = body.origen === 'meta' ? 'meta' : 'otro';
+  if (body.plan === 'diagnostico') {
+    const ip = req.headers.get('cf-connecting-ip') || 'x';
+    if (await env.STORE.get(`abiertocal:${ip}`)) return json({ ok: true });
+    await env.STORE.put(`abiertocal:${ip}`, '1', { expirationTtl: 3600 });
+    ctx.waitUntil(avisos.registrar(env, 'inicio', { plan: 'diagnostico', importe: 50, origen }));
+    return json({ ok: true });
+  }
+  const sid = String(body.session_id || '');
+  if (!/^cs_(live|test)_[A-Za-z0-9]{20,200}$/.test(sid)) return json({ error: 'bad_session' }, 400);
+  if (await env.STORE.get(`abierto:${sid}`)) return json({ ok: true });
+  await env.STORE.put(`abierto:${sid}`, '1', { expirationTtl: 2 * 86400 });
+  ctx.waitUntil((async () => {
+    const cs = await stripeRequest(env, `checkout/sessions/${sid}`, null, 'GET');
+    if (cs.error || cs.status === 'expired') return;
+    await avisos.registrar(env, 'inicio', { plan: (cs.metadata || {}).plan || 'esencial', importe: (cs.amount_total || 0) / 100, origen });
+  })().catch(e => console.error('abierto', e)));
+  return json({ ok: true });
+}
+
 // GET /acceso?session_id=cs_…: la página de gracias pide aquí el enlace de descarga (no depende del email).
 // Solo lee: el webhook de Stripe es quien crea el acceso, así que mientras no llega responde «pendiente».
 async function handleAcceso(req, env) {
@@ -997,6 +1021,9 @@ export default {
           break;
         case 'GET /admin/sessions':
           res = await handleAdminSessions(req, env);
+          break;
+        case 'POST /abierto':
+          res = await handleAbierto(req, env, ctx);
           break;
         case 'GET /acceso':
           res = await handleAcceso(req, env);

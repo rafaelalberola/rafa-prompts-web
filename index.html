@@ -1313,6 +1313,14 @@ Cuando te pegue una solicitud de un posible cliente:
   function cookie(k) { var m = document.cookie.match(new RegExp('(?:^|; )' + k + '=([^;]*)')); return m ? m[1] : ''; }
   function fbc() { var id = new URLSearchParams(location.search).get('fbclid') || ''; return cookie('_fbc') || (id ? 'fb.1.' + Date.now() + '.' + id : ''); }
   function nuevoId(p) { return p + '_' + Date.now().toString(36) + Math.random().toString(36).slice(2, 8); }
+  /* de dónde llega la visita (para el aviso de Telegram): anuncio de Meta u otra cosa; se recuerda durante la visita */
+  var ORIGEN = /(^|[?&])(utm_source=meta|fbclid=)/.test(location.search) ? 'meta' : '';
+  try { if (ORIGEN) sessionStorage.setItem('rp_origen', ORIGEN); else ORIGEN = sessionStorage.getItem('rp_origen') || 'otro'; } catch (e) { ORIGEN = ORIGEN || 'otro'; }
+  /* aviso a Rafa por Telegram: alguien ha abierto el pago o el calendario (sin cookies ni datos personales) */
+  function avisoAbierto(datos) {
+    if (!LIVE) return;
+    try { fetch(API_URL + '/abierto', { method: 'POST', keepalive: true, headers: { 'Content-Type': 'text/plain' }, body: JSON.stringify(Object.assign({ origen: ORIGEN }, datos)) }).catch(function () {}); } catch (e) {}
+  }
   /* copia del evento en el servidor (API de conversiones) con el mismo id que el píxel: Meta los junta.
      Solo se manda si la persona aceptó las cookies de Meta. */
   function espejo(eventos) {
@@ -1428,6 +1436,7 @@ Cuando te pegue una solicitud de un posible cliente:
         var importe = Number(d.importe) || precio(plan), ic = 'ic_' + d.session_id;
         if (window.fbq) fbq('track', 'InitiateCheckout', { content_name: PROD[plan][0], content_ids: [PROD[plan][1]], value: importe, currency: 'EUR' }, { eventID: ic });
         espejo([{ name: 'InitiateCheckout', id: ic, value: importe, content_id: PROD[plan][1] }]);
+        avisoAbierto({ session_id: d.session_id });
       }
       await montar(plan, d);
       if (abierto === plan) cargando(false);
@@ -1480,6 +1489,7 @@ Cuando te pegue una solicitud de un posible cliente:
     var ic = nuevoId('icd');
     if (window.fbq) fbq('track', 'InitiateCheckout', { content_name: 'Diagnóstico de implantación', content_ids: ['diagnostico-implantacion'], value: 50.00, currency: 'EUR' }, { eventID: ic });
     espejo([{ name: 'InitiateCheckout', id: ic, value: 50, content_id: 'diagnostico-implantacion' }]);
+    avisoAbierto({ plan: 'diagnostico' });
   }
   document.querySelectorAll('.js-diag').forEach(function (a) { a.addEventListener('click', function (e) { e.preventDefault(); abrirCalendly(a.href); }); });
   /* reserva pagada: compra en Meta con el mismo id que manda el servidor (así no se cuenta dos veces) */

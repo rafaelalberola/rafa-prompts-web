@@ -22,15 +22,19 @@ export async function enviarTelegram(env, texto) {
   return r.json().catch(() => ({ ok: false }));
 }
 
-// tipo: venta | contacto | completo | llamada | fallo
+// tipo: venta | inicio | contacto | completo | llamada | fallo
+// Las ventas se avisan al momento; el resto va en el aviso de cada 10 minutos. Todo queda para el resumen diario.
 export async function registrar(env, tipo, datos) {
   const ahora = Date.now();
   const id = `${ahora}-${Math.random().toString(36).slice(2, 8)}`;
-  const ev = JSON.stringify({ tipo, t: ahora, ...datos });
+  const e = { tipo, t: ahora, ...datos };
+  const ev = JSON.stringify(e);
+  let enviado = false;
+  if (tipo === 'venta') enviado = !!(await enviarTelegram(env, `<b>Venta</b>\n${LINEA.venta(e)}`).catch(() => ({}))).ok;
   await Promise.all([
-    env.STORE.put(`tg:${id}`, ev, { expirationTtl: 2 * 86400 }),
+    enviado ? null : env.STORE.put(`tg:${id}`, ev, { expirationTtl: 2 * 86400 }),
     env.STORE.put(`log:${diaMadrid(ahora)}:${id}`, ev, { expirationTtl: 3 * 86400 }),
-  ]).catch(e => console.error('registrar aviso', e));
+  ]).catch(err => console.error('registrar aviso', err));
 }
 
 async function leer(env, prefix) {
@@ -44,14 +48,16 @@ async function leer(env, prefix) {
   return out.sort((a, b) => a.t - b.t);
 }
 
+const DE = { meta: 'llega del anuncio de Meta', otro: 'llega de la web' };
 const LINEA = {
+  inicio: e => `· ${PLAN[e.plan] || e.plan} · ${euros(e.importe)} · ${DE[e.origen] || DE.otro}`,
   venta: e => `· ${esc(e.email)} · ${PLAN[e.plan] || e.plan} · ${euros(e.importe)}${e.garantiaHasta ? `. Garantía hasta el ${esc(e.garantiaHasta)}` : ''}`,
   contacto: e => `· ${esc(e.email)} · ${esc(origen(e.source))}`,
   completo: e => `· ${esc(e.email)} · ${e.plan === 'negocio' ? 'Negocio: mándale los 12 proyectos en menos de 24 horas.' : 'Esencial: su garantía ha terminado.'}`,
   llamada: e => `· ${esc(e.email)} · ${esc(e.cuando)}`,
   fallo: e => `· ${esc(e.email)} · ${esc(e.que)}. Sigue en cola y se reintenta cada 5 minutos.`,
 };
-const TITULO = { venta: 'Ventas', contacto: 'Contactos nuevos', completo: 'Se quedan el curso completo', llamada: 'Llamadas reservadas', fallo: 'Emails que no han salido' };
+const TITULO = { venta: 'Ventas', inicio: 'Inicios de pago', contacto: 'Contactos nuevos', completo: 'Se quedan el curso completo', llamada: 'Llamadas reservadas', fallo: 'Emails que no han salido' };
 
 // Cada 10 minutos: un solo mensaje con todo lo nuevo. Si no ha pasado nada, no manda nada.
 export async function aviso10(env) {
@@ -78,6 +84,7 @@ export async function resumenDiario(env, ahora = Date.now()) {
   const lineas = [
     `<b>Ayer, ${diaLargo(ayer)}</b>`,
     `Ventas: ${ventas.length}${ventas.length ? ` (${euros(total)})` : ''}`,
+    `Inicios de pago: ${de('inicio').length}`,
     `Contactos nuevos: ${contactos.length}${contactos.length ? ` (${Object.entries(porGuia).map(([k, n]) => `${esc(k)} ${n}`).join(', ')})` : ''}`,
     `Se quedan el curso completo: ${de('completo').length}`,
     `Llamadas reservadas: ${de('llamada').length}`,

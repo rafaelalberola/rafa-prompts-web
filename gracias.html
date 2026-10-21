@@ -42,6 +42,15 @@
   <meta name="twitter:image" content="https://rafaprompts.com/assets/img/og-image.png">
   <meta name="twitter:site" content="@rafa.prompts">
   <!-- SEO:auto:end -->
+<style>
+  .thanks-acceso { display: flex; flex-direction: column; align-items: flex-start; gap: 10px; margin: 8px 0 28px; }
+  .thanks-acceso .btn { gap: 10px; }
+  .thanks-acceso .btn[aria-disabled] { opacity: .85; cursor: progress; }
+  .acceso-spin { width: 16px; height: 16px; border-radius: 50%; border: 2px solid rgba(255, 255, 255, .35); border-top-color: #fff; animation: acceso-gira .75s linear infinite; }
+  .thanks-acceso .btn.listo .acceso-spin { display: none; }
+  @keyframes acceso-gira { to { transform: rotate(360deg); } }
+  .acceso-nota { margin: 0; font-size: 14px; color: var(--ink-soft, #45423D); }
+</style>
 </head>
 <body>
 
@@ -74,8 +83,13 @@
           <span class="italic">empezamos.</span>
         </h1>
         <p class="lede">
-          En unos minutos vas a recibir un email con el enlace de acceso a tus 21 PDFs. Mientras tanto, esto es lo que tienes que saber:
+          Tu acceso a los PDF ya está aquí abajo. También te lo mando por email.
         </p>
+
+        <div class="thanks-acceso" id="acceso">
+          <a class="btn accent" id="acceso-btn" href="#" aria-disabled="true"><span class="acceso-spin" aria-hidden="true"></span><span id="acceso-txt">Preparando tu acceso…</span></a>
+          <p class="acceso-nota" id="acceso-nota">Guarda este botón: es tu acceso a los PDF.</p>
+        </div>
 
         <p class="lede" id="negocio-note" hidden>
           <strong>Plan Negocio:</strong> los 12 proyectos listos para copiar te llegan por correo en menos de 24 horas, en un email aparte.
@@ -83,7 +97,7 @@
 
         <ol class="thanks-steps">
           <li>
-            <strong>Revisa tu bandeja de entrada</strong> — el email llega desde <code>hola@rafaprompts.com</code> con asunto <em>"Tus PDFs de El método Claude están listos"</em>.
+            <strong>Revisa tu correo.</strong> El email llega desde <code>hola@rafaprompts.com</code> con el asunto <em>«Ya tienes El método Claude: aquí está tu acceso»</em>.
           </li>
           <li>
             <strong>Si no lo ves en 5 minutos, mira en spam o promociones.</strong> Marca el remitente como "no spam" para futuras actualizaciones.
@@ -97,7 +111,7 @@
         </ol>
 
         <div class="thanks-help">
-          <p>¿No te llegó el email tras 30 minutos? Escríbeme directamente a <a href="mailto:hola@rafaprompts.com">hola@rafaprompts.com</a> con tu nombre y te lo reenvío en menos de un día.</p>
+          <p>¿No te llegó el email en 30 minutos? El botón de arriba ya funciona. Escríbeme a <a href="mailto:hola@rafaprompts.com">hola@rafaprompts.com</a> con tu nombre y lo reviso en menos de un día.</p>
         </div>
 
         <div class="thanks-cta">
@@ -131,7 +145,7 @@
         const k = document.querySelector('.thanks .kicker'); if (k) k.textContent = 'Reserva confirmada';
         const h = document.querySelector('.thanks h1'); if (h) h.innerHTML = 'Diagnóstico reservado <span class="italic">hablamos pronto.</span>';
         const l = document.querySelector('.thanks .lede'); if (l) l.textContent = 'Te escribo en menos de 24 horas desde hola@rafaprompts.com para fijar el día de la llamada. Son 45 minutos. Si después contratas la implantación, estos 50 € se descuentan del precio.';
-        document.querySelectorAll('.thanks-steps, #negocio-note').forEach(function (e) { e.hidden = true; });
+        document.querySelectorAll('.thanks-steps, #negocio-note, #acceso').forEach(function (e) { e.hidden = true; });
         const help = document.querySelector('.thanks-help p'); if (help) help.textContent = '¿No te llega mi correo en 24 horas? Escríbeme a hola@rafaprompts.com y lo vemos.';
       }
       const dedupKey = sessionId ? `purchase_tracked_${sessionId}` : '';
@@ -149,6 +163,31 @@
         if (dedupKey) sessionStorage.setItem(dedupKey, '1');
       };
       fire();
+    })();
+  </script>
+<script>
+    /* Acceso inmediato: el servidor da el enlace de descarga en cuanto Stripe confirma el pago (sin esperar al email) */
+    (function () {
+      var q = new URLSearchParams(location.search), sid = q.get('session_id') || '';
+      var box = document.getElementById('acceso'), btn = document.getElementById('acceso-btn');
+      var txt = document.getElementById('acceso-txt'), nota = document.getElementById('acceso-nota');
+      if (!box) return;
+      if (!sid || q.get('plan') === 'diagnostico') { box.hidden = true; return; }
+      btn.addEventListener('click', function (e) { if (btn.getAttribute('aria-disabled')) e.preventDefault(); });
+      var n = 0;
+      (function pedir() {
+        fetch('https://rafa-prompts-api.prxystudio.workers.dev/acceso?session_id=' + encodeURIComponent(sid))
+          .then(function (r) { return r.json(); })
+          .then(function (d) {
+            if (d.url) { btn.href = d.url; btn.removeAttribute('aria-disabled'); btn.classList.add('listo'); txt.textContent = 'Descargar el curso'; return; }
+            throw new Error('pendiente');
+          })
+          .catch(function () {
+            if (++n < 40) return setTimeout(pedir, 2000);
+            btn.classList.add('listo'); txt.textContent = 'Tu acceso te llega por email';
+            nota.textContent = 'Está tardando más de lo normal. Si en 30 minutos no tienes el email, escríbeme a hola@rafaprompts.com.';
+          });
+      })();
     })();
   </script>
 <script src="/js/consent.js"></script>

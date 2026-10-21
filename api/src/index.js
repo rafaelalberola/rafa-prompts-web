@@ -10,6 +10,7 @@
  *   GET  /pdfs                → list of files (catalog used by /descargas)
  *   POST /evento              → copia en servidor (API de conversiones) de PageView, ViewContent e InitiateCheckout
  *   GET  /oferta              → precio de lanzamiento vigente y su fecha de fin
+ *   GET  /acceso?session_id=  → enlace de descarga para la página de gracias (sin esperar al email)
  *   POST /admin/pruebas | GET /admin/brevo | POST /admin/capi | POST /admin/tareas → operaciones con OPS_TOKEN
  *   cron cada 5 min           → bienvenida del día después y recordatorios de la llamada (24 h y 1 h)
  *
@@ -311,7 +312,8 @@ async function handleCalendly(req, env) {
     const fin = Math.max(Math.floor((Date.parse(cita.inicio) - Date.now()) / 1000) + 2 * 86400, 3600);
     await programar(env, `prog:cita:${id}`, cita, fin).catch(e => console.error('programar cita:', e));
     const m = correo.citaConfirmada({ nombre: cita.name, inicio: cita.inicio, tz: cita.tz, joinUrl: cita.joinUrl, cancelUrl: cita.cancelUrl, rescheduleUrl: cita.rescheduleUrl });
-    await brevoSendEmail(env, { to: cita.email, name: cita.name, subject: m.asunto, html: m.html }).catch(e => console.error('email cita:', e));
+    const r = await brevoSendEmail(env, { to: cita.email, name: cita.name, subject: m.asunto, html: m.html }).catch(e => ({ error: e.message }));
+    if (!brevoOk(r)) await programar(env, `prog:citaok:${id}`, { tipo: 'citaok', ...cita }, 7 * 86400).catch(() => {});
   }
   await metaCapiPurchase(env, {
     eventId: `diag_${id}`, eventTime: Date.parse(inv.created_at) / 1000 || undefined,
@@ -389,9 +391,13 @@ async function handleWebhook(req, env) {
   await env.STORE.put(`session:${csid}`, token, { expirationTtl: ttlSeconds });
 
   // Send email (Brevo)
-  await sendDeliveryEmail(env, { to: email, name, token, plan: plan || 'esencial', importe: (cs.amount_total || 0) / 100 }).catch(e => {
-    console.error('email error:', e);
-  });
+  const entrega = { tipo: 'entrega', email, name, token, plan: plan || 'esencial', importe: (cs.amount_total || 0) / 100 };
+  const envio = await sendDeliveryEmail(env, { to: email, name, token, plan: entrega.plan, importe: entrega.importe }).catch(e => ({ error: e.message }));
+  // si Brevo falla, el email queda en cola y el cron lo reintenta cada 5 minutos (el acceso ya está en la página de gracias)
+  if (!brevoOk(envio)) {
+    console.error('email de compra no enviado, en cola:', JSON.stringify(envio));
+    await programar(env, `prog:entrega:${token}`, entrega, 30 * 86400).catch(() => {});
+  }
   // Bienvenida con el orden para empezar: a las 9:00 (Madrid) del primer día que esté al menos a 8 horas
   await programar(env, `prog:bienv:${token}`, { tipo: 'bienvenida', email, name, token, cuando: proximasNueve(Date.now() + 8 * 3600e3) }, 30 * 86400)
     .catch(e => console.error('programar bienvenida:', e));
@@ -456,6 +462,17 @@ async function handleAdminSessions(req, env) {
     metadata: s.metadata || {},
   }));
   return json({ sessions: out });
+}
+
+// GET /acceso?session_id=cs_…: la página de gracias pide aquí el enlace de descarga (no depende del email).
+// Solo lee: el webhook de Stripe es quien crea el acceso, así que mientras no llega responde «pendiente».
+async function handleAcceso(req, env) {
+  const csid = new URL(req.url).searchParams.get('session_id') || '';
+  if (!/^cs_(live|test)_[A-Za-z0-9]{20,200}$/.test(csid)) return json({ error: 'bad_session' }, 400);
+  const v = await env.STORE.get(`session:${csid}`);
+  if (!v) return json({ pendiente: true });
+  if (v === 'diagnostico') return json({ plan: 'diagnostico' });
+  return json({ url: `${env.DOWNLOAD_PAGE}?t=${v}` });
 }
 
 async function handleSession(req, env) {
@@ -567,6 +584,8 @@ function senderFromEnv(env) {
     email: m ? m[2].trim() : (env.EMAIL_REPLY_TO || 'hola@rafaprompts.com'),
   };
 }
+
+const brevoOk = r => !!(r && r.messageId);
 
 async function brevoSendEmail(env, { to, name, subject, html, replyTo }) {
   const sender = senderFromEnv(env);
@@ -752,11 +771,24 @@ async function tareasProgramadas(env, ahora = Date.now()) {
     if (!raw) continue;
     const d = JSON.parse(raw);
     try {
-      if (d.tipo === 'bienvenida') {
+      if (d.tipo === 'entrega') {
+        const r = await sendDeliveryEmail(env, { to: d.email, name: d.name, token: d.token, plan: d.plan, importe: d.importe });
+        if (!brevoOk(r)) { hecho.push(`entrega pendiente ${d.email}: ${r && r.message}`); continue; }
+        await env.STORE.delete(k.name);
+        hecho.push(`entrega ${d.email}`);
+      } else if (d.tipo === 'bienvenida') {
         if (ahora < d.cuando) continue;
-        await sendBienvenidaEmail(env, { to: d.email, name: d.name, token: d.token });
+        const r = await sendBienvenidaEmail(env, { to: d.email, name: d.name, token: d.token });
+        if (!brevoOk(r)) { hecho.push(`bienvenida pendiente ${d.email}: ${r && r.message}`); continue; }
         await env.STORE.delete(k.name);
         hecho.push(`bienvenida ${d.email}`);
+      } else if (d.tipo === 'citaok') {
+        if (Date.parse(d.inicio) < ahora) { await env.STORE.delete(k.name); continue; }
+        const m = correo.citaConfirmada({ nombre: d.name, inicio: d.inicio, tz: d.tz, joinUrl: d.joinUrl, cancelUrl: d.cancelUrl, rescheduleUrl: d.rescheduleUrl });
+        const r = await brevoSendEmail(env, { to: d.email, name: d.name, subject: m.asunto, html: m.html });
+        if (!brevoOk(r)) { hecho.push(`confirmación cita pendiente ${d.email}`); continue; }
+        await env.STORE.delete(k.name);
+        hecho.push(`confirmación cita ${d.email}`);
       } else if (d.tipo === 'cita') {
         const inicio = Date.parse(d.inicio);
         const falta = inicio - ahora;
@@ -769,7 +801,8 @@ async function tareasProgramadas(env, ahora = Date.now()) {
         if (est && est.cancelada) { await env.STORE.delete(k.name); hecho.push(`cita cancelada ${d.email}`); continue; }
         if (est && est.joinUrl) d.joinUrl = est.joinUrl;
         const m = correo.citaRecordatorio({ tipo: toca, nombre: d.name, inicio: d.inicio, tz: d.tz, joinUrl: d.joinUrl, rescheduleUrl: d.rescheduleUrl });
-        await brevoSendEmail(env, { to: d.email, name: d.name, subject: m.asunto, html: m.html });
+        const r = await brevoSendEmail(env, { to: d.email, name: d.name, subject: m.asunto, html: m.html });
+        if (!brevoOk(r)) { hecho.push(`recordatorio ${toca} pendiente ${d.email}: ${r && r.message}`); continue; }
         d.enviados[toca === '24h' ? 'd24' : 'h1'] = Date.now();
         await programar(env, k.name, d, Math.floor(falta / 1000) + 2 * 86400);
         hecho.push(`recordatorio ${toca} ${d.email}`);
@@ -889,6 +922,9 @@ export default {
           break;
         case 'GET /admin/sessions':
           res = await handleAdminSessions(req, env);
+          break;
+        case 'GET /acceso':
+          res = await handleAcceso(req, env);
           break;
         case 'GET /session':
           res = await handleSession(req, env);

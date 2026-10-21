@@ -499,8 +499,9 @@ body:has(.modal[open]) { overflow: hidden; }
 html { scroll-padding-top: 96px; }
 body::before { content: ""; position: fixed; inset: 0 0 auto; height: env(safe-area-inset-top, 0px); z-index: 60; background: var(--bg); }
 .topwrap { position: sticky; top: env(safe-area-inset-top, 0px); z-index: 50; }
-.top { border-radius: var(--r-pill); border: 1px solid transparent; transition: margin .35s cubic-bezier(.2,.7,.2,1), padding .35s cubic-bezier(.2,.7,.2,1), background .35s, box-shadow .35s, border-color .35s; }
-.top.is-floating { margin-top: 10px; padding: 10px 10px 10px 22px; border-color: var(--lg-border); }
+.top { border-radius: var(--r-pill); border: 1px solid transparent; transition: transform .35s cubic-bezier(.2,.7,.2,1), padding .35s cubic-bezier(.2,.7,.2,1), background .35s, box-shadow .35s, border-color .35s; }
+/* separada del borde del navegador con un desplazamiento (el margen se colapsaba y no mueve la página) */
+.top.is-floating { transform: translateY(14px); padding: 10px 10px 10px 22px; border-color: var(--lg-border); }
 .top.is-floating .top-cta { background: var(--ink); color: var(--bg); }
 .top.lg { background: rgba(255, 255, 255, 0.78); } /* como la barra de byrafa.design: cristal, pero el texto de detrás no compite */
 

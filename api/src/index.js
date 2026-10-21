@@ -4,6 +4,7 @@
  * Routes:
  *   POST /checkout            → create embedded checkout session
  *   POST /webhook             → stripe webhook (checkout.session.completed)
+ *   POST /calendly            → calendly webhook (invitee.created): diagnóstico pagado → compra en Meta
  *   GET  /session?token=...   → metadata for the /descargas page
  *   GET  /download?token=...&file=... → stream watermarked PDF
  *   GET  /pdfs                → list of files (catalog used by /descargas)
@@ -15,26 +16,17 @@
  */
 
 import { PDFDocument, StandardFonts, rgb } from 'pdf-lib';
+import ORDEN_CURSO from '../../course/modulos.json';
+import { checkoutParams } from './checkout.js';
 
+// El orden y los títulos de los módulos salen de course/modulos.json (fuente única del curso)
 const PDF_CATALOG = [
-  { slug: '00-empezar-aqui',                title: 'Empezar aquí',                                          order: 0 },
-  { slug: 'modulo-01-pensar-en-claude',     title: 'Módulo 01 · Pensar en Claude',                          order: 1 },
-  { slug: 'modulo-02-claude-md',            title: 'Módulo 02 · El CLAUDE.md',                              order: 2 },
-  { slug: 'modulo-03-skills-agentes',       title: 'Módulo 03 · Skills y agentes',                          order: 3 },
-  { slug: 'modulo-04-pipelines-reales',     title: 'Módulo 04 · Pipelines reales',                          order: 4 },
-  { slug: 'modulo-05-orquestacion',         title: 'Módulo 05 · Orquestación',                              order: 5 },
-  { slug: 'modulo-06-iteracion-medida',     title: 'Módulo 06 · Iteración y medida',                        order: 6 },
-  { slug: 'modulo-07-claude-code-arranque', title: 'Módulo 07 · Claude Code: el agente que vive en tu editor', order: 7 },
-  { slug: 'modulo-08-skills-subagentes-mcp',title: 'Módulo 08 · Skills nativas, subagentes y MCP',           order: 8 },
-  { slug: 'modulo-09-sistema-autonomo',     title: 'Módulo 09 · Construir tu primer sistema autónomo',       order: 9 },
-  { slug: 'modulo-10-vivir-con-sistema-ia', title: 'Módulo 10 · Vivir con un sistema de IA',                 order: 10 },
-  { slug: 'modulo-11-tu-web-con-claude', title: 'Módulo 11 · Tu web, hecha con Claude', order: 11 },
-  { slug: 'modulo-12-tu-crm-conectado', title: 'Módulo 12 · Tu CRM, conectado a tu web', order: 12 },
-  { slug: 'modulo-13-encontrar-clientes', title: 'Módulo 13 · Encontrar clientes potenciales', order: 13 },
-  { slug: 'modulo-14-contacto-y-agenda', title: 'Módulo 14 · Primer contacto, llamadas y seguimiento', order: 14 },
-  { slug: 'modulo-15-facturas-y-cobros', title: 'Módulo 15 · Facturas, cobros y los números del mes', order: 15 },
-  { slug: 'modulo-16-contratar-y-formar', title: 'Módulo 16 · Contratar y formar a tu equipo', order: 16 },
-  { slug: 'prompt-library-100',             title: 'Biblioteca · 100 prompts',                              order: 17 },
+  { slug: '00-empezar-aqui', title: 'Empezar aquí', order: 0 },
+  ...ORDEN_CURSO.modulos.map((m, i) => {
+    const n = String(i + 1).padStart(2, '0');
+    return { slug: `modulo-${n}-${m.slug}`, title: `Módulo ${n} · ${m.titulo_pdf}`, order: i + 1 };
+  }),
+  { slug: 'prompt-library-100', title: 'Biblioteca · 100 prompts', order: ORDEN_CURSO.modulos.length + 1 },
 ];
 
 const json = (data, status = 200, extraHeaders = {}) =>
@@ -67,6 +59,8 @@ async function stripeRequest(env, path, body, method = 'POST') {
     headers: {
       Authorization: `Bearer ${env.STRIPE_SECRET_KEY}`,
       'Content-Type': 'application/x-www-form-urlencoded',
+      // versión de la API fijada cuando se configura (cuenta de Rafa Prompts)
+      ...(env.STRIPE_API_VERSION ? { 'Stripe-Version': env.STRIPE_API_VERSION } : {}),
     },
   };
   if (body) opts.body = stripeEncode(body);
@@ -131,7 +125,7 @@ async function hashedUserData({ email, name, fbp, fbc, ip, userAgent }) {
   return ud;
 }
 
-async function metaCapiPurchase(env, { eventId, eventTime, value, currency, email, name, fbp, fbc, ip, userAgent, sourceUrl }) {
+async function metaCapiPurchase(env, { eventId, eventTime, value, currency, email, name, fbp, fbc, ip, userAgent, sourceUrl, contentName = 'El método Claude', contentIds = ['metodo-claude'] }) {
   if (!env.META_PIXEL_ID || !env.META_CAPI_TOKEN) {
     console.warn('CAPI skipped: META_PIXEL_ID or META_CAPI_TOKEN missing');
     return { skipped: true };
@@ -147,8 +141,8 @@ async function metaCapiPurchase(env, { eventId, eventTime, value, currency, emai
       custom_data: {
         currency: currency || 'EUR',
         value: Number(value),
-        content_name: 'El método Claude',
-        content_ids: ['metodo-claude'],
+        content_name: contentName,
+        content_ids: contentIds,
         content_type: 'product',
       },
     }],
@@ -251,29 +245,45 @@ async function handleCheckout(req, env) {
     ip,
     user_agent: userAgent.slice(0, 400),
   };
-  const session = await stripeRequest(env, 'checkout/sessions', {
-    ui_mode: 'embedded',
-    mode: 'payment',
-    line_items: [{ price: env.STRIPE_PRICE_ID, quantity: 1 }],
-    customer_creation: 'always',
-    automatic_tax: { enabled: true },
-    billing_address_collection: 'auto',
-    invoice_creation: { enabled: true },
-    // la factura sale a nombre de la empresa con su NIF (la web promete «Factura para tu empresa»)
-    tax_id_collection: { enabled: true },
-    allow_promotion_codes: true,
-    return_url: env.SUCCESS_URL,
-    locale: 'es',
-    metadata,
-    custom_text: {
-      submit: { message: 'Acceso inmediato. Recibirás los PDFs por email.' },
-    },
-  });
+  const { params, plan } = checkoutParams(env, body, metadata);
+  const session = await stripeRequest(env, 'checkout/sessions', params);
   if (session.error) {
     console.error('Stripe error:', session.error);
     return json({ error: session.error.message || 'stripe_error' }, 500);
   }
-  return json({ client_secret: session.client_secret, session_id: session.id });
+  return json({
+    client_secret: session.client_secret,
+    session_id: session.id,
+    ui_mode: params.ui_mode,
+    plan,
+    publishable_key: env.STRIPE_PUBLISHABLE_KEY || null,
+  });
+}
+
+// Diagnóstico de 50 € reservado y pagado en Calendly. Calendly no permite configurar por API la
+// redirección tras reservar, así que la compra llega por webhook (invitee.created) y se manda a Meta
+// desde el servidor. La firma usa el mismo formato que la de Stripe (t=…,v1=… con HMAC SHA-256).
+async function handleCalendly(req, env) {
+  const payload = await req.text();
+  const ok = await verifyStripeSignature(payload, req.headers.get('calendly-webhook-signature'), env.CALENDLY_SIGNING_KEY);
+  if (!ok) return new Response('invalid signature', { status: 400 });
+  const ev = JSON.parse(payload);
+  if (ev.event !== 'invitee.created') return new Response('ignored', { status: 200 });
+  const inv = ev.payload || {};
+  const pago = inv.payment || {};
+  if (!pago.successful) return new Response('ignored: unpaid', { status: 200 });
+  const id = String(inv.uri || '').split('/').pop();
+  if (!id) return new Response('no invitee', { status: 400 });
+  const clave = `calendly:${id}`;
+  if (await env.STORE.get(clave)) return new Response('already processed', { status: 200 });
+  await env.STORE.put(clave, '1', { expirationTtl: 400 * 24 * 60 * 60 });
+  await metaCapiPurchase(env, {
+    eventId: `diag_${id}`, eventTime: Date.parse(inv.created_at) / 1000 || undefined,
+    value: Number(pago.amount) || 50, currency: String(pago.currency || 'EUR').toUpperCase(),
+    email: inv.email, name: inv.name, sourceUrl: 'https://calendly.com/rafaprompts/30min',
+    contentName: 'Diagnóstico de implantación', contentIds: ['diagnostico-implantacion'],
+  }).catch(e => console.error('CAPI error:', e));
+  return new Response('ok', { status: 200 });
 }
 
 async function handleWebhook(req, env) {
@@ -319,7 +329,7 @@ async function handleWebhook(req, env) {
     await capi();
     return new Response('ok', { status: 200 });
   }
-  const isCourse = plan === 'negocio' || (!plan && String(md.page_url || '').includes('rafaprompts.com'));
+  const isCourse = plan === 'esencial' || plan === 'negocio' || (!plan && String(md.page_url || '').includes('rafaprompts.com'));
   if (!isCourse) return new Response('ignored: not a rafa.prompts course purchase', { status: 200 });
 
   const token = newToken();
@@ -686,6 +696,9 @@ export default {
           break;
         case 'POST /webhook':
           res = await handleWebhook(req, env);
+          break;
+        case 'POST /calendly':
+          res = await handleCalendly(req, env);
           break;
         case 'POST /capi-backfill':
           res = await handleCapiBackfill(req, env);

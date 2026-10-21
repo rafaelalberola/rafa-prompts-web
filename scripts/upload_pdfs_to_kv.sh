@@ -22,27 +22,14 @@ if [ -z "${CLOUDFLARE_API_TOKEN:-}" ]; then
   fi
 fi
 
-# Map slug -> filename (slug coincide con el nombre del PDF sin .pdf)
-FILES=(
-  "00-empezar-aqui"
-  "modulo-01-pensar-en-claude"
-  "modulo-02-claude-md"
-  "modulo-03-skills-agentes"
-  "modulo-04-pipelines-reales"
-  "modulo-05-orquestacion"
-  "modulo-06-iteracion-medida"
-  "modulo-07-claude-code-arranque"
-  "modulo-08-skills-subagentes-mcp"
-  "modulo-09-sistema-autonomo"
-  "modulo-10-vivir-con-sistema-ia"
-  "modulo-11-tu-web-con-claude"
-  "modulo-12-tu-crm-conectado"
-  "modulo-13-encontrar-clientes"
-  "modulo-14-contacto-y-agenda"
-  "modulo-15-facturas-y-cobros"
-  "modulo-16-contratar-y-formar"
-  "prompt-library-100"
-)
+# Lista de PDFs: la guía, los módulos en el orden de course/modulos.json (fuente única) y la biblioteca
+ROOT="$(cd "$(dirname "$0")/.." && pwd)"
+FILES=("00-empezar-aqui")
+while IFS= read -r f; do FILES+=("$f"); done < <(node -e '
+  const o = require(process.argv[1]);
+  o.modulos.forEach((m, i) => console.log(`modulo-${String(i + 1).padStart(2, "0")}-${m.slug}`));
+' "$ROOT/course/modulos.json")
+FILES+=("prompt-library-100")
 
 cd "$(dirname "$0")/../api"
 

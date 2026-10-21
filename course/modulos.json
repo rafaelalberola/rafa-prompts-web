@@ -1,0 +1,220 @@
+{
+  "_nota": "Fuente única del orden del curso (user journey). El número de cada módulo es su posición en esta lista. La home (build.py), los PDF (scripts/generate_pdfs.mjs) y el Worker (api/src/index.js) leen de aquí. En los textos, {{n:slug}} se sustituye por el número del módulo.",
+  "modulos": [
+    {
+      "slug": "pensar-en-claude",
+      "contenido": "modulo-01.json",
+      "titulo_pdf": "Pensar en Claude",
+      "titulo": "Qué le puedes pedir a Claude",
+      "descripcion": "Qué trabajo de tu negocio puede hacer Claude y cuál te conviene seguir haciendo tú.",
+      "icono": "message-circle-question"
+    },
+    {
+      "slug": "claude-md",
+      "contenido": "modulo-02.json",
+      "titulo_pdf": "El CLAUDE.md",
+      "titulo": "Que Claude conozca tu negocio",
+      "descripcion": "Se lo explicas una vez y responde como lo harías tú.",
+      "icono": "store"
+    },
+    {
+      "slug": "tu-web-con-claude",
+      "contenido": "modulo-11.json",
+      "titulo_pdf": "Tu web, hecha con Claude",
+      "titulo": "Tu web, hecha con Claude",
+      "descripcion": "Claude diseña y escribe tu web, y la publicas en una tarde con tu dominio.",
+      "icono": "globe"
+    },
+    {
+      "slug": "tu-crm-conectado",
+      "contenido": "modulo-12.json",
+      "titulo_pdf": "Tu CRM, conectado a tu web",
+      "titulo": "Tu CRM, conectado a tu web",
+      "descripcion": "Quien te escribe desde la web entra solo en tu Excel o tu CRM, ya clasificado.",
+      "icono": "database"
+    },
+    {
+      "slug": "encontrar-clientes",
+      "contenido": "modulo-13.json",
+      "titulo_pdf": "Encontrar clientes potenciales",
+      "titulo": "Encontrar clientes potenciales",
+      "descripcion": "Una lista de empresas que encajan con lo que vendes, con el motivo de cada una.",
+      "icono": "search"
+    },
+    {
+      "slug": "contacto-y-agenda",
+      "contenido": "modulo-14.json",
+      "titulo_pdf": "Primer contacto, llamadas y seguimiento",
+      "titulo": "Primer contacto, llamadas y seguimiento",
+      "descripcion": "El primer mensaje, la llamada en tu agenda y el CRM al día.",
+      "icono": "calendar-check"
+    },
+    {
+      "slug": "skills-agentes",
+      "contenido": "modulo-03.json",
+      "titulo_pdf": "Skills y agentes",
+      "titulo": "Presupuestos, informes y correos en un clic",
+      "descripcion": "Lo que repites cada semana, hecho por Claude con tu formato.",
+      "icono": "file-text"
+    },
+    {
+      "slug": "pipelines-reales",
+      "contenido": "modulo-04.json",
+      "titulo_pdf": "Pipelines reales",
+      "titulo": "Cinco casos, paso a paso",
+      "descripcion": "Los textos de tu web, tu competencia, la bandeja de entrada, tus ventas y tus procesos.",
+      "icono": "clipboard-list"
+    },
+    {
+      "slug": "orquestacion",
+      "contenido": "modulo-05.json",
+      "titulo_pdf": "Orquestación",
+      "titulo": "Conectarlo con tus herramientas",
+      "descripcion": "Gmail, tus formularios y Telegram: el resumen te llega al móvil sin que toques nada.",
+      "icono": "plug"
+    },
+    {
+      "slug": "facturas-y-cobros",
+      "contenido": "modulo-15.json",
+      "titulo_pdf": "Facturas, cobros y los números del mes",
+      "titulo": "Facturas, cobros y los números del mes",
+      "descripcion": "Facturas listas para la gestoría, los cobros pendientes a la vista y el informe del mes.",
+      "icono": "receipt"
+    },
+    {
+      "slug": "contratar-y-formar",
+      "contenido": "modulo-16.json",
+      "titulo_pdf": "Contratar y formar a tu equipo",
+      "titulo": "Contratar y formar a tu equipo",
+      "descripcion": "La oferta de empleo, los currículos resumidos y el manual del primer día.",
+      "icono": "user-plus"
+    },
+    {
+      "slug": "iteracion-medida",
+      "contenido": "modulo-06.json",
+      "titulo_pdf": "Iteración y medida",
+      "titulo": "Comprobar que te ahorra tiempo",
+      "descripcion": "Cuántas horas recuperas cada semana y cómo arreglar lo que falla.",
+      "icono": "timer"
+    },
+    {
+      "slug": "claude-code-arranque",
+      "contenido": "modulo-07.json",
+      "titulo_pdf": "Claude Code: el agente que vive en tu editor",
+      "titulo": "Claude en tu ordenador",
+      "descripcion": "Lo instalas en cinco minutos y trabaja con tus archivos.",
+      "icono": "laptop"
+    },
+    {
+      "slug": "skills-subagentes-mcp",
+      "contenido": "modulo-08.json",
+      "titulo_pdf": "Skills nativas, subagentes y MCP",
+      "titulo": "Conectarlo con tus cuentas",
+      "descripcion": "Gmail, Drive y Notion, con varios asistentes repartiéndose el trabajo.",
+      "icono": "network"
+    },
+    {
+      "slug": "sistema-autonomo",
+      "contenido": "modulo-09.json",
+      "titulo_pdf": "Construir tu primer sistema autónomo",
+      "titulo": "Tu primera automatización que va sola",
+      "descripcion": "Cada mañana, el trabajo hecho antes de que abras el ordenador.",
+      "icono": "sunrise"
+    },
+    {
+      "slug": "vivir-con-sistema-ia",
+      "contenido": "modulo-10.json",
+      "titulo_pdf": "Vivir con un sistema de IA",
+      "titulo": "Mantenerlo sin sustos",
+      "descripcion": "Media hora al mes de revisión y los cinco fallos más habituales, resueltos.",
+      "icono": "wrench"
+    }
+  ],
+  "recorrido": [
+    {
+      "fase": "Empieza",
+      "etapas": [
+        {
+          "titulo": "Tu web",
+          "texto": "Reservas el dominio y Claude te diseña y escribe la web.",
+          "icono": "globe",
+          "modulos": [
+            "tu-web-con-claude"
+          ]
+        },
+        {
+          "titulo": "Tu CRM",
+          "texto": "Cada contacto de la web entra solo en tu Excel o tu CRM.",
+          "icono": "database",
+          "modulos": [
+            "tu-crm-conectado"
+          ]
+        }
+      ]
+    },
+    {
+      "fase": "Vende",
+      "etapas": [
+        {
+          "titulo": "Clientes potenciales",
+          "texto": "Claude busca empresas que encajan contigo y las guarda.",
+          "icono": "search",
+          "modulos": [
+            "encontrar-clientes"
+          ]
+        },
+        {
+          "titulo": "Contacto y agenda",
+          "texto": "El primer mensaje, la llamada en tu agenda y el CRM al día.",
+          "icono": "calendar-check",
+          "modulos": [
+            "contacto-y-agenda"
+          ]
+        },
+        {
+          "titulo": "Presupuestos",
+          "texto": "Presupuestos e informes con tu formato, en un clic.",
+          "icono": "file-text",
+          "modulos": [
+            "skills-agentes"
+          ]
+        }
+      ]
+    },
+    {
+      "fase": "Gestiona",
+      "etapas": [
+        {
+          "titulo": "Atención al cliente",
+          "texto": "El correo ordenado y cada solicitud clasificada al llegar.",
+          "icono": "inbox",
+          "modulos": [
+            "pipelines-reales",
+            "orquestacion"
+          ]
+        },
+        {
+          "titulo": "Facturas y cobros",
+          "texto": "Facturas para la gestoría y aviso de cada cobro pendiente.",
+          "icono": "receipt",
+          "modulos": [
+            "facturas-y-cobros"
+          ]
+        }
+      ]
+    },
+    {
+      "fase": "Crece",
+      "etapas": [
+        {
+          "titulo": "Tu equipo",
+          "texto": "La oferta de empleo, los currículos y el manual del primer día.",
+          "icono": "user-plus",
+          "modulos": [
+            "contratar-y-formar"
+          ]
+        }
+      ]
+    }
+  ]
+}

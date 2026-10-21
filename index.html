@@ -131,8 +131,12 @@ h3 { margin: 0; font-size: 20px; line-height: 1.2; font-weight: 800; letter-spac
 .value-line { margin: 0; font-weight: 700; font-size: 16px; color: var(--ok); text-align: center; }
 @media (max-width: 899px) { .value-line { text-align: left; } }
 @media (min-width: 900px) {
-  /* escritorio: el mismo formato vertical que en móvil, en una columna centrada */
-  .journey, .card.journey-auto { width: 100%; max-width: 760px; margin-inline: auto; }
+  /* escritorio: el mismo formato vertical que en móvil, en una columna centrada
+     con el mismo ancho que la descripción de la cabecera (60ch a 17px), para que sus bordes coincidan */
+  .journey, .card.journey-auto { width: 100%; max-width: calc(60ch * 17 / 16); margin-inline: auto; }
+  .journey, .card.journey-auto { font-size: 16px; }
+  /* en la columna estrecha, el botón va debajo a todo el ancho (como en móvil) y el texto queda en dos líneas */
+  .card.journey-auto .journey-go { flex: 1 1 100%; }
 }
 @media (prefers-reduced-motion: no-preference) {
   .journey.in .stage::before { animation: jLineY .7s cubic-bezier(.2,.7,.2,1) both; animation-delay: calc(var(--i) * 110ms); }

@@ -540,13 +540,27 @@ const SUBSCRIBE_SOURCES = new Set([
   'index', 'metodo', 'other',
 ]);
 
+// Nombre y enlace de cada guía, para el correo de bienvenida («Tu guía de …») y el aviso a Rafa
+const G = 'https://rafaprompts.com/';
 const SOURCE_META = {
-  yate: { name: 'reel hiperrealista con Claude', url: 'https://rafaprompts.com/reel-hiperrealista-con-claude.html' },
-  madrugon: { name: 'agente que produce reels mientras duermes', url: 'https://rafaprompts.com/agente-creador-reels-claude.html' },
-  anzuelo: { name: 'hooks que paran el scroll', url: 'https://rafaprompts.com/anzuelo.html' },
-  brujula: { name: 'brújula editorial', url: 'https://rafaprompts.com/brujula.html' },
-  'reel-hiperrealista': { name: 'reel hiperrealista con Claude', url: 'https://rafaprompts.com/reel-hiperrealista-con-claude.html' },
-  'agente-creador-reels': { name: 'agente que produce reels', url: 'https://rafaprompts.com/agente-creador-reels-claude.html' },
+  'reel-hiperrealista': { name: 'reel hiperrealista con Claude', url: G + 'reel-hiperrealista-con-claude.html' },
+  'agente-creador-reels': { name: 'agente que produce reels', url: G + 'agente-creador-reels-claude.html' },
+  hooks: { name: 'hooks que paran el scroll', url: G + 'hooks.html' },
+  anzuelo: { name: 'hooks que paran el scroll', url: G + 'anzuelo.html' },
+  brujula: { name: 'métricas de los creadores que crecen', url: G + 'brujula.html' },
+  yate: { name: 'reel hiperrealista con Claude', url: G + 'reel-hiperrealista-con-claude.html' },
+  madrugon: { name: 'agente que produce reels mientras duermes', url: G + 'agente-creador-reels-claude.html' },
+  portero: { name: 'agente que filtra tus DMs', url: G + 'portero.html' },
+  tienda: { name: 'cómo monetizar sin sponsors', url: G + 'tienda.html' },
+  voz: { name: 'cómo enseñar a Claude a hablar como tú', url: G + 'voz.html' },
+  mensaje: { name: 'cómo validar un mensaje sin gastar en anuncios', url: G + 'mensaje.html' },
+  conectar: { name: 'cómo conectar dos herramientas sin integración', url: G + 'conectar.html' },
+  vender: { name: 'cómo vender tu producto sin sponsors', url: G + 'vender.html' },
+  dms: { name: 'cómo automatizar tus DMs', url: G + 'dms.html' },
+  agentes: { name: 'cómo dividir un prompt en tres', url: G + 'agentes.html' },
+  automatizar: { name: 'qué automatizar primero', url: G + 'automatizar.html' },
+  metricas: { name: 'las métricas que importan', url: G + 'metricas.html' },
+  borrar: { name: 'qué automatizaciones mantener y cuáles borrar', url: G + 'borrar.html' },
 };
 
 const isValidEmail = (s) => /^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(s) && s.length <= 200;

@@ -421,13 +421,12 @@ body:has(.modal[open]) { overflow: hidden; }
 .how { list-style: none; margin: 0; padding: 0; display: grid; grid-template-columns: repeat(3, minmax(0, 1fr)); gap: var(--s2); }
 .how li { display: flex; flex-direction: column; gap: 6px; padding: 12px; border-radius: 12px; background: var(--bg); font-size: 13.5px; font-weight: 600; line-height: 1.35; }
 .how span { width: 22px; height: 22px; border-radius: 50%; display: inline-flex; align-items: center; justify-content: center; background: var(--ink); color: var(--bg); font-size: 11px; font-weight: 800; }
-.peek { position: relative; margin: 0; border-radius: 14px; background: var(--band); color: var(--band-ink); overflow: hidden; }
-.peek figcaption { display: flex; align-items: center; justify-content: space-between; gap: var(--s3); padding: 10px 14px; border-bottom: 1px solid rgba(242, 239, 231, 0.12); font: 700 11px/1.3 var(--f-mono); letter-spacing: 0.04em; color: var(--band-soft); }
-.peek-copy { flex: 0 0 auto; padding: 5px 10px; border-radius: var(--r-pill); border: 1px solid rgba(242, 239, 231, 0.3); background: transparent; color: var(--band-ink); font: 700 11px/1 var(--f-mono); cursor: pointer; }
-.peek-copy:hover { background: rgba(242, 239, 231, 0.12); }
-.peek pre { margin: 0; padding: 14px 14px 64px; font: 400 12.5px/1.55 var(--f-mono); white-space: pre-wrap; }
-.peek-fade { position: absolute; inset: auto 0 0 0; height: 84px; display: flex; align-items: flex-end; justify-content: center; padding-bottom: 12px; background: linear-gradient(180deg, rgba(20, 19, 17, 0) 0%, rgba(20, 19, 17, 0.92) 55%); -webkit-backdrop-filter: blur(2px); backdrop-filter: blur(2px); }
-.peek-fade span { padding: 7px 12px; border-radius: var(--r-pill); background: rgba(242, 239, 231, 0.12); border: 1px solid rgba(242, 239, 231, 0.22); font: 700 11px/1.2 var(--f-mono); color: var(--band-ink); text-align: center; }
+.peek { position: relative; margin: 0; display: flex; flex-direction: column; gap: var(--s2); }
+.peek-box { position: relative; border-radius: 14px; background: var(--band); color: var(--band-ink); overflow: hidden; }
+.peek-bar { padding: 11px 14px; border-bottom: 1px solid rgba(242, 239, 231, 0.12); font: 700 11.5px/1.2 var(--f-mono); letter-spacing: 0.04em; color: var(--band-soft); white-space: nowrap; overflow: hidden; text-overflow: ellipsis; }
+.peek-cap { font-size: 13px; color: var(--ink-mute); }
+.peek pre { margin: 0; padding: 14px 14px 40px; font: 400 12.5px/1.55 var(--f-mono); white-space: pre-wrap; }
+.peek-fade { position: absolute; inset: auto 0 0 0; height: 64px; background: linear-gradient(180deg, rgba(20, 19, 17, 0) 0%, rgba(20, 19, 17, 0.92) 55%); -webkit-backdrop-filter: blur(2px); backdrop-filter: blur(2px); }
 .pj-list { list-style: none; margin: 0; padding: 0; display: flex; flex-direction: column; }
 .pj-list li { display: grid; grid-template-columns: 26px minmax(0, 1fr) auto; align-items: baseline; gap: var(--s3); padding: 11px 0; border-top: 1px solid var(--line); }
 .pj-n { font: 700 11.5px/1 var(--f-mono); color: var(--accent-ink); }
@@ -435,7 +434,7 @@ body:has(.modal[open]) { overflow: hidden; }
 .pj-t strong { font-size: 15px; line-height: 1.3; }
 .pj-t span { font-size: 13.5px; line-height: 1.4; color: var(--ink-mute); }
 .pj-a { font: 700 10px/1 var(--f-mono); letter-spacing: 0.08em; text-transform: uppercase; color: var(--ink-mute); white-space: nowrap; }
-.modal-note { margin: 0; font-size: 13.5px; color: var(--ink-mute); }
+.callout { margin: 0; display: flex; align-items: flex-start; gap: var(--s3); padding: 12px 14px; border-radius: 12px; background: rgba(30, 138, 76, 0.08); border: 1px solid rgba(30, 138, 76, 0.20); font-size: 14px; font-weight: 600; line-height: 1.4; color: var(--ok); }
 .modal-foot { flex: 0 0 auto; display: flex; flex-direction: column; gap: var(--s3); padding: var(--s4) var(--s5) var(--s5); border-top: 1px solid var(--line); background: var(--surface); }
 @media (max-width: 560px) {
   .how { grid-template-columns: minmax(0, 1fr); }
@@ -445,7 +444,6 @@ body:has(.modal[open]) { overflow: hidden; }
 }
 
 /* ---------- credenciales en la bio ---------- */
-.bio-txt .creds { font: 700 11.5px/1.5 var(--f-mono); letter-spacing: 0.08em; text-transform: uppercase; color: var(--accent-ink); }
 
 /* ---------- pie ---------- */
 .foot { display: flex; flex-wrap: wrap; align-items: center; justify-content: center; gap: var(--s3) var(--s5); padding-block: 40px; border-top: 1px solid var(--line); font-size: 14px; color: var(--ink-mute); }
@@ -595,7 +593,7 @@ body:has(.modal[open]) { overflow: hidden; }
       <div class="hero-copy">
         <p class="kicker">El método Claude · curso en PDF</p>
         <h1 id="h-hero">Aprende a automatizar tu negocio con Claude <span class="it">sin programar</span></h1>
-        <p class="lede">Para quien lleva una empresa de menos de 20 personas y acaba las tardes contestando correos y ordenando solicitudes. Empiezas este fin de semana en la web de Claude, sin instalar nada.</p>
+        <p class="lede">Si llevas una empresa de unas 20 personas o menos y acabas las tardes contestando correos y ordenando solicitudes, esto es para ti. Empieza a automatizar tu negocio con Claude este fin de semana, sin necesidad de programar.</p>
         <div class="buy">
           <a class="btn js-buy" href="https://rafaprompts.com/#comprar">Comprar el curso · 149&nbsp;€</a>
           <p class="assure" aria-label="Condiciones de compra"><span class="assure-line"><span>Pago único</span><span>14 días de garantía</span><span>Factura para tu empresa</span></span></p>
@@ -788,7 +786,7 @@ body:has(.modal[open]) { overflow: hidden; }
             <li><span class="yes"><svg><use href="#i-yes"/></svg></span>Todo lo de Esencial</li>
             <li><span class="yes"><svg><use href="#i-yes"/></svg></span><button type="button" class="link-btn" data-dialog="dlg-proyectos">12 proyectos listos para copiar</button></li>
             <li><span class="yes"><svg><use href="#i-yes"/></svg></span>Adaptados a tu tipo de negocio</li>
-            <li><span class="yes"><svg><use href="#i-yes"/></svg></span>Proyectos nuevos cada 3 meses</li>
+            <li><span class="yes"><svg><use href="#i-yes"/></svg></span>Los proyectos que añada después, incluidos</li>
           </ul>
           <div class="plan-cta"><a class="btn block js-negocio" href="https://buy.stripe.com/00waEYaL6eAagQe8xtaZi0d">Comprar · 249&nbsp;€</a></div>
         </article>
@@ -817,7 +815,6 @@ body:has(.modal[open]) { overflow: hidden; }
           <h2 id="h-rafa">Soy Rafa</h2>
         </div>
         <div class="bio-txt">
-          <p class="creds">Allfunds · Scale-up de pagos de más de 1.000 empleados · OLX</p>
           <p>Llevo siete años diseñando productos y marcas digitales: webs, tiendas online, apps y marcas para empresas muy distintas. Pasé cuatro años en los sistemas de pagos de una scale-up española de más de 1.000 empleados y he trabajado con Allfunds, la plataforma que conecta gestoras de fondos con bancos de todo el mundo y que cotiza en la bolsa de Ámsterdam. También he dado una masterclass al equipo de OLX.</p>
           <p>Uso Claude a diario desde hace dos años. Mis propios proyectos funcionan con él: paneles que cada mañana me resumen las ventas por Telegram y servidores capaces de ordenar decenas de miles de fotos sin que nadie los toque.</p>
           <p>He visto lo que cambia en un negocio cuando Claude se usa con método: el trabajo de una tarde se queda en minutos. Por eso he decidido enseñárselo a quien lleva una empresa pequeña y, si hace falta, ayudarle a montarlo.</p>
@@ -861,8 +858,8 @@ body:has(.modal[open]) { overflow: hidden; }
     <section class="sec" id="guias" aria-labelledby="h-guias" style="border-top:0">
       <div class="head">
         <p class="kicker">Gratis</p>
-        <h2 id="h-guias">¿Todavía no? Empieza por el marketing</h2>
-        <p>Tres guías abiertas para hacer el contenido de tus redes con IA.</p>
+        <h2 id="h-guias">¿Todavía no estás seguro? Echa un vistazo a estas guías gratuitas</h2>
+        <p>Te ayudo a hacer el contenido de tus redes con IA de forma automática: generas posts y vídeos en un par de clics, con tu propio influencer IA.</p>
       </div>
       <div class="card-stack">
       <ul class="guides">
@@ -898,16 +895,17 @@ body:has(.modal[open]) { overflow: hidden; }
     <p class="modal-lede">Cada proyecto es Claude ya preparado para una tarea de tu negocio. No escribes nada desde cero.</p>
     <ol class="how"><li><span>1</span>Copias las instrucciones</li><li><span>2</span>Las pegas en Claude</li><li><span>3</span>Cambias lo que va entre corchetes por tus datos</li></ol>
     <figure class="peek">
-      <figcaption><span>Proyecto 01 · Solicitudes que se ordenan solas</span><button type="button" class="peek-copy" data-copy="peek-text">Copiar</button></figcaption>
-      <pre id="peek-text">Eres el asistente de captación de [TU NEGOCIO].
+      <div class="peek-box"><div class="peek-bar">Solicitudes que se ordenan solas</div>
+      <pre>Eres el asistente de captación de [TU NEGOCIO].
 Cuando te pegue una solicitud de un posible cliente:
 1. Haz una ficha: nombre, qué necesita, dónde y para cuándo.
 2. Clasifícala de la A a la D con mis criterios.
 3. Escribe una respuesta corta con mi tono y propón dos huecos…</pre>
-      <div class="peek-fade" aria-hidden="true"><span>Y así los 12, con un ejemplo y cómo adaptarlo a tu sector</span></div>
+      <div class="peek-fade" aria-hidden="true"></div></div>
+      <figcaption class="peek-cap">Ejemplo de proyecto: las instrucciones que pegas en Claude.</figcaption>
     </figure>
     <ul class="pj-list"><li><span class="pj-n">01</span><span class="pj-t"><strong>Solicitudes que se ordenan solas</strong><span>Cada petición, con su prioridad y la respuesta ya escrita.</span></span><span class="pj-a">Captación</span></li><li><span class="pj-n">02</span><span class="pj-t"><strong>Presupuestos</strong><span>De las notas de la visita al presupuesto con tus precios.</span></span><span class="pj-a">Ventas</span></li><li><span class="pj-n">03</span><span class="pj-t"><strong>Propuestas</strong><span>Para trabajos grandes: fases, plazos y precio en dos páginas.</span></span><span class="pj-a">Ventas</span></li><li><span class="pj-n">04</span><span class="pj-t"><strong>Seguimiento de presupuestos</strong><span>A quién escribir hoy y qué decirle.</span></span><span class="pj-a">Ventas</span></li><li><span class="pj-n">05</span><span class="pj-t"><strong>Respuestas a clientes</strong><span>Cada mensaje contestado con tu tono y tus fechas.</span></span><span class="pj-a">Clientes</span></li><li><span class="pj-n">06</span><span class="pj-t"><strong>Reseñas y quejas</strong><span>Respuestas a Google y a quejas que no suenan a plantilla.</span></span><span class="pj-a">Clientes</span></li><li><span class="pj-n">07</span><span class="pj-t"><strong>Preguntas frecuentes</strong><span>Los correos que repites, convertidos en respuestas guardadas.</span></span><span class="pj-a">Clientes</span></li><li><span class="pj-n">08</span><span class="pj-t"><strong>Publicaciones para redes</strong><span>De una foto y dos datos, el texto para cada red.</span></span><span class="pj-a">Marketing</span></li><li><span class="pj-n">09</span><span class="pj-t"><strong>Ofertas y campañas</strong><span>La oferta, los mensajes y el calendario de una campaña.</span></span><span class="pj-a">Marketing</span></li><li><span class="pj-n">10</span><span class="pj-t"><strong>Facturas para la gestoría</strong><span>Las facturas del mes en la tabla que pide tu gestoría.</span></span><span class="pj-a">Administración</span></li><li><span class="pj-n">11</span><span class="pj-t"><strong>Revisión de contratos</strong><span>Lo que vas a firmar, explicado en lenguaje llano.</span></span><span class="pj-a">Administración</span></li><li><span class="pj-n">12</span><span class="pj-t"><strong>Informe del mes</strong><span>Cómo ha ido el mes y qué hacer el siguiente.</span></span><span class="pj-a">Administración</span></li></ul>
-    <p class="modal-note">Cada tres meses añado proyectos nuevos y te llegan al mismo correo.</p>
+    <p class="callout"><span class="yes"><svg><use href="#i-yes"/></svg></span>Cuando añada proyectos nuevos, también serán tuyos y te llegarán al mismo correo.</p>
   </div>
   <div class="modal-foot">
     <a class="btn block js-negocio" href="https://buy.stripe.com/00waEYaL6eAagQe8xtaZi0d">Comprar · 249&nbsp;€</a>
@@ -992,13 +990,6 @@ Cuando te pegue una solicitud de un posible cliente:
   });
   document.querySelectorAll('dialog.modal').forEach(function (d) {
     d.addEventListener('click', function (e) { if (e.target === d || e.target.closest('[data-close]')) d.close(); });
-  });
-  document.querySelectorAll('[data-copy]').forEach(function (b) {
-    b.addEventListener('click', function () {
-      var t = document.getElementById(b.dataset.copy).innerText;
-      var done = function () { b.textContent = 'Copiado'; setTimeout(function () { b.textContent = 'Copiar'; }, 1600); };
-      if (navigator.clipboard) navigator.clipboard.writeText(t).then(done).catch(function () {}); else done();
-    });
   });
 })();
 </script>

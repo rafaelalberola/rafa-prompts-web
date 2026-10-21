@@ -88,7 +88,7 @@ a { color: inherit; }
 }
 .sec { display: flex; flex-direction: column; gap: var(--s6); padding-block: var(--s7); border-top: 1px solid var(--line); }
 @media (min-width: 900px) { .sec { gap: 40px; padding-block: var(--s9); } }
-.head { display: flex; flex-direction: column; align-items: center; gap: var(--s3); max-width: 720px; margin-inline: auto; text-align: center; }
+.head { display: flex; flex-direction: column; align-items: center; gap: var(--s2); max-width: 720px; margin-inline: auto; text-align: center; }
 .kicker { margin: 0; font: 700 12px/1.2 var(--f-mono); letter-spacing: 0.16em; text-transform: uppercase; color: var(--accent-ink); }
 h1, h2 { margin: 0; font-family: var(--f-sans); font-weight: 900; letter-spacing: -0.028em; filter: url(#grain); }
 h2 { font-size: clamp(30px, 4.2vw, 50px); line-height: 1.02; }
@@ -162,7 +162,7 @@ h3 { margin: 0; font-size: 20px; line-height: 1.2; font-weight: 800; letter-spac
 .cta-row { display: flex; flex-wrap: wrap; align-items: center; justify-content: center; gap: var(--s4) var(--s5); }
 
 /* demostración: antes → Claude → después */
-.demo { display: grid; grid-template-columns: minmax(0, 1fr); justify-items: center; gap: var(--s4); }
+.demo { display: flex; flex-direction: column; align-items: center; gap: var(--s4); }
 .flow { display: flex; flex-direction: column; align-items: center; justify-content: center; gap: var(--s2); color: var(--accent); }
 .flow .arrow { width: 24px; height: 24px; transform: rotate(90deg); }
 .chip { display: inline-flex; align-items: center; gap: 6px; padding: 6px 12px 6px 8px; border-radius: var(--r-pill); border: 1px solid var(--lg-border); font: 800 13px/1 var(--f-sans); color: var(--accent-ink); white-space: nowrap; }
@@ -172,20 +172,38 @@ h3 { margin: 0; font-size: 20px; line-height: 1.2; font-weight: 800; letter-spac
 .hero .demo-cap span { font: 400 14.5px/1.4 var(--f-sans); color: var(--ink-mute); white-space: nowrap; }
 @media (min-width: 900px) {
   /* las tres piezas forman un bloque centrado y las dos apps miden lo mismo */
-  .demo { grid-template-columns: minmax(0, 600px) auto minmax(0, 248px); justify-content: center; align-items: center; gap: var(--s6); }
+  .demo { flex-direction: row; justify-content: center; align-items: center; gap: var(--s6); }
+  .demo > .ui-window { flex: 0 1 600px; }
+  .demo > .ui-phone { flex: 0 0 248px; }
   .flow .arrow { transform: none; }
 }
 
+/* tarjetas con icono o visual: 24 px entre el icono y el texto, 8 px entre título y descripción */
+.about > .card, .steps > .card, .tasks > .card { gap: var(--s5); }
+.card-txt { display: flex; flex-direction: column; gap: var(--s2); }
+.card-txt p { margin: 0; }
+
+/* ---------- filas de tarjetas: siempre flex, 1, 2 o 3 por fila según el ancho ---------- */
+.tasks, .about, .steps, .routes, .plans, .guides { list-style: none; margin: 0; padding: 0; display: flex; flex-wrap: wrap; align-items: stretch; gap: var(--gap-card); }
+.tasks > *, .about > *, .steps > *, .routes > *, .plans > *, .guides > * { flex: 1 1 100%; min-width: 0; }
+@media (min-width: 640px) { .tasks > * { flex: 0 0 calc((100% - var(--gap-card)) / 2); } }
+@media (min-width: 1000px) { .tasks > * { flex-basis: calc((100% - 2 * var(--gap-card)) / 3); } }
+@media (min-width: 860px) { .guides > * { flex: 0 0 calc((100% - 2 * var(--gap-card)) / 3); } }
+@media (min-width: 900px) {
+  .about > *, .steps > *, .plans > * { flex: 0 0 calc((100% - 2 * var(--gap-card)) / 3); }
+  .routes > * { flex: 0 0 calc((100% - var(--gap-card)) / 2); }
+}
+
 /* ---------- lo que vas a montar ---------- */
-.tasks { list-style: none; margin: 0; padding: 0; display: grid; grid-template-columns: minmax(0, 1fr); gap: var(--gap-card); }
-@media (min-width: 640px) { .tasks { grid-template-columns: repeat(2, minmax(0, 1fr)); } }
-@media (min-width: 1000px) { .tasks { grid-template-columns: repeat(3, minmax(0, 1fr)); } }
+
+
+
 .task { gap: var(--s2); }
 .task p { margin: 0; font-size: 15.5px; color: var(--ink-soft); }
 .note { margin: 0; text-align: center; color: var(--ink-mute); font-size: 15px; }
 /* visuales de las tareas: siempre la misma tarjeta pequeña (mismo tamaño, borde y sombra),
    sin fondo detrás, y como mucho una etiqueta en la misma esquina. Cambia solo el contenido. */
-.viz { position: relative; align-self: stretch; display: flex; justify-content: flex-start; padding: 0 12px 0 0; margin: -52px 0 var(--s1); }
+.viz { position: relative; align-self: stretch; display: flex; justify-content: flex-start; padding: 0 12px 0 0; margin-top: -52px; }
 .tasks { padding-top: 40px; row-gap: 64px; }
 .task .mini { box-shadow: 0 14px 30px rgba(20, 19, 17, 0.12); }
 .mini { position: relative; width: 216px; height: 116px; padding: 16px; box-sizing: border-box; display: flex; flex-direction: column; justify-content: center; gap: 9px; background: var(--surface); border: 1px solid var(--line-strong); border-radius: 12px; box-shadow: 0 8px 20px rgba(20, 19, 17, 0.07); }
@@ -198,6 +216,10 @@ h3 { margin: 0; font-size: 20px; line-height: 1.2; font-weight: 800; letter-spac
 .v-row.hot { background: rgba(218, 119, 86, 0.12); color: var(--accent-ink); }
 .v-row.hot b { color: var(--accent-ink); }
 .v-row.mute { opacity: 0.45; }
+.v-row.v-head { height: 18px; font: 700 9.5px/1 var(--f-mono); letter-spacing: 0.1em; text-transform: uppercase; color: var(--ink-mute); }
+.v-row.v-head b { color: var(--ink-mute); font-weight: 700; }
+.v-row.new { background: rgba(30, 138, 76, 0.10); color: var(--ok); }
+.v-row.new b { color: var(--ok); }
 .g { flex: 0 0 auto; width: 20px; height: 20px; border-radius: 50%; display: inline-flex; align-items: center; justify-content: center; background: rgba(20, 19, 17, 0.07); font: 700 10.5px/1 var(--f-mono); font-style: normal; color: var(--ink-soft); }
 .g.a { background: rgba(30, 138, 76, 0.12); color: var(--ok); }
 .v-phone { flex: 0 0 auto; margin-left: auto; width: 9px; height: 15px; border: 1.5px solid var(--ok-icon); border-radius: 3px; }
@@ -214,9 +236,23 @@ h3 { margin: 0; font-size: 20px; line-height: 1.2; font-weight: 800; letter-spac
 .v-badge.q { font: 800 14px/1 var(--f-sans); }
 .v-badge:not(.icon) svg { width: 12px; height: 12px; fill: none; stroke: currentColor; stroke-width: 2.2; stroke-linecap: round; stroke-linejoin: round; }
 
+
+/* ahorro estimado: en verde, con la cuenta debajo para que se pueda comprobar */
+.save { margin: 0; display: flex; flex-direction: column; gap: 2px; padding-top: var(--s3); border-top: 1px solid var(--line); }
+.save strong { font-size: 17px; font-weight: 800; color: var(--ok); }
+.save span { font-size: 13px; line-height: 1.4; color: var(--ink-mute); }
+.task .card-txt { flex: 1; }
+.task .save { margin-top: auto; }
+.rate { margin: var(--s2) 0 0; display: flex; align-items: center; justify-content: center; gap: var(--s2); font-size: 15px; color: var(--ink-soft); }
+.rate input { width: 76px; height: 38px; padding: 0 10px; border: 1px solid var(--line-strong); border-radius: 10px; background: var(--surface); font: 800 16px/1 var(--f-sans); color: var(--ok); text-align: center; }
+.rate input:focus-visible { outline: 2px solid var(--ok); outline-offset: 2px; }
+.save-total { margin: 0; text-align: center; font-size: 16px; color: var(--ink-soft); }
+.save-total .save-sum { color: var(--ok); }
+@media (max-width: 899px) { .rate { justify-content: flex-start; } }
+
 /* ---------- qué es Claude ---------- */
-.about { list-style: none; margin: 0; padding: 0; display: grid; grid-template-columns: minmax(0, 1fr); gap: var(--gap-card); }
-@media (min-width: 900px) { .about { grid-template-columns: repeat(3, minmax(0, 1fr)); } }
+
+
 .about p { margin: 0; font-size: 15.5px; color: var(--ink-soft); }
 
 /* icono de las tarjetas de «¿Qué es Claude?» (Lucide), en terracota suave para no confundirse con los números de «Cómo funciona» */
@@ -224,8 +260,8 @@ h3 { margin: 0; font-size: 20px; line-height: 1.2; font-weight: 800; letter-spac
 .card-ico svg { width: 22px; height: 22px; fill: none; stroke: currentColor; stroke-width: 2; stroke-linecap: round; stroke-linejoin: round; }
 
 /* ---------- el método ---------- */
-.steps { list-style: none; margin: 0; padding: 0; display: grid; grid-template-columns: minmax(0, 1fr); gap: var(--gap-card); }
-@media (min-width: 900px) { .steps { grid-template-columns: repeat(3, minmax(0, 1fr)); } }
+
+
 .step { gap: var(--s3); }
 .step-n { width: 40px; height: 40px; border-radius: 50%; display: inline-flex; align-items: center; justify-content: center; background: var(--ink); color: var(--bg); font-weight: 900; font-size: 17px; }
 /* iconos de Lucide (ISC), dibujados en línea */
@@ -236,14 +272,16 @@ h3 { margin: 0; font-size: 20px; line-height: 1.2; font-weight: 800; letter-spac
 .step .contact span { color: var(--ink); font-weight: 600; user-select: all; }
 
 /* ---------- rutas ---------- */
-.routes { display: grid; grid-template-columns: minmax(0, 1fr); gap: var(--gap-card); }
-@media (min-width: 900px) { .routes { grid-template-columns: repeat(2, minmax(0, 1fr)); } }
+
+
 .route { gap: var(--s5); }
 .route-head { display: flex; flex-direction: column; align-items: flex-start; gap: var(--s2); padding-bottom: var(--s5); border-bottom: 1px solid var(--line); }
 .route-head h3 { font-size: 24px; letter-spacing: -0.015em; }
 .route-head p { margin: 0; font-size: 15.5px; color: var(--ink-soft); }
 .mods { list-style: none; margin: 0; padding: 0; display: flex; flex-direction: column; gap: var(--s4); }
-.mods li { display: grid; grid-template-columns: 28px minmax(0, 1fr); align-items: baseline; gap: var(--s3); text-align: left; }
+.mods li { display: flex; align-items: baseline; gap: var(--s3); text-align: left; }
+.mods .n { flex: 0 0 28px; }
+.mods .txt { flex: 1 1 0; min-width: 0; }
 .mods .txt { display: flex; flex-direction: column; gap: 3px; }
 .mods strong { font-size: 16px; line-height: 1.3; font-weight: 700; color: var(--ink); }
 .mods .txt > span { font-size: 14px; line-height: 1.45; color: var(--ink-mute); }
@@ -253,7 +291,9 @@ h3 { margin: 0; font-size: 20px; line-height: 1.2; font-weight: 800; letter-spac
 
 /* ---------- comparativa ---------- */
 .vs { width: 100%; max-width: 980px; margin-inline: auto; display: flex; flex-direction: column; background: var(--surface); border: 1px solid var(--line); border-radius: var(--r-card); overflow: hidden; }
-.vs-row { display: grid; grid-template-columns: 150px minmax(0, 1fr) minmax(0, 1fr); align-items: stretch; }
+.vs-row { display: flex; align-items: stretch; }
+.vs-k { flex: 0 0 150px; }
+.vs-them, .vs-us { flex: 1 1 0; min-width: 0; }
 .vs-row + .vs-row .vs-k, .vs-row + .vs-row .vs-them { border-top: 1px solid var(--line); }
 .vs-row + .vs-row .vs-us { border-top: 1px solid rgba(242, 239, 231, 0.10); }
 .vs-k, .vs-them, .vs-us { display: flex; align-items: center; gap: var(--s3); padding: 16px 20px; font-size: 15.5px; line-height: 1.4; }
@@ -286,8 +326,8 @@ h3 { margin: 0; font-size: 20px; line-height: 1.2; font-weight: 800; letter-spac
 .vs-card.them h3 { color: var(--ink-soft); }
 
 /* ---------- planes ---------- */
-.plans { display: grid; grid-template-columns: minmax(0, 1fr); gap: var(--gap-card); align-items: stretch; }
-@media (min-width: 900px) { .plans { grid-template-columns: repeat(3, minmax(0, 1fr)); } }
+
+
 .plan { gap: var(--s4); }
 .plan h3 { display: flex; align-items: center; gap: var(--s2); font-size: 22px; }
 .plan .label { margin-top: -8px; }
@@ -343,8 +383,8 @@ h3 { margin: 0; font-size: 20px; line-height: 1.2; font-weight: 800; letter-spac
 .close h2 .it { display: block; margin-top: 0.12em; font-size: 0.8em; filter: none; }
 
 /* ---------- guías gratis ---------- */
-.guides { list-style: none; margin: 0; padding: 0; display: grid; grid-template-columns: minmax(0, 1fr); gap: var(--gap-card); }
-@media (min-width: 860px) { .guides { grid-template-columns: repeat(3, minmax(0, 1fr)); } }
+
+
 .card-stack { display: flex; flex-direction: column; gap: var(--gap-card); }
 .guides > li { display: flex; }
 .guides > li > .card { flex: 1; }
@@ -433,7 +473,8 @@ body:has(.modal[open]) { overflow: hidden; }
 .modal-body { flex: 1 1 auto; overflow-y: auto; padding: var(--s5); display: flex; flex-direction: column; gap: var(--s5); overscroll-behavior: contain; }
 .modal-body > * { flex-shrink: 0; }
 .modal-lede { margin: 0; font-size: 16px; color: var(--ink-soft); }
-.how { list-style: none; margin: 0; padding: 0; display: grid; grid-template-columns: repeat(3, minmax(0, 1fr)); gap: var(--s2); }
+.how { list-style: none; margin: 0; padding: 0; display: flex; gap: var(--s2); }
+.how li { flex: 1 1 0; min-width: 0; }
 .how li { display: flex; flex-direction: column; gap: 6px; padding: 12px; border-radius: 12px; background: var(--bg); font-size: 13.5px; font-weight: 600; line-height: 1.35; }
 .how span { width: 22px; height: 22px; border-radius: 50%; display: inline-flex; align-items: center; justify-content: center; background: var(--ink); color: var(--bg); font-size: 11px; font-weight: 800; }
 .peek { position: relative; margin: 0; display: flex; flex-direction: column; gap: var(--s2); }
@@ -443,7 +484,10 @@ body:has(.modal[open]) { overflow: hidden; }
 .peek pre { margin: 0; padding: 14px 14px 40px; font: 400 12.5px/1.55 var(--f-mono); white-space: pre-wrap; }
 .peek-fade { position: absolute; inset: auto 0 0 0; height: 64px; background: linear-gradient(180deg, rgba(20, 19, 17, 0) 0%, rgba(20, 19, 17, 0.92) 55%); -webkit-backdrop-filter: blur(2px); backdrop-filter: blur(2px); }
 .pj-list { list-style: none; margin: 0; padding: 0; display: flex; flex-direction: column; }
-.pj-list li { display: grid; grid-template-columns: 26px minmax(0, 1fr) auto; align-items: baseline; gap: var(--s3); padding: 11px 0; border-top: 1px solid var(--line); }
+.pj-list li { display: flex; align-items: baseline; gap: var(--s3); padding: 11px 0; border-top: 1px solid var(--line); }
+.pj-n { flex: 0 0 26px; }
+.pj-t { flex: 1 1 0; min-width: 0; }
+.pj-a { margin-left: auto; }
 .pj-n { font: 700 11.5px/1 var(--f-mono); color: var(--accent-ink); }
 .pj-t { display: flex; flex-direction: column; gap: 2px; }
 .pj-t strong { font-size: 15px; line-height: 1.3; }
@@ -452,10 +496,10 @@ body:has(.modal[open]) { overflow: hidden; }
 .callout { margin: 0; display: flex; align-items: flex-start; gap: var(--s3); padding: 12px 14px; border-radius: 12px; background: rgba(30, 138, 76, 0.08); border: 1px solid rgba(30, 138, 76, 0.20); font-size: 14px; font-weight: 600; line-height: 1.4; color: var(--ok); }
 .modal-foot { flex: 0 0 auto; display: flex; flex-direction: column; gap: var(--s3); padding: var(--s4) var(--s5) var(--s5); border-top: 1px solid var(--line); background: var(--surface); }
 @media (max-width: 560px) {
-  .how { grid-template-columns: minmax(0, 1fr); }
+  .how { flex-direction: column; }
   .how li { flex-direction: row; align-items: center; }
   .pj-a { display: none; }
-  .pj-list li { grid-template-columns: 26px minmax(0, 1fr); }
+
 }
 
 /* ---------- credenciales en la bio ---------- */
@@ -517,6 +561,7 @@ body::before { content: ""; position: fixed; inset: 0 0 auto; height: env(safe-a
   .task.in .v-row { animation: vRow .6s cubic-bezier(.2,.7,.2,1) both; }
   .task.in .v-row:nth-child(1) { animation-delay: .25s; } .task.in .v-row:nth-child(2) { animation-delay: .37s; }
   .task.in .v-row:nth-child(3) { animation-delay: .49s; } .task.in .v-row:nth-child(4) { animation-delay: .61s; }
+  .task.in .v-row.new { animation: vRow .6s cubic-bezier(.2,.7,.2,1) .37s both, vNew 1.4s ease 1s 1; }
   .task.in .v-row.hot { animation: vRow .6s cubic-bezier(.2,.7,.2,1) .25s both, vHot 1.4s ease .9s 1; }
   .task.in .v-map i { animation: vPop .5s cubic-bezier(.2,1.4,.4,1) both; }
   .task.in .v-map i:nth-child(2) { animation-delay: .1s; } .task.in .v-map i:nth-child(3) { animation-delay: .2s; }
@@ -536,6 +581,7 @@ body::before { content: ""; position: fixed; inset: 0 0 auto; height: env(safe-a
 @keyframes vLine { from { transform: scaleX(0); } to { transform: scaleX(1); } }
 @keyframes vRow { from { opacity: 0; transform: translateX(-10px); } to { opacity: 1; transform: none; } }
 @keyframes vHot { 0%, 100% { box-shadow: 0 0 0 0 rgba(218, 119, 86, 0); } 40% { box-shadow: 0 0 0 4px rgba(218, 119, 86, 0.22); } }
+@keyframes vNew { 0%, 100% { box-shadow: 0 0 0 0 rgba(30, 138, 76, 0); } 40% { box-shadow: 0 0 0 4px rgba(30, 138, 76, 0.18); } }
 @keyframes vPop { from { opacity: 0; transform: translate(-50%, -50%) scale(0); } to { opacity: 1; transform: translate(-50%, -50%) scale(1); } }
 @keyframes vPulse { 0%, 100% { transform: translate(-50%, -50%) scale(1); } 50% { transform: translate(-50%, -50%) scale(1.18); } }
 @keyframes vBlink { 0%, 100% { opacity: 1; } 50% { opacity: 0.25; } }
@@ -603,16 +649,19 @@ body::before { content: ""; position: fixed; inset: 0 0 auto; height: env(safe-a
 .gm-tabs .on { color: #0B57D0; font-weight: 600; box-shadow: inset 0 -3px 0 #0B57D0; }
 .gm-tabs .on b { margin-left: 6px; padding: 1px 7px; border-radius: 10px; background: #0B57D0; color: #fff; font-size: 11px; font-weight: 700; }
 .gm-list { list-style: none; margin: 0; padding: 0; display: flex; flex-direction: column; }
-.gm-list li { display: grid; grid-template-columns: 14px 16px 128px minmax(0, 1fr) auto; grid-template-areas: "chk star who what time"; align-items: center; gap: 10px; padding: 9px 14px; border-bottom: 1px solid #F1F3F4; font-size: 13px; line-height: 1.3; }
-.chk { grid-area: chk; width: 13px; height: 13px; border: 1.5px solid #9AA0A6; border-radius: 2px; }
-.gm-list .ico-star { grid-area: star; width: 16px; height: 16px; color: #9AA0A6; }
-.who { grid-area: who; font-weight: 700; white-space: nowrap; overflow: hidden; text-overflow: ellipsis; }
-.what { grid-area: what; min-width: 0; color: #5F6368; white-space: nowrap; overflow: hidden; text-overflow: ellipsis; }
+.gm-list li { display: flex; align-items: center; gap: 10px; padding: 9px 14px; border-bottom: 1px solid #F1F3F4; font-size: 13px; line-height: 1.3; }
+.chk { flex: 0 0 13px; width: 13px; height: 13px; border: 1.5px solid #9AA0A6; border-radius: 2px; }
+.gm-list .ico-star { flex: 0 0 16px; width: 16px; height: 16px; color: #9AA0A6; }
+.who { flex: 0 0 128px; font-weight: 700; white-space: nowrap; overflow: hidden; text-overflow: ellipsis; }
+.what { flex: 1 1 0; min-width: 0; color: #5F6368; white-space: nowrap; overflow: hidden; text-overflow: ellipsis; }
 .what b { color: #1F1F1F; font-weight: 700; }
-.gm-list time { grid-area: time; font-size: 12px; font-weight: 700; color: #1F1F1F; white-space: nowrap; }
+.gm-list time { flex: 0 0 auto; font-size: 12px; font-weight: 700; color: #1F1F1F; white-space: nowrap; }
 .gm-list .more { display: block; padding: 12px 14px; border-bottom: 0; text-align: center; font-size: 12.5px; color: #5F6368; }
 @container (max-width: 470px) {
-  .gm-list li { grid-template-columns: minmax(0, 1fr) auto; grid-template-areas: "who time" "what what"; row-gap: 2px; }
+  .gm-list li { flex-wrap: wrap; row-gap: 2px; }
+  .who { flex: 1 1 auto; order: 1; }
+  .gm-list time { order: 2; }
+  .what { flex: 1 1 100%; order: 3; }
   .chk, .gm-list .ico-star { display: none; }
   .what { white-space: normal; display: -webkit-box; -webkit-line-clamp: 2; -webkit-box-orient: vertical; }
   .gm-tabs span:nth-child(3) { display: none; }
@@ -762,9 +811,9 @@ body::before { content: ""; position: fixed; inset: 0 0 auto; height: env(safe-a
         <h2 id="h-claude">¿Qué es&nbsp;Claude y&nbsp;por&nbsp;qué te&nbsp;interesa?</h2>
       </div>
       <ul class="about">
-        <li class="card"><span class="card-ico" aria-hidden="true"><svg viewBox="0 0 24 24"><path d="M9.937 15.5A2 2 0 0 0 8.5 14.063l-6.135-1.582a.5.5 0 0 1 0-.962L8.5 9.936A2 2 0 0 0 9.937 8.5l1.582-6.135a.5.5 0 0 1 .963 0L14.063 8.5A2 2 0 0 0 15.5 9.937l6.135 1.581a.5.5 0 0 1 0 .964L15.5 14.063a2 2 0 0 0-1.437 1.437l-1.582 6.135a.5.5 0 0 1-.963 0z"/><path d="M20 3v4"/><path d="M22 5h-4"/><path d="M4 17v2"/><path d="M5 18H3"/></svg></span><h3>Qué es</h3><p>Un&nbsp;asistente de&nbsp;inteligencia artificial, como&nbsp;ChatGPT, creado por&nbsp;Anthropic. Le&nbsp;escribes como&nbsp;a&nbsp;una&nbsp;persona y&nbsp;hace la&nbsp;tarea. La&nbsp;diferencia: escribe más&nbsp;natural, respeta tus&nbsp;reglas al&nbsp;pie de&nbsp;la&nbsp;letra y&nbsp;lee documentos enteros de&nbsp;una&nbsp;vez.</p></li>
-        <li class="card"><span class="card-ico" aria-hidden="true"><svg viewBox="0 0 24 24"><path d="m3 17 2 2 4-4"/><path d="m3 7 2 2 4-4"/><path d="M13 6h8"/><path d="M13 12h8"/><path d="M13 18h8"/></svg></span><h3>Qué puede hacer</h3><p>Escribir y&nbsp;contestar correos, leer PDF y&nbsp;documentos, ordenar datos, preparar textos y&nbsp;conectarse con&nbsp;Gmail o&nbsp;Google Drive.</p></li>
-        <li class="card"><span class="card-ico" aria-hidden="true"><svg viewBox="0 0 24 24"><polyline points="22 7 13.5 15.5 8.5 10.5 2 17"/><polyline points="16 7 22 7 22 13"/></svg></span><h3>Por&nbsp;qué aprenderlo</h3><p>Usado a&nbsp;ratos te&nbsp;ahorra minutos. Con&nbsp;tu&nbsp;negocio explicado y&nbsp;tus&nbsp;tareas guardadas te&nbsp;quita horas cada&nbsp;semana, y&nbsp;eso es&nbsp;lo&nbsp;que&nbsp;aprendes aquí.</p></li>
+        <li class="card"><span class="card-ico" aria-hidden="true"><svg viewBox="0 0 24 24"><path d="M9.937 15.5A2 2 0 0 0 8.5 14.063l-6.135-1.582a.5.5 0 0 1 0-.962L8.5 9.936A2 2 0 0 0 9.937 8.5l1.582-6.135a.5.5 0 0 1 .963 0L14.063 8.5A2 2 0 0 0 15.5 9.937l6.135 1.581a.5.5 0 0 1 0 .964L15.5 14.063a2 2 0 0 0-1.437 1.437l-1.582 6.135a.5.5 0 0 1-.963 0z"/><path d="M20 3v4"/><path d="M22 5h-4"/><path d="M4 17v2"/><path d="M5 18H3"/></svg></span><div class="card-txt"><h3>Qué es</h3><p>Un&nbsp;asistente de&nbsp;inteligencia artificial, como&nbsp;ChatGPT, creado por&nbsp;Anthropic. Le&nbsp;escribes como&nbsp;a&nbsp;una&nbsp;persona y&nbsp;hace la&nbsp;tarea. La&nbsp;diferencia: escribe más&nbsp;natural, respeta tus&nbsp;reglas al&nbsp;pie de&nbsp;la&nbsp;letra y&nbsp;lee documentos enteros de&nbsp;una&nbsp;vez.</p></div></li>
+        <li class="card"><span class="card-ico" aria-hidden="true"><svg viewBox="0 0 24 24"><path d="m3 17 2 2 4-4"/><path d="m3 7 2 2 4-4"/><path d="M13 6h8"/><path d="M13 12h8"/><path d="M13 18h8"/></svg></span><div class="card-txt"><h3>Qué puede hacer</h3><p>Escribir y&nbsp;contestar correos, leer PDF y&nbsp;documentos, ordenar los&nbsp;datos de&nbsp;tu&nbsp;Excel o&nbsp;tu&nbsp;CRM, preparar textos y&nbsp;conectarse con&nbsp;Gmail o&nbsp;Google Drive.</p></div></li>
+        <li class="card"><span class="card-ico" aria-hidden="true"><svg viewBox="0 0 24 24"><polyline points="22 7 13.5 15.5 8.5 10.5 2 17"/><polyline points="16 7 22 7 22 13"/></svg></span><div class="card-txt"><h3>Por&nbsp;qué aprenderlo</h3><p>Usado a&nbsp;ratos te&nbsp;ahorra minutos. Con&nbsp;tu&nbsp;negocio explicado y&nbsp;tus&nbsp;tareas guardadas te&nbsp;quita horas cada&nbsp;semana, y&nbsp;eso es&nbsp;lo&nbsp;que&nbsp;aprendes aquí.</p></div></li>
       </ul>
     </section>
   </div>
@@ -776,15 +825,17 @@ body::before { content: ""; position: fixed; inset: 0 0 auto; height: env(safe-a
         <p class="kicker">Lo&nbsp;que&nbsp;vas a&nbsp;montar</p>
         <h2 id="h-montas">Algunas de&nbsp;las&nbsp;tareas que&nbsp;aprenderás a&nbsp;automatizar en&nbsp;tu&nbsp;negocio</h2>
         <p>Te&nbsp;las&nbsp;explico paso a&nbsp;paso dentro del&nbsp;curso, cada&nbsp;una&nbsp;con&nbsp;su&nbsp;plantilla lista para&nbsp;copiar.</p>
+        <p class="rate"><label for="rate">Ahorro estimado con&nbsp;tu&nbsp;hora a</label> <input id="rate" type="number" inputmode="numeric" min="10" max="300" step="5" value="25" aria-label="Cuánto vale una hora de tu tiempo, en euros"> <span>€</span></p>
       </div>
       <ul class="tasks">
-        <li class="card task"><div class="viz" aria-hidden="true"><div class="mini"><span class="v-line b" style="--w:46%"></span><span class="v-line" style="--w:88%"></span><span class="v-line" style="--w:74%"></span><span class="v-line" style="--w:60%"></span><span class="v-badge icon"><svg viewBox="0 0 100 100"><use href="#flower"/></svg></span></div></div><h3>Que&nbsp;Claude conozca tu&nbsp;negocio</h3><span class="label">Disponible en&nbsp;el&nbsp;Módulo 02</span><p>Claude conoce tus&nbsp;servicios, tus&nbsp;precios y&nbsp;tu&nbsp;forma de&nbsp;hablar, y&nbsp;te&nbsp;responde como&nbsp;lo&nbsp;harías tú.</p></li>
-        <li class="card task"><div class="viz" aria-hidden="true"><div class="mini rows"><div class="v-row hot"><span>Hoy</span><b>3</b></div><div class="v-row"><span>Esta semana</span><b>5</b></div><div class="v-row"><span>Delegar</span><b>2</b></div><div class="v-row mute"><span>Archivar</span><b>30</b></div></div></div><h3>El&nbsp;correo pendiente, ordenado</h3><span class="label">Disponible en&nbsp;el&nbsp;Módulo 04</span><p>Ordena tu&nbsp;bandeja de&nbsp;entrada por&nbsp;urgencia y&nbsp;te&nbsp;deja escritas las&nbsp;respuestas de&nbsp;hoy.</p></li>
-        <li class="card task"><div class="viz" aria-hidden="true"><div class="mini rows"><div class="v-row"><i class="g a">A</i><span class="v-line" style="--w:62%"></span><span class="v-phone"></span></div><div class="v-row"><i class="g">B</i><span class="v-line" style="--w:48%"></span></div><div class="v-row mute"><i class="g">D</i><span class="v-line" style="--w:56%"></span></div></div></div><h3>Las&nbsp;solicitudes, clasificadas solas</h3><span class="label">Disponible en&nbsp;el&nbsp;Módulo 05</span><p>Clasifica cada&nbsp;solicitud de&nbsp;tu&nbsp;web con&nbsp;tus&nbsp;criterios y&nbsp;te&nbsp;avisa en&nbsp;el&nbsp;móvil de&nbsp;los&nbsp;clientes que&nbsp;encajan.</p></li>
-        <li class="card task"><div class="viz" aria-hidden="true"><div class="mini"><div class="v-map"><i style="left:12%;top:70%"></i><i style="left:28%;top:40%"></i><i style="left:40%;top:76%"></i><i style="left:55%;top:56%"></i><i style="left:20%;top:16%"></i><span class="v-gap" style="left:80%;top:28%"></span><span class="v-gap-t" style="left:80%;top:62%">tu&nbsp;hueco</span></div></div></div><h3>Investigación de&nbsp;mercado</h3><span class="label">Disponible en&nbsp;el&nbsp;Módulo 04</span><p>Analiza a&nbsp;tu&nbsp;competencia antes de&nbsp;lanzar un&nbsp;servicio: quién lo&nbsp;ofrece, a&nbsp;qué precio y&nbsp;dónde queda hueco.</p></li>
-        <li class="card task"><div class="viz" aria-hidden="true"><div class="mini"><div class="v-step"><i>1</i><span class="v-line" style="--w:80%"></span></div><div class="v-step"><i>2</i><span class="v-line" style="--w:60%"></span></div><div class="v-step"><i>3</i><span class="v-line" style="--w:72%"></span></div><span class="v-badge icon q">?</span></div></div><h3>Tus&nbsp;procesos, por&nbsp;escrito</h3><span class="label">Disponible en&nbsp;el&nbsp;Módulo 04</span><p>Convierte lo&nbsp;que&nbsp;sabes en&nbsp;un&nbsp;manual para&nbsp;tu&nbsp;equipo: se&nbsp;lo&nbsp;cuentas a&nbsp;Claude y&nbsp;lo&nbsp;escribe, con&nbsp;sus&nbsp;preguntas frecuentes.</p></li>
-        <li class="card task"><div class="viz" aria-hidden="true"><div class="mini"><span class="v-line b" style="--w:52%"></span><span class="v-line" style="--w:86%"></span><span class="v-line" style="--w:68%"></span><span class="v-badge"><svg viewBox="0 0 24 24"><path d="M20 11a8 8 0 0 0-14.3-4.9L4 8M4 4v4h4M4 13a8 8 0 0 0 14.3 4.9L20 16M20 20v-4h-4"/></svg>cada&nbsp;semana</span></div></div><h3>Presupuestos, informes y&nbsp;correos en&nbsp;un&nbsp;clic</h3><span class="label">Disponible en&nbsp;el&nbsp;Módulo 03</span><p>Automatiza los&nbsp;presupuestos, informes o&nbsp;correos que&nbsp;repites cada&nbsp;semana: Claude los&nbsp;hace por&nbsp;ti.</p></li>
+        <li class="card task"><div class="viz" aria-hidden="true"><div class="mini"><span class="v-line b" style="--w:46%"></span><span class="v-line" style="--w:88%"></span><span class="v-line" style="--w:74%"></span><span class="v-line" style="--w:60%"></span><span class="v-badge icon"><svg viewBox="0 0 100 100"><use href="#flower"/></svg></span></div></div><div class="card-txt"><h3>Que&nbsp;Claude conozca tu&nbsp;negocio</h3><span class="label">Disponible en&nbsp;el&nbsp;Módulo 02</span><p>Claude conoce tus&nbsp;servicios, tus&nbsp;precios y&nbsp;tu&nbsp;forma de&nbsp;hablar, y&nbsp;te&nbsp;responde como&nbsp;lo&nbsp;harías tú.</p><p class="save" data-h="2"><strong>+50&nbsp;€ al&nbsp;mes</strong><span>2&nbsp;h al&nbsp;mes: 30 min a&nbsp;la&nbsp;semana sin&nbsp;corregir respuestas genéricas</span></p></div></li>
+        <li class="card task"><div class="viz" aria-hidden="true"><div class="mini rows"><div class="v-row hot"><span>Hoy</span><b>3</b></div><div class="v-row"><span>Esta semana</span><b>5</b></div><div class="v-row"><span>Delegar</span><b>2</b></div><div class="v-row mute"><span>Archivar</span><b>30</b></div></div></div><div class="card-txt"><h3>El&nbsp;correo pendiente, ordenado</h3><span class="label">Disponible en&nbsp;el&nbsp;Módulo 04</span><p>Ordena tu&nbsp;bandeja de&nbsp;entrada por&nbsp;urgencia y&nbsp;te&nbsp;deja escritas las&nbsp;respuestas de&nbsp;hoy.</p><p class="save" data-h="8"><strong>+200&nbsp;€ al&nbsp;mes</strong><span>8&nbsp;h al&nbsp;mes: 40 min menos con&nbsp;el&nbsp;correo, 3 días a&nbsp;la&nbsp;semana</span></p></div></li>
+        <li class="card task"><div class="viz" aria-hidden="true"><div class="mini rows"><div class="v-row"><i class="g a">A</i><span class="v-line" style="--w:62%"></span><span class="v-phone"></span></div><div class="v-row"><i class="g">B</i><span class="v-line" style="--w:48%"></span></div><div class="v-row mute"><i class="g">D</i><span class="v-line" style="--w:56%"></span></div></div></div><div class="card-txt"><h3>Las&nbsp;solicitudes, clasificadas solas</h3><span class="label">Disponible en&nbsp;el&nbsp;Módulo 05</span><p>Clasifica cada&nbsp;solicitud de&nbsp;tu&nbsp;web con&nbsp;tus&nbsp;criterios y&nbsp;te&nbsp;avisa en&nbsp;el&nbsp;móvil de&nbsp;los&nbsp;clientes que&nbsp;encajan.</p><p class="save" data-h="4"><strong>+100&nbsp;€ al&nbsp;mes</strong><span>4&nbsp;h al&nbsp;mes: 6 min menos por&nbsp;solicitud, unas&nbsp;40 al&nbsp;mes</span></p></div></li>
+        <li class="card task"><div class="viz" aria-hidden="true"><div class="mini rows"><div class="v-row v-head"><span>Cliente</span><b>Fase</b></div><div class="v-row new"><span>Javier R.</span><b>Nuevo</b></div><div class="v-row"><span>Marta L.</span><b>Presupuesto</b></div><div class="v-row mute"><span>Obras Turia</span><b>Ganado</b></div></div></div><div class="card-txt"><h3>Tus&nbsp;clientes, al&nbsp;día en&nbsp;tu&nbsp;Excel o&nbsp;tu&nbsp;CRM</h3><span class="label">Disponible en&nbsp;el&nbsp;Módulo 05</span><p>Cada&nbsp;solicitud nueva se&nbsp;apunta sola en&nbsp;tu&nbsp;Excel, tu&nbsp;Google Sheets o&nbsp;tu&nbsp;CRM (HubSpot, Zoho…), clasificada y&nbsp;con&nbsp;sus&nbsp;datos, sin&nbsp;teclear nada.</p><p class="save" data-h="6"><strong>+150&nbsp;€ al&nbsp;mes</strong><span>6&nbsp;h al&nbsp;mes: 9 min menos por&nbsp;cliente al&nbsp;apuntarlo y&nbsp;seguirlo, unos&nbsp;40 al&nbsp;mes</span></p></div></li>
+        <li class="card task"><div class="viz" aria-hidden="true"><div class="mini"><div class="v-step"><i>1</i><span class="v-line" style="--w:80%"></span></div><div class="v-step"><i>2</i><span class="v-line" style="--w:60%"></span></div><div class="v-step"><i>3</i><span class="v-line" style="--w:72%"></span></div><span class="v-badge icon q">?</span></div></div><div class="card-txt"><h3>Tus&nbsp;procesos, por&nbsp;escrito</h3><span class="label">Disponible en&nbsp;el&nbsp;Módulo 04</span><p>Convierte lo&nbsp;que&nbsp;sabes en&nbsp;un&nbsp;manual para&nbsp;tu&nbsp;equipo: se&nbsp;lo&nbsp;cuentas a&nbsp;Claude y&nbsp;lo&nbsp;escribe, con&nbsp;sus&nbsp;preguntas frecuentes.</p><p class="save" data-h="4"><strong>+100&nbsp;€ al&nbsp;mes</strong><span>4&nbsp;h al&nbsp;mes: 1 h a&nbsp;la&nbsp;semana sin&nbsp;resolver las&nbsp;mismas dudas del&nbsp;equipo</span></p></div></li>
+        <li class="card task"><div class="viz" aria-hidden="true"><div class="mini"><span class="v-line b" style="--w:52%"></span><span class="v-line" style="--w:86%"></span><span class="v-line" style="--w:68%"></span><span class="v-badge"><svg viewBox="0 0 24 24"><path d="M20 11a8 8 0 0 0-14.3-4.9L4 8M4 4v4h4M4 13a8 8 0 0 0 14.3 4.9L20 16M20 20v-4h-4"/></svg>cada&nbsp;semana</span></div></div><div class="card-txt"><h3>Presupuestos, informes y&nbsp;correos en&nbsp;un&nbsp;clic</h3><span class="label">Disponible en&nbsp;el&nbsp;Módulo 03</span><p>Automatiza los&nbsp;presupuestos, informes o&nbsp;correos que&nbsp;repites cada&nbsp;semana: Claude los&nbsp;hace por&nbsp;ti.</p><p class="save" data-h="6"><strong>+150&nbsp;€ al&nbsp;mes</strong><span>6&nbsp;h al&nbsp;mes: 30 min menos por&nbsp;documento, 3 a&nbsp;la&nbsp;semana</span></p></div></li>
       </ul>
+      <p class="save-total">Las&nbsp;seis juntas: unas&nbsp;<strong>30&nbsp;h</strong> al&nbsp;mes, <strong class="save-sum">+750&nbsp;€ al&nbsp;mes</strong> con&nbsp;tu&nbsp;hora a&nbsp;<span class="rate-echo">25</span>&nbsp;€.</p>
     </section>
   </div>
 
@@ -796,9 +847,9 @@ body::before { content: ""; position: fixed; inset: 0 0 auto; height: env(safe-a
         <h2 id="h-como">Aprendes, lo&nbsp;aplicas y,&nbsp;si&nbsp;lo&nbsp;necesitas, te&nbsp;ayudo</h2>
       </div>
       <ol class="steps">
-        <li class="card step"><span class="step-n">1</span><h3>Aprendes</h3><p>Lees el&nbsp;curso a&nbsp;tu&nbsp;ritmo, paso a&nbsp;paso y&nbsp;sin&nbsp;programar.</p></li>
-        <li class="card step"><span class="step-n">2</span><h3>Lo&nbsp;aplicas</h3><p>Copias las&nbsp;plantillas en&nbsp;tu&nbsp;negocio y&nbsp;empiezas a&nbsp;ahorrar horas desde&nbsp;el&nbsp;primer día.</p></li>
-        <li class="card step"><span class="step-n">3</span><h3>Te&nbsp;ayudo si&nbsp;lo&nbsp;necesitas</h3><p>Si&nbsp;te&nbsp;atascas o&nbsp;no&nbsp;tienes tiempo, lo&nbsp;montamos juntos en&nbsp;tu&nbsp;empresa.</p><p class="contact">Escríbeme a&nbsp;<span>hola@rafaprompts.com</span></p></li>
+        <li class="card step"><span class="step-n">1</span><div class="card-txt"><h3>Aprendes</h3><p>Lees el&nbsp;curso a&nbsp;tu&nbsp;ritmo, paso a&nbsp;paso y&nbsp;sin&nbsp;programar.</p></div></li>
+        <li class="card step"><span class="step-n">2</span><div class="card-txt"><h3>Lo&nbsp;aplicas</h3><p>Copias las&nbsp;plantillas en&nbsp;tu&nbsp;negocio y&nbsp;empiezas a&nbsp;ahorrar horas desde&nbsp;el&nbsp;primer día.</p></div></li>
+        <li class="card step"><span class="step-n">3</span><div class="card-txt"><h3>Te&nbsp;ayudo si&nbsp;lo&nbsp;necesitas</h3><p>Si&nbsp;te&nbsp;atascas o&nbsp;no&nbsp;tienes tiempo, lo&nbsp;montamos juntos en&nbsp;tu&nbsp;empresa.</p><p class="contact">Escríbeme a&nbsp;<span>hola@rafaprompts.com</span></p></div></li>
       </ol>
     </section>
   </div>
@@ -826,13 +877,12 @@ body::before { content: ""; position: fixed; inset: 0 0 auto; height: env(safe-a
             <li><span class="n">05</span><span class="txt"><strong>Conectarlo con&nbsp;tus&nbsp;herramientas</strong><span>Conecta Claude con&nbsp;Gmail, tus&nbsp;formularios y&nbsp;Telegram: entra un&nbsp;correo o&nbsp;una&nbsp;solicitud y&nbsp;te&nbsp;llega el&nbsp;resumen al&nbsp;móvil sin&nbsp;tocar nada.</span></span></li>
             <li><span class="n">06</span><span class="txt"><strong>Comprobar que&nbsp;te&nbsp;ahorra tiempo</strong><span>Mide cuántas horas recuperas cada&nbsp;semana y&nbsp;mejora lo&nbsp;que&nbsp;falla sin&nbsp;romper el&nbsp;resto.</span></span></li>
           </ol>
-          <p class="positive"><span class="yes"><svg><use href="#i-yes"/></svg></span>Todas las&nbsp;tareas de&nbsp;arriba salen de&nbsp;esta ruta.</p>
         </article>
         <article class="card route">
           <div class="route-head">
             <span class="label">Ruta avanzada · módulos 07 a&nbsp;10</span>
             <h3>Con&nbsp;Claude Code, sin&nbsp;escribir código</h3>
-            <p>Instalas Claude en&nbsp;tu&nbsp;ordenador y&nbsp;te&nbsp;acompaño paso a&nbsp;paso. Sirve para&nbsp;que&nbsp;el&nbsp;trabajo se&nbsp;haga solo, a&nbsp;la&nbsp;hora que&nbsp;le&nbsp;digas.</p>
+            <p>Claude trabaja solo en&nbsp;tu&nbsp;ordenador, a&nbsp;la&nbsp;hora que&nbsp;le&nbsp;digas.</p>
           </div>
           <ol class="mods">
             <li><span class="n">07</span><span class="txt"><strong>Claude en&nbsp;tu&nbsp;ordenador</strong><span>Instala Claude en&nbsp;tu&nbsp;ordenador en&nbsp;cinco minutos para&nbsp;que&nbsp;trabaje directamente con&nbsp;tus&nbsp;archivos y&nbsp;carpetas.</span></span></li>
@@ -853,12 +903,12 @@ body::before { content: ""; position: fixed; inset: 0 0 auto; height: env(safe-a
         <h2 id="h-comparar">Otros cursos de&nbsp;IA frente a&nbsp;este</h2>
       </div>
       <div class="vs" role="table" aria-label="Comparativa con otros cursos de IA">
-        <div class="vs-row vs-headrow" role="row"><span class="vs-k" role="columnheader"></span><span class="vs-them" role="columnheader">Un&nbsp;curso de&nbsp;IA cualquiera</span><span class="vs-us" role="columnheader"><svg class="vs-mark" viewBox="0 0 100 100" aria-hidden="true"><use href="#flower"/></svg>El&nbsp;método Claude</span></div>
-        <div class="vs-row" role="row"><span class="vs-k" role="rowheader">Formato</span><span class="vs-them" role="cell"><span class="no"><svg><use href="#i-no"/></svg></span>Horas de&nbsp;vídeo que&nbsp;ves una&nbsp;vez</span><span class="vs-us" role="cell"><span class="yes"><svg><use href="#i-yes"/></svg></span>PDF con&nbsp;pasos numerados, abierto mientras trabajas</span></div><div class="vs-row" role="row"><span class="vs-k" role="rowheader">Herramientas</span><span class="vs-them" role="cell"><span class="no"><svg><use href="#i-no"/></svg></span>Muchas, todas por&nbsp;encima</span><span class="vs-us" role="cell"><span class="yes"><svg><use href="#i-yes"/></svg></span>Claude, a&nbsp;fondo</span></div><div class="vs-row" role="row"><span class="vs-k" role="rowheader">Ejemplos</span><span class="vs-them" role="cell"><span class="no"><svg><use href="#i-no"/></svg></span>De&nbsp;marketing o&nbsp;de&nbsp;programación</span><span class="vs-us" role="cell"><span class="yes"><svg><use href="#i-yes"/></svg></span>De&nbsp;un&nbsp;negocio como&nbsp;el&nbsp;tuyo: correo, clientes y&nbsp;procesos</span></div><div class="vs-row" role="row"><span class="vs-k" role="rowheader">Al&nbsp;terminar</span><span class="vs-them" role="cell"><span class="no"><svg><use href="#i-no"/></svg></span>Sabes qué existe</span><span class="vs-us" role="cell"><span class="yes"><svg><use href="#i-yes"/></svg></span>Tienes tus&nbsp;tareas montadas y&nbsp;funcionando</span></div><div class="vs-row" role="row"><span class="vs-k" role="rowheader">Precio</span><span class="vs-them" role="cell"><span class="no"><svg><use href="#i-no"/></svg></span>Cuota mensual o&nbsp;cientos de&nbsp;euros</span><span class="vs-us" role="cell"><span class="yes"><svg><use href="#i-yes"/></svg></span>149&nbsp;€ una&nbsp;vez, con&nbsp;14 días de&nbsp;garantía</span></div>
+        <div class="vs-row vs-headrow" role="row"><span class="vs-k" role="columnheader"></span><span class="vs-us" role="columnheader"><svg class="vs-mark" viewBox="0 0 100 100" aria-hidden="true"><use href="#flower"/></svg>El&nbsp;método Claude</span><span class="vs-them" role="columnheader">Un&nbsp;curso de&nbsp;IA cualquiera</span></div>
+        <div class="vs-row" role="row"><span class="vs-k" role="rowheader">Formato</span><span class="vs-us" role="cell"><span class="yes"><svg><use href="#i-yes"/></svg></span>PDF con&nbsp;pasos numerados, abierto mientras trabajas</span><span class="vs-them" role="cell"><span class="no"><svg><use href="#i-no"/></svg></span>Horas de&nbsp;vídeo que&nbsp;ves una&nbsp;vez</span></div><div class="vs-row" role="row"><span class="vs-k" role="rowheader">Herramientas</span><span class="vs-us" role="cell"><span class="yes"><svg><use href="#i-yes"/></svg></span>Claude, a&nbsp;fondo</span><span class="vs-them" role="cell"><span class="no"><svg><use href="#i-no"/></svg></span>Muchas, todas por&nbsp;encima</span></div><div class="vs-row" role="row"><span class="vs-k" role="rowheader">Ejemplos</span><span class="vs-us" role="cell"><span class="yes"><svg><use href="#i-yes"/></svg></span>De&nbsp;un&nbsp;negocio como&nbsp;el&nbsp;tuyo: correo, clientes y&nbsp;procesos</span><span class="vs-them" role="cell"><span class="no"><svg><use href="#i-no"/></svg></span>De&nbsp;marketing o&nbsp;de&nbsp;programación</span></div><div class="vs-row" role="row"><span class="vs-k" role="rowheader">Al&nbsp;terminar</span><span class="vs-us" role="cell"><span class="yes"><svg><use href="#i-yes"/></svg></span>Tienes tus&nbsp;tareas montadas y&nbsp;funcionando</span><span class="vs-them" role="cell"><span class="no"><svg><use href="#i-no"/></svg></span>Sabes qué existe</span></div><div class="vs-row" role="row"><span class="vs-k" role="rowheader">Precio</span><span class="vs-us" role="cell"><span class="yes"><svg><use href="#i-yes"/></svg></span>149&nbsp;€ una&nbsp;vez, con&nbsp;14 días de&nbsp;garantía</span><span class="vs-them" role="cell"><span class="no"><svg><use href="#i-no"/></svg></span>Cuota mensual o&nbsp;cientos de&nbsp;euros</span></div>
       </div>
       <div class="vs-cards">
-        <div class="card vs-card them"><h3>Un&nbsp;curso de&nbsp;IA cualquiera</h3><ul class="vs-items"><li><span class="no"><svg><use href="#i-no"/></svg></span><span><span class="label">Formato</span>Horas de&nbsp;vídeo que&nbsp;ves una&nbsp;vez</span></li><li><span class="no"><svg><use href="#i-no"/></svg></span><span><span class="label">Herramientas</span>Muchas, todas por&nbsp;encima</span></li><li><span class="no"><svg><use href="#i-no"/></svg></span><span><span class="label">Ejemplos</span>De&nbsp;marketing o&nbsp;de&nbsp;programación</span></li><li><span class="no"><svg><use href="#i-no"/></svg></span><span><span class="label">Al&nbsp;terminar</span>Sabes qué existe</span></li><li><span class="no"><svg><use href="#i-no"/></svg></span><span><span class="label">Precio</span>Cuota mensual o&nbsp;cientos de&nbsp;euros</span></li></ul></div>
         <div class="card vs-card us"><h3><svg class="vs-mark" viewBox="0 0 100 100" aria-hidden="true"><use href="#flower"/></svg>El&nbsp;método Claude</h3><ul class="vs-items"><li><span class="yes"><svg><use href="#i-yes"/></svg></span><span><span class="label">Formato</span>PDF con&nbsp;pasos numerados, abierto mientras trabajas</span></li><li><span class="yes"><svg><use href="#i-yes"/></svg></span><span><span class="label">Herramientas</span>Claude, a&nbsp;fondo</span></li><li><span class="yes"><svg><use href="#i-yes"/></svg></span><span><span class="label">Ejemplos</span>De&nbsp;un&nbsp;negocio como&nbsp;el&nbsp;tuyo: correo, clientes y&nbsp;procesos</span></li><li><span class="yes"><svg><use href="#i-yes"/></svg></span><span><span class="label">Al&nbsp;terminar</span>Tienes tus&nbsp;tareas montadas y&nbsp;funcionando</span></li><li><span class="yes"><svg><use href="#i-yes"/></svg></span><span><span class="label">Precio</span>149&nbsp;€ una&nbsp;vez, con&nbsp;14 días de&nbsp;garantía</span></li></ul></div>
+        <div class="card vs-card them"><h3>Un&nbsp;curso de&nbsp;IA cualquiera</h3><ul class="vs-items"><li><span class="no"><svg><use href="#i-no"/></svg></span><span><span class="label">Formato</span>Horas de&nbsp;vídeo que&nbsp;ves una&nbsp;vez</span></li><li><span class="no"><svg><use href="#i-no"/></svg></span><span><span class="label">Herramientas</span>Muchas, todas por&nbsp;encima</span></li><li><span class="no"><svg><use href="#i-no"/></svg></span><span><span class="label">Ejemplos</span>De&nbsp;marketing o&nbsp;de&nbsp;programación</span></li><li><span class="no"><svg><use href="#i-no"/></svg></span><span><span class="label">Al&nbsp;terminar</span>Sabes qué existe</span></li><li><span class="no"><svg><use href="#i-no"/></svg></span><span><span class="label">Precio</span>Cuota mensual o&nbsp;cientos de&nbsp;euros</span></li></ul></div>
       </div>
     </section>
   </div>
@@ -900,11 +950,11 @@ body::before { content: ""; position: fixed; inset: 0 0 auto; height: env(safe-a
           <p class="plan-price"><span class="from">Desde</span><strong>590&nbsp;€</strong></p>
           <ul class="checks">
             <li><span class="yes"><svg><use href="#i-yes"/></svg></span>Todo lo&nbsp;de&nbsp;Negocio</li>
-            <li><span class="yes"><svg><use href="#i-yes"/></svg></span>Llamada de&nbsp;20 minutos sin&nbsp;coste</li>
+            <li><span class="yes"><svg><use href="#i-yes"/></svg></span>Diagnóstico de&nbsp;45 minutos para&nbsp;empezar (50&nbsp;€, se&nbsp;descuentan si&nbsp;contratas)</li>
             <li><span class="yes"><svg><use href="#i-yes"/></svg></span>Precio final cerrado antes de&nbsp;empezar</li>
             <li><span class="yes"><svg><use href="#i-yes"/></svg></span>Te&nbsp;acompaño hasta&nbsp;que&nbsp;funcione</li>
           </ul>
-          <div class="plan-cta"><a class="btn ghost block" href="mailto:hola@rafaprompts.com?subject=Implantaci%C3%B3n%20a%20medida">Pedir una&nbsp;llamada</a></div>
+          <div class="plan-cta"><a class="btn ghost block js-diag" href="https://buy.stripe.com/3cI6oIf1m4ZA2Zo8xtaZi0e">Diagnóstico · 50&nbsp;€</a></div>
         </article>
       </div>
     </section>
@@ -946,7 +996,7 @@ body::before { content: ""; position: fixed; inset: 0 0 auto; height: env(safe-a
         </div>
         <div class="faq-group"><p class="faq-k">Planes y&nbsp;compra</p>
           <details><summary>¿Qué cambia entre&nbsp;los&nbsp;planes?</summary><p>El&nbsp;curso es&nbsp;el&nbsp;mismo en&nbsp;los&nbsp;tres. Negocio añade 12 proyectos ya&nbsp;preparados para&nbsp;tu&nbsp;tipo de&nbsp;negocio, que&nbsp;te&nbsp;llegan por&nbsp;correo en&nbsp;menos de&nbsp;24 horas. La&nbsp;implantación a&nbsp;medida es&nbsp;para&nbsp;montarlo juntos en&nbsp;tu&nbsp;empresa, con&nbsp;un&nbsp;precio cerrado según lo&nbsp;que&nbsp;necesites.</p></details>
-          <details><summary>¿Cómo funciona la&nbsp;implantación a&nbsp;medida?</summary><p>Empezamos con&nbsp;una&nbsp;llamada de&nbsp;20 minutos, sin&nbsp;coste, para&nbsp;ver tu&nbsp;negocio. Después te&nbsp;doy un&nbsp;precio final cerrado, desde&nbsp;590&nbsp;€, según lo&nbsp;que&nbsp;haya que&nbsp;montar. Ese precio incluye todo el&nbsp;plan Negocio y&nbsp;todo mi&nbsp;trabajo hasta&nbsp;que&nbsp;funcione. Aparte solo pagas tus&nbsp;herramientas, como&nbsp;tu&nbsp;plan de&nbsp;Claude.</p></details>
+          <details><summary>¿Cómo funciona la&nbsp;implantación a&nbsp;medida?</summary><p>Empezamos con&nbsp;un&nbsp;diagnóstico de&nbsp;45 minutos que&nbsp;cuesta 50&nbsp;€. Repasamos tu&nbsp;negocio y&nbsp;te&nbsp;llevas por&nbsp;escrito las&nbsp;tres tareas que&nbsp;más&nbsp;horas te&nbsp;quitan y&nbsp;cuánto costaría automatizarlas. Si&nbsp;contratas la&nbsp;implantación, desde&nbsp;590&nbsp;€, esos 50&nbsp;€ se&nbsp;descuentan del&nbsp;precio. El&nbsp;precio final incluye todo el&nbsp;plan Negocio y&nbsp;todo mi&nbsp;trabajo hasta&nbsp;que&nbsp;funcione; aparte solo pagas tus&nbsp;herramientas, como&nbsp;tu&nbsp;plan de&nbsp;Claude.</p></details>
           <details><summary>¿Me&nbsp;haces factura?</summary><p>Sí. Al&nbsp;pagar puedes poner el&nbsp;nombre y&nbsp;el&nbsp;NIF de&nbsp;tu&nbsp;empresa, y&nbsp;la&nbsp;factura te&nbsp;llega por&nbsp;correo.</p></details>
           <details><summary>¿Y&nbsp;si&nbsp;no&nbsp;me&nbsp;sirve?</summary><p>Tienes 14 días para&nbsp;pedir el&nbsp;reembolso. Me&nbsp;escribes una&nbsp;línea contando qué ha&nbsp;fallado y&nbsp;te&nbsp;devuelvo el&nbsp;dinero, sin&nbsp;preguntas. Si&nbsp;no&nbsp;te&nbsp;sirve, no&nbsp;pagas.</p></details>
         </div>
@@ -1016,7 +1066,7 @@ Cuando te pegue una solicitud de un posible cliente:
       <div class="peek-fade" aria-hidden="true"></div></div>
       <figcaption class="peek-cap">Ejemplo de&nbsp;proyecto: las&nbsp;instrucciones que&nbsp;pegas en&nbsp;Claude.</figcaption>
     </figure>
-    <ul class="pj-list"><li><span class="pj-n">01</span><span class="pj-t"><strong>Solicitudes que&nbsp;se&nbsp;ordenan solas</strong><span>Cada&nbsp;petición, con&nbsp;su&nbsp;prioridad y&nbsp;la&nbsp;respuesta ya&nbsp;escrita.</span></span><span class="pj-a">Captación</span></li><li><span class="pj-n">02</span><span class="pj-t"><strong>Presupuestos</strong><span>De&nbsp;las&nbsp;notas de&nbsp;la&nbsp;visita al&nbsp;presupuesto con&nbsp;tus&nbsp;precios.</span></span><span class="pj-a">Ventas</span></li><li><span class="pj-n">03</span><span class="pj-t"><strong>Propuestas</strong><span>Para&nbsp;trabajos grandes: fases, plazos y&nbsp;precio en&nbsp;dos páginas.</span></span><span class="pj-a">Ventas</span></li><li><span class="pj-n">04</span><span class="pj-t"><strong>Seguimiento de&nbsp;presupuestos</strong><span>A&nbsp;quién escribir hoy y&nbsp;qué decirle.</span></span><span class="pj-a">Ventas</span></li><li><span class="pj-n">05</span><span class="pj-t"><strong>Respuestas a&nbsp;clientes</strong><span>Cada&nbsp;mensaje contestado con&nbsp;tu&nbsp;tono y&nbsp;tus&nbsp;fechas.</span></span><span class="pj-a">Clientes</span></li><li><span class="pj-n">06</span><span class="pj-t"><strong>Reseñas y&nbsp;quejas</strong><span>Respuestas a&nbsp;Google y&nbsp;a&nbsp;quejas que&nbsp;no&nbsp;suenan a&nbsp;plantilla.</span></span><span class="pj-a">Clientes</span></li><li><span class="pj-n">07</span><span class="pj-t"><strong>Preguntas frecuentes</strong><span>Los&nbsp;correos que&nbsp;repites, convertidos en&nbsp;respuestas guardadas.</span></span><span class="pj-a">Clientes</span></li><li><span class="pj-n">08</span><span class="pj-t"><strong>Publicaciones para&nbsp;redes</strong><span>De&nbsp;una&nbsp;foto y&nbsp;dos datos, el&nbsp;texto para&nbsp;cada&nbsp;red.</span></span><span class="pj-a">Marketing</span></li><li><span class="pj-n">09</span><span class="pj-t"><strong>Ofertas y&nbsp;campañas</strong><span>La&nbsp;oferta, los&nbsp;mensajes y&nbsp;el&nbsp;calendario de&nbsp;una&nbsp;campaña.</span></span><span class="pj-a">Marketing</span></li><li><span class="pj-n">10</span><span class="pj-t"><strong>Facturas para&nbsp;la&nbsp;gestoría</strong><span>Las&nbsp;facturas del&nbsp;mes en&nbsp;la&nbsp;tabla que&nbsp;pide tu&nbsp;gestoría.</span></span><span class="pj-a">Administración</span></li><li><span class="pj-n">11</span><span class="pj-t"><strong>Revisión de&nbsp;contratos</strong><span>Lo&nbsp;que&nbsp;vas a&nbsp;firmar, explicado en&nbsp;lenguaje llano.</span></span><span class="pj-a">Administración</span></li><li><span class="pj-n">12</span><span class="pj-t"><strong>Informe del&nbsp;mes</strong><span>Cómo ha&nbsp;ido el&nbsp;mes y&nbsp;qué hacer el&nbsp;siguiente.</span></span><span class="pj-a">Administración</span></li></ul>
+    <ul class="pj-list"><li><span class="pj-n">01</span><span class="pj-t"><strong>Solicitudes que&nbsp;se&nbsp;ordenan solas</strong><span>Cada&nbsp;petición, con&nbsp;su&nbsp;prioridad y&nbsp;la&nbsp;respuesta ya&nbsp;escrita.</span></span><span class="pj-a">Captación</span></li><li><span class="pj-n">02</span><span class="pj-t"><strong>Presupuestos</strong><span>De&nbsp;las&nbsp;notas de&nbsp;la&nbsp;visita al&nbsp;presupuesto con&nbsp;tus&nbsp;precios.</span></span><span class="pj-a">Ventas</span></li><li><span class="pj-n">03</span><span class="pj-t"><strong>Clientes al&nbsp;día en&nbsp;tu&nbsp;Excel o&nbsp;tu&nbsp;CRM</strong><span>Cada&nbsp;cliente nuevo, apuntado con&nbsp;su&nbsp;fase y&nbsp;su&nbsp;próximo contacto.</span></span><span class="pj-a">Ventas</span></li><li><span class="pj-n">04</span><span class="pj-t"><strong>Seguimiento de&nbsp;presupuestos</strong><span>A&nbsp;quién escribir hoy y&nbsp;qué decirle.</span></span><span class="pj-a">Ventas</span></li><li><span class="pj-n">05</span><span class="pj-t"><strong>Respuestas a&nbsp;clientes</strong><span>Cada&nbsp;mensaje contestado con&nbsp;tu&nbsp;tono y&nbsp;tus&nbsp;fechas.</span></span><span class="pj-a">Clientes</span></li><li><span class="pj-n">06</span><span class="pj-t"><strong>Reseñas y&nbsp;quejas</strong><span>Respuestas a&nbsp;Google y&nbsp;a&nbsp;quejas que&nbsp;no&nbsp;suenan a&nbsp;plantilla.</span></span><span class="pj-a">Clientes</span></li><li><span class="pj-n">07</span><span class="pj-t"><strong>Preguntas frecuentes</strong><span>Los&nbsp;correos que&nbsp;repites, convertidos en&nbsp;respuestas guardadas.</span></span><span class="pj-a">Clientes</span></li><li><span class="pj-n">08</span><span class="pj-t"><strong>Publicaciones para&nbsp;redes</strong><span>De&nbsp;una&nbsp;foto y&nbsp;dos datos, el&nbsp;texto para&nbsp;cada&nbsp;red.</span></span><span class="pj-a">Marketing</span></li><li><span class="pj-n">09</span><span class="pj-t"><strong>Ofertas y&nbsp;campañas</strong><span>La&nbsp;oferta, los&nbsp;mensajes y&nbsp;el&nbsp;calendario de&nbsp;una&nbsp;campaña.</span></span><span class="pj-a">Marketing</span></li><li><span class="pj-n">10</span><span class="pj-t"><strong>Facturas para&nbsp;la&nbsp;gestoría</strong><span>Las&nbsp;facturas del&nbsp;mes en&nbsp;la&nbsp;tabla que&nbsp;pide tu&nbsp;gestoría.</span></span><span class="pj-a">Administración</span></li><li><span class="pj-n">11</span><span class="pj-t"><strong>Revisión de&nbsp;contratos</strong><span>Lo&nbsp;que&nbsp;vas a&nbsp;firmar, explicado en&nbsp;lenguaje llano.</span></span><span class="pj-a">Administración</span></li><li><span class="pj-n">12</span><span class="pj-t"><strong>Informe del&nbsp;mes</strong><span>Cómo ha&nbsp;ido el&nbsp;mes y&nbsp;qué hacer el&nbsp;siguiente.</span></span><span class="pj-a">Administración</span></li></ul>
     <p class="callout"><span class="yes"><svg><use href="#i-yes"/></svg></span>Cuando añada proyectos nuevos, también serán tuyos y&nbsp;te&nbsp;llegarán al&nbsp;mismo correo.</p>
   </div>
   <div class="modal-foot">
@@ -1079,6 +1129,13 @@ Cuando te pegue una solicitud de un posible cliente:
     box.innerHTML = '';
   }
   document.querySelectorAll('.js-buy').forEach(function (a) { a.addEventListener('click', function (e) { e.preventDefault(); open(); }); });
+  /* Diagnóstico de 50 €: inicio de pago y al enlace de Stripe */
+  document.querySelectorAll('.js-diag').forEach(function (a) { a.addEventListener('click', function (e) {
+    if (!window.fbq) return;
+    e.preventDefault();
+    fbq('track', 'InitiateCheckout', { content_name: 'Diagnóstico de implantación', content_ids: ['diagnostico-implantacion'], value: 50.00, currency: 'EUR' });
+    setTimeout(function () { location.href = a.href; }, 250);
+  }); });
   /* Negocio se paga en la página de Stripe: se registra el inicio de pago y se abre el enlace */
   document.querySelectorAll('.js-negocio').forEach(function (a) { a.addEventListener('click', function (e) {
     if (!window.fbq) return;
@@ -1094,6 +1151,23 @@ Cuando te pegue una solicitud de un posible cliente:
 })();
 </script>
 
+<script>
+/* Ahorro estimado: horas al mes de cada tarea × lo que vale la hora del visitante */
+(function () {
+  var input = document.getElementById('rate');
+  if (!input) return;
+  var miles = function (n) { return String(Math.round(n)).replace(/\B(?=(\d{3})+(?!\d))/g, '.'); };
+  var fmt = function (n) { return '+' + miles(n) + '\u00a0€ al mes'; };
+  function update() {
+    var r = parseFloat(input.value); if (!(r > 0)) return;
+    var total = 0;
+    document.querySelectorAll('.save[data-h]').forEach(function (el) { var h = parseFloat(el.dataset.h); total += h * r; el.querySelector('strong').textContent = fmt(h * r); });
+    var sum = document.querySelector('.save-sum'); if (sum) sum.textContent = fmt(total);
+    var echo = document.querySelector('.rate-echo'); if (echo) echo.textContent = r.toLocaleString('es-ES');
+  }
+  input.addEventListener('input', update); update();
+})();
+</script>
 <script>
 /* Cabecera de cristal al hacer scroll y aparición suave de los bloques */
 (function () {

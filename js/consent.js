@@ -15,7 +15,7 @@
 
   var css = ''
     + '.rpc{position:fixed;left:16px;right:16px;bottom:16px;z-index:9998;display:flex;justify-content:center;pointer-events:none;}'
-    + '.rpc-card{pointer-events:auto;width:min(640px,100%);display:flex;flex-wrap:wrap;align-items:center;gap:12px 20px;padding:18px 20px;'
+    + '.rpc-card{pointer-events:auto;width:min(560px,100%);display:flex;flex-wrap:wrap;align-items:center;gap:12px 20px;padding:18px 20px;'
     + 'border-radius:20px;background:#fff;border:1px solid rgba(20,19,17,.12);box-shadow:0 18px 44px rgba(20,19,17,.18);'
     + 'font:400 14.5px/1.5 Archivo,system-ui,-apple-system,sans-serif;color:#45423D;}'
     + '.rpc-txt{flex:1 1 300px;margin:0;}.rpc-txt a{color:#141311;text-decoration:underline;text-underline-offset:2px;}'
@@ -30,8 +30,7 @@
     if (!document.getElementById('rpc-css')) { var st = document.createElement('style'); st.id = 'rpc-css'; st.textContent = css; document.head.appendChild(st); }
     var el = document.createElement('div'); el.className = 'rpc';
     el.innerHTML = '<div class="rpc-card" role="dialog" aria-live="polite" aria-label="Cookies">'
-      + '<p class="rpc-txt">Usamos cookies de Meta para saber qué anuncios te han traído hasta aquí y enseñarte lo que te interesa. '
-      + 'La web funciona igual si las rechazas. <a href="/privacidad.html#cookies">Más información</a></p>'
+      + '<p class="rpc-txt">Usamos cookies de Meta para medir anuncios. <a href="/privacidad.html#cookies">Más información</a></p>'
       + '<div class="rpc-btns"><button type="button" class="rpc-b" data-v="no">Rechazar</button><button type="button" class="rpc-b" data-v="si">Aceptar</button></div></div>';
     el.addEventListener('click', function (e) {
       var b = e.target.closest('[data-v]'); if (!b) return;

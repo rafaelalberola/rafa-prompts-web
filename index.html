@@ -219,6 +219,19 @@ h3 { margin: 0; font-size: 20px; line-height: 1.2; font-weight: 800; letter-spac
 @media (min-width: 900px) { .about { grid-template-columns: repeat(3, minmax(0, 1fr)); } }
 .about p { margin: 0; font-size: 15.5px; color: var(--ink-soft); }
 
+/* bloque «¿Por qué Claude y no ChatGPT?» */
+#claude .about + .why { margin-top: calc(var(--gap-card) - 40px); }
+@media (max-width: 899px) { #claude .about + .why { margin-top: calc(var(--gap-card) - var(--s6)); } }
+.why { background: var(--band); border-color: var(--band); color: var(--band-ink); }
+.why h3 { color: var(--band-ink); font-size: 22px; }
+.why > p { font-size: 16px; color: var(--band-soft); }
+.why-list { list-style: none; margin: 0; padding: 0; display: grid; grid-template-columns: minmax(0, 1fr); gap: var(--s4) var(--s6); }
+@media (min-width: 760px) { .why-list { grid-template-columns: repeat(2, minmax(0, 1fr)); } }
+.why-list li { display: flex; align-items: flex-start; gap: var(--s3); }
+.why-list li > span:last-child { display: flex; flex-direction: column; gap: 3px; font-size: 15px; line-height: 1.45; color: var(--band-soft); }
+.why-list strong { font-size: 16px; color: var(--band-ink); }
+.why .yes { background: rgba(111, 221, 163, 0.16); color: var(--ok-on-dark); }
+
 /* ---------- el método ---------- */
 .steps { list-style: none; margin: 0; padding: 0; display: grid; grid-template-columns: minmax(0, 1fr); gap: var(--gap-card); }
 @media (min-width: 900px) { .steps { grid-template-columns: repeat(3, minmax(0, 1fr)); } }
@@ -756,10 +769,15 @@ body::before { content: ""; position: fixed; inset: 0 0 auto; height: env(safe-a
         <h2 id="h-claude">¿Qué es&nbsp;Claude y&nbsp;por&nbsp;qué te&nbsp;interesa?</h2>
       </div>
       <ul class="about">
-        <li class="card"><h3>Qué es</h3><p>Un&nbsp;asistente de&nbsp;inteligencia artificial, como&nbsp;ChatGPT, creado por&nbsp;la&nbsp;empresa Anthropic. Le&nbsp;escribes como&nbsp;a&nbsp;una&nbsp;persona y&nbsp;te&nbsp;contesta o&nbsp;hace la&nbsp;tarea.</p></li>
+        <li class="card"><h3>Qué es</h3><p>Un&nbsp;asistente de&nbsp;inteligencia artificial, como&nbsp;ChatGPT, creado por&nbsp;Anthropic, una&nbsp;empresa que&nbsp;fundaron antiguos investigadores de&nbsp;OpenAI. Le&nbsp;escribes como&nbsp;a&nbsp;una&nbsp;persona y&nbsp;te&nbsp;contesta o&nbsp;hace la&nbsp;tarea.</p></li>
         <li class="card"><h3>Qué puede hacer</h3><p>Escribir y&nbsp;contestar correos, leer PDF y&nbsp;documentos, ordenar datos, preparar textos y&nbsp;conectarse con&nbsp;Gmail o&nbsp;Google Drive.</p></li>
         <li class="card"><h3>Por&nbsp;qué aprenderlo</h3><p>Usado a&nbsp;ratos te&nbsp;ahorra minutos. Con&nbsp;tu&nbsp;negocio explicado y&nbsp;tus&nbsp;tareas guardadas te&nbsp;quita horas cada&nbsp;semana, y&nbsp;eso es&nbsp;lo&nbsp;que&nbsp;aprendes aquí.</p></li>
       </ul>
+      <div class="card why">
+        <h3>¿Por&nbsp;qué Claude y&nbsp;no&nbsp;ChatGPT?</h3>
+        <p>Los&nbsp;dos sirven. Para&nbsp;un&nbsp;negocio, para&nbsp;mí Claude gana en&nbsp;cuatro cosas:</p>
+        <ul class="why-list"><li><span class="yes"><svg><use href="#i-yes"/></svg></span><span><strong>Escribe como&nbsp;una&nbsp;persona</strong>Sus&nbsp;correos y&nbsp;presupuestos suenan menos a&nbsp;plantilla: los&nbsp;puedes enviar casi sin&nbsp;tocarlos.</span></li><li><span class="yes"><svg><use href="#i-yes"/></svg></span><span><strong>Respeta tus&nbsp;reglas</strong>Sigue al&nbsp;pie de&nbsp;la&nbsp;letra instrucciones largas, como&nbsp;el&nbsp;documento de&nbsp;tu&nbsp;negocio, y&nbsp;no&nbsp;se&nbsp;las&nbsp;salta a&nbsp;la&nbsp;tercera respuesta.</span></li><li><span class="yes"><svg><use href="#i-yes"/></svg></span><span><strong>Lee documentos enteros</strong>Un&nbsp;contrato, las&nbsp;facturas del&nbsp;mes o&nbsp;una&nbsp;carpeta de&nbsp;correos de&nbsp;una&nbsp;vez, sin&nbsp;tener que&nbsp;trocearlos.</span></li><li><span class="yes"><svg><use href="#i-yes"/></svg></span><span><strong>Trabaja por&nbsp;su&nbsp;cuenta</strong>Con&nbsp;Claude Code hace tareas en&nbsp;tu&nbsp;ordenador y&nbsp;te&nbsp;las&nbsp;deja terminadas, no&nbsp;solo te&nbsp;dice cómo hacerlas.</span></li></ul>
+      </div>
     </section>
   </div>
 
@@ -935,6 +953,7 @@ body::before { content: ""; position: fixed; inset: 0 0 auto; height: env(safe-a
           <details><summary>¿Cuánto tiempo me&nbsp;lleva?</summary><p>Unas&nbsp;5 o&nbsp;6 horas de&nbsp;lectura entre&nbsp;las&nbsp;dos rutas. Si&nbsp;haces un&nbsp;módulo cada&nbsp;dos días con&nbsp;tu&nbsp;propio negocio, en&nbsp;tres semanas tienes tu&nbsp;sistema funcionando, y&nbsp;desde&nbsp;el&nbsp;primer módulo ya&nbsp;hay tareas que&nbsp;te&nbsp;quitas de&nbsp;encima.</p></details>
         </div>
         <div class="faq-group"><p class="faq-k">Claude</p>
+          <details><summary>¿Y&nbsp;si&nbsp;ya&nbsp;uso ChatGPT?</summary><p>La&nbsp;forma de&nbsp;trabajar te&nbsp;sirve igual, pero&nbsp;los&nbsp;pasos, las&nbsp;plantillas y&nbsp;las&nbsp;automatizaciones del&nbsp;curso están hechos para&nbsp;Claude. Empieza con&nbsp;su&nbsp;plan gratuito y&nbsp;compara tú mismo con&nbsp;una&nbsp;tarea real de&nbsp;tu&nbsp;negocio.</p></details>
           <details><summary>¿Qué plan de&nbsp;Claude necesito?</summary><p>Para&nbsp;empezar te&nbsp;vale el&nbsp;plan gratuito. Cuando lo&nbsp;uses a&nbsp;diario, y&nbsp;para&nbsp;la&nbsp;ruta avanzada, lo&nbsp;normal es&nbsp;pasar al&nbsp;plan de&nbsp;pago de&nbsp;Claude, una&nbsp;suscripción mensual que&nbsp;se&nbsp;paga aparte.</p></details>
         </div>
         <div class="faq-group"><p class="faq-k">Planes y&nbsp;compra</p>
@@ -1097,7 +1116,7 @@ Cuando te pegue una solicitud de un posible cliente:
   var groups = ['.tasks > li', '.about > li', '.steps > li', '.routes > article', '.plans > article', '.vs-cards > .card', '.guides > li', '.faq-group'];
   var els = [];
   groups.forEach(function (sel) { document.querySelectorAll(sel).forEach(function (el, i) { el.style.setProperty('--d', i % 3); els.push(el); }); });
-  document.querySelectorAll('.sec .head, .demo, .vs, .subscribe, .bio').forEach(function (el) { els.push(el); });
+  document.querySelectorAll('.sec .head, .demo, .vs, .subscribe, .bio, .why').forEach(function (el) { els.push(el); });
   var limit = window.innerHeight * 0.92;
   els.forEach(function (el) { if (el.getBoundingClientRect().top > limit) el.classList.add('pre'); });
   var io = new IntersectionObserver(function (entries) {

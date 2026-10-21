@@ -216,5 +216,139 @@
       "Saber abandonar un sistema cuando deja de servir, sin culpa"
     ],
     "cover_image": "modulo-10-cover.png"
+  },
+  "modulo_11": {
+    "title": "Tu web, hecha con Claude",
+    "subtitle": "Reservas tu dominio, Claude te entrevista como un diseñador sénior, te escribe y diseña la web, y la publicas en una tarde.",
+    "lessons": [
+      "Qué hace falta para tener web",
+      "Elegir y reservar el dominio",
+      "El encargo: Claude te entrevista",
+      "Claude escribe y diseña la web completa",
+      "Publicarla con tu dominio",
+      "El mínimo legal en España",
+      "Que te encuentren"
+    ],
+    "duration_minutes": 40,
+    "what_you_learn": [
+      "Elegir y reservar tu dominio sabiendo lo que pagarás cada año",
+      "Conseguir que Claude te entreviste y te escriba y diseñe una web de una página",
+      "Publicarla gratis en Netlify con tu propio dominio",
+      "Poner el aviso legal, la privacidad y, si hace falta, el aviso de cookies",
+      "Crear tu ficha de Google y pedir reseñas a clientes reales"
+    ],
+    "cover_image": "modulo-11-cover.png"
+  },
+  "modulo_12": {
+    "title": "Tu CRM, conectado a tu web",
+    "subtitle": "Cada persona que te escribe desde la web entra sola en tu lista de clientes, y Claude te dice si encaja y qué hacer con ella.",
+    "lessons": [
+      "Qué es un CRM, en cristiano",
+      "Tu CRM en Google Sheets, diseñado por Claude",
+      "Antes de guardar contactos: lo mínimo de protección de datos",
+      "Que el formulario de tu web llegue solo a tu CRM",
+      "Que Claude conozca tu web y tus servicios",
+      "Conectar Claude con tu CRM",
+      "La revisión de 15 minutos a la semana",
+      "En la ruta avanzada: el resumen cada mañana sin pedirlo"
+    ],
+    "duration_minutes": 40,
+    "what_you_learn": [
+      "Decidir si te basta una hoja de Google Sheets o te compensa un CRM como HubSpot",
+      "Tener una hoja de clientes con estados y fecha del próximo paso, diseñada por Claude",
+      "Hacer que el formulario de tu web llegue solo a tu lista, con la privacidad en regla",
+      "Montar un proyecto en claude.ai que clasifica cada contacto según tus servicios",
+      "Revisar la lista con Claude en 15 minutos a la semana"
+    ],
+    "cover_image": "modulo-12-cover.png"
+  },
+  "modulo_13": {
+    "title": "Encontrar clientes potenciales",
+    "subtitle": "Claude busca negocios que encajan con lo que vendes, te dice por qué encaja cada uno y te los deja en tu hoja o tu CRM.",
+    "lessons": [
+      "Tu cliente ideal en una ficha",
+      "Señales de compra: quién te necesita ahora",
+      "La búsqueda con Claude",
+      "Puntuar y filtrar",
+      "Guardarlo en tu hoja o tu CRM",
+      "Cada semana, sin pensar",
+      "Lo que no se debe hacer"
+    ],
+    "duration_minutes": 40,
+    "what_you_learn": [
+      "Escribir la ficha de tu cliente ideal a partir de tus mejores clientes",
+      "Reconocer las señales públicas de que una empresa te necesita ahora",
+      "Pedirle a Claude una búsqueda con criterios concretos y la fuente de cada dato",
+      "Puntuar el encaje de 1 a 5 y guardar los buenos en tu hoja o tu CRM sin duplicados",
+      "Repetir la búsqueda cada semana y saber qué datos no debes guardar"
+    ],
+    "cover_image": "modulo-13-cover.png"
+  },
+  "modulo_14": {
+    "title": "Primer contacto, llamadas y seguimiento",
+    "subtitle": "Claude escribe el primer mensaje, prepara tus llamadas, te ayuda a cerrar la cita y deja el CRM al día. Tú revisas y envías.",
+    "lessons": [
+      "Qué canal usar con cada contacto",
+      "El primer mensaje, personalizado",
+      "El guion de la llamada",
+      "Agendar sin idas y venidas",
+      "Después de la llamada",
+      "Seguimiento sin olvidos",
+      "En la ruta avanzada: borradores listos cada mañana"
+    ],
+    "duration_minutes": 40,
+    "what_you_learn": [
+      "Elegir el canal de cada contacto según el permiso que te haya dado",
+      "Escribir con Claude un primer mensaje que solo encaja con esa empresa",
+      "Preparar una llamada en diez minutos",
+      "Cerrar citas con una página de reservas o con Google Calendar conectado",
+      "Pasar de las notas de una llamada al CRM al día y a un seguimiento semanal"
+    ],
+    "cover_image": "modulo-14-cover.png"
+  },
+  "modulo_15": {
+    "title": "Facturas, cobros y los números del mes",
+    "subtitle": "Claude ordena las facturas para la gestoría, encuentra quién te debe, redacta los recordatorios y prepara el informe del mes. Tú revisas y envías.",
+    "lessons": [
+      "Qué hace Claude aquí y qué no",
+      "Las facturas recibidas, ordenadas para la gestoría",
+      "Quién te debe dinero, cuánto y desde cuándo",
+      "Recordatorios de cobro en tu tono",
+      "El informe del mes",
+      "El cierre de trimestre con la gestoría",
+      "Qué datos subir y cuáles no",
+      "En la ruta avanzada: el aviso de cobros de cada lunes"
+    ],
+    "duration_minutes": 40,
+    "what_you_learn": [
+      "Pasar las facturas de proveedores a una tabla para la gestoría, con lo dudoso marcado",
+      "Saber quién te debe, cuánto y desde cuándo",
+      "Reclamar cobros con correos en tu tono, del amable al último aviso",
+      "Preparar el informe del mes sin cifras inventadas y el paquete del trimestre",
+      "Saber qué datos subir y cómo evitar que tus conversaciones se usen para entrenar"
+    ],
+    "cover_image": "modulo-15-cover.png"
+  },
+  "modulo_16": {
+    "title": "Contratar y formar a tu equipo",
+    "subtitle": "El puesto, la oferta, los currículos, las entrevistas y el manual del primer día. Claude lo prepara y tú decides.",
+    "lessons": [
+      "Antes de contratar, define el puesto",
+      "La oferta de empleo",
+      "Dónde publicarla y cómo recibir los currículos ordenados",
+      "Leer currículos con Claude, decidiendo tú",
+      "Entrevistas: el mismo guion para todos",
+      "El primer día y el primer mes",
+      "Lo que Claude no debe hacer"
+    ],
+    "duration_minutes": 40,
+    "what_you_learn": [
+      "Calcular cuántas horas necesitas antes de contratar y qué puedes automatizar primero",
+      "Escribir una oferta clara, con salario y sin requisitos que discriminen",
+      "Recibir las candidaturas en una hoja, con su aviso de privacidad",
+      "Leer currículos y entrevistar con ayuda de Claude, decidiendo tú",
+      "Recibir a la persona nueva con un plan de bienvenida y un manual del puesto"
+    ],
+    "cover_image": "modulo-16-cover.png"
   }
 }

@@ -1,5 +1,5 @@
 #!/usr/bin/env bash
-# Sube los 12 PDFs del curso a la KV STORE del worker rafa-prompts-api.
+# Sube los 18 PDFs del curso a la KV STORE del worker rafa-prompts-api.
 # Cada PDF se guarda con la clave `file:<slug>` (formato esperado por el worker).
 #
 # Prereqs:
@@ -35,6 +35,12 @@ FILES=(
   "modulo-08-skills-subagentes-mcp"
   "modulo-09-sistema-autonomo"
   "modulo-10-vivir-con-sistema-ia"
+  "modulo-11-tu-web-con-claude"
+  "modulo-12-tu-crm-conectado"
+  "modulo-13-encontrar-clientes"
+  "modulo-14-contacto-y-agenda"
+  "modulo-15-facturas-y-cobros"
+  "modulo-16-contratar-y-formar"
   "prompt-library-100"
 )
 
@@ -54,7 +60,7 @@ for slug in "${FILES[@]}"; do
 done
 
 echo ""
-echo "✓ 12 PDFs subidos a KV STORE"
+echo "✓ ${#FILES[@]} PDFs subidos a KV STORE"
 echo ""
 echo "next: redespliega el worker para cargar el nuevo PDF_CATALOG"
 echo "  cd api && npx wrangler deploy"

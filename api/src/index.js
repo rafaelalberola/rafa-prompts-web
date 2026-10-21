@@ -28,7 +28,13 @@ const PDF_CATALOG = [
   { slug: 'modulo-08-skills-subagentes-mcp',title: 'Módulo 08 · Skills nativas, subagentes y MCP',           order: 8 },
   { slug: 'modulo-09-sistema-autonomo',     title: 'Módulo 09 · Construir tu primer sistema autónomo',       order: 9 },
   { slug: 'modulo-10-vivir-con-sistema-ia', title: 'Módulo 10 · Vivir con un sistema de IA',                 order: 10 },
-  { slug: 'prompt-library-100',             title: 'Biblioteca · 100 prompts',                              order: 11 },
+  { slug: 'modulo-11-tu-web-con-claude', title: 'Módulo 11 · Tu web, hecha con Claude', order: 11 },
+  { slug: 'modulo-12-tu-crm-conectado', title: 'Módulo 12 · Tu CRM, conectado a tu web', order: 12 },
+  { slug: 'modulo-13-encontrar-clientes', title: 'Módulo 13 · Encontrar clientes potenciales', order: 13 },
+  { slug: 'modulo-14-contacto-y-agenda', title: 'Módulo 14 · Primer contacto, llamadas y seguimiento', order: 14 },
+  { slug: 'modulo-15-facturas-y-cobros', title: 'Módulo 15 · Facturas, cobros y los números del mes', order: 15 },
+  { slug: 'modulo-16-contratar-y-formar', title: 'Módulo 16 · Contratar y formar a tu equipo', order: 16 },
+  { slug: 'prompt-library-100',             title: 'Biblioteca · 100 prompts',                              order: 17 },
 ];
 
 const json = (data, status = 200, extraHeaders = {}) =>
@@ -169,7 +175,7 @@ async function sendDeliveryEmail(env, { to, name, token }) {
   <div style="max-width:560px; margin:0 auto; background:#fff; padding:40px 36px; border-radius:20px;">
     <div style="font-family: 'IBM Plex Mono', monospace; font-size:11px; letter-spacing:0.18em; text-transform:uppercase; color:#DA7756; font-weight:700; margin-bottom:16px;">El método Claude</div>
     <h1 style="font-size:28px; font-weight:900; line-height:1.1; margin:0 0 16px; letter-spacing:-0.02em;">${greeting}, gracias por tu compra</h1>
-    <p style="font-size:16px; line-height:1.6; color:#333; margin:0 0 20px;">Tu acceso al curso ya está listo. Puedes descargar los 12 PDFs (los 10 módulos, la guía "empezar aquí" y la biblioteca de 100 prompts) desde tu página personal:</p>
+    <p style="font-size:16px; line-height:1.6; color:#333; margin:0 0 20px;">Tu acceso al curso ya está listo. Puedes descargar los 18 PDFs (los 16 módulos, la guía "empezar aquí" y la biblioteca de 100 prompts) desde tu página personal:</p>
     <p style="margin:28px 0;">
       <a href="${downloadUrl}" style="display:inline-block; background:#DA7756; color:#fff; padding:16px 28px; border-radius:999px; text-decoration:none; font-weight:700; font-size:15px;">Acceder a las descargas</a>
     </p>

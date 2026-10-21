@@ -7,7 +7,7 @@
 
 <script>if(location.protocol!=="https:"&&location.hostname.endsWith("rafaprompts.com"))location.replace("https:"+location.href.substring(location.protocol.length));</script>
 <title>rafa.prompts · Aprende a automatizar tu negocio con Claude</title>
-<meta name="description" content="Curso en PDF para automatizar tu negocio con Claude sin programar: el correo, las solicitudes de clientes, la investigación y los procesos. 10 módulos, 100 prompts y plantillas. 149 €, pago único.">
+<meta name="description" content="Curso en PDF para automatizar tu negocio con Claude sin programar: tu web, tus clientes, el correo, las facturas y tu equipo. 16 módulos, 100 prompts y plantillas. 149 €, pago único.">
 <link rel="canonical" href="https://rafaprompts.com/">
 <meta name="robots" content="index, follow, max-image-preview:large">
 <meta name="author" content="Rafael Alberola">
@@ -16,7 +16,7 @@
 <meta property="og:locale" content="es_ES">
 <meta property="og:url" content="https://rafaprompts.com/">
 <meta property="og:title" content="Aprende a automatizar tu negocio con Claude">
-<meta property="og:description" content="Curso en PDF para pymes que quieren automatizar el correo, las solicitudes y los procesos con Claude. Sin programar. Desde 149 €, con 14 días de garantía.">
+<meta property="og:description" content="Curso en PDF para pymes: automatiza con Claude tu web, tus clientes, el correo y las facturas, sin programar. Desde 149 €, con 14 días de garantía.">
 <meta property="og:image" content="https://rafaprompts.com/assets/img/og-image.png">
 <meta name="twitter:card" content="summary_large_image">
 <meta name="twitter:site" content="@rafa.prompts">
@@ -95,6 +95,59 @@ h2 { font-size: clamp(30px, 4.2vw, 50px); line-height: 1.02; }
 h3 { margin: 0; font-size: 20px; line-height: 1.2; font-weight: 800; letter-spacing: -0.01em; }
 .head p:not(.kicker) { margin: 0; max-width: 60ch; font-size: 17px; color: var(--ink-soft); }
 .it { font-family: var(--f-serif); font-style: italic; font-weight: 500; letter-spacing: -0.01em; color: var(--accent); }
+
+/* ---------- el recorrido: vertical en móvil, horizontal en escritorio ---------- */
+.journey { display: flex; flex-direction: column; gap: var(--s5); }
+.act { display: flex; flex-direction: column; gap: var(--s3); min-width: 0; }
+.act-name { margin: 0; font: 700 11.5px/1.3 var(--f-mono); letter-spacing: 0.14em; text-transform: uppercase; color: var(--ink-mute); }
+.stages { list-style: none; margin: 0; padding: 0; display: flex; flex-direction: column; }
+.stage { position: relative; display: flex; align-items: flex-start; gap: var(--s4); padding-bottom: var(--s5); }
+.stage:last-child { padding-bottom: 0; }
+.stage::before { content: ""; position: absolute; left: 21px; top: 0; bottom: 0; width: 2px; background: var(--line-strong); transform-origin: top center; }
+.stage:first-child::before { top: 22px; }
+.stage:last-child::before { bottom: auto; height: 22px; }
+.stage:only-child::before { display: none; }
+.node { position: relative; z-index: 1; flex: 0 0 44px; width: 44px; height: 44px; border-radius: 50%; display: inline-flex; align-items: center; justify-content: center; background: var(--surface); border: 1px solid var(--line-strong); color: var(--accent-ink); box-shadow: 0 0 0 6px var(--bg); }
+.node svg { width: 20px; height: 20px; fill: none; stroke: currentColor; stroke-width: 2; stroke-linecap: round; stroke-linejoin: round; }
+.stage-txt { display: flex; flex-direction: column; gap: var(--s2); min-width: 0; padding-top: 10px; }
+.stage h3 { font-size: 17px; }
+.stage p { margin: 0; font-size: 15px; line-height: 1.45; color: var(--ink-soft); text-wrap: pretty; }
+.card.mod > .card-ico, .card.journey-auto > .card-ico { flex: 0 0 44px; }
+.card.journey-auto { flex-direction: row; align-items: center; gap: var(--s5); }
+.journey-auto p { margin: 0; font-size: 16px; color: var(--ink-soft); }
+.journey-auto strong { color: var(--ink); }
+.value-line { margin: 0; font-weight: 700; font-size: 16px; color: var(--ok); text-align: center; }
+@media (max-width: 899px) { .value-line { text-align: left; } }
+@media (min-width: 1080px) {
+  .journey { flex-direction: row; gap: 0; }
+  .act { flex: var(--n) 1 0; gap: var(--s5); }
+  .act-name { margin-right: var(--s4); padding-bottom: var(--s2); border-bottom: 2px solid rgba(218, 119, 86, 0.35); }
+  .stages { flex-direction: row; }
+  .stage { flex: 1 1 0; min-width: 0; flex-direction: column; gap: var(--s4); padding: 0 var(--s3) 0 0; }
+  .stage .label { letter-spacing: 0.06em; }
+  .stage::before, .stage:first-child::before, .stage:last-child::before, .stage:only-child::before { display: block; top: 21px; bottom: auto; left: 0; right: 0; width: auto; height: 2px; transform-origin: left center; }
+  .act:first-child .stage:first-child::before { left: 22px; }
+  .act:last-child .stage:last-child::before { right: auto; width: 22px; }
+  .stage-txt { padding-top: 0; }
+  .stage h3 { font-size: 16px; min-height: 2.4em; }  /* títulos de una o dos líneas: las etiquetas quedan alineadas */
+  .stage p { font-size: 14px; }
+  .journey-auto { align-self: center; }
+}
+@media (prefers-reduced-motion: no-preference) {
+  .journey.in .stage::before { animation: jLineY .7s cubic-bezier(.2,.7,.2,1) both; animation-delay: calc(var(--i) * 110ms); }
+  .journey.in .node { animation: jNode .5s cubic-bezier(.2,.7,.2,1) both; animation-delay: calc(var(--i) * 110ms + 60ms); }
+  @media (min-width: 1080px) { .journey.in .stage::before { animation-name: jLineX; } }
+}
+@keyframes jLineY { from { transform: scaleY(0); } }
+@keyframes jLineX { from { transform: scaleX(0); } }
+@keyframes jNode { from { transform: scale(.6); opacity: 0; } }
+
+/* ---------- módulos: una tarjeta por módulo, una debajo de otra ---------- */
+.mod-list { list-style: none; margin: 0 auto; padding: 0; width: 100%; max-width: 780px; display: flex; flex-direction: column; gap: var(--s2); }
+.card.mod { flex-direction: row; align-items: center; gap: var(--s5); padding: var(--s4) var(--s5); }
+.mod h3 { font-size: 17px; }
+.mod p { margin: 0; font-size: 15px; color: var(--ink-soft); }
+.mod-n { font: 700 14px/1 var(--f-mono); letter-spacing: 0.04em; color: var(--accent-ink); margin-right: 4px; }
 
 /* ---------- piezas reutilizables ---------- */
 .card { display: flex; flex-direction: column; align-items: flex-start; gap: var(--s4); padding: var(--s5); text-align: left; background: var(--surface); border: 1px solid var(--line); border-radius: var(--r-card); }
@@ -730,7 +783,7 @@ body::before { content: ""; position: fixed; inset: 0 0 auto; height: env(safe-a
   <header class="top">
     <a class="brand" href="https://rafaprompts.com/"><strong>rafa</strong>.prompts</a>
     <nav aria-label="Secciones">
-      <a href="#montas">Qué montas</a>
+      <a href="#montas">Lo&nbsp;que&nbsp;ahorras</a>
       <a href="#rutas">¿Hay que&nbsp;programar?</a>
       <a href="#precio">Precio</a>
       <a class="top-cta js-buy" href="https://rafaprompts.com/#comprar">Comprar · 149&nbsp;€</a>
@@ -745,7 +798,7 @@ body::before { content: ""; position: fixed; inset: 0 0 auto; height: env(safe-a
       <div class="hero-copy">
         <p class="kicker">El&nbsp;método Claude · curso en&nbsp;PDF</p>
         <h1 id="h-hero">Aprende a&nbsp;automatizar tu&nbsp;negocio con&nbsp;Claude <span class="it">sin&nbsp;programar</span></h1>
-        <p class="lede">Si&nbsp;llevas una&nbsp;pyme y&nbsp;acabas las&nbsp;tardes contestando correos y&nbsp;ordenando solicitudes, esto es&nbsp;para&nbsp;ti. Empieza este fin de&nbsp;semana sin&nbsp;necesidad de&nbsp;programar.</p>
+        <p class="lede">¿Se&nbsp;te&nbsp;van las&nbsp;tardes en&nbsp;correos, Excel y&nbsp;papeles? Claude puede devolverte unas&nbsp;30 horas al&nbsp;mes, y&nbsp;empiezas este fin de&nbsp;semana.</p>
         <div class="buy">
           <a class="btn js-buy" href="https://rafaprompts.com/#comprar">Comprar el&nbsp;curso · 149&nbsp;€</a>
           <p class="assure" aria-label="Condiciones de compra"><span class="assure-line"><span>Pago único</span><span>14 días de&nbsp;garantía</span><span>Factura para&nbsp;tu&nbsp;empresa</span></span></p>
@@ -810,9 +863,52 @@ body::before { content: ""; position: fixed; inset: 0 0 auto; height: env(safe-a
       </div>
       <ul class="about">
         <li class="card"><span class="card-ico" aria-hidden="true"><svg viewBox="0 0 24 24"><path d="M9.937 15.5A2 2 0 0 0 8.5 14.063l-6.135-1.582a.5.5 0 0 1 0-.962L8.5 9.936A2 2 0 0 0 9.937 8.5l1.582-6.135a.5.5 0 0 1 .963 0L14.063 8.5A2 2 0 0 0 15.5 9.937l6.135 1.581a.5.5 0 0 1 0 .964L15.5 14.063a2 2 0 0 0-1.437 1.437l-1.582 6.135a.5.5 0 0 1-.963 0z"/><path d="M20 3v4"/><path d="M22 5h-4"/><path d="M4 17v2"/><path d="M5 18H3"/></svg></span><div class="card-txt"><h3>Qué es</h3><p>Una&nbsp;IA como&nbsp;ChatGPT, de&nbsp;Anthropic: le&nbsp;escribes y&nbsp;hace la&nbsp;tarea. Pero&nbsp;escribe más&nbsp;natural, sigue tus&nbsp;reglas al&nbsp;pie de&nbsp;la&nbsp;letra y&nbsp;lee documentos enteros.</p></div></li>
-        <li class="card"><span class="card-ico" aria-hidden="true"><svg viewBox="0 0 24 24"><path d="m3 17 2 2 4-4"/><path d="m3 7 2 2 4-4"/><path d="M13 6h8"/><path d="M13 12h8"/><path d="M13 18h8"/></svg></span><div class="card-txt"><h3>Qué puede hacer</h3><p>Escribir y&nbsp;contestar correos, leer PDF y&nbsp;documentos, ordenar los&nbsp;datos de&nbsp;tu&nbsp;Excel o&nbsp;tu&nbsp;CRM, preparar textos y&nbsp;conectarse con&nbsp;Gmail o&nbsp;Google Drive.</p></div></li>
-        <li class="card"><span class="card-ico" aria-hidden="true"><svg viewBox="0 0 24 24"><polyline points="22 7 13.5 15.5 8.5 10.5 2 17"/><polyline points="16 7 22 7 22 13"/></svg></span><div class="card-txt"><h3>Por&nbsp;qué aprenderlo</h3><p>Usado a&nbsp;ratos te&nbsp;ahorra minutos. Con&nbsp;tu&nbsp;negocio explicado y&nbsp;tus&nbsp;tareas guardadas te&nbsp;quita horas cada&nbsp;semana, y&nbsp;eso es&nbsp;lo&nbsp;que&nbsp;aprendes aquí.</p></div></li>
+        <li class="card"><span class="card-ico" aria-hidden="true"><svg viewBox="0 0 24 24"><path d="m3 17 2 2 4-4"/><path d="m3 7 2 2 4-4"/><path d="M13 6h8"/><path d="M13 12h8"/><path d="M13 18h8"/></svg></span><div class="card-txt"><h3>Qué puede hacer</h3><p>Contesta correos, lee tus&nbsp;PDF, ordena tu&nbsp;Excel o&nbsp;tu&nbsp;CRM y&nbsp;se&nbsp;conecta con&nbsp;Gmail y&nbsp;Google Drive.</p></div></li>
+        <li class="card"><span class="card-ico" aria-hidden="true"><svg viewBox="0 0 24 24"><polyline points="22 7 13.5 15.5 8.5 10.5 2 17"/><polyline points="16 7 22 7 22 13"/></svg></span><div class="card-txt"><h3>Lo&nbsp;que&nbsp;ganas</h3><p>Aplícalo a&nbsp;tu&nbsp;negocio y&nbsp;ahorra unas&nbsp;30 horas al&nbsp;mes. Con&nbsp;tu&nbsp;hora a&nbsp;25 €, son unos&nbsp;750 € cada&nbsp;mes.</p></div></li>
       </ul>
+    </section>
+  </div>
+
+  <!-- 1c. El recorrido: todo lo que cubre el curso, de la web al equipo (horizontal en escritorio, vertical en móvil) -->
+  <div class="wrap">
+    <section class="sec" id="recorrido" aria-labelledby="h-recorrido">
+      <div class="head">
+        <p class="kicker">De&nbsp;principio a&nbsp;fin</p>
+        <h2 id="h-recorrido">Todo tu&nbsp;negocio, con&nbsp;una&nbsp;sola herramienta</h2>
+        <p>Desde&nbsp;que&nbsp;un&nbsp;cliente te&nbsp;encuentra hasta&nbsp;que&nbsp;contratas a&nbsp;tu&nbsp;próxima persona. También lo&nbsp;que&nbsp;tu&nbsp;negocio aún no&nbsp;necesita, pero&nbsp;va a&nbsp;necesitar.</p>
+      </div>
+      <div class="journey">
+        <div class="act" style="--n:2">
+          <p class="act-name">Empieza</p>
+          <ol class="stages">
+            <li class="stage" style="--i:0"><span class="node" aria-hidden="true"><svg viewBox="0 0 24 24"><circle cx="12" cy="12" r="10" /><path d="M12 2a14.5 14.5 0 0 0 0 20 14.5 14.5 0 0 0 0-20" /><path d="M2 12h20" /></svg></span><div class="stage-txt"><h3>Tu&nbsp;web</h3><span class="label">Módulo 11</span><p>Reservas el&nbsp;dominio y&nbsp;Claude te&nbsp;diseña y&nbsp;escribe la&nbsp;web.</p></div></li>
+            <li class="stage" style="--i:1"><span class="node" aria-hidden="true"><svg viewBox="0 0 24 24"><ellipse cx="12" cy="5" rx="9" ry="3" /><path d="M3 5V19A9 3 0 0 0 21 19V5" /><path d="M3 12A9 3 0 0 0 21 12" /></svg></span><div class="stage-txt"><h3>Tu&nbsp;CRM</h3><span class="label">Módulo 12</span><p>Cada&nbsp;contacto de&nbsp;la&nbsp;web entra solo en&nbsp;tu&nbsp;Excel o&nbsp;tu&nbsp;CRM.</p></div></li>
+          </ol>
+        </div>
+        <div class="act" style="--n:3">
+          <p class="act-name">Vende</p>
+          <ol class="stages" start="3">
+            <li class="stage" style="--i:2"><span class="node" aria-hidden="true"><svg viewBox="0 0 24 24"><circle cx="11" cy="11" r="8" /><path d="m21 21-4.3-4.3" /></svg></span><div class="stage-txt"><h3>Clientes potenciales</h3><span class="label">Módulo 13</span><p>Claude busca empresas que&nbsp;encajan contigo y&nbsp;las&nbsp;guarda.</p></div></li>
+            <li class="stage" style="--i:3"><span class="node" aria-hidden="true"><svg viewBox="0 0 24 24"><path d="M8 2v4" /><path d="M16 2v4" /><rect width="18" height="18" x="3" y="4" rx="2" /><path d="M3 10h18" /><path d="m9 16 2 2 4-4" /></svg></span><div class="stage-txt"><h3>Contacto y&nbsp;agenda</h3><span class="label">Módulo 14</span><p>El&nbsp;primer mensaje, la&nbsp;llamada en&nbsp;tu&nbsp;agenda y&nbsp;el&nbsp;CRM al&nbsp;día.</p></div></li>
+            <li class="stage" style="--i:4"><span class="node" aria-hidden="true"><svg viewBox="0 0 24 24"><path d="M15 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V7Z" /><path d="M14 2v4a2 2 0 0 0 2 2h4" /><path d="M10 9H8" /><path d="M16 13H8" /><path d="M16 17H8" /></svg></span><div class="stage-txt"><h3>Presupuestos</h3><span class="label">Módulo 03</span><p>Presupuestos e&nbsp;informes con&nbsp;tu&nbsp;formato, en&nbsp;un&nbsp;clic.</p></div></li>
+          </ol>
+        </div>
+        <div class="act" style="--n:2">
+          <p class="act-name">Gestiona</p>
+          <ol class="stages" start="6">
+            <li class="stage" style="--i:5"><span class="node" aria-hidden="true"><svg viewBox="0 0 24 24"><polyline points="22 12 16 12 14 15 10 15 8 12 2 12" /><path d="M5.45 5.11 2 12v6a2 2 0 0 0 2 2h16a2 2 0 0 0 2-2v-6l-3.45-6.89A2 2 0 0 0 16.76 4H7.24a2 2 0 0 0-1.79 1.11z" /></svg></span><div class="stage-txt"><h3>Atención al&nbsp;cliente</h3><span class="label">Módulos 04 y&nbsp;05</span><p>El&nbsp;correo ordenado y&nbsp;cada&nbsp;solicitud clasificada al&nbsp;llegar.</p></div></li>
+            <li class="stage" style="--i:6"><span class="node" aria-hidden="true"><svg viewBox="0 0 24 24"><path d="M4 2v20l2-1 2 1 2-1 2 1 2-1 2 1 2-1 2 1V2l-2 1-2-1-2 1-2-1-2 1-2-1-2 1Z" /><path d="M16 8h-6a2 2 0 1 0 0 4h4a2 2 0 1 1 0 4H8" /><path d="M12 17.5v-11" /></svg></span><div class="stage-txt"><h3>Facturas y&nbsp;cobros</h3><span class="label">Módulo 15</span><p>Facturas para&nbsp;la&nbsp;gestoría y&nbsp;aviso de&nbsp;cada&nbsp;cobro pendiente.</p></div></li>
+          </ol>
+        </div>
+        <div class="act" style="--n:1">
+          <p class="act-name">Crece</p>
+          <ol class="stages" start="8">
+            <li class="stage" style="--i:7"><span class="node" aria-hidden="true"><svg viewBox="0 0 24 24"><path d="M16 21v-2a4 4 0 0 0-4-4H6a4 4 0 0 0-4 4v2" /><circle cx="9" cy="7" r="4" /><line x1="19" x2="19" y1="8" y2="14" /><line x1="22" x2="16" y1="11" y2="11" /></svg></span><div class="stage-txt"><h3>Tu&nbsp;equipo</h3><span class="label">Módulo 16</span><p>La&nbsp;oferta de&nbsp;empleo, los&nbsp;currículos y&nbsp;el&nbsp;manual del&nbsp;primer día.</p></div></li>
+          </ol>
+        </div>
+      </div>
+      <div class="card journey-auto"><span class="card-ico" aria-hidden="true"><svg viewBox="0 0 24 24"><path d="M3 12a9 9 0 0 1 9-9 9.75 9.75 0 0 1 6.74 2.74L21 8" /><path d="M21 3v5h-5" /><path d="M21 12a9 9 0 0 1-9 9 9.75 9.75 0 0 1-6.74-2.74L3 16" /><path d="M8 16H3v5" /></svg></span><p><strong>Y&nbsp;cuando quieras, todo esto funciona solo cada&nbsp;mañana.</strong> Lo&nbsp;montas con&nbsp;Claude Code en&nbsp;los&nbsp;módulos 07 a&nbsp;10, sin&nbsp;programar.</p></div>
+      <p class="value-line">Todo el&nbsp;recorrido por&nbsp;menos de&nbsp;lo&nbsp;que&nbsp;cobra una&nbsp;agencia solo por&nbsp;hacerte la&nbsp;web.</p>
     </section>
   </div>
 
@@ -820,19 +916,18 @@ body::before { content: ""; position: fixed; inset: 0 0 auto; height: env(safe-a
   <div class="wrap">
     <section class="sec" id="montas" aria-labelledby="h-montas">
       <div class="head">
-        <p class="kicker">Lo&nbsp;que&nbsp;vas a&nbsp;montar</p>
+        <p class="kicker">Lo&nbsp;que&nbsp;recuperas</p>
         <h2 id="h-montas">Algunas de&nbsp;las&nbsp;tareas que&nbsp;aprenderás a&nbsp;automatizar en&nbsp;tu&nbsp;negocio</h2>
-        <p>Te&nbsp;las&nbsp;explico paso a&nbsp;paso dentro del&nbsp;curso, cada&nbsp;una&nbsp;con&nbsp;su&nbsp;plantilla lista para&nbsp;copiar.</p>
         <p class="save-total">Las&nbsp;seis juntas te&nbsp;ahorran unas&nbsp;<strong>30&nbsp;h al&nbsp;mes</strong>: <strong class="save-sum">+750&nbsp;€ al&nbsp;mes</strong></p>
         <p class="save-note">Calculado a&nbsp;25&nbsp;€ la&nbsp;hora. La&nbsp;media en&nbsp;España es&nbsp;de&nbsp;26,18&nbsp;€ (<a href="https://www.ine.es/dyngs/Prensa/ETCL2T26.htm" target="_blank" rel="noopener">INE</a>).</p>
       </div>
       <ul class="tasks">
-        <li class="card task"><div class="viz" aria-hidden="true"><div class="mini"><span class="v-line b" style="--w:46%"></span><span class="v-line" style="--w:88%"></span><span class="v-line" style="--w:74%"></span><span class="v-line" style="--w:60%"></span><span class="v-badge icon"><svg viewBox="0 0 100 100"><use href="#flower"/></svg></span></div></div><div class="card-txt"><h3>Que&nbsp;Claude conozca tu&nbsp;negocio</h3><span class="label">Disponible en&nbsp;el&nbsp;Módulo 02</span><p>Claude conoce tus&nbsp;servicios, tus&nbsp;precios y&nbsp;tu&nbsp;forma de&nbsp;hablar, y&nbsp;te&nbsp;responde como&nbsp;lo&nbsp;harías tú.</p><p class="save" data-h="2"><strong>+50&nbsp;€ al&nbsp;mes</strong><span>2&nbsp;h al&nbsp;mes: 30 min a&nbsp;la&nbsp;semana sin&nbsp;corregir respuestas genéricas</span></p></div></li>
-        <li class="card task"><div class="viz" aria-hidden="true"><div class="mini rows"><div class="v-row hot"><span>Hoy</span><b>3</b></div><div class="v-row"><span>Esta semana</span><b>5</b></div><div class="v-row"><span>Delegar</span><b>2</b></div><div class="v-row mute"><span>Archivar</span><b>30</b></div></div></div><div class="card-txt"><h3>El&nbsp;correo pendiente, ordenado</h3><span class="label">Disponible en&nbsp;el&nbsp;Módulo 04</span><p>Ordena tu&nbsp;bandeja de&nbsp;entrada por&nbsp;urgencia y&nbsp;te&nbsp;deja escritas las&nbsp;respuestas de&nbsp;hoy.</p><p class="save" data-h="8"><strong>+200&nbsp;€ al&nbsp;mes</strong><span>8&nbsp;h al&nbsp;mes: 40 min menos con&nbsp;el&nbsp;correo, 3 días a&nbsp;la&nbsp;semana</span></p></div></li>
-        <li class="card task"><div class="viz" aria-hidden="true"><div class="mini rows"><div class="v-row"><i class="g a">A</i><span class="v-line" style="--w:62%"></span><span class="v-phone"></span></div><div class="v-row"><i class="g">B</i><span class="v-line" style="--w:48%"></span></div><div class="v-row mute"><i class="g">D</i><span class="v-line" style="--w:56%"></span></div></div></div><div class="card-txt"><h3>Las&nbsp;solicitudes, clasificadas solas</h3><span class="label">Disponible en&nbsp;el&nbsp;Módulo 05</span><p>Clasifica cada&nbsp;solicitud de&nbsp;tu&nbsp;web con&nbsp;tus&nbsp;criterios y&nbsp;te&nbsp;avisa en&nbsp;el&nbsp;móvil de&nbsp;los&nbsp;clientes que&nbsp;encajan.</p><p class="save" data-h="4"><strong>+100&nbsp;€ al&nbsp;mes</strong><span>4&nbsp;h al&nbsp;mes: 6 min menos por&nbsp;solicitud, unas&nbsp;40 al&nbsp;mes</span></p></div></li>
-        <li class="card task"><div class="viz" aria-hidden="true"><div class="mini rows"><div class="v-row v-head"><span>Cliente</span><b>Fase</b></div><div class="v-row new"><span>Javier R.</span><b>Nuevo</b></div><div class="v-row"><span>Marta L.</span><b>Presupuesto</b></div><div class="v-row mute"><span>Obras Turia</span><b>Ganado</b></div></div></div><div class="card-txt"><h3>Tus&nbsp;clientes, al&nbsp;día en&nbsp;tu&nbsp;Excel o&nbsp;tu&nbsp;CRM</h3><span class="label">Disponible en&nbsp;el&nbsp;Módulo 05</span><p>Cada&nbsp;solicitud nueva se&nbsp;apunta sola en&nbsp;tu&nbsp;Excel, tu&nbsp;Google Sheets o&nbsp;tu&nbsp;CRM (HubSpot, Zoho…), clasificada y&nbsp;con&nbsp;sus&nbsp;datos, sin&nbsp;teclear nada.</p><p class="save" data-h="6"><strong>+150&nbsp;€ al&nbsp;mes</strong><span>6&nbsp;h al&nbsp;mes: 9 min menos por&nbsp;cliente al&nbsp;apuntarlo y&nbsp;seguirlo, unos&nbsp;40 al&nbsp;mes</span></p></div></li>
-        <li class="card task"><div class="viz" aria-hidden="true"><div class="mini"><div class="v-step"><i>1</i><span class="v-line" style="--w:80%"></span></div><div class="v-step"><i>2</i><span class="v-line" style="--w:60%"></span></div><div class="v-step"><i>3</i><span class="v-line" style="--w:72%"></span></div><span class="v-badge icon q">?</span></div></div><div class="card-txt"><h3>Tus&nbsp;procesos, por&nbsp;escrito</h3><span class="label">Disponible en&nbsp;el&nbsp;Módulo 04</span><p>Convierte lo&nbsp;que&nbsp;sabes en&nbsp;un&nbsp;manual para&nbsp;tu&nbsp;equipo: se&nbsp;lo&nbsp;cuentas a&nbsp;Claude y&nbsp;lo&nbsp;escribe, con&nbsp;sus&nbsp;preguntas frecuentes.</p><p class="save" data-h="4"><strong>+100&nbsp;€ al&nbsp;mes</strong><span>4&nbsp;h al&nbsp;mes: 1 h a&nbsp;la&nbsp;semana sin&nbsp;resolver las&nbsp;mismas dudas del&nbsp;equipo</span></p></div></li>
-        <li class="card task"><div class="viz" aria-hidden="true"><div class="mini"><span class="v-line b" style="--w:52%"></span><span class="v-line" style="--w:86%"></span><span class="v-line" style="--w:68%"></span><span class="v-badge"><svg viewBox="0 0 24 24"><path d="M20 11a8 8 0 0 0-14.3-4.9L4 8M4 4v4h4M4 13a8 8 0 0 0 14.3 4.9L20 16M20 20v-4h-4"/></svg>cada&nbsp;semana</span></div></div><div class="card-txt"><h3>Presupuestos, informes y&nbsp;correos en&nbsp;un&nbsp;clic</h3><span class="label">Disponible en&nbsp;el&nbsp;Módulo 03</span><p>Automatiza los&nbsp;presupuestos, informes o&nbsp;correos que&nbsp;repites cada&nbsp;semana: Claude los&nbsp;hace por&nbsp;ti.</p><p class="save" data-h="6"><strong>+150&nbsp;€ al&nbsp;mes</strong><span>6&nbsp;h al&nbsp;mes: 30 min menos por&nbsp;documento, 3 a&nbsp;la&nbsp;semana</span></p></div></li>
+        <li class="card task"><div class="viz" aria-hidden="true"><div class="mini"><span class="v-line b" style="--w:46%"></span><span class="v-line" style="--w:88%"></span><span class="v-line" style="--w:74%"></span><span class="v-line" style="--w:60%"></span><span class="v-badge icon"><svg viewBox="0 0 100 100"><use href="#flower"/></svg></span></div></div><div class="card-txt"><h3>Que&nbsp;Claude conozca tu&nbsp;negocio</h3><span class="label">Disponible en&nbsp;el&nbsp;Módulo 02</span><p>Le&nbsp;explicas tu&nbsp;negocio una&nbsp;vez y&nbsp;responde a&nbsp;tus&nbsp;clientes como&nbsp;lo&nbsp;harías tú.</p><p class="save" data-h="2"><strong>+50&nbsp;€ al&nbsp;mes</strong><span>2&nbsp;h menos al&nbsp;mes corrigiendo respuestas</span></p></div></li>
+        <li class="card task"><div class="viz" aria-hidden="true"><div class="mini rows"><div class="v-row hot"><span>Hoy</span><b>3</b></div><div class="v-row"><span>Esta semana</span><b>5</b></div><div class="v-row"><span>Delegar</span><b>2</b></div><div class="v-row mute"><span>Archivar</span><b>30</b></div></div></div><div class="card-txt"><h3>El&nbsp;correo pendiente, ordenado</h3><span class="label">Disponible en&nbsp;el&nbsp;Módulo 04</span><p>Abres el&nbsp;correo y&nbsp;ya&nbsp;está ordenado por&nbsp;urgencia, con&nbsp;las&nbsp;respuestas de&nbsp;hoy escritas.</p><p class="save" data-h="8"><strong>+200&nbsp;€ al&nbsp;mes</strong><span>8&nbsp;h menos al&nbsp;mes con&nbsp;el&nbsp;correo</span></p></div></li>
+        <li class="card task"><div class="viz" aria-hidden="true"><div class="mini rows"><div class="v-row"><i class="g a">A</i><span class="v-line" style="--w:62%"></span><span class="v-phone"></span></div><div class="v-row"><i class="g">B</i><span class="v-line" style="--w:48%"></span></div><div class="v-row mute"><i class="g">D</i><span class="v-line" style="--w:56%"></span></div></div></div><div class="card-txt"><h3>Las&nbsp;solicitudes, clasificadas solas</h3><span class="label">Disponible en&nbsp;el&nbsp;Módulo 05</span><p>Cada&nbsp;solicitud de&nbsp;tu&nbsp;web llega clasificada, y&nbsp;te&nbsp;avisa al&nbsp;móvil cuando entra un&nbsp;buen cliente.</p><p class="save" data-h="4"><strong>+100&nbsp;€ al&nbsp;mes</strong><span>4&nbsp;h menos al&nbsp;mes ordenando solicitudes</span></p></div></li>
+        <li class="card task"><div class="viz" aria-hidden="true"><div class="mini rows"><div class="v-row v-head"><span>Cliente</span><b>Fase</b></div><div class="v-row new"><span>Javier R.</span><b>Nuevo</b></div><div class="v-row"><span>Marta L.</span><b>Presupuesto</b></div><div class="v-row mute"><span>Obras Turia</span><b>Ganado</b></div></div></div><div class="card-txt"><h3>Tus&nbsp;clientes, al&nbsp;día en&nbsp;tu&nbsp;Excel o&nbsp;tu&nbsp;CRM</h3><span class="label">Disponible en&nbsp;el&nbsp;Módulo 05</span><p>Cada&nbsp;cliente nuevo se&nbsp;apunta solo en&nbsp;tu&nbsp;Excel o&nbsp;tu&nbsp;CRM, con&nbsp;todos sus&nbsp;datos.</p><p class="save" data-h="6"><strong>+150&nbsp;€ al&nbsp;mes</strong><span>6&nbsp;h menos al&nbsp;mes apuntando clientes</span></p></div></li>
+        <li class="card task"><div class="viz" aria-hidden="true"><div class="mini"><div class="v-step"><i>1</i><span class="v-line" style="--w:80%"></span></div><div class="v-step"><i>2</i><span class="v-line" style="--w:60%"></span></div><div class="v-step"><i>3</i><span class="v-line" style="--w:72%"></span></div><span class="v-badge icon q">?</span></div></div><div class="card-txt"><h3>Tus&nbsp;procesos, por&nbsp;escrito</h3><span class="label">Disponible en&nbsp;el&nbsp;Módulo 04</span><p>Se&nbsp;lo&nbsp;cuentas a&nbsp;Claude y&nbsp;escribe el&nbsp;manual de&nbsp;tu&nbsp;equipo, para&nbsp;que&nbsp;dejen de&nbsp;preguntarte lo&nbsp;mismo.</p><p class="save" data-h="4"><strong>+100&nbsp;€ al&nbsp;mes</strong><span>4&nbsp;h menos al&nbsp;mes resolviendo dudas del&nbsp;equipo</span></p></div></li>
+        <li class="card task"><div class="viz" aria-hidden="true"><div class="mini"><span class="v-line b" style="--w:52%"></span><span class="v-line" style="--w:86%"></span><span class="v-line" style="--w:68%"></span><span class="v-badge"><svg viewBox="0 0 24 24"><path d="M20 11a8 8 0 0 0-14.3-4.9L4 8M4 4v4h4M4 13a8 8 0 0 0 14.3 4.9L20 16M20 20v-4h-4"/></svg>cada&nbsp;semana</span></div></div><div class="card-txt"><h3>Presupuestos, informes y&nbsp;correos en&nbsp;un&nbsp;clic</h3><span class="label">Disponible en&nbsp;el&nbsp;Módulo 03</span><p>Los&nbsp;presupuestos e&nbsp;informes de&nbsp;cada&nbsp;semana salen con&nbsp;tu&nbsp;formato en&nbsp;un&nbsp;clic.</p><p class="save" data-h="6"><strong>+150&nbsp;€ al&nbsp;mes</strong><span>6&nbsp;h menos al&nbsp;mes haciendo documentos</span></p></div></li>
       </ul>
     </section>
   </div>
@@ -845,8 +940,8 @@ body::before { content: ""; position: fixed; inset: 0 0 auto; height: env(safe-a
         <h2 id="h-como">Aprendes, lo&nbsp;aplicas y,&nbsp;si&nbsp;lo&nbsp;necesitas, te&nbsp;ayudo</h2>
       </div>
       <ol class="steps">
-        <li class="card step"><span class="step-n">1</span><div class="card-txt"><h3>Aprendes</h3><p>Lees el&nbsp;curso a&nbsp;tu&nbsp;ritmo, paso a&nbsp;paso y&nbsp;sin&nbsp;programar.</p></div></li>
-        <li class="card step"><span class="step-n">2</span><div class="card-txt"><h3>Lo&nbsp;aplicas</h3><p>Copias las&nbsp;plantillas en&nbsp;tu&nbsp;negocio y&nbsp;empiezas a&nbsp;ahorrar horas desde&nbsp;el&nbsp;primer día.</p></div></li>
+        <li class="card step"><span class="step-n">1</span><div class="card-txt"><h3>Aprendes</h3><p>Lees el&nbsp;curso a&nbsp;tu&nbsp;ritmo, con&nbsp;pasos numerados.</p></div></li>
+        <li class="card step"><span class="step-n">2</span><div class="card-txt"><h3>Lo&nbsp;aplicas</h3><p>Copias las&nbsp;plantillas en&nbsp;tu&nbsp;negocio y&nbsp;desde&nbsp;el&nbsp;primer día recuperas horas.</p></div></li>
         <li class="card step"><span class="step-n">3</span><div class="card-txt"><h3>Te&nbsp;ayudo si&nbsp;lo&nbsp;necesitas</h3><p>Si&nbsp;te&nbsp;atascas o&nbsp;no&nbsp;tienes tiempo, lo&nbsp;montamos juntos en&nbsp;tu&nbsp;empresa.</p><p class="contact">Escríbeme a&nbsp;<span>hola@rafaprompts.com</span></p></div></li>
       </ol>
     </section>
@@ -858,38 +953,26 @@ body::before { content: ""; position: fixed; inset: 0 0 auto; height: env(safe-a
       <div class="head">
         <p class="kicker">La&nbsp;pregunta de&nbsp;siempre</p>
         <h2 id="h-rutas">¿Hay que&nbsp;saber programar? No.</h2>
-        <p>El&nbsp;curso tiene dos rutas. Empiezas por&nbsp;la&nbsp;básica y,&nbsp;si&nbsp;un&nbsp;día quieres ir más&nbsp;lejos, tienes la&nbsp;avanzada. En&nbsp;ninguna necesitas saber programar.</p>
+        <p>Todo se&nbsp;hace escribiendo, como&nbsp;en&nbsp;un&nbsp;chat. Y&nbsp;si&nbsp;un&nbsp;día quieres que&nbsp;Claude trabaje solo, los&nbsp;módulos 07 a&nbsp;10 te&nbsp;enseñan cómo, también sin&nbsp;programar.</p>
       </div>
-      <div class="routes">
-        <article class="card route">
-          <div class="route-head">
-            <span class="label">Ruta básica · módulos 01 a&nbsp;06</span>
-            <h3>En&nbsp;la&nbsp;web de&nbsp;Claude, sin&nbsp;instalar nada</h3>
-            <p>Escribes instrucciones claras y&nbsp;usas plantillas ya&nbsp;hechas.</p>
-          </div>
-          <ol class="mods">
-            <li><span class="n">01</span><span class="txt"><strong>Qué le&nbsp;puedes pedir a&nbsp;Claude</strong><span>Descubre qué trabajo de&nbsp;tu&nbsp;negocio puede hacer Claude por&nbsp;ti y&nbsp;cuál conviene que&nbsp;sigas haciendo tú.</span></span></li>
-            <li><span class="n">02</span><span class="txt"><strong>Que&nbsp;Claude conozca tu&nbsp;negocio</strong><span>Explícale una&nbsp;vez tus&nbsp;servicios, tus&nbsp;precios y&nbsp;cómo hablas a&nbsp;tus&nbsp;clientes: Claude responde como&nbsp;lo&nbsp;harías tú.</span></span></li>
-            <li><span class="n">03</span><span class="txt"><strong>Presupuestos, informes y&nbsp;correos en&nbsp;un&nbsp;clic</strong><span>Automatiza los&nbsp;presupuestos, informes y&nbsp;correos que&nbsp;repites cada&nbsp;semana: Claude los&nbsp;hace por&nbsp;ti con&nbsp;tu&nbsp;formato.</span></span></li>
-            <li><span class="n">04</span><span class="txt"><strong>Cinco casos, paso a&nbsp;paso</strong><span>Escribe los&nbsp;textos de&nbsp;tu&nbsp;web, analiza a&nbsp;tu&nbsp;competencia, vacía la&nbsp;bandeja de&nbsp;entrada, saca conclusiones de&nbsp;tus&nbsp;ventas y&nbsp;pon por&nbsp;escrito tus&nbsp;procesos. Cinco casos completos para&nbsp;copiar.</span></span></li>
-            <li><span class="n">05</span><span class="txt"><strong>Conectarlo con&nbsp;tus&nbsp;herramientas</strong><span>Conecta Claude con&nbsp;Gmail, tus&nbsp;formularios y&nbsp;Telegram: entra un&nbsp;correo o&nbsp;una&nbsp;solicitud y&nbsp;te&nbsp;llega el&nbsp;resumen al&nbsp;móvil sin&nbsp;tocar nada.</span></span></li>
-            <li><span class="n">06</span><span class="txt"><strong>Comprobar que&nbsp;te&nbsp;ahorra tiempo</strong><span>Mide cuántas horas recuperas cada&nbsp;semana y&nbsp;mejora lo&nbsp;que&nbsp;falla sin&nbsp;romper el&nbsp;resto.</span></span></li>
-          </ol>
-        </article>
-        <article class="card route">
-          <div class="route-head">
-            <span class="label">Ruta avanzada · módulos 07 a&nbsp;10</span>
-            <h3>Con&nbsp;Claude Code, sin&nbsp;escribir código</h3>
-            <p>Claude trabaja solo en&nbsp;tu&nbsp;ordenador, a&nbsp;la&nbsp;hora que&nbsp;le&nbsp;digas.</p>
-          </div>
-          <ol class="mods">
-            <li><span class="n">07</span><span class="txt"><strong>Claude en&nbsp;tu&nbsp;ordenador</strong><span>Instala Claude en&nbsp;tu&nbsp;ordenador en&nbsp;cinco minutos para&nbsp;que&nbsp;trabaje directamente con&nbsp;tus&nbsp;archivos y&nbsp;carpetas.</span></span></li>
-            <li><span class="n">08</span><span class="txt"><strong>Conectarlo con&nbsp;tus&nbsp;cuentas</strong><span>Conecta Gmail, Drive y&nbsp;Notion, y&nbsp;pon a&nbsp;varios asistentes a&nbsp;repartirse el&nbsp;trabajo.</span></span></li>
-            <li><span class="n">09</span><span class="txt"><strong>Tu&nbsp;primera automatización que&nbsp;va sola</strong><span>Monta un&nbsp;sistema que&nbsp;se&nbsp;pone en&nbsp;marcha solo cada&nbsp;mañana y&nbsp;te&nbsp;deja el&nbsp;trabajo hecho antes de&nbsp;que&nbsp;abras el&nbsp;ordenador.</span></span></li>
-            <li><span class="n">10</span><span class="txt"><strong>Mantenerlo sin&nbsp;sustos</strong><span>Revisa tus&nbsp;automatizaciones en&nbsp;media hora al&nbsp;mes y&nbsp;resuelve los&nbsp;cinco fallos más&nbsp;habituales.</span></span></li>
-          </ol>
-        </article>
-      </div>
+      <ol class="mod-list">
+        <li class="card mod"><span class="card-ico" aria-hidden="true"><svg viewBox="0 0 24 24"><path d="M7.9 20A9 9 0 1 0 4 16.1L2 22Z" /><path d="M9.09 9a3 3 0 0 1 5.83 1c0 2-3 3-3 3" /><path d="M12 17h.01" /></svg></span><div class="card-txt"><h3><span class="mod-n">01</span> Qué le&nbsp;puedes pedir a&nbsp;Claude</h3><p>Qué trabajo de&nbsp;tu&nbsp;negocio puede hacer Claude y&nbsp;cuál te&nbsp;conviene seguir haciendo tú.</p></div></li>
+        <li class="card mod"><span class="card-ico" aria-hidden="true"><svg viewBox="0 0 24 24"><path d="m2 7 4.41-4.41A2 2 0 0 1 7.83 2h8.34a2 2 0 0 1 1.42.59L22 7" /><path d="M4 12v8a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2v-8" /><path d="M15 22v-4a2 2 0 0 0-2-2h-2a2 2 0 0 0-2 2v4" /><path d="M2 7h20" /><path d="M22 7v3a2 2 0 0 1-2 2a2.7 2.7 0 0 1-1.59-.63.7.7 0 0 0-.82 0A2.7 2.7 0 0 1 16 12a2.7 2.7 0 0 1-1.59-.63.7.7 0 0 0-.82 0A2.7 2.7 0 0 1 12 12a2.7 2.7 0 0 1-1.59-.63.7.7 0 0 0-.82 0A2.7 2.7 0 0 1 8 12a2.7 2.7 0 0 1-1.59-.63.7.7 0 0 0-.82 0A2.7 2.7 0 0 1 4 12a2 2 0 0 1-2-2V7" /></svg></span><div class="card-txt"><h3><span class="mod-n">02</span> Que&nbsp;Claude conozca tu&nbsp;negocio</h3><p>Se&nbsp;lo&nbsp;explicas una&nbsp;vez y&nbsp;responde como&nbsp;lo&nbsp;harías tú.</p></div></li>
+        <li class="card mod"><span class="card-ico" aria-hidden="true"><svg viewBox="0 0 24 24"><path d="M15 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V7Z" /><path d="M14 2v4a2 2 0 0 0 2 2h4" /><path d="M10 9H8" /><path d="M16 13H8" /><path d="M16 17H8" /></svg></span><div class="card-txt"><h3><span class="mod-n">03</span> Presupuestos, informes y&nbsp;correos en&nbsp;un&nbsp;clic</h3><p>Lo&nbsp;que&nbsp;repites cada&nbsp;semana, hecho por&nbsp;Claude con&nbsp;tu&nbsp;formato.</p></div></li>
+        <li class="card mod"><span class="card-ico" aria-hidden="true"><svg viewBox="0 0 24 24"><rect width="8" height="4" x="8" y="2" rx="1" ry="1" /><path d="M16 4h2a2 2 0 0 1 2 2v14a2 2 0 0 1-2 2H6a2 2 0 0 1-2-2V6a2 2 0 0 1 2-2h2" /><path d="M12 11h4" /><path d="M12 16h4" /><path d="M8 11h.01" /><path d="M8 16h.01" /></svg></span><div class="card-txt"><h3><span class="mod-n">04</span> Cinco casos, paso a&nbsp;paso</h3><p>Los&nbsp;textos de&nbsp;tu&nbsp;web, tu&nbsp;competencia, la&nbsp;bandeja de&nbsp;entrada, tus&nbsp;ventas y&nbsp;tus&nbsp;procesos.</p></div></li>
+        <li class="card mod"><span class="card-ico" aria-hidden="true"><svg viewBox="0 0 24 24"><path d="M12 22v-5" /><path d="M9 8V2" /><path d="M15 8V2" /><path d="M18 8v5a4 4 0 0 1-4 4h-4a4 4 0 0 1-4-4V8Z" /></svg></span><div class="card-txt"><h3><span class="mod-n">05</span> Conectarlo con&nbsp;tus&nbsp;herramientas</h3><p>Gmail, tus&nbsp;formularios y&nbsp;Telegram: el&nbsp;resumen te&nbsp;llega al&nbsp;móvil sin&nbsp;que&nbsp;toques nada.</p></div></li>
+        <li class="card mod"><span class="card-ico" aria-hidden="true"><svg viewBox="0 0 24 24"><line x1="10" x2="14" y1="2" y2="2" /><line x1="12" x2="15" y1="14" y2="11" /><circle cx="12" cy="14" r="8" /></svg></span><div class="card-txt"><h3><span class="mod-n">06</span> Comprobar que&nbsp;te&nbsp;ahorra tiempo</h3><p>Cuántas horas recuperas cada&nbsp;semana y&nbsp;cómo arreglar lo&nbsp;que&nbsp;falla.</p></div></li>
+        <li class="card mod"><span class="card-ico" aria-hidden="true"><svg viewBox="0 0 24 24"><path d="M20 16V7a2 2 0 0 0-2-2H6a2 2 0 0 0-2 2v9m16 0H4m16 0 1.28 2.55a1 1 0 0 1-.9 1.45H3.62a1 1 0 0 1-.9-1.45L4 16" /></svg></span><div class="card-txt"><h3><span class="mod-n">07</span> Claude en&nbsp;tu&nbsp;ordenador</h3><p>Lo&nbsp;instalas en&nbsp;cinco minutos y&nbsp;trabaja con&nbsp;tus&nbsp;archivos.</p></div></li>
+        <li class="card mod"><span class="card-ico" aria-hidden="true"><svg viewBox="0 0 24 24"><rect x="16" y="16" width="6" height="6" rx="1" /><rect x="2" y="16" width="6" height="6" rx="1" /><rect x="9" y="2" width="6" height="6" rx="1" /><path d="M5 16v-3a1 1 0 0 1 1-1h12a1 1 0 0 1 1 1v3" /><path d="M12 12V8" /></svg></span><div class="card-txt"><h3><span class="mod-n">08</span> Conectarlo con&nbsp;tus&nbsp;cuentas</h3><p>Gmail, Drive y&nbsp;Notion, con&nbsp;varios asistentes repartiéndose el&nbsp;trabajo.</p></div></li>
+        <li class="card mod"><span class="card-ico" aria-hidden="true"><svg viewBox="0 0 24 24"><path d="M12 2v8" /><path d="m4.93 10.93 1.41 1.41" /><path d="M2 18h2" /><path d="M20 18h2" /><path d="m19.07 10.93-1.41 1.41" /><path d="M22 22H2" /><path d="m8 6 4-4 4 4" /><path d="M16 18a4 4 0 0 0-8 0" /></svg></span><div class="card-txt"><h3><span class="mod-n">09</span> Tu&nbsp;primera automatización que&nbsp;va sola</h3><p>Cada&nbsp;mañana, el&nbsp;trabajo hecho antes de&nbsp;que&nbsp;abras el&nbsp;ordenador.</p></div></li>
+        <li class="card mod"><span class="card-ico" aria-hidden="true"><svg viewBox="0 0 24 24"><path d="M14.7 6.3a1 1 0 0 0 0 1.4l1.6 1.6a1 1 0 0 0 1.4 0l3.77-3.77a6 6 0 0 1-7.94 7.94l-6.91 6.91a2.12 2.12 0 0 1-3-3l6.91-6.91a6 6 0 0 1 7.94-7.94l-3.76 3.76z" /></svg></span><div class="card-txt"><h3><span class="mod-n">10</span> Mantenerlo sin&nbsp;sustos</h3><p>Media hora al&nbsp;mes de&nbsp;revisión y&nbsp;los&nbsp;cinco fallos más&nbsp;habituales, resueltos.</p></div></li>
+        <li class="card mod"><span class="card-ico" aria-hidden="true"><svg viewBox="0 0 24 24"><circle cx="12" cy="12" r="10" /><path d="M12 2a14.5 14.5 0 0 0 0 20 14.5 14.5 0 0 0 0-20" /><path d="M2 12h20" /></svg></span><div class="card-txt"><h3><span class="mod-n">11</span> Tu&nbsp;web, hecha con&nbsp;Claude</h3><p>Claude diseña y&nbsp;escribe tu&nbsp;web, y&nbsp;la&nbsp;publicas en&nbsp;una&nbsp;tarde con&nbsp;tu&nbsp;dominio.</p></div></li>
+        <li class="card mod"><span class="card-ico" aria-hidden="true"><svg viewBox="0 0 24 24"><ellipse cx="12" cy="5" rx="9" ry="3" /><path d="M3 5V19A9 3 0 0 0 21 19V5" /><path d="M3 12A9 3 0 0 0 21 12" /></svg></span><div class="card-txt"><h3><span class="mod-n">12</span> Tu&nbsp;CRM, conectado a&nbsp;tu&nbsp;web</h3><p>Quien te&nbsp;escribe desde&nbsp;la&nbsp;web entra solo en&nbsp;tu&nbsp;Excel o&nbsp;tu&nbsp;CRM, ya&nbsp;clasificado.</p></div></li>
+        <li class="card mod"><span class="card-ico" aria-hidden="true"><svg viewBox="0 0 24 24"><circle cx="11" cy="11" r="8" /><path d="m21 21-4.3-4.3" /></svg></span><div class="card-txt"><h3><span class="mod-n">13</span> Encontrar clientes potenciales</h3><p>Una&nbsp;lista de&nbsp;empresas que&nbsp;encajan con&nbsp;lo&nbsp;que&nbsp;vendes, con&nbsp;el&nbsp;motivo de&nbsp;cada&nbsp;una.</p></div></li>
+        <li class="card mod"><span class="card-ico" aria-hidden="true"><svg viewBox="0 0 24 24"><path d="M8 2v4" /><path d="M16 2v4" /><rect width="18" height="18" x="3" y="4" rx="2" /><path d="M3 10h18" /><path d="m9 16 2 2 4-4" /></svg></span><div class="card-txt"><h3><span class="mod-n">14</span> Primer contacto, llamadas y&nbsp;seguimiento</h3><p>El&nbsp;primer mensaje, la&nbsp;llamada en&nbsp;tu&nbsp;agenda y&nbsp;el&nbsp;CRM al&nbsp;día.</p></div></li>
+        <li class="card mod"><span class="card-ico" aria-hidden="true"><svg viewBox="0 0 24 24"><path d="M4 2v20l2-1 2 1 2-1 2 1 2-1 2 1 2-1 2 1V2l-2 1-2-1-2 1-2-1-2 1-2-1-2 1Z" /><path d="M16 8h-6a2 2 0 1 0 0 4h4a2 2 0 1 1 0 4H8" /><path d="M12 17.5v-11" /></svg></span><div class="card-txt"><h3><span class="mod-n">15</span> Facturas, cobros y&nbsp;los&nbsp;números del&nbsp;mes</h3><p>Facturas listas para&nbsp;la&nbsp;gestoría, los&nbsp;cobros pendientes a&nbsp;la&nbsp;vista y&nbsp;el&nbsp;informe del&nbsp;mes.</p></div></li>
+        <li class="card mod"><span class="card-ico" aria-hidden="true"><svg viewBox="0 0 24 24"><path d="M16 21v-2a4 4 0 0 0-4-4H6a4 4 0 0 0-4 4v2" /><circle cx="9" cy="7" r="4" /><line x1="19" x2="19" y1="8" y2="14" /><line x1="22" x2="16" y1="11" y2="11" /></svg></span><div class="card-txt"><h3><span class="mod-n">16</span> Contratar y&nbsp;formar a&nbsp;tu&nbsp;equipo</h3><p>La&nbsp;oferta de&nbsp;empleo, los&nbsp;currículos resumidos y&nbsp;el&nbsp;manual del&nbsp;primer día.</p></div></li>
+      </ol>
     </section>
   </div>
 
@@ -926,7 +1009,7 @@ body::before { content: ""; position: fixed; inset: 0 0 auto; height: env(safe-a
           <h3>Esencial</h3><span class="label">El&nbsp;curso completo</span>
           <p class="plan-price"><strong>149&nbsp;€</strong><small>pago único</small></p>
           <ul class="checks">
-            <li><span class="yes"><svg><use href="#i-yes"/></svg></span>Los&nbsp;10 módulos en&nbsp;PDF, con&nbsp;las&nbsp;dos rutas</li>
+            <li><span class="yes"><svg><use href="#i-yes"/></svg></span>Los&nbsp;16 módulos en&nbsp;PDF</li>
             <li><span class="yes"><svg><use href="#i-yes"/></svg></span>100 instrucciones y&nbsp;plantillas para&nbsp;copiar</li>
             <li><span class="yes"><svg><use href="#i-yes"/></svg></span>Actualizaciones gratis</li>
           </ul>
@@ -983,20 +1066,20 @@ body::before { content: ""; position: fixed; inset: 0 0 auto; height: env(safe-a
       <div class="head"><h2 id="h-preguntas">Preguntas frecuentes</h2></div>
       <div class="faq">
         <div class="faq-group"><p class="faq-k">El&nbsp;curso</p>
-          <details><summary>¿Necesito saber programar?</summary><p>No. Los&nbsp;seis primeros módulos se&nbsp;hacen en&nbsp;la&nbsp;web de&nbsp;Claude: le&nbsp;escribes como&nbsp;a&nbsp;una&nbsp;persona y&nbsp;usas plantillas que&nbsp;ya&nbsp;están hechas. Los&nbsp;módulos 07 a&nbsp;10 instalan Claude en&nbsp;tu&nbsp;ordenador y&nbsp;ahí te&nbsp;acompaño paso a&nbsp;paso. Tampoco escribes código.</p></details>
-          <details><summary>¿Es&nbsp;otro curso hecho con&nbsp;IA?</summary><p>Lo&nbsp;he&nbsp;escrito con&nbsp;ayuda de&nbsp;Claude, que&nbsp;es&nbsp;justo lo&nbsp;que&nbsp;enseño a&nbsp;hacer. Lo&nbsp;que&nbsp;no&nbsp;sale de&nbsp;la&nbsp;IA es&nbsp;el&nbsp;contenido: cada&nbsp;caso, cada&nbsp;plantilla y&nbsp;cada&nbsp;error que&nbsp;explico viene de&nbsp;proyectos reales, los&nbsp;míos y&nbsp;lo&nbsp;que&nbsp;veo cada&nbsp;semana en&nbsp;las&nbsp;empresas con&nbsp;las&nbsp;que&nbsp;trabajo. Y&nbsp;no&nbsp;es&nbsp;un&nbsp;curso de&nbsp;IA en&nbsp;general, sino un&nbsp;método para&nbsp;una&nbsp;sola herramienta aplicado a&nbsp;lo&nbsp;que&nbsp;ya&nbsp;haces. Lo&nbsp;que&nbsp;montas se&nbsp;queda en&nbsp;tu&nbsp;negocio: Claude sabe cómo trabajas, tus&nbsp;tareas están guardadas y&nbsp;tienes tu&nbsp;primera automatización en&nbsp;marcha.</p></details>
-          <details><summary>¿Por&nbsp;qué en&nbsp;PDF y&nbsp;no&nbsp;en&nbsp;vídeo?</summary><p>Porque un&nbsp;vídeo se&nbsp;ve una&nbsp;vez y&nbsp;se&nbsp;olvida, y&nbsp;este curso está hecho para&nbsp;usarse. Lo&nbsp;tienes abierto al&nbsp;lado mientras trabajas, lo&nbsp;lees a&nbsp;tu&nbsp;ritmo, también desde&nbsp;el&nbsp;móvil, y&nbsp;cuando llegas a&nbsp;un&nbsp;paso copias el&nbsp;texto y&nbsp;lo&nbsp;pegas en&nbsp;Claude. Sin&nbsp;buscar el&nbsp;minuto exacto de&nbsp;una&nbsp;clase ni&nbsp;copiar a&nbsp;mano lo&nbsp;que&nbsp;alguien dice en&nbsp;pantalla. Cada&nbsp;módulo trae ejemplos, capturas y&nbsp;pasos numerados: no&nbsp;hace falta entenderlo todo de&nbsp;golpe, solo seguir el&nbsp;siguiente paso.</p></details>
-          <details><summary>¿Cuánto tiempo me&nbsp;lleva?</summary><p>Unas&nbsp;5 o&nbsp;6 horas de&nbsp;lectura entre&nbsp;las&nbsp;dos rutas. Si&nbsp;haces un&nbsp;módulo cada&nbsp;dos días con&nbsp;tu&nbsp;propio negocio, en&nbsp;tres semanas tienes tu&nbsp;sistema funcionando, y&nbsp;desde&nbsp;el&nbsp;primer módulo ya&nbsp;hay tareas que&nbsp;te&nbsp;quitas de&nbsp;encima.</p></details>
+          <details><summary>¿Necesito saber programar?</summary><p>No. Le&nbsp;escribes a&nbsp;Claude como&nbsp;a&nbsp;una&nbsp;persona y&nbsp;usas plantillas que&nbsp;ya&nbsp;están hechas. En&nbsp;los&nbsp;módulos 07 a&nbsp;10 lo&nbsp;instalas en&nbsp;tu&nbsp;ordenador siguiendo los&nbsp;pasos, también sin&nbsp;escribir código.</p></details>
+          <details><summary>¿Es&nbsp;otro curso hecho con&nbsp;IA?</summary><p>Lo&nbsp;he&nbsp;escrito con&nbsp;ayuda de&nbsp;Claude, que&nbsp;es&nbsp;justo lo&nbsp;que&nbsp;enseño. Lo&nbsp;que&nbsp;no&nbsp;sale de&nbsp;la&nbsp;IA son los&nbsp;casos, las&nbsp;plantillas y&nbsp;los&nbsp;errores que&nbsp;explico: vienen de&nbsp;proyectos reales, míos y&nbsp;de&nbsp;las&nbsp;empresas con&nbsp;las&nbsp;que&nbsp;trabajo. Y&nbsp;lo&nbsp;que&nbsp;montas se&nbsp;queda funcionando en&nbsp;tu&nbsp;negocio.</p></details>
+          <details><summary>¿Por&nbsp;qué en&nbsp;PDF y&nbsp;no&nbsp;en&nbsp;vídeo?</summary><p>Porque un&nbsp;vídeo se&nbsp;ve una&nbsp;vez y&nbsp;este curso se&nbsp;usa. Lo&nbsp;tienes abierto al&nbsp;lado mientras trabajas, también en&nbsp;el&nbsp;móvil, y&nbsp;cuando llegas a&nbsp;un&nbsp;paso copias el&nbsp;texto y&nbsp;lo&nbsp;pegas en&nbsp;Claude. Nada de&nbsp;buscar el&nbsp;minuto exacto de&nbsp;una&nbsp;clase: solo sigues el&nbsp;siguiente paso.</p></details>
+          <details><summary>¿Cuánto tiempo me&nbsp;lleva?</summary><p>Unas&nbsp;10 horas en&nbsp;total, leyendo y&nbsp;probando. No&nbsp;hace falta acabarlo para&nbsp;notarlo: con&nbsp;el&nbsp;módulo 02 ya&nbsp;te&nbsp;quitas tareas de&nbsp;encima. A&nbsp;un&nbsp;módulo cada&nbsp;dos días, en&nbsp;un&nbsp;mes lo&nbsp;tienes todo funcionando.</p></details>
         </div>
         <div class="faq-group"><p class="faq-k">Claude</p>
-          <details><summary>¿Y&nbsp;si&nbsp;ya&nbsp;uso ChatGPT?</summary><p>La&nbsp;forma de&nbsp;trabajar te&nbsp;sirve igual, pero&nbsp;los&nbsp;pasos, las&nbsp;plantillas y&nbsp;las&nbsp;automatizaciones del&nbsp;curso están hechos para&nbsp;Claude. Empieza con&nbsp;su&nbsp;plan gratuito y&nbsp;compara tú mismo con&nbsp;una&nbsp;tarea real de&nbsp;tu&nbsp;negocio.</p></details>
-          <details><summary>¿Qué plan de&nbsp;Claude necesito?</summary><p>Para&nbsp;empezar te&nbsp;vale el&nbsp;plan gratuito. Cuando lo&nbsp;uses a&nbsp;diario, y&nbsp;para&nbsp;la&nbsp;ruta avanzada, lo&nbsp;normal es&nbsp;pasar al&nbsp;plan de&nbsp;pago de&nbsp;Claude, una&nbsp;suscripción mensual que&nbsp;se&nbsp;paga aparte.</p></details>
+          <details><summary>¿Y&nbsp;si&nbsp;ya&nbsp;uso ChatGPT?</summary><p>El&nbsp;método te&nbsp;sirve igual, pero&nbsp;los&nbsp;pasos y&nbsp;las&nbsp;plantillas están hechos para&nbsp;Claude. Pruébalo gratis con&nbsp;una&nbsp;tarea real de&nbsp;tu&nbsp;negocio y&nbsp;compara tú mismo.</p></details>
+          <details><summary>¿Qué plan de&nbsp;Claude necesito?</summary><p>Para&nbsp;empezar te&nbsp;vale el&nbsp;plan gratuito. Cuando lo&nbsp;uses a&nbsp;diario, o&nbsp;para&nbsp;que&nbsp;trabaje solo (módulos 07 a&nbsp;10), lo&nbsp;normal es&nbsp;el&nbsp;plan de&nbsp;pago de&nbsp;Claude, desde&nbsp;unos&nbsp;20&nbsp;$ al&nbsp;mes más&nbsp;IVA, que&nbsp;pagas aparte.</p></details>
         </div>
         <div class="faq-group"><p class="faq-k">Planes y&nbsp;compra</p>
           <details><summary>¿Qué cambia entre&nbsp;los&nbsp;planes?</summary><p>El&nbsp;curso es&nbsp;el&nbsp;mismo en&nbsp;los&nbsp;tres. Negocio añade 12 proyectos ya&nbsp;preparados para&nbsp;tu&nbsp;tipo de&nbsp;negocio, que&nbsp;te&nbsp;llegan por&nbsp;correo en&nbsp;menos de&nbsp;24 horas. La&nbsp;implantación a&nbsp;medida es&nbsp;para&nbsp;montarlo juntos en&nbsp;tu&nbsp;empresa, con&nbsp;un&nbsp;precio cerrado según lo&nbsp;que&nbsp;necesites.</p></details>
           <details><summary>¿Cómo funciona la&nbsp;implantación a&nbsp;medida?</summary><p>Empezamos con&nbsp;un&nbsp;diagnóstico de&nbsp;45 minutos que&nbsp;cuesta 50&nbsp;€. Repasamos tu&nbsp;negocio y&nbsp;te&nbsp;llevas por&nbsp;escrito las&nbsp;tres tareas que&nbsp;más&nbsp;horas te&nbsp;quitan y&nbsp;cuánto costaría automatizarlas. Si&nbsp;contratas la&nbsp;implantación, desde&nbsp;590&nbsp;€, esos 50&nbsp;€ se&nbsp;descuentan del&nbsp;precio. El&nbsp;precio final incluye todo el&nbsp;plan Negocio y&nbsp;todo mi&nbsp;trabajo hasta&nbsp;que&nbsp;funcione; aparte solo pagas tus&nbsp;herramientas, como&nbsp;tu&nbsp;plan de&nbsp;Claude.</p></details>
           <details><summary>¿Me&nbsp;haces factura?</summary><p>Sí. Al&nbsp;pagar puedes poner el&nbsp;nombre y&nbsp;el&nbsp;NIF de&nbsp;tu&nbsp;empresa, y&nbsp;la&nbsp;factura te&nbsp;llega por&nbsp;correo.</p></details>
-          <details><summary>¿Y&nbsp;si&nbsp;no&nbsp;me&nbsp;sirve?</summary><p>Tienes 14 días para&nbsp;pedir el&nbsp;reembolso. Me&nbsp;escribes una&nbsp;línea contando qué ha&nbsp;fallado y&nbsp;te&nbsp;devuelvo el&nbsp;dinero, sin&nbsp;preguntas. Si&nbsp;no&nbsp;te&nbsp;sirve, no&nbsp;pagas.</p></details>
+          <details><summary>¿Y&nbsp;si&nbsp;no&nbsp;me&nbsp;sirve?</summary><p>Tienes 14 días para&nbsp;pedir el&nbsp;reembolso. Me&nbsp;escribes una&nbsp;línea y&nbsp;te&nbsp;devuelvo el&nbsp;dinero, sin&nbsp;preguntas.</p></details>
         </div>
       </div>
     </section>
@@ -1005,7 +1088,7 @@ body::before { content: ""; position: fixed; inset: 0 0 auto; height: env(safe-a
   <!-- 9. Cierre -->
   <section class="close" aria-labelledby="h-close">
     <div class="wrap close-in">
-      <h2 id="h-close">Automatiza tu&nbsp;negocio este fin de&nbsp;semana <span class="it">empezando por&nbsp;el&nbsp;correo</span></h2>
+      <h2 id="h-close">Automatiza tu&nbsp;negocio este fin de&nbsp;semana <span class="it">y&nbsp;recupera tus&nbsp;tardes</span></h2>
       <div class="buy">
         <a class="btn js-buy" href="https://rafaprompts.com/#comprar">Comprar el&nbsp;curso · 149&nbsp;€</a>
         <p class="assure on-dark" aria-label="Condiciones de compra"><span class="assure-line"><span>Pago único</span><span>14 días de&nbsp;garantía</span><span>Factura para&nbsp;tu&nbsp;empresa</span></span></p>
@@ -1023,9 +1106,9 @@ body::before { content: ""; position: fixed; inset: 0 0 auto; height: env(safe-a
       </div>
       <div class="card-stack">
       <ul class="guides">
-        <li><a class="card guide" href="https://rafaprompts.com/reel-hiperrealista-con-claude.html"><h3>Cómo producir un&nbsp;reel hiperrealista con&nbsp;Claude</h3><span class="label"><time data-ago="0" datetime="2026-10">octubre 2026</time> · Producción</span><p>Guion, imagen, vídeo, voz, subtítulos, sonido y&nbsp;mezcla. El&nbsp;sistema completo, abierto.</p><span class="go">Leer la&nbsp;guía gratis</span></a></li>
-        <li><a class="card guide" href="https://rafaprompts.com/agente-creador-reels-claude.html"><h3>Cómo montar un&nbsp;sistema que&nbsp;produce reels mientras duermes</h3><span class="label"><time data-ago="1" datetime="2026-09">septiembre 2026</time> · Automatización</span><p>El&nbsp;agente se&nbsp;levanta de&nbsp;madrugada, escribe el&nbsp;guion, genera el&nbsp;vídeo y&nbsp;lo&nbsp;monta. Tú solo revisas y&nbsp;publicas por&nbsp;la&nbsp;mañana.</p><span class="go">Leer la&nbsp;guía gratis</span></a></li>
-        <li><a class="card guide" href="https://rafaprompts.com/hooks.html"><h3>8 fórmulas para&nbsp;escribir hooks que&nbsp;paren el&nbsp;scroll</h3><span class="label"><time data-ago="2" datetime="2026-08">agosto 2026</time> · Hooks</span><p>Las&nbsp;plantillas que&nbsp;han funcionado en&nbsp;mis&nbsp;reels este año. Una&nbsp;fórmula por&nbsp;slide, ejemplos reales, copia y&nbsp;pega.</p><span class="go">Leer la&nbsp;guía gratis</span></a></li>
+        <li><a class="card guide" href="https://rafaprompts.com/reel-hiperrealista-con-claude.html"><h3>Aprende a&nbsp;crear vídeos UGC con&nbsp;influencers IA</h3><span class="label"><time data-ago="0" datetime="2026-10">octubre 2026</time> · Producción</span><p>Del&nbsp;guion al&nbsp;vídeo final con&nbsp;tu&nbsp;influencer IA, paso a&nbsp;paso.</p><span class="go">Leer la&nbsp;guía gratis</span></a></li>
+        <li><a class="card guide" href="https://rafaprompts.com/agente-creador-reels-claude.html"><h3>Monta un&nbsp;sistema que&nbsp;crea vídeos UGC automáticamente por&nbsp;ti</h3><span class="label"><time data-ago="1" datetime="2026-09">septiembre 2026</time> · Automatización</span><p>Mientras duermes, escribe el&nbsp;guion, genera el&nbsp;vídeo y&nbsp;lo&nbsp;monta. Por&nbsp;la&nbsp;mañana solo revisas y&nbsp;publicas.</p><span class="go">Leer la&nbsp;guía gratis</span></a></li>
+        <li><a class="card guide" href="https://rafaprompts.com/hooks.html"><h3>8 fórmulas para&nbsp;escribir hooks que&nbsp;paren el&nbsp;scroll</h3><span class="label"><time data-ago="2" datetime="2026-08">agosto 2026</time> · Hooks</span><p>Las&nbsp;fórmulas que&nbsp;mejor me&nbsp;han funcionado en&nbsp;reels, con&nbsp;ejemplos para&nbsp;copiar.</p><span class="go">Leer la&nbsp;guía gratis</span></a></li>
       </ul>
       <div class="card subscribe">
           <h2 class="sub-title">¿Te&nbsp;aviso cuando salga la&nbsp;siguiente guía? <span class="it">una&nbsp;al&nbsp;mes y&nbsp;sin&nbsp;spam</span></h2>
@@ -1156,10 +1239,10 @@ Cuando te pegue una solicitud de un posible cliente:
   function onScroll() { var f = window.scrollY > 40; top.classList.toggle('lg', f); top.classList.toggle('is-floating', f); }
   window.addEventListener('scroll', onScroll, { passive: true }); onScroll();
   if (window.matchMedia('(prefers-reduced-motion: reduce)').matches || !('IntersectionObserver' in window)) return;
-  var groups = ['.tasks > li', '.about > li', '.steps > li', '.routes > article', '.plans > article', '.vs-cards > .card', '.guides > li', '.faq-group'];
+  var groups = ['.tasks > li', '.about > li', '.steps > li', '.mod-list > li', '.plans > article', '.vs-cards > .card', '.guides > li', '.faq-group'];
   var els = [];
   groups.forEach(function (sel) { document.querySelectorAll(sel).forEach(function (el, i) { el.style.setProperty('--d', i % 3); els.push(el); }); });
-  document.querySelectorAll('.sec .head, .demo, .vs, .subscribe, .bio').forEach(function (el) { els.push(el); });
+  document.querySelectorAll('.sec .head, .demo, .vs, .subscribe, .bio, .journey, .journey-auto').forEach(function (el) { els.push(el); });
   var limit = window.innerHeight * 0.92;
   els.forEach(function (el) { if (el.getBoundingClientRect().top > limit) el.classList.add('pre'); });
   var io = new IntersectionObserver(function (entries) {
